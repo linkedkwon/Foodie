@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="format-detection" content="telephone=no">
+
+  <title>Foodie</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/css/reset.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/commons.css}"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/signup.css}"/>
+</head>
+<body>
+  <div id="app">
+
+    <!-- header -->
+    <div th:replace="/fragments/main-header.html"></div>
+
+    <!-- Contents -->
+    <div id="contents">
+      <div class="section-860">
+        <ul class="nav-tabs2">
+          <li><a href="#">개인 회원가입</a></li>
+          <li class="active"><a href="#">맛집 회원가입</a></li>
+        </ul>
+
+        <div class="inner">
+          <!-- STEP1. 회원정보 입력 -->
+          <div class="step1-group">
+            <h3>STEP1. 회원정보 입력</h3>
+            <div class="form-table">
+              <div class="row">
+                <div class="th">이름</div>
+                <div class="td">
+                  <input type="text" name="restaurants_name">
+                </div>
+              </div>
+              <div class="row">
+                <div class="th">이메일</div>
+                <div class="td">
+                  <input type="text" name="restaurants_email">
+                  <a href="#" class="btn-sm">중복확인</a>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="th">비밀번호</div>
+                <div class="td">
+                  <input type="password" name="restaurants_password">
+                  <span class="tip">+4~15자의 영문자, 숫자조합</span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="th">비밀번호 확인</div>
+                <div class="td">
+                  <input type="password" name="restaurants_password_check">
+                </div>
+              </div>
+  
+              <div class="row">
+                <div class="th">전화번호</div>
+                <div class="td">
+                  <input type="tel" name="restaurants_phone">
+                  <span class="tip">+선택사항</span>
+                </div>
+              </div>
+  
+              <div class="row">
+                <div class="th">휴대전화</div>
+                <div class="td">
+                  <input type="tel" name="restaurants_mobile">
+                </div>
+              </div>
+  
+              <div class="row">
+                <div class="th">주소</div>
+                <div class="td">
+                  <div class="addr-box addr1">
+                    <input type="text" name="restaurants_zipcode">
+                    <a href="#" class="btn-sm">우편번호 찾기</a>
+                  </div>
+  
+                  <div class="addr-box addr2">
+                    <input type="text" name="restaurants_add1">
+                  </div>
+  
+                  <div class="addr-box addr3">
+                    <input type="text" name="restaurants_add2">
+                    <span class="tip">+나머지 상세주소 입력</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- STEP1. 회원정보 입력 END -->
+
+          <!-- STEP2. 정보수신 설정 -->
+          <div class="step2-group">
+            <h3>STEP2. 정보수신 설정</h3>  
+            <div class="form-table">
+              <div class="row">
+                <div class="th">이메일 수신 설정</div>
+                <div class="td">
+                  <span>
+                    <label for="email-receiving-y">수신함</label>
+                    <input type="radio" id="email-receiving-y" name="email_receiving" value="1">
+                  </span>
+                  <span>
+                    <label for="email-receiving-n">수신안함</label>
+                    <input type="radio" id="email-receiving-n" name="email_receiving" value="0">
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="th">SNS 수신 설정</div>
+                <div class="td">
+                  <span>
+                    <label for="sns-receiving-y">수신함</label>
+                    <input type="radio" id="sns-receiving-y" name="sns_receiving" value="1">
+                  </span>
+                  <span>
+                    <label for="sns-receiving-n">수신안함</label>
+                    <input type="radio" id="sns-receiving-n" name="sns_receiving" value="0">
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- STEP2. 정보수신 설정 END -->
+
+          <dl class="sns-login-btn">
+            <dt>간편로그인</dt>
+            <dd>
+              <a href="#" class="google">구글 로그인</a>
+              <a href="#" class="naver">네이버 로그인</a>
+              <a href="#" class="kakao">카카오 로그인</a>
+              <a href="#" class="facebook">페이스북 로그인</a>
+            </dd>
+          </dl>
+
+          <div class="btn-area">
+            <a href="" class="btn btn-primary">가입하기</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <div th:replace="/fragments/main-footer.html"></div>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/commons.js}"></script>
+  </div>
+</body>
+</html>

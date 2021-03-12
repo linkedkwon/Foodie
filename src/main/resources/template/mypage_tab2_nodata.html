@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="format-detection" content="telephone=no">
+
+  <title>Foodie</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/css/reset.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/commons.css}" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- header -->
+    <div th:replace="/fragments/main-header.html"></div>
+
+    <!-- Contents -->
+    <div id="contents">
+      <h2>MY PAGE</h2>
+      <div class="section-860">
+        <ul class="nav-tabs2">
+          <li><a href="#">로그인 정보</a></li>
+          <li class="active"><a href="#">찜한 목록</a></li>
+          <li><a href="#">내가쓴글</a></li>
+          <li><a href="#">프리미엄회원</a></li>
+        </ul>
+
+        <div class="inner">
+          <div class="title-group">
+            <h3>찜한 맛집 목록 <span>(0개)</span></h3>
+          </div>
+          
+          <div class="no-data">&lt;찜한 맛집 목록이 없습니다.&gt;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <div th:replace="/fragments/main-footer.html"></div>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/commons.js}"></script>
+  </div>
+</body>
+</html>

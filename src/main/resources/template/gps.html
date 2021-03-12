@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="format-detection" content="telephone=no">
+
+  <title>Foodie</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/css/reset.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/commons.css}"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css"/>
+</head>
+<body>
+  <div id="app">
+
+    <!-- header -->
+    <div th:replace="/fragments/main-header.html"></div>
+    
+    <!-- Contents -->
+    <div id="contents">
+      <div class="gps-wrapper">
+        <picture>
+          <source srcset="/images/ico-red-exmark@2x.png 2x">
+          <img src="/images/ico-red-exmark.png" alt="foodie">
+        </picture>
+        <p class="message">현재 등록된 내 위치가 없습니다.<br/>내위치를 등록하여 주변 맛집을 만나보세요.</p>
+  
+        <a href="#" class="btn btn-primary">현재 내 위치 등록</a>
+      </div>
+    </div>
+
+    <!-- footer --
+    <div th:replace="/fragments/main-footer.html"></div>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/commons.js}"></script>
+  </div>
+</body>
+</html>

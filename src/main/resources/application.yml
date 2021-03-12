@@ -1,0 +1,32 @@
+#dev
+server:
+  address: localhost
+  port: 8080
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  thymeleaf:
+    prefix: classpath:template/
+    suffix: .html
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/Foodie?serverTimezone=Asia/Seoul&useSSL=false&characterEncoding=utf-8
+    username: root
+    password: ehfrhfo7167&
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+logging:
+  level:
+    org.hibernate.type: trace
+
+---
+
+# deploy{to be adding}
