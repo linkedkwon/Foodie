@@ -13,12 +13,12 @@ spring:
     cache: false
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/Foodie?serverTimezone=Asia/Seoul&useSSL=false&characterEncoding=utf-8
+    url: jdbc:mysql://183.111.227.104:3306/foodie?useSSL=false&characterEncoding=utf8&serverTimezone=UTC
     username: root
-    password: ehfrhfo7167&
+    password: Foodie123!@#
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     show-sql: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
