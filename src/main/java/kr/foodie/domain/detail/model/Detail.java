@@ -1,15 +1,22 @@
-package kr.foodie.domain.detail;
+package kr.foodie.domain.detail.model;
+
+import kr.foodie.domain.account.model.Comment;
+import kr.foodie.domain.category.model.Region;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "DETAIL")
 public class Detail {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DETAIL_ID")
-    private long id;
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "REGION_ID")
+    private Region region;
 
     @Column(name = "DETAIL_TITLE")
     private String title;
@@ -69,10 +76,7 @@ public class Detail {
     private String surtax;
 
     //Dtype for color
-    //img to be adding
-    //mapping to 'Meta-detail'
-    //mapping to 'Comment'
-    //mapping to 'Favorites'
+    @Enumerated(EnumType.STRING)
+    private ColorType colorType;
 
 }
-

@@ -1,16 +1,19 @@
-package kr.foodie.domain.member;
+package kr.foodie.domain.member.model;
+
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
 
+
 @Entity
-@Table(name = "MEMBER")
+@Table(name = "\"MEMBER\"")
+@Data
 public class Member {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMBER_ID")
-    private long id;
+    private Long id;
 
     @Column(name = "NAME", nullable = false, length = 15)
     private String name;
@@ -36,19 +39,14 @@ public class Member {
     @Column(name = "SNS_INFO_TYPE", nullable = false, length = 1)
     private String snsReceivedType;
 
-    //general or restaurant member sign-up
-    @Enumerated(EnumType.STRING)
+    //0 or 1
     @Column(name = "MEMBER_TYPE", length = 1)
-    private MemberType memberType;
+    private String memberType;
 
     //premium role type
     @Enumerated(EnumType.STRING)
     @Column(name = "ROLE_TYPE")
     private RoleType roleType;
-
-    //Identification with roleType object through interceptor mapped premium page
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date payedPremiumDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -56,5 +54,9 @@ public class Member {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
 
-
+    //Identification with roleType object through interceptor mapped premium page
+    /**
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastPayedDate;
+    */
 }
