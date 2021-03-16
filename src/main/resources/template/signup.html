@@ -13,6 +13,7 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/commons.css}" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" />
   <link rel="stylesheet" type="text/css" th:href="@{/css/signup.css}" />
+  <script src="../static/js/register.js"></script>
 </head>
 <body>
   <div id="app">
@@ -77,7 +78,7 @@
                     <input type="tel" id="user-tel" name="user_phone"
                            onblur="checkTel()" oninput="oninputTel()" th:field="*{telNum}">
                     <span class="tip">+선택사항</span>
-                    <sdiv class="error-next-box" id="tel-msg"></sdiv>
+                    <div class="error-next-box" id="tel-msg"></div>
                   </div>
                 </div>
 
@@ -166,7 +167,7 @@
             <!-- Member Type -->
             <input type="tel" hidden="true" th:field="*{memberType}">
             <div class="btn-area">
-              <a class="btn btn-primary" onclick="checkFormBeforeSubmit()">가입하기</a>
+              <a class="btn btn-primary" onclick="checkFormBeforeSubmit()">가입하기</a>기
             </div>
           </form>
         </div>

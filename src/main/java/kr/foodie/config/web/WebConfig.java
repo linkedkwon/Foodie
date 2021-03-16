@@ -26,6 +26,7 @@ public class WebConfig implements WebMvcConfigurer {
         //Base view mapping
         registry.addViewController("/policy").setViewName("policy");
         registry.addViewController("/join").setViewName("signup");
+        registry.addViewController("/auth/login").setViewName("login");
         registry.addViewController("/submit").setViewName("signup_done");
 
         /**
