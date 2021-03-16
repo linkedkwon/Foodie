@@ -17,11 +17,6 @@ public class RouteController {
         return "gps";
     }
 
-    @GetMapping("/login")
-    public String renderSingIn(){
-        return "login";
-    }
-
     @GetMapping("/register")
     public String renderSignUp(){
         return "signup";

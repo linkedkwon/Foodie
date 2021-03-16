@@ -28,14 +28,23 @@
           </a>
         </h1>
 
-        <form action="#" method="post">
+        <form id="sign-in-form" action="/login" method="post">
           <div class="form-box">
-            <input type="text" placeholder="E-mail">
+            <input type="text" id="input-email" name="email" placeholder="E-mail"
+                   oninput="oninputEmail()">
+            <div class="error-next-box" id="email-msg"></div>
           </div>
+
           <div class="form-box">
-            <input type="password" placeholder="PASSWORD">
+            <input type="password" id="input-pswd" name="password" placeholder="PASSWORD"
+                   oninput="oninputPswd()">
+            <div class="error-next-box" id="pswd-msg"></div>
           </div>
-          <button href="#" class="btn btn-primary">로그인</button>
+          <div class="error-next-box" id="login-error-msg"></div>
+
+          <div class="btn-area">
+            <a class="btn btn-primary" onclick="checkFormBeforeLogin()">로그인</a>
+          </div>
 
           <div class="login-util">
             <div class="check-logged-auto">
@@ -64,6 +73,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
     <script type="text/javascript" th:src="@{/js/commons.js}"></script>
+    <script type="text/javascript" th:src="@{/js/login.js}"></script>
   </div>
 </body>
 </html>
