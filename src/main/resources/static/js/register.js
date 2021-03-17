@@ -1,5 +1,28 @@
 //email validation checked value
 var validationChecked = false;
+document.getElementById("member-type").value = "0";
+
+//tab onclick function to put member type
+$("ul.nav-tabs2 li").click(function(){
+
+    if(this.className == "active")
+        return false;
+
+    $("ul.nav-tabs2 li").removeClass("active");
+    $(this).addClass("active");
+    $(".inner").hide();
+
+    var activeTab = $(this).find("a").attr("href");
+    $(activeTab).fadeIn();
+
+    var memberType = document.getElementById("member-type");
+    if(memberType.value == 0) memberType.value = "1";
+    else memberType.value="0";
+
+    console.log('멤버타입이에요', memberType.value);
+
+    return false;
+});
 
 //check name regular expression
 function checkName(){

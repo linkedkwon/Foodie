@@ -13,7 +13,6 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/commons.css}" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" />
   <link rel="stylesheet" type="text/css" th:href="@{/css/signup.css}" />
-  <script src="../static/js/register.js"></script>
 </head>
 <body>
   <div id="app">
@@ -25,11 +24,11 @@
     <div id="contents">
       <div class="section-860">
         <ul class="nav-tabs2">
-          <li class="active"><a href="#">개인 회원가입</a></li>
-          <li><a href="#">맛집 회원가입</a></li>
+          <li class="active" attr=""><a href="#tab" target="_self">개인 회원가입</a></li>
+          <li><a href="#tab" target="_self">맛집 회원가입</a></li>
         </ul>
 
-        <div class="inner">
+        <div class="inner" id="tab">
           <form id="sign-up-form" th:action="@{/auth/register}" th:object="${member}" method="post">
             <!-- STEP1. 회원정보 입력 -->
             <div class="step1-group">
@@ -158,31 +157,31 @@
             <dl class="sns-login-btn">
               <dt>간편로그인</dt>
               <dd>
-                <a href="#" class="google">구글 로그인</a>
+                <a href="/oauth2/authorization/google" class="google">구글 로그인</a>
                 <a href="#" class="naver">네이버 로그인</a>
                 <a href="#" class="kakao">카카오 로그인</a>
                 <a href="#" class="facebook">페이스북 로그인</a>
               </dd>
             </dl>
             <!-- Member Type -->
-            <input type="tel" hidden="true" th:field="*{memberType}">
+            <input type="hidden" value="0" id="member-type" th:field="*{memberType}"/>
+
             <div class="btn-area">
-              <a class="btn btn-primary" onclick="checkFormBeforeSubmit()">가입하기</a>기
+              <a class="btn btn-primary" onclick="checkFormBeforeSubmit()">가입하기</a>
             </div>
           </form>
         </div>
       </div>
     </div>
-  </div>
 
     <!-- footer -->
     <div th:replace="/fragments/main-footer.html"></div>
-
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script type="text/javascript" th:src="@{/js/commons.js}"></script>
-    <script type="text/javascript" th:src="@{/js/register.js}"></script>
   </div>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script type="text/javascript" th:src="@{/js/commons.js}"></script>
+  <script type="text/javascript" th:src="@{/js/register.js}"></script>
 </body>
 </html>
