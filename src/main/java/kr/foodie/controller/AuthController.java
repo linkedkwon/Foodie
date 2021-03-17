@@ -1,13 +1,11 @@
-package kr.foodie.domain.member.controller;
+package kr.foodie.controller;
 
-import kr.foodie.domain.member.model.Member;
-import kr.foodie.domain.member.service.MemberService;
+import kr.foodie.domain.member.Member;
+import kr.foodie.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.http.HttpRequest;
 
 @Controller
 @RequestMapping(path = "/auth")

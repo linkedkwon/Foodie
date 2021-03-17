@@ -1,4 +1,4 @@
-package kr.foodie.domain.category.model;
+package kr.foodie.domain.category;
 
 import lombok.Data;
 import javax.persistence.*;
@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "REGION")
 @Data
-public class Region {
+public class Category {
 
     @Id
     @Column(name = "REGION_ID")

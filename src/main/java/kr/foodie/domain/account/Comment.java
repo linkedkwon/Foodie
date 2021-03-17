@@ -1,7 +1,7 @@
-package kr.foodie.domain.account.model;
+package kr.foodie.domain.account;
 
-import kr.foodie.domain.detail.model.Detail;
-import kr.foodie.domain.member.model.Member;
+import kr.foodie.domain.detail.Detail;
+import kr.foodie.domain.member.Member;
 
 import javax.persistence.*;
 

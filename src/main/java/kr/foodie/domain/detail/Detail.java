@@ -1,10 +1,8 @@
-package kr.foodie.domain.detail.model;
+package kr.foodie.domain.detail;
 
-import kr.foodie.domain.account.model.Comment;
-import kr.foodie.domain.category.model.Region;
+import kr.foodie.domain.category.Category;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "DETAIL")
@@ -16,7 +14,7 @@ public class Detail {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "REGION_ID")
-    private Region region;
+    private Category region;
 
     @Column(name = "DETAIL_TITLE")
     private String title;

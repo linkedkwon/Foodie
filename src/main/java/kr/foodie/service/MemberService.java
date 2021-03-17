@@ -1,11 +1,15 @@
-package kr.foodie.domain.member.service;
+package kr.foodie.service;
 
-import kr.foodie.domain.member.model.Member;
-import kr.foodie.domain.member.model.RoleType;
-import kr.foodie.domain.member.repo.MemberRepository;
+import kr.foodie.domain.member.Member;
+import kr.foodie.domain.member.RoleType;
+import kr.foodie.repo.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 
 @Service
 public class MemberService {
@@ -25,11 +29,12 @@ public class MemberService {
     public String save(Member member){
         if(member.getTelNum().length() == 0) member.setTelNum("없음");
 
-        //password encoding
+        Date time = Calendar.getInstance().getTime();
+
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
-        //set member type
-        member.setMemberType("0");
         member.setRoleType(RoleType.GENERAL);
+        member.setCreatedDate(time);
+        member.setLastModifiedDate(time);
 
         memberRepository.save(member);
 

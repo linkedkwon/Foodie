@@ -9,22 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class RouteController {
 
-    @GetMapping({"", "/"})
-    public String renderMain(){ return "main"; }
-
     @GetMapping("/gps")
     public String renderGps(){
         return "gps";
-    }
-
-    @GetMapping("/register")
-    public String renderSignUp(){
-        return "signup";
-    }
-
-    @GetMapping("/mypage")
-    public String renderMypage(){
-        return "mypage_tab1";
     }
 
     @GetMapping("/submain/green")

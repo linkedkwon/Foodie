@@ -1,6 +1,6 @@
-package kr.foodie.domain.category.service;
+package kr.foodie.service;
 
-import kr.foodie.domain.category.repo.CategoryRepository;
+import kr.foodie.repo.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

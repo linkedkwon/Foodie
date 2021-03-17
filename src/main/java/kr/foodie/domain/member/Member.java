@@ -1,4 +1,4 @@
-package kr.foodie.domain.member.model;
+package kr.foodie.domain.member;
 
 import lombok.Data;
 
@@ -15,32 +15,32 @@ public class Member {
     @Column(name = "MEMBER_ID")
     private Long id;
 
-    @Column(name = "NAME", nullable = false, length = 15)
+    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "EMAIL", nullable = false, length = 20)
+    @Column(name = "EMAIL")
     private String email;
 
-    @Column(name = "PASSWORD", nullable = false)
+    @Column(name = "PASSWORD")
     private String password;
 
     @Column(name = "TEL", length = 15)
     private String telNum;
 
-    @Column(name = "PHONE", nullable = false, length = 15)
+    @Column(name = "PHONE")
     private String phoneNum;
 
-    @Column(name = "ADDRESS", nullable = false, length = 50)
+    @Column(name = "ADDRESS")
     private String address;
 
-    @Column(name = "EMAIL_INFO_TYPE", nullable = false, length = 1)
+    @Column(name = "EMAIL_INFO_TYPE")
     private String emailReceivedType;
 
-    @Column(name = "SNS_INFO_TYPE", nullable = false, length = 1)
+    @Column(name = "SNS_INFO_TYPE")
     private String snsReceivedType;
 
     //0 or 1
-    @Column(name = "MEMBER_TYPE", length = 1)
+    @Column(name = "MEMBER_TYPE")
     private String memberType;
 
     //premium role type
@@ -49,14 +49,18 @@ public class Member {
     private RoleType roleType;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATED_DATE", updatable = false)
     private Date createdDate;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "MODIFIED_DATE")
     private Date lastModifiedDate;
 
-    //Identification with roleType object through interceptor mapped premium page
-    /**
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastPayedDate;
-    */
+    //oauth type
+    @Column(name = "PROVIDER")
+    private String provider;
+
+    @Column(name = "PROVIDER_ID")
+    private String providerId;
+
 }
