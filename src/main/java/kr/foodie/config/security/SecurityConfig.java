@@ -1,5 +1,10 @@
 package kr.foodie.config.security;
 
+import kr.foodie.config.security.auth.AuthUserDetailsService;
+import kr.foodie.config.security.handler.LoginFailureHandler;
+import kr.foodie.config.security.handler.LoginSuccessHandler;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,33 +12,48 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final AuthUserDetailsService authUserDetailsService;
+
     //ignore resources not need to match
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().requestMatchers();
+        //web.ignoring().requestMatchers();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.httpBasic().disable();
 
         http.authorizeRequests()
-                .antMatchers("/policy").authenticated()
+                .antMatchers("/account/**").authenticated()
                 .anyRequest().permitAll()
-                .and()
+             .and()
                 .formLogin()
                 .loginPage("/auth/login")
                 .usernameParameter("email")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/");
+                .defaultSuccessUrl("/")
+                //.successHandler(successHandler())
                 //.failureHandler(failureHandler());
+            .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .clearAuthentication(true)
+            .and()
+                .oauth2Login()
+                .loginPage("/auth/login")
+                .userInfoEndpoint()
+                .userService(authUserDetailsService);
     }
 
     @Bean
@@ -41,4 +61,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AuthenticationFailureHandler failureHandler() { return new LoginFailureHandler(); }
+
+    @Bean
+    public AuthenticationSuccessHandler successHandler() { return new LoginSuccessHandler(); }
+
 }
+
