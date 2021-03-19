@@ -64,7 +64,6 @@ public class AuthUserDetails implements UserDetails, OAuth2User {
         return collectors;
     }
 
-
     @Override
     public Map<String, Object> getAttributes() {
         return attributes;
@@ -74,4 +73,5 @@ public class AuthUserDetails implements UserDetails, OAuth2User {
     public String getName() {
         return "dolphin";
     }
+
 }

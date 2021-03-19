@@ -1,14 +1,18 @@
 package kr.foodie.domain.member;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 
 @Entity
 @Table(name = "\"MEMBER\"")
 @Data
+@NoArgsConstructor
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,10 +61,23 @@ public class Member {
     private Date lastModifiedDate;
 
     //oauth type
-    @Column(name = "PROVIDER")
+    @Column(name = "PROVIDER_TYPE")
     private String provider;
 
     @Column(name = "PROVIDER_ID")
     private String providerId;
 
+    @Builder
+    public Member(String name, String email, String memberType,
+                  RoleType role, Date createdDate, Date lastModifiedDate ,
+                  String provider, String providerId){
+        this.name = name;
+        this.email = email;
+        this.memberType = memberType;
+        this.roleType = role;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
+        this.provider = provider;
+        this.providerId = providerId;
+    }
 }

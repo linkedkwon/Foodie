@@ -1,6 +1,5 @@
 package kr.foodie.config.security;
 
-import kr.foodie.config.security.auth.AuthUserDetailsService;
 import kr.foodie.config.security.handler.LoginFailureHandler;
 import kr.foodie.config.security.handler.LoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +22,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthUserDetailsService authUserDetailsService;
 
-    //ignore resources not need to match
     @Override
     public void configure(WebSecurity web) throws Exception {
         //web.ignoring().requestMatchers();
