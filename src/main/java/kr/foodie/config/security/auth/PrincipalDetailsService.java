@@ -1,7 +1,7 @@
 package kr.foodie.config.security.auth;
 
-import kr.foodie.domain.member.model.Member;
-import kr.foodie.domain.member.repo.MemberRepository;
+import kr.foodie.domain.member.Member;
+import kr.foodie.repo.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

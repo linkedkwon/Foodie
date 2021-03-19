@@ -1,7 +1,9 @@
 <!-- Header -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <header id="header" class="">
     <div class="inner-wrapper">
-        <a href="#" class="btn-category"><span>카테고리</span></a>
+        <a href="#" id="mainCategory" class="btn-category"><span>카테고리</span></a>
         <a href="/">
         <h1></h1>
         </a>
@@ -33,12 +35,13 @@
     <div class="global-nav">
         <div class="inner">
             <ul class="side-menu">
-                <li class="active"><a href="#">지역별</a></li>
-                <li><a href="#">역세권</a></li>
-                <li><a href="#">맛집촌</a></li>
+                <!--  class="active"-->
+                <li id="region1"><a>지역별</a></li>
+                <li id="region2"><a>역세권</a></li>
+                <li id="region3"><a>맛집촌</a></li>
                 <li><a href="#">위치기반</a></li>
             </ul>
-            <div class="gnb-contents">
+            <div id="regionContent1" class="gnb-contents">
                 <ul class="top-menu">
                     <li class="active"><a href="#">서울</a></li>
                     <li><a href="#">경기</a></li>
@@ -58,6 +61,65 @@
                     <li><a href="#">제주</a></li>
                     <li><a href="#">세종</a></li>
                 </ul>
+                <div id="regionDetailContent1">
+<!--                <ul >-->
+                   <!-- <li><a href="#">강남구<span>(376)</span></a></li>
+                    <li><a href="#">강동구<span>(36)</span></a></li>
+                    <li><a href="#">강북구<span>(136)</span></a></li>
+                    <li><a href="#">강서구<span>(83)</span></a></li>
+                    <li><a href="#">관악구<span>(79)</span></a></li>
+                    <li><a href="#">광진구<span>(102)</span></a></li>
+                    <li><a href="#">구로구<span>(4)</span></a></li>
+                    <li><a href="#">금천구<span>(11)</span></a></li>
+                    <li><a href="#">노원구<span>(59)</span></a></li>
+                    <li><a href="#">도봉구<span>(20)</span></a></li>
+                    <li><a href="#">강남구<span>(376)</span></a></li>
+                    <li><a href="#">강동구<span>(36)</span></a></li>
+                    <li><a href="#">강북구<span>(136)</span></a></li>
+                    <li><a href="#">강서구<span>(83)</span></a></li>
+                    <li><a href="#">관악구<span>(79)</span></a></li>
+                    <li><a href="#">광진구<span>(102)</span></a></li>
+                    <li><a href="#">구로구<span>(4)</span></a></li>
+                    <li><a href="#">금천구<span>(11)</span></a></li>
+                    <li><a href="#">노원구<span>(59)</span></a></li>
+                    <li><a href="#">도봉구<span>(20)</span></a></li>-->
+<!--                </ul>-->
+                </div>
+            </div>
+
+            <div id="regionContent2" class="gnb-contents">
+                <ul class="top-menu">
+                    <li class="active"><a href="#">수도권</a></li>
+                    <li><a href="#">부산</a></li>
+                    <li><a href="#">대구</a></li>
+                    <li><a href="#">광주</a></li>
+                    <li><a href="#">대전</a></li>
+                </ul>
+                <ul class="item-list-wrapper" id="regionDetailContent2">
+                    <li><a href="#">강남구<span>(376)</span></a></li>
+                    <li><a href="#">강동구<span>(36)</span></a></li>
+                    <li><a href="#">강북구<span>(136)</span></a></li>
+                    <li><a href="#">강서구<span>(83)</span></a></li>
+                    <li><a href="#">관악구<span>(79)</span></a></li>
+                    <li><a href="#">광진구<span>(102)</span></a></li>
+                    <li><a href="#">구로구<span>(4)</span></a></li>
+                    <li><a href="#">금천구<span>(11)</span></a></li>
+                    <li><a href="#">노원구<span>(59)</span></a></li>
+                    <li><a href="#">도봉구<span>(20)</span></a></li>
+                    <li><a href="#">강남구<span>(376)</span></a></li>
+                    <li><a href="#">강동구<span>(36)</span></a></li>
+                    <li><a href="#">강북구<span>(136)</span></a></li>
+                    <li><a href="#">강서구<span>(83)</span></a></li>
+                    <li><a href="#">관악구<span>(79)</span></a></li>
+                    <li><a href="#">광진구<span>(102)</span></a></li>
+                    <li><a href="#">구로구<span>(4)</span></a></li>
+                    <li><a href="#">금천구<span>(11)</span></a></li>
+                    <li><a href="#">노원구<span>(59)</span></a></li>
+                    <li><a href="#">도봉구<span>(20)</span></a></li>
+                </ul>
+            </div>
+
+            <div id="regionContent3" class="gnb-contents">
                 <ul class="item-list-wrapper">
                     <li><a href="#">강남구<span>(376)</span></a></li>
                     <li><a href="#">강동구<span>(36)</span></a></li>
@@ -84,4 +146,76 @@
         </div>
     </div>
     <!-- Global Navigation END -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script th:inline="javascript">
+    $(document).ready(function (){
+
+        $("#mainCategory").click(function () {
+            console.log('main_click')
+            $("#region1").addClass("active");
+            $("#regionContent2").hide();
+            $("#regionContent3").hide();
+            $.ajax({
+                url: "/category/region/1?name=서울",
+                type:"GET",
+            }).done(function (fragment) {
+                console.log(fragment)
+
+                /*<![CDATA[*/
+
+                /*[# th:each="info : ${fragment}"]*/
+                console.log(/*[[${info}]]*/)
+                /*[/]*/
+
+                /*]]>*/
+
+
+                // var json = "<ul class=\"item-list-wrapper\" th:each='info, i: ${fragment}'>" +
+                //     "<li><a href=\"#\" th:text='info'><span>(376)</span></a></li>" +
+                //     "</ul>"
+                // console.log(json)
+
+                // $("#regionDetailContent1").replaceWith(json);
+            });
+
+            // if (status == "none") {
+            //     $("#hidden").css("display", "");
+            // } else {
+            //     $("#hidden").css("display", "none");
+            // }
+        });
+
+        $("#region1").click(function () {
+            console.log('region_click')
+            $("li[id*=region]").removeClass("active")
+            $("div[id*=regionContent]").hide()
+            $("#region1").addClass("active");
+            $("#regionContent1").show();
+        });
+
+        $("#region2").click(function () {
+            console.log('region2_click')
+            $("li[id*=region]").removeClass("active")
+            $("div[id*=regionContent]").hide()
+
+            $("#region2").addClass("active");
+            $("#regionContent2").show();
+        });
+        $("#region3").click(function () {
+            console.log('region3_click')
+            $("li[id*=region]").removeClass("active")
+            $("div[id*=regionContent]").hide()
+
+            $("#region3").addClass("active");
+            $("#regionContent3").show();
+            // if (status == "none") {
+            //     $("#hidden").css("display", "");
+            // } else {
+            //     $("#hidden").css("display", "none");
+            // }
+        });
+        }
+
+    )
+    </script>
 </header>

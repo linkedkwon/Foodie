@@ -1,6 +1,6 @@
 package kr.foodie.config.security.auth;
 
-import kr.foodie.domain.member.model.Member;
+import kr.foodie.domain.member.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
