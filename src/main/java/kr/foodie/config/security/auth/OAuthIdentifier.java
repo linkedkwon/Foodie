@@ -47,7 +47,6 @@ public enum OAuthIdentifier {
         @Override
         public String getEmail(Map<String, Object> attributes){
             Map<String, Object> response = (Map<String, Object>) attributes.get("response");
-
             return (String)response.get("email");
         }
     };
