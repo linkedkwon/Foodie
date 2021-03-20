@@ -1,7 +1,6 @@
 package kr.foodie.config.security.auth;
 
 import kr.foodie.domain.member.Member;
-import kr.foodie.domain.member.RoleType;
 import kr.foodie.repo.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -16,8 +15,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 //composed service
 @RequiredArgsConstructor
@@ -37,32 +36,28 @@ public class AuthUserDetailsService implements UserDetailsService, OAuth2UserSer
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2User oAuth2User = new DefaultOAuth2UserService()
-                .loadUser(userRequest);
 
-        //google
-        String name = oAuth2User.getAttribute("name");
-        String email = oAuth2User.getAttribute("email");
-        String provider = userRequest.getClientRegistration().getRegistrationId();
-        String providerId = oAuth2User.getAttribute("sub");
-        Date time = Calendar.getInstance().getTime();
+        OAuth2User oAuth2User = new DefaultOAuth2UserService().loadUser(userRequest);
+        Map<String, OAuthIdentifier> registration = initIdentifier();
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
 
-        Member entity = memberRepository.findMemberByEmail(email)
+        Member entity = memberRepository.findMemberByEmail(registration.get(registrationId).getEmail(oAuth2User.getAttributes()))
                 .orElseGet(() -> {
-                    Member member = Member.builder()
-                            .email(email)
-                            .name(name)
-                            .memberType("0")
-                            .role(RoleType.GENERAL)
-                            .createdDate(time)
-                            .lastModifiedDate(time)
-                            .provider(provider)
-                            .providerId(providerId)
-                            .build();
+                    Member member = registration.get(registrationId).toEntity(oAuth2User.getAttributes());
                     memberRepository.save(member);
                     return member;
                 });
 
-        return new AuthUserDetails(entity, oAuth2User.getAttributes());
+        return new AuthUserDetails(entity);
+    }
+
+    //for enum overriding
+    public static final Map<String, OAuthIdentifier> initIdentifier() {
+        Map<String, OAuthIdentifier> registration = new HashMap<String, OAuthIdentifier>();
+        registration.put("google", OAuthIdentifier.GOOGLE);
+        registration.put("kakao", OAuthIdentifier.KAKAO);
+        registration.put("naver", OAuthIdentifier.NAVER);
+
+        return registration;
     }
 }

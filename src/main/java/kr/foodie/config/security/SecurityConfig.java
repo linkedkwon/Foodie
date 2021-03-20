@@ -1,5 +1,6 @@
 package kr.foodie.config.security;
 
+import kr.foodie.config.security.auth.AuthUserDetailsService;
 import kr.foodie.config.security.handler.LoginFailureHandler;
 import kr.foodie.config.security.handler.LoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/")
-                //.successHandler(successHandler())
-                //.failureHandler(failureHandler());
+                .successHandler(successHandler())
+                .failureHandler(failureHandler())
             .and()
                 .logout()
                 .logoutUrl("/logout")
