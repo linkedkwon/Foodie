@@ -10,9 +10,26 @@ function checkFormBeforeLogin(){
     if(email_flag || pswd_flag)
         return;
 
-    const form = document.getElementById("sign-in-form");
-    form.submit();
+    $.ajax({
+        url: '/login',
+        type: 'POST',
+        data : {
+            email:email.value,
+            password:pswd.value
+        },
+        success: function(data){
+            if(data == 1){
+                $('#login-error-msg').text("아이디 또는 비밀번호가 일치하지 않습니다.");
+            }
+            else{
+                window.location.href = data;
+            }
+        },
+        error: function(status, error){
+            console.log(status, error);
+        }
+    });
 }
 
-function oninputEmail(){$('#email-msg').text('');}
-function oninputPswd(){$('#pswd-msg').text('');}
+function oninputEmail(){$('#email-msg').text(''); $('#login-error-msg').text('');}
+function oninputPswd(){$('#pswd-msg').text(''); $('#login-error-msg').text('');}

@@ -79,7 +79,7 @@ function checkMailValidation(){
             }
         },
         error: function (status, error) {
-            console.log(status, error)
+            console.log(status, error);
         }
     });
 }

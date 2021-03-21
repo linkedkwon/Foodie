@@ -1,8 +1,8 @@
 package kr.foodie.config.security;
 
 import kr.foodie.config.security.auth.AuthUserDetailsService;
-import kr.foodie.config.security.handler.LoginFailureHandler;
-import kr.foodie.config.security.handler.LoginSuccessHandler;
+import kr.foodie.config.security.handler.AuthFailureHandler;
+import kr.foodie.config.security.handler.AuthSuccessHandler;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
@@ -25,7 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        //web.ignoring().requestMatchers();
+            web
+                .ignoring()
+                    .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
     }
 
     @Override
@@ -35,20 +37,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/account/**").authenticated()
                 .anyRequest().permitAll()
-             .and()
+                    .and()
                 .formLogin()
-                .loginPage("/auth/login")
                 .usernameParameter("email")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/")
+                .loginPage("/auth/login")
                 .successHandler(successHandler())
                 .failureHandler(failureHandler())
-            .and()
+                    .and()
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .clearAuthentication(true)
-            .and()
+                    .and()
                 .oauth2Login()
                 .loginPage("/auth/login")
                 .userInfoEndpoint()
@@ -61,10 +62,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationFailureHandler failureHandler() { return new LoginFailureHandler(); }
+    public AuthenticationFailureHandler failureHandler() { return new AuthFailureHandler(); }
 
     @Bean
-    public AuthenticationSuccessHandler successHandler() { return new LoginSuccessHandler(); }
+    public AuthenticationSuccessHandler successHandler() { return new AuthSuccessHandler(); }
 
 }
 
