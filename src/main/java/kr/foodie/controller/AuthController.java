@@ -41,4 +41,15 @@ public class AuthController {
             return "/login";
         return "redirect:/";
     }
+
+    @GetMapping("/help/idInquiry")
+    public String renderIdInquiry(){
+        return "help-id";
+    }
+
+    @GetMapping("/help/pwInquiry")
+    public String renderPwInquiry(){
+        return "help-pswd";
+    }
+
 }
