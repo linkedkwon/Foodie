@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     List<Category> findByRegionTypeAndProvinceNameContaining(String regionType, String provinceName);
+    List<Category> findByRegionTypeAndDistrictName(String regionType, String districtName);
 }

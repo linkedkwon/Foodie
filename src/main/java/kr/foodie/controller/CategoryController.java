@@ -26,8 +26,13 @@ public class CategoryController {
     @GetMapping(value ="/region/{regionType}")
     public List<Category> getCategory(Model model, @PathVariable String regionType, HttpServletRequest request){
         String regionName = request.getParameter("name");
-        List<Category> commentList = categoryService.getCategory(regionType, regionName);
-        model.addAttribute("infos", categoryService.getCategory(regionType, regionName));
+        List<Category> commentList;
+        if(regionType.equals("2")){
+            commentList = categoryService.getCategorySecondType(regionType, regionName);
+        }else{
+            commentList = categoryService.getCategory(regionType, regionName);
+        }
+//        model.addAttribute("infos", categoryService.getCategory(regionType, regionName));
         return commentList;
     }
 
