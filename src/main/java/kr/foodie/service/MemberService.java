@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
+
 
 @Service
 public class MemberService {
@@ -20,10 +20,32 @@ public class MemberService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public String validate(String email) {
-        if(memberRepository.findMemberByEmail(email).isPresent())
+    //to be changing as Query
+    public String validateEmail(String email) {
+        if(memberRepository.findByEmail(email).isPresent())
             return "1";
         return "0";
+    }
+
+    public String inquiryId(String name, String phoneNum){
+       Member entity = memberRepository.findByNameAndPhoneNum(name, phoneNum)
+                        .orElseGet(() -> {
+                            Member member = new Member();
+                            member.setEmail("1");
+                            return member;
+                        });
+       return entity.getEmail();
+    }
+
+    public String inquiryPw(String email, String phoneNum){
+        Member entity = memberRepository.findByEmailAndPhoneNum(email, phoneNum)
+                .orElseGet(() -> {
+                    Member member = new Member();
+                    member.setEmail("1");
+                    return member;
+                });
+
+        return entity.getEmail();
     }
 
     public String save(Member member){
