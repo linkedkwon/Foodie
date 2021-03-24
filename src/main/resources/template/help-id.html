@@ -22,34 +22,39 @@
 
     <!-- Contents -->
     <div id="contents">
-            <div class="section-header-box">
-                <h1 class="section-header-text"style="margin-bottom: 10px;">계정 정보 찾기</h1>
-            </div>
-            <div class="section-860">
-                <ul class="nav-tabs2">
-                    <li class="active" attr=""><a href="/auth/help/idInquiry" target="_self">이메일 찾기</a></li>
-                    <li><a href="/auth/help/pwInquiry" target="_self">비밀번호 찾기</a></li>
-                </ul>
+        <div class="section-header-box">
+            <h1 class="section-header-text">계정 정보 찾기</h1>
+        </div>
 
-                <div class="inner" id="tab">
+        <div class="section-860">
+            <ul class="nav-tabs2">
+                <li class="active" attr=""><a href="/auth/help/idInquiry" target="_self">이메일 찾기</a></li>
+                <li><a href="/auth/help/pwInquiry" target="_self">비밀번호 찾기</a></li>
+            </ul>
+
+            <div class="inner" id="tab">
+                <div class="default-section" id="default-section1">
                     <p>등록한 이름과 휴대전화 번호로 이메일 찾기</p>
                     <ul class="util-menu">
                         <li>
                             <picture><img src="/images/ico-modal-check.png"/></picture>
-                            <span>회원정보에 등록한 이름과 휴대전화 번호가 같아야, 이메일을 찾으실 수 있습니다.</span>
+                            <span>회원정보에 등록한 이름과 휴대전화 번호로 이메일을 찾으실 수 있습니다.</span>
                         </li>
                         <li>
                             <picture><img src="/images/ico-modal-check.png"/></picture>
                             <span>본인 확인 후 아래에서 이메일을 확인하실 수 있습니다.</span>
                         </li>
                     </ul>
+                </div>
 
+                <div id="default-section2">
                     <div class="form-table-help">
                         <div class="row">
                             <div class="col">
                                 <div class="th">이름</div>
                                 <div class="td">
-                                    <input type="text" name="name"/>
+                                    <input type="text" id="user-name" name="user-name" oninput="oninputName()"/>
+                                    <div class="error-next-box" id="error-name-msg"></div>
                                 </div>
                             </div>
                         </div>
@@ -57,20 +62,53 @@
                             <div class="col">
                                 <div class="th">휴대전화</div>
                                 <div class="td">
-                                    <input type="text" name="phone-num"/>
+                                    <input type="text" id="user-phone" name="phone-num" oninput="oninputPhone()"/>
+                                    <div class="error-next-box" id="error-phone-msg"></div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row-msg">
+                            <div class="col">
+                                <div class="error-inquiry-box" id="error-inquiry-msg"></div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <a class="btn btn-primary" style="width: 346px; margin-top: 15px;">이메일 찾기</a>
+                                <a class="btn btn-primary" onclick="onClickInquiryEmail()">이메일 찾기</a>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="success-section" id="success-section">
+                    <div class="form-table-help">
+                        <div class="row">
+                            <div class="col">
+                                <p>고객님의 정보와 일치하는 이메일입니다.</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <span class="success-text" id="success-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <a href="/auth/login" class="btn btn-primary">로그인하러 가기</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <a href="/auth/help/pwInquiry" class="btn btn-primary">비밀번호 찾기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
             </div>
+        </div>
     </div>
-            <!-- footer -->
+
+    <!-- footer -->
     <div th:replace="/fragments/main-footer.html"></div>
 </div>
 
@@ -78,5 +116,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" th:src="@{/js/commons.js}"></script>
+<script type="text/javascript" th:src="@{/js/help.js}"></script>
 </body>
 </html>

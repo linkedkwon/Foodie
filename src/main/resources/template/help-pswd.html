@@ -23,53 +23,79 @@
     <!-- Contents -->
     <div id="contents">
         <div class="section-header-box">
-            <h1 class="section-header-text"style="margin-bottom: 10px;">계정 정보 찾기</h1>
+            <h1 class="section-header-text">계정 정보 찾기</h1>
         </div>
-        <div class="section-860">
+
+        <div class="section-860" id="section-860" style="height:350px;" >
             <ul class="nav-tabs2">
                 <li><a href="/auth/help/idInquiry" target="_self">이메일 찾기</a></li>
                 <li class="active" attr=""><a href="/auth/help/pwInquiry" target="_self">비밀번호 찾기</a></li>
             </ul>
 
             <div class="inner" id="tab">
-                <p>등록한 이메일로 비밀번호 재설정</p>
-                <ul class="util-menu">
-                    <li>
-                        <picture><img src="/images/ico-modal-check.png"/></picture>
-                        <span>회원정보에 등록한 이메일과 휴대전화 번호가 같아야, 비밀번호를 재설정 하실 수 있습니다.</span>
-                    </li>
-                    <li>
-                        <picture><img src="/images/ico-modal-check.png"/></picture>
-                        <span>비밀번호 재설정 기능은 등록하신 이메일로 발송됩니다.</span>
-                    </li>
-                </ul>
+                <div class="default-section">
+                    <p>등록한 이메일로 비밀번호 재설정</p>
+                    <ul class="util-menu">
+                        <li>
+                            <picture><img src="/images/ico-modal-check.png"/></picture>
+                            <span>회원정보에 등록한 이메일과 휴대전화 번호로 비밀번호를 재설정 하실 수 있습니다.</span>
+                        </li>
+                        <li>
+                            <picture><img src="/images/ico-modal-check.png"/></picture>
+                            <span>비밀번호 재설정 코드는 등록하신 이메일로 발송됩니다.</span>
+                        </li>
+                    </ul>
+                </div>
 
-                <div class="form-table-help">
-                    <div class="row">
-                        <div class="col">
-                            <div class="th">이메일</div>
-                            <div class="td">
-                                <input type="text" name="email"/>
+                <div>
+                    <div class="form-table-help">
+                        <div class="row">
+                            <div class="col2">
+                                <div class="th">이메일</div>
+                                <div class="td">
+                                    <input type="text" id="user-email" name="user-email" oninput="oninputEmail()"/>
+                                    <div class="error-next-box" id="error-email-msg"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="th">휴대전화</div>
-                            <div class="td">
-                                <input type="text" name="phone-num"/>
+                        <div class="row">
+                            <div class="col2">
+                                <div class="th">휴대전화</div>
+                                <div class="td">
+                                    <input type="text" id="user-phone" name="phone-num" oninput="oninputPhone()"/>
+                                    <a href="javascript:void(0);" class="btn-sm" id="receive-code-btn" onclick="onClickInquiryPswd()">인증코드 전송</a>
+                                    <div class="error-next-box" id="error-phone-msg"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <a class="btn btn-primary" style="width: 346px; margin-top: 15px;">비밀번호 재설정</a>
+                        <div class="row-msg">
+                            <div class="col2" style="margin: 0 auto;">
+                                <div class="error-inquiry-box" id="error-inquiry-msg"></div>
+                            </div>
+                        </div>
+                        <div class="success-section" id="success-section">
+                            <div class="row">
+                                <div class="col2">
+                                    <div class="th">인증코드</div>
+                                    <div class="td">
+                                        <input type="text" id="receive-code" name="receive-code" maxlength="6"/>
+                                        <div class="error-next-box" id="send-msg"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col2">
+                                    <a class="btn btn-primary" id="submit-btn" onclick="onClickInquiryPswd()">비밀번호 재설정</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- footer -->
     <div th:replace="/fragments/main-footer.html"></div>
 </div>
@@ -78,5 +104,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" th:src="@{/js/commons.js}"></script>
+<script type="text/javascript" th:src="@{/js/help.js}"></script>
 </body>
 </html>
