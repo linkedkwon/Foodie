@@ -23,8 +23,7 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
 
         //to be changing as json
         if (savedRequest != null) {
-            String targetUrl = savedRequest.getRedirectUrl();
-            out.print(targetUrl);
+            out.print(savedRequest.getRedirectUrl());
             return;
         }
         out.print("/");

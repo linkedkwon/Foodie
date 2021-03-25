@@ -3,7 +3,6 @@ package kr.foodie.domain.category;
 import lombok.Data;
 import javax.persistence.*;
 
-
 @Entity
 @Table(name = "REGION")
 @Data

@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
-//composed service
 @RequiredArgsConstructor
 @Service
 public class AuthUserDetailsService implements UserDetailsService, OAuth2UserService<OAuth2UserRequest, OAuth2User> {
@@ -27,7 +26,7 @@ public class AuthUserDetailsService implements UserDetailsService, OAuth2UserSer
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member entity = memberRepository.findMemberByEmail(username)
+        Member entity = memberRepository.findByEmail(username)
                 .orElseThrow(()->{
                     return new UsernameNotFoundException(username + "not found");
                 });
@@ -41,7 +40,7 @@ public class AuthUserDetailsService implements UserDetailsService, OAuth2UserSer
         Map<String, OAuthIdentifier> registration = initIdentifier();
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
 
-        Member entity = memberRepository.findMemberByEmail(registration.get(registrationId).getEmail(oAuth2User.getAttributes()))
+        Member entity = memberRepository.findByEmail(registration.get(registrationId).getEmail(oAuth2User.getAttributes()))
                 .orElseGet(() -> {
                     Member member = registration.get(registrationId).toEntity(oAuth2User.getAttributes());
                     memberRepository.save(member);
@@ -51,7 +50,6 @@ public class AuthUserDetailsService implements UserDetailsService, OAuth2UserSer
         return new AuthUserDetails(entity);
     }
 
-    //for enum overriding
     public static final Map<String, OAuthIdentifier> initIdentifier() {
         Map<String, OAuthIdentifier> registration = new HashMap<String, OAuthIdentifier>();
         registration.put("google", OAuthIdentifier.GOOGLE);

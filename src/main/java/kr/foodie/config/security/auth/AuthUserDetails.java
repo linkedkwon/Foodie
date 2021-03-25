@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-//composed object
 @Data
 public class AuthUserDetails implements UserDetails, OAuth2User {
 
@@ -18,11 +17,6 @@ public class AuthUserDetails implements UserDetails, OAuth2User {
     private Map<String, Object> attributes;
 
     public AuthUserDetails(Member member) { this.member = member; }
-
-    public AuthUserDetails(Member member, Map<String, Object> attributes) {
-        this.member = member;
-        this.attributes = attributes;
-    }
 
     @Override
     public String getPassword() {
