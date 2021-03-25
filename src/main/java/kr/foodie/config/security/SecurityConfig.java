@@ -14,6 +14,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 
 @RequiredArgsConstructor
@@ -22,6 +26,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthUserDetailsService authUserDetailsService;
+
+    private final DataSource dataSource;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -50,6 +56,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .clearAuthentication(true)
                     .and()
+                .rememberMe()
+                .rememberMeParameter("remember")
+                .key("remember")
+                .userDetailsService(authUserDetailsService)
+                .tokenRepository(tokenRepository())
+                .tokenValiditySeconds(60*60*24)
+                    .and()
                 .oauth2Login()
                 .loginPage("/auth/login")
                 .userInfoEndpoint()
@@ -66,6 +79,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationSuccessHandler successHandler() { return new AuthSuccessHandler(); }
+
+    @Bean
+    public PersistentTokenRepository tokenRepository(){
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+
+        return jdbcTokenRepository;
+    }
 
 }
 

@@ -15,7 +15,7 @@ public class MailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    //to be changing with mailDTO(after received specification
+    //to be changing with mailDTO after received specification
     @Async
     public void sendCode(String email, String code) throws Exception{
         MimeMessage message = javaMailSender.createMimeMessage();

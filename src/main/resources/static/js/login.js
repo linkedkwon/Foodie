@@ -1,5 +1,7 @@
 function checkFormBeforeLogin(){
 
+    var checked = $('input:checkbox[id="remember-me"]').is(":checked")
+
     var email = document.getElementById("input-email");
     var pswd = document.getElementById("input-pswd");
     var email_flag = false;
@@ -15,7 +17,8 @@ function checkFormBeforeLogin(){
         type: 'POST',
         data : {
             email:email.value,
-            password:pswd.value
+            password:pswd.value,
+            remember:checked
         },
         success: function(data){
             if(data == 1){

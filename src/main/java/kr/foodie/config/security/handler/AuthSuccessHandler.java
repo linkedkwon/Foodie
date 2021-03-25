@@ -17,6 +17,8 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 
+        request.getSession().setMaxInactiveInterval(1);
+
         SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response);
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
