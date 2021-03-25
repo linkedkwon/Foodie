@@ -4,6 +4,7 @@ import kr.foodie.domain.member.Member;
 import kr.foodie.domain.member.RoleType;
 import kr.foodie.repo.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,6 @@ public class MemberService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    //to be changing as Query
     public String validateEmail(String email) {
         if(memberRepository.findByEmail(email).isPresent())
             return "1";
@@ -61,5 +61,14 @@ public class MemberService {
         memberRepository.save(member);
 
         return "signup_done";
+    }
+
+    public void updatePassword(String email, String password){
+        Member entity = memberRepository.findByEmail(email)
+                .orElseThrow(()->{
+                    return new UsernameNotFoundException(email + "not found");
+                });
+        entity.setPassword(bCryptPasswordEncoder.encode(password));
+        memberRepository.save(entity);
     }
 }

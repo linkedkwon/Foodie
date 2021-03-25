@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 @EnableAsync
+@EnableCaching
 @SpringBootApplication
 public class FoodieApplication implements WebMvcConfigurer {
 

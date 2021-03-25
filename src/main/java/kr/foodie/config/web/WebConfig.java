@@ -1,5 +1,6 @@
 package kr.foodie.config.web;
 
+import kr.foodie.config.web.handler.RedirectHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,6 @@ import java.time.Duration;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    //config caching
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("resources/**")
@@ -19,14 +19,16 @@ public class WebConfig implements WebMvcConfigurer {
                 .setCacheControl(CacheControl.maxAge(Duration.ofDays(365)));
     }
 
-    //Handling excepts, redirect related to view
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
 
         //Base view mapping
         registry.addViewController("/policy").setViewName("policy");
         registry.addViewController("/join").setViewName("signup");
+        registry.addViewController("/login").setViewName("login");
         registry.addViewController("/submit").setViewName("signup_done");
+        registry.addViewController("/help/idInquiry").setViewName("help-id");
+        registry.addViewController("/help/pwInquiry").setViewName("help-pswd");
 
         /**
         registry.addRedirectViewController("/done","/");
@@ -40,9 +42,11 @@ public class WebConfig implements WebMvcConfigurer {
          */
     }
 
-    //Interceptor detail to be adding premium authorization
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {}
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new RedirectHandler())
+                .addPathPatterns("/help/reset");
+    }
 
     //Async task to be adding with search, gps
     @Override

@@ -26,10 +26,10 @@
             <h1 class="section-header-text">계정 정보 찾기</h1>
         </div>
 
-        <div class="section-860" id="section-860" style="height:350px;" >
+        <div class="section-860" id="section-860" style="height:350px;">
             <ul class="nav-tabs2">
-                <li><a href="/auth/help/idInquiry" target="_self">이메일 찾기</a></li>
-                <li class="active" attr=""><a href="/auth/help/pwInquiry" target="_self">비밀번호 찾기</a></li>
+                <li><a href="/help/idInquiry" target="_self">이메일 찾기</a></li>
+                <li class="active" attr=""><a href="/help/pwInquiry" target="_self">비밀번호 찾기</a></li>
             </ul>
 
             <div class="inner" id="tab">
@@ -74,19 +74,32 @@
                             </div>
                         </div>
                         <div class="success-section" id="success-section">
+
                             <div class="row">
                                 <div class="col2">
                                     <div class="th">인증코드</div>
                                     <div class="td">
-                                        <input type="text" id="receive-code" name="receive-code" maxlength="6"/>
-                                        <div class="error-next-box" id="send-msg"></div>
+                                        <input type="text" id="receive-code" name="receive-code" maxlength="6"
+                                        oninput="oninputCode()"/>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="row-code-msg">
+                                <div class="col">
+                                    <div class="error-next-box" id="send-msg"></div>
+                                </div>
+                            </div>
+
+                            <div class="row-code-msg" id="error-code-box" style="display: none">
+                                <div class="col3">
+                                    <div class="error-next-box-code" id="error-code-msg">하윙</div>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col2">
-                                    <a class="btn btn-primary" id="submit-btn" onclick="onClickInquiryPswd()">비밀번호 재설정</a>
+                                    <a class="btn btn-primary" id="submit-btn" onclick="submitCode()">비밀번호 재설정</a>
                                 </div>
                             </div>
                         </div>

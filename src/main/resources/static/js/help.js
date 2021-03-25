@@ -12,7 +12,7 @@ function onClickInquiryEmail(){
 
 
     $.ajax({
-        url: '/auth/inquiry/id',
+        url: '/help/inquiry/id',
         type: 'POST',
         data : {
             name:name,
@@ -52,7 +52,7 @@ function onClickInquiryPswd(){
     if(email_flag || phone_flag) return;
 
     $.ajax({
-        url: '/auth/inquiry/pw',
+        url: '/help/inquiry/pw',
         type: 'POST',
         data : {
             email:email,
@@ -65,12 +65,12 @@ function onClickInquiryPswd(){
             }
             else{
                 document.getElementById("success-section").style.display = "block";
-                document.getElementById("section-860").style.height = 450+"px";
+                document.getElementById("section-860").style.height = 470+"px";
                 document.getElementById("user-email").disabled=true;
                 document.getElementById("user-phone").disabled=true;
                 document.getElementById("success-section").style.display = "block";
                 send_msg.style.color = "#440fd3";
-                send_msg.innerText = "입력하신 메일로 6자리 인증번호가 발송되었습니다.";
+                send_msg.innerText = "입력하신 메일로 6자리 인증코드가 발송되었습니다. \(유효시간 10분\)";
             }
         },
         error: function(status, error){
@@ -79,6 +79,98 @@ function onClickInquiryPswd(){
     });
 }
 
+function submitCode(){
+    var code = document.getElementById("receive-code").value;
+    var msg = document.getElementById("error-code-msg");
+
+    if(code.length !=6){
+        document.getElementById("section-860").style.height = 490+"px";
+        document.getElementById("error-code-box").style.display="block";
+        msg.innerText ="인증코드를 다시 확인해주세요.";
+        return;
+    }
+
+    var email = document.getElementById("user-email").value;
+    var code = document.getElementById("receive-code").value;
+
+    $.ajax({
+        url: '/help/inquiry/code',
+        type: 'POST',
+        data : {
+            email: email,
+            code: code
+        },
+        success: function(data){
+            if(data == 1){
+                console.log("실패");
+                document.getElementById("section-860").style.height = 490+"px";
+                document.getElementById("error-code-box").style.display="block";
+                msg.innerText="인증코드가 일치하지 않습니다.";
+            }
+            else{
+                console.log("성공");
+                window.location.href = "/help/reset?email="+data;
+            }
+        },
+        error: function(status, error){
+            console.log(status, error);
+        }
+    });
+}
+
+function checkPassword(){
+
+    var reg = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{4,15}$/;
+    var pswd1 = document.getElementById("user-password1").value;
+    var pswd1_msg = document.getElementById("error-password1-msg");
+
+    if(pswd1.length == 0){ pswd1_msg.innerText = "필수 정보입니다."; return false;}
+    if(reg.test(pswd1) == false){ pswd1_msg.innerText = "4~15자의 영문자, 숫자조합을 사용하세요."; return false;}
+    pswd1_msg.innerText = "";
+
+    //change with pswd-match msg
+    var pswd2 =  document.getElementById("user-password2").value;
+    var pswd2_msg = document.getElementById("error-password2-msg");
+
+    if(pswd1 == pswd2 || pswd2.length == 0) {pswd2_msg.innerText = "";}
+    else{ pswd2_msg.innerText = "비밀번호가 일치하지 않습니다.";}
+
+    return true;
+}
+
+function matchPassword() {
+
+    var pswd1 = document.getElementById("user-password1").value;
+    var pswd2 = document.getElementById("user-password2").value;
+    var pswd2_msg = document.getElementById("error-password2-msg");
+
+    if(pswd1 != pswd2){ pswd2_msg.innerText = "비밀번호가 일치하지 않습니다."; return false;}
+
+    pswd2_msg.innerText = "";
+    return true;
+}
+
+function submitPassword(){
+
+    var list = [checkPassword(), matchPassword()];
+    if(list.includes(false)) return;
+
+    console.log("성공");
+    const urlParams = new URLSearchParams(window.location.search);
+    const data = urlParams.get('email');
+    document.getElementById("qs").value = data;
+
+    const form = document.getElementById("password-reset-form");
+    form.submit();
+}
+
 function oninputName(){$('#error-name-msg').text("");$('#error-inquiry-msg').text("");}
 function oninputEmail(){$('#error-email-msg').text("");$('#error-inquiry-msg').text("");}
 function oninputPhone(){$('#error-phone-msg').text("");$('#error-inquiry-msg').text("");}
+function oninputCode(){
+    $('#error-code-msg').text("");
+    document.getElementById("error-code-box").style.display="none";
+    document.getElementById("section-860").style.height = 470+"px";
+}
+function oninputPassword1(){$('#error-password1-msg').text("");}
+function oninputPassword2(){$('#error-password2-msg').text("");}
