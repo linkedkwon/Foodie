@@ -46,6 +46,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new RedirectHandler())
                 .addPathPatterns("/help/reset");
+
     }
 
     //Async task to be adding with search, gps
