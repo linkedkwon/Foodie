@@ -18,7 +18,16 @@ public class ShopService {
         this.shopRepository = shopRepository;
     }
 
-    public List<Shop> getShopInfos(String regionTypeId) {
-        return shopRepository.findByRegionTypeId(regionTypeId);
+    public List<Shop> getShopInfos(String regionTypeId, String shopType) {
+        return shopRepository.findByRegionTypeIdAndShopTypeAndOrderIsNull(regionTypeId, shopType);
+    }
+    public List<Shop> getShopInfosWithOrder(String regionTypeId, String shopType, Integer num) {
+        return shopRepository.findByRegionTypeIdAndShopTypeAndOrderIsLessThan(regionTypeId, shopType, num);
+    }
+    public List<Shop> getShopInfosWithSideOrder(String regionTypeId, String shopType, Integer num) {
+        return shopRepository.findByRegionTypeIdAndShopTypeAndOrderIsGreaterThan(regionTypeId, shopType, num);
+    }
+    public List<Shop> getShopDetail(Integer shopId) {
+        return shopRepository.findByShopId(shopId);
     }
 }

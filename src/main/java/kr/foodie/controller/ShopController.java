@@ -1,15 +1,15 @@
 package kr.foodie.controller;
 
+import kr.foodie.domain.shop.HashTag;
 import kr.foodie.domain.shop.Shop;
+import kr.foodie.domain.shop.Region;
+import kr.foodie.service.RegionService;
 import kr.foodie.service.ShopService;
+import kr.foodie.service.TagService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -17,17 +17,65 @@ import java.util.List;
 public class ShopController {
 
     private final ShopService shopService;
+    private final TagService tagService;
+    private final RegionService regionService;
 
-    public ShopController(ShopService shopService) {
+    public ShopController(ShopService shopService, TagService tagService, RegionService regionService) {
         this.shopService = shopService;
+        this.tagService = tagService;
+        this.regionService = regionService;
     }
 
-    @ResponseBody
-    @GetMapping(value ="region/{regionTypeId}")
-    public List<Shop> getCategory(Model model, @PathVariable String regionTypeId, HttpServletRequest request){
+    @RequestMapping(value ="region/{regionTypeId}/{shopType}", method= RequestMethod.GET)
+    public ModelAndView getCategory(@PathVariable String regionTypeId, @PathVariable String shopType){
+        ModelAndView mav = new ModelAndView();
+        if(shopType.equals("red")){
+            shopType = "0";
+        }else{
+            shopType = "1";
+        }
         List<Shop> commentList;
-        commentList = shopService.getShopInfos(regionTypeId);
-        return commentList;
+        List<Shop> commentListWithOrder;
+        List<Shop> sideCommentListWithOrder;
+        List<Region> regionInfos;
+        regionInfos = regionService.getRegionInfo(Integer.valueOf(regionTypeId));
+        commentList = shopService.getShopInfos(regionTypeId, shopType);
+        commentListWithOrder = shopService.getShopInfosWithOrder(regionTypeId, shopType, 9);
+        sideCommentListWithOrder = shopService.getShopInfosWithSideOrder(regionTypeId, shopType, 8);
+        mav.addObject("payload", commentList);
+        mav.addObject("regionInfo", regionInfos);
+        mav.addObject("priority", commentListWithOrder);
+        mav.addObject("sidePriority", sideCommentListWithOrder);
+        if(shopType.equals("0")){
+            mav.setViewName("submain-red");
+        }else{
+            mav.setViewName("submain-green");
+        }
+
+        return mav;
     }
 
+    @RequestMapping(value ="/{shopId}", method= RequestMethod.GET)
+    public ModelAndView getShopDetail(@PathVariable Integer shopId){
+        ModelAndView mav = new ModelAndView();
+
+        List<Shop> commentList;
+        List<HashTag> hashTags;
+        commentList = shopService.getShopDetail(shopId);
+        hashTags = tagService.getHashTags(shopId);
+        mav.addObject("payload", commentList);
+        if(commentList.size() > 0){
+            Integer background = commentList.get(0).getBackground();
+            if(background == 1){
+                mav.setViewName("detail-green");
+            }else if (background == 2){
+                mav.setViewName("detail-red");
+            }else{
+                mav.setViewName("detail-mustard");
+            }
+            mav.addObject("hashTags",hashTags);
+            return mav;
+        }
+        return null;
+    }
 }

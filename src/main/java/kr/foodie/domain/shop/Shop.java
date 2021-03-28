@@ -15,7 +15,7 @@ public class Shop {
 
     @Id
     @Column(name = "SHOP_ID")
-    private Long shopId;
+    private Integer shopId;
 
     @Column(name = "REGION_TYPE_ID")
     private String regionTypeId;
@@ -25,6 +25,15 @@ public class Shop {
 
     @Column(name = "VILLAGE_TYPE_ID")
     private String villageTypeId;
+
+    @Column(name = "SHOP_TYPE")
+    private String shopType;
+
+    @Column(name = "Background")
+    private Integer background;
+
+    @Column(name = "order")
+    private Integer order;
 
     @Column(name = "SHOP_NAME")
     private String shopName;

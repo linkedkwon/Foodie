@@ -167,10 +167,10 @@
                 ul.appendChild(li);
                 if(type=='2'){
                     if(element.subwayName != null){
-                        li.innerHTML=li.innerHTML +"<a href='#'>" +element.subwayName + "</a>";
+                        li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.subwayName + "</a>";
                     }
                 }else{
-                    li.innerHTML=li.innerHTML +"<a href='#'>" +element.districtName + "</a>";
+                    li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.districtName + "";
                 }
             }
         });
