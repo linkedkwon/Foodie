@@ -210,8 +210,8 @@ function checkInfoReceived(){
 //compose address distributed 3 parts
 function composeAddress(){
     document.getElementById("detail-address").value =
-        document.getElementById("post-code").value + " " +
-        document.getElementById("address").value + " " +
+        document.getElementById("post-code").value + "+" +
+        document.getElementById("address").value + "+" +
         document.getElementById("detail-address").value;
 }
 

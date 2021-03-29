@@ -42,6 +42,9 @@ public class Member {
     @Column(name = "SNS_INFO_TYPE")
     private String snsReceivedType;
 
+    @Column(name = "POINT")
+    private String point;
+
     //0 or 1
     @Column(name = "MEMBER_TYPE")
     private String memberType;

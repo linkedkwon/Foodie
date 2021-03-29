@@ -54,6 +54,7 @@ public class MemberService {
         Date time = Calendar.getInstance().getTime();
 
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
+        member.setPoint("0");
         member.setRoleType(RoleType.GENERAL);
         member.setCreatedDate(time);
         member.setLastModifiedDate(time);
@@ -69,6 +70,27 @@ public class MemberService {
                     return new UsernameNotFoundException(email + "not found");
                 });
         entity.setPassword(bCryptPasswordEncoder.encode(password));
+        memberRepository.save(entity);
+    }
+
+    public void update(Member member){
+        Member entity = memberRepository.findByEmail(member.getEmail())
+                .orElseThrow(()->{
+                   return new UsernameNotFoundException("not found");
+                });
+        System.out.println(member.getName());
+        entity.setName(member.getName());
+        if(member.getPassword().length() > 0)
+            entity.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
+        entity.setAddress(member.getAddress());
+        entity.setEmailReceivedType(member.getEmailReceivedType());
+        entity.setSnsReceivedType(member.getSnsReceivedType());
+        entity.setPhoneNum(member.getPhoneNum());
+        entity.setTelNum(member.getTelNum());
+
+        Date time = Calendar.getInstance().getTime();
+        entity.setLastModifiedDate(time);
+
         memberRepository.save(entity);
     }
 }

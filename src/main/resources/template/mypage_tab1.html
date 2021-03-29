@@ -25,77 +25,111 @@
       <div class="section-860">
         <ul class="nav-tabs2">
           <li class="active"><a href="#">로그인 정보</a></li>
-          <li><a href="/user/wish/item">찜한 목록</a></li>
+          <li><a href="/user/wishItem">찜한 목록</a></li>
           <li><a href="/user/comment">내가쓴글</a></li>
           <li><a href="/user/pay">프리미엄회원</a></li>
         </ul>
 
-        <div class="inner">
+        <form class="inner" id="form-table" th:action="@{/user/info/edit}" th:object="${member}" method="post">
           <h3>회원정보 수정</h3>
           <div class="form-table">
             <div class="row">
               <div class="th">이름</div>
               <div class="td">
-                <input type="text" name="user_name" th:value="${member.name}">
+                <input type="text" id="user-name" name="user_name" th:value="${member.name}" th:field="*{name}"
+                       onblur="checkName()" oninput="oninputName()">
+                <div class="error-next-box" id="name-msg"></div>
               </div>
             </div>
             <div class="row">
               <div class="th">이메일</div>
               <div class="td">
-                <input type="text" name="user_email" th:value="${member.email}">
+                <input type="text" id="email" name="user_email"  disabled="true" th:value="${member.email}">
+                <input type="text" id="user-email" style="display: none" th:field="*{email}"/>
               </div>
             </div>
 
             <div class="row">
               <div class="th">새 비밀번호</div>
               <div class="td">
-                <input type="password" name="user_password">
+                <input type="password" id="user-pswd1" name="user_password" th:field="*{password}"
+                       onblur="checkPassword()" oninput="oninputPswd1()">
+                <span class="tip">+4~15자의 영문자, 숫자조합</span>
+                <div class="error-next-box" id="pswd-msg1"></div>
               </div>
             </div>
 
             <div class="row">
               <div class="th">비밀번호 확인</div>
               <div class="td">
-                <input type="password" name="user_password_check">
+                <input type="password" id="user-pswd2" name="user_password_check"
+                       onblur="matchPassword()" oninput="oninputPswd2()">
+                <div class="error-next-box" id="pswd-msg2"></div>
               </div>
             </div>
 
             <div class="row">
               <div class="th">전화번호</div>
               <div class="td">
-                <input type="tel" name="user_phone" th:value="${member.telNum}">
+                <input type="tel" id="user-tel" name="user_phone" th:value="${member.telNum}" th:field="*{telNum}"
+                       onblur="checkTel()" oninput="oninputTel()">
+                <div class="error-next-box" id="tel-msg"></div>
               </div>
             </div>
 
             <div class="row">
               <div class="th">휴대전화</div>
               <div class="td">
-                <input type="tel" name="user_mobile" th:value="${member.phoneNum}">
+                <input type="tel" id="user-phone" name="user_mobile" th:value="${member.phoneNum}" th:field="*{phoneNum}"
+                       onblur="checkPhone()" oninput="oninputPhone()">
+                <div class="error-next-box" id="phone-msg"></div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="th">주소</div>
+              <div class="td">
+                <div class="addr-box addr1">
+                  <input type="text" id="post-code" name="user_zipcode" disabled="true" th:value="${member.getAddress().split('\+')[0]}">
+                  <a href="javascript:void(0);" class="btn-sm" onClick="execDaumPostcode()">우편번호 찾기</a>
+                </div>
+
+                <div class="addr-box addr2">
+                  <input type="text" id="address" name="user_add1" disabled="true" th:value="${member.getAddress().toString().split('\+')[1]}">
+                </div>
+
+                <div class="addr-box addr3">
+                  <input type="text" id="detail-address" name="user_add2" disabled="true"
+                         oninput="oninputAddress()" onblur="checkAddress()" th:value="${member.getAddress().toString().split('\+')[2]}">
+                  <input type="text" id="composed-address" style="display:none" th:field="*{address}"/>
+                </div>
+                <div class="error-next-box" id="address-msg"></div>
               </div>
             </div>
           </div>
-          
+
           <div class="etc-info">
-            <span>
-              <label for="auto-login">자동 로그인 설정</label>
-              <input type="checkbox" id="auto-login">
-            </span>
             <span>
               <label for="email-receiving">이메일 서비스</label>
               <input type="checkbox" id="email-receiving" th:checked="${member.emailReceivedType.toString().equals('1')}">
+              <input type="text" id="email-receiving-value" style="display:none" th:field="*{emailReceivedType}"/>
+            </span>
+            <span>
+              <label for="sns-receiving">SNS 서비스</label>
+              <input type="checkbox" id="sns-receiving" th:checked="${member.snsReceivedType.toString().equals('1')}">
+              <input type="text" id="sns-receiving-value" style="display:none" th:field="*{snsReceivedType}"/>
             </span>
 
             <div class="point">
-              나의 포인트 : <span>200p</span>
+              나의 포인트 : <span th:text="${member.point}"></span>
             </div>
           </div>
           
 
           <div class="btn-area">
-            <a href="" class="btn btn-primary">수정하기</a>
+            <a class="btn btn-primary" onclick="checkFormBeforeEdit()">수정하기</a>
           </div>
-
-        </div>
+        </form>
       </div>
     </div>
     <!-- footer -->
@@ -103,6 +137,7 @@
   </div>
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script type="text/javascript" th:src="@{/js/commons.js}"></script>
   <script type="text/javascript" th:src="@{/js/mypage.js}"></script>
 </body>

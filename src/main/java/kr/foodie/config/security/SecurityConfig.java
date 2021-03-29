@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.authorizeRequests()
-                .antMatchers("/account/**").authenticated()
+                .antMatchers("/user/**").authenticated()
                 .anyRequest().permitAll()
                     .and()
                 .formLogin()
@@ -87,6 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         return jdbcTokenRepository;
     }
+
 
 }
 
