@@ -20,15 +20,14 @@
     <div id="contents">
       <div class="login-form">
         <h1>
-          <a href="#">
+          <a href="/">
             <picture>
-              <source srcset="/images/logo-login@2x.png 2x">
-              <img src="/images/logo-login.png" alt="foodie">
+              <img src="/images/logo-red.png" alt="foodie">
             </picture>
           </a>
         </h1>
 
-        <form id="sign-in-form" action="/login" method="post">
+        <form id="sign-in-form">
           <div class="form-box">
             <input type="text" id="input-email" name="email" placeholder="E-mail"
                    oninput="oninputEmail()">
@@ -45,13 +44,12 @@
           <div class="btn-area">
             <a class="btn btn-primary" onclick="checkFormBeforeLogin()">로그인</a>
           </div>
-
           <div class="login-util">
             <div class="check-logged-auto">
-              <input type="checkbox" id="logged-auto">
-              <label for="logged-auto">자동 로그인</label>
+              <input type="checkbox" id="remember-me" name="remember-me">
+              <label for="remember-me">자동 로그인</label>
             </div>
-            <a href="#">아이디/비밀번호 찾기</a>
+              <a href="/help/idInquiry">아이디/비밀번호 찾기</a>
           </div>
         </form>
 
@@ -59,7 +57,7 @@
           <dt>간편로그인</dt>
           <dd>
             <a href="/oauth2/authorization/google" class="google">구글 로그인</a>
-            <a href="" class="naver">네이버 로그인</a>
+            <a href="/oauth2/authorization/naver" class="naver">네이버 로그인</a>
             <a href="/oauth2/authorization/kakao" class="kakao">카카오 로그인</a>
             <a href="#" class="facebook">페이스북 로그인</a>
           </dd>

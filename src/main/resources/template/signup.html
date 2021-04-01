@@ -15,173 +15,173 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/signup.css}" />
 </head>
 <body>
-  <div id="app">
+<div id="app">
 
-    <!-- header -->
-    <div th:replace="/fragments/main-header.html"></div>
+  <!-- header -->
+  <div th:replace="/fragments/main-header.html"></div>
 
-    <!-- Contents -->
-    <div id="contents">
-      <div class="section-860">
-        <ul class="nav-tabs2">
-          <li class="active" attr=""><a href="#tab" target="_self">개인 회원가입</a></li>
-          <li><a href="#tab" target="_self">맛집 회원가입</a></li>
-        </ul>
+  <!-- Contents -->
+  <div id="contents">
+    <div class="section-860">
+      <ul class="nav-tabs2">
+        <li class="active" attr=""><a href="#tab" target="_self">개인 회원가입</a></li>
+        <li><a href="#tab" target="_self">맛집 회원가입</a></li>
+      </ul>
 
-        <div class="inner" id="tab">
-          <form id="sign-up-form" th:action="@{/auth/register}" th:object="${member}" method="post">
-            <!-- STEP1. 회원정보 입력 -->
-            <div class="step1-group">
-              <h3>STEP1. 회원정보 입력</h3>
-              <div class="form-table">
-                <div class="row">
-                  <div class="th">이름</div>
-                  <div class="td" id="check-name-div">
-                    <input type="text" id="user-name" name="user_name"
-                           onblur="checkName()" oninput="oninputName()" th:field="*{name}"/>
-                    <div class="error-next-box" id="name-msg"></div>
-                  </div>
+      <div class="inner" id="tab">
+        <form id="sign-up-form" th:action="@{/auth/register}" th:object="${member}" method="post">
+          <!-- STEP1. 회원정보 입력 -->
+          <div class="step1-group">
+            <h3>STEP1. 회원정보 입력</h3>
+            <div class="form-table">
+              <div class="row">
+                <div class="th">이름</div>
+                <div class="td" id="check-name-div">
+                  <input type="text" id="user-name" name="user_name"
+                         onblur="checkName()" oninput="oninputName()" th:field="*{name}"/>
+                  <div class="error-next-box" id="name-msg"></div>
                 </div>
-                <div class="row">
-                  <div class="th">이메일</div>
-                  <div class="td" id="check-id-div">
-                    <input type="text"  id="user-email" name="user_email"
-                           oninput="oninputEmail()" th:field="*{email}">
-                    <a href="javascript:void(0);" class="btn-sm" id="id-check" onclick="checkMailValidation()">중복확인</a>
-                    <div class="error-next-box" id="email-msg" ></div>
-                  </div>
+              </div>
+              <div class="row">
+                <div class="th">이메일</div>
+                <div class="td" id="check-id-div">
+                  <input type="text"  id="user-email" name="user_email"
+                         oninput="oninputEmail()" th:field="*{email}">
+                  <a href="javascript:void(0);" class="btn-sm" id="id-check" onclick="checkMailValidation()">중복확인</a>
+                  <div class="error-next-box" id="email-msg" ></div>
                 </div>
+              </div>
 
-                <div class="row">
-                  <div class="th">비밀번호</div>
-                  <div class="td">
-                    <input type="password" id="user-pswd1" name="user_password"
-                           onblur="checkPassword()" oninput="oninputPswd1()" th:field="*{password}">
-                    <span class="tip">+4~15자의 영문자, 숫자조합</span>
-                    <div class="error-next-box" id="pswd-msg1"></div>
-                  </div>
+              <div class="row">
+                <div class="th">비밀번호</div>
+                <div class="td">
+                  <input type="password" id="user-pswd1" name="user_password"
+                         onblur="checkPassword()" oninput="oninputPswd1()" th:field="*{password}">
+                  <span class="tip">+4~15자의 영문자, 숫자조합</span>
+                  <div class="error-next-box" id="pswd-msg1"></div>
                 </div>
+              </div>
 
-                <div class="row">
-                  <div class="th">비밀번호 확인</div>
-                  <div class="td">
-                    <input type="password" id="user-pswd2" name="user_password_check"
-                           onblur="matchPassword()" oninput="oninputPswd2()">
-                    <div class="error-next-box" id="pswd-msg2"></div>
-                  </div>
+              <div class="row">
+                <div class="th">비밀번호 확인</div>
+                <div class="td">
+                  <input type="password" id="user-pswd2" name="user_password_check"
+                         onblur="matchPassword()" oninput="oninputPswd2()">
+                  <div class="error-next-box" id="pswd-msg2"></div>
                 </div>
+              </div>
 
-                <div class="row">
-                  <div class="th">전화번호</div>
-                  <div class="td">
-                    <input type="tel" id="user-tel" name="user_phone"
-                           onblur="checkTel()" oninput="oninputTel()" th:field="*{telNum}">
-                    <span class="tip">+선택사항</span>
-                    <div class="error-next-box" id="tel-msg"></div>
-                  </div>
+              <div class="row">
+                <div class="th">전화번호</div>
+                <div class="td">
+                  <input type="tel" id="user-tel" name="user_phone"
+                         onblur="checkTel()" oninput="oninputTel()" th:field="*{telNum}">
+                  <span class="tip">+선택사항</span>
+                  <div class="error-next-box" id="tel-msg"></div>
                 </div>
+              </div>
 
-                <div class="row">
-                  <div class="th">휴대전화</div>
-                  <div class="td">
-                    <input type="tel" id="user-phone" name="user_mobile"
-                           onblur="checkPhone()" oninput="oninputPhone()" th:field="*{phoneNum}">
-                    <div class="error-next-box" id="phone-msg"></div>
-                  </div>
+              <div class="row">
+                <div class="th">휴대전화</div>
+                <div class="td">
+                  <input type="tel" id="user-phone" name="user_mobile"
+                         onblur="checkPhone()" oninput="oninputPhone()" th:field="*{phoneNum}">
+                  <div class="error-next-box" id="phone-msg"></div>
                 </div>
+              </div>
 
-                <div class="row">
-                  <div class="th">주소</div>
-                  <div class="td">
-                    <div class="addr-box addr1">
-                      <!--changed1 -->
-                      <input type="text" id="post-code" name="user_zipcode" disabled="true">
-                      <a href="javascript:void(0);" class="btn-sm" onClick="execDaumPostcode()">우편번호 찾기</a>
-                    </div>
-
-                    <div class="addr-box addr2">
-                      <!--changed2-->
-                      <input type="text" id="address" name="user_add1" disabled="true">
-                    </div>
-                    <!--changed3 -->
-                    <div class="addr-box addr3">
-                      <input type="text" id="detail-address" name="user_add2" disabled="true"
-                             oninput="oninputAddress()" th:field="*{address}">
-                      <span class="tip">+나머지 상세주소 입력</span>
-                    </div>
-                    <div class="error-next-box" id="address-msg"></div>
+              <div class="row">
+                <div class="th">주소</div>
+                <div class="td">
+                  <div class="addr-box addr1">
+                    <!--changed1 -->
+                    <input type="text" id="post-code" name="user_zipcode" disabled="true">
+                    <a href="javascript:void(0);" class="btn-sm" onClick="execDaumPostcode()">우편번호 찾기</a>
                   </div>
+
+                  <div class="addr-box addr2">
+                    <!--changed2-->
+                    <input type="text" id="address" name="user_add1" disabled="true">
+                  </div>
+                  <!--changed3 -->
+                  <div class="addr-box addr3">
+                    <input type="text" id="detail-address" name="user_add2" disabled="true"
+                           oninput="oninputAddress()" th:field="*{address}">
+                    <span class="tip">+나머지 상세주소 입력</span>
+                  </div>
+                  <div class="error-next-box" id="address-msg"></div>
                 </div>
               </div>
             </div>
-            <!-- STEP1. 회원정보 입력 END -->
+          </div>
+          <!-- STEP1. 회원정보 입력 END -->
 
-            <!-- STEP2. 정보수신 설정 -->
-            <div class="step2-group">
-              <h3>STEP2. 정보수신 설정</h3>
-              <div class="form-table">
-                <div class="row">
-                  <div class="th">이메일 수신 설정</div>
-                  <div class="td">
+          <!-- STEP2. 정보수신 설정 -->
+          <div class="step2-group">
+            <h3>STEP2. 정보수신 설정</h3>
+            <div class="form-table">
+              <div class="row">
+                <div class="th">이메일 수신 설정</div>
+                <div class="td">
                   <span>
                     <label for="email-receiving-y">수신함</label>
                     <input type="radio" id="email-receiving-y" name="email_receiving" value="1" onclick="clickMailBtn()">
                   </span>
-                    <span>
+                  <span>
                     <label for="email-receiving-n">수신안함</label>
                     <input type="radio" id="email-receiving-n" name="email_receiving" value="0" onclick="clickMailBtn()">
                   </span>
-                    <input type="text" id="email-receiving-value" style="display:none" th:field="*{emailReceivedType}"></input>
-                    <div class="error-next-box" id="mail-receiving-msg" style="padding-left:30px"></div>
-                  </div>
+                  <input type="text" id="email-receiving-value" style="display:none" th:field="*{emailReceivedType}"/>
+                  <div class="error-next-box" id="mail-receiving-msg" style="padding-left:30px"></div>
                 </div>
-                <div class="row">
-                  <div class="th">SNS 수신 설정</div>
-                  <div class="td">
+              </div>
+              <div class="row">
+                <div class="th">SNS 수신 설정</div>
+                <div class="td">
                   <span>
                     <label for="sns-receiving-y">수신함</label>
                     <input type="radio" id="sns-receiving-y" name="sns_receiving" value="1" onclick="clickSNSBtn()">
                   </span>
-                    <span>
+                  <span>
                     <label for="sns-receiving-n">수신안함</label>
                     <input type="radio" id="sns-receiving-n" name="sns_receiving" value="0" onclick="clickSNSBtn()">
                   </span>
-                    <input type="text" id="sns-receiving-value" style="display:none" th:field="*{snsReceivedType}"></input>
-                    <div class="error-next-box" id="sns-receiving-msg" style="padding-left:30px"></div>
-                  </div>
+                  <input type="text" id="sns-receiving-value" style="display:none" th:field="*{snsReceivedType}"/>
+                  <div class="error-next-box" id="sns-receiving-msg" style="padding-left:30px"></div>
                 </div>
               </div>
             </div>
-            <!-- STEP2. 정보수신 설정 END -->
+          </div>
+          <!-- STEP2. 정보수신 설정 END -->
 
-            <dl class="sns-login-btn">
-              <dt>간편로그인</dt>
-              <dd>
-                <a href="/oauth2/authorization/google" class="google">구글 로그인</a>
-                <a href="#" class="naver">네이버 로그인</a>
-                <a href="#" class="kakao">카카오 로그인</a>
-                <a href="#" class="facebook">페이스북 로그인</a>
-              </dd>
-            </dl>
-            <!-- Member Type -->
-            <input type="hidden" value="0" id="member-type" th:field="*{memberType}"/>
+          <dl class="sns-login-btn">
+            <dt>간편로그인</dt>
+            <dd>
+              <a href="/oauth2/authorization/google" class="google">구글 로그인</a>
+              <a href="/oauth2/authorization/naver" class="naver">네이버 로그인</a>
+              <a href="/oauth2/authorization/kakao" class="kakao">카카오 로그인</a>
+              <a href="#" class="facebook">페이스북 로그인</a>
+            </dd>
+          </dl>
+          <!-- Member Type -->
+          <input type="hidden" value="0" id="member-type" th:field="*{memberType}"/>
 
-            <div class="btn-area">
-              <a class="btn btn-primary" onclick="checkFormBeforeSubmit()">가입하기</a>
-            </div>
-          </form>
-        </div>
+          <div class="btn-area">
+            <a class="btn btn-primary" onclick="checkFormBeforeSubmit()">가입하기</a>
+          </div>
+        </form>
       </div>
     </div>
-
-    <!-- footer -->
-    <div th:replace="/fragments/main-footer.html"></div>
   </div>
 
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script type="text/javascript" th:src="@{/js/commons.js}"></script>
-  <script type="text/javascript" th:src="@{/js/register.js}"></script>
+  <!-- footer -->
+  <div th:replace="/fragments/main-footer.html"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" th:src="@{/js/commons.js}"></script>
+<script type="text/javascript" th:src="@{/js/register.js}"></script>
 </body>
 </html>

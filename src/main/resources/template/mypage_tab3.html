@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="format-detection" content="telephone=no">
+
+  <title>Foodie</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/css/reset.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/commons.css}" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}" />
+</head>
+<body>
+<div id="app">
+  <!-- header -->
+  <div th:include="fragments/main-header.html"></div>
+    
+    <!-- Contents -->
+    <div id="contents">
+      <h2>MY PAGE</h2>
+      <div class="section-860">
+        <ul class="nav-tabs2">
+          <li><a href="/user/info">로그인 정보</a></li>
+          <li><a href="/user/wishItem">찜한 목록</a></li>
+          <li class="active"><a href="#">내가쓴글</a></li>
+          <li><a href="/user/pay">프리미엄회원</a></li>
+        </ul>
+
+        <div class="inner">
+          <h3>내가 쓴 글 <span>(13개)</span></h3>
+          <ul class="my-comments">
+            <li class="title-group">
+              <div>닉네임</div>
+              <div>내용</div>
+              <div>맛집명</div>
+              <div>리뷰</div>
+            </li>
+            <li>
+              <div class="user-id">선우지환</div>
+              <div class="title">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
+              <div class="restaurant-name">78온더 라이즈</div>
+              <div class="score">
+                감동(4점)
+              </div>
+            </li>
+            <li>
+              <div class="user-id">선우지환</div>
+              <div class="title">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
+              <div class="restaurant-name">78온더 라이즈</div>
+              <div class="score">
+                감동(4점)
+              </div>
+            </li>
+            <li>
+              <div class="user-id">선우지환</div>
+              <div class="title">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
+              <div class="restaurant-name">78온더 라이즈</div>
+              <div class="score">
+                감동(4점)
+              </div>
+            </li>
+            <li>
+              <div class="user-id">선우지환</div>
+              <div class="title">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
+              <div class="restaurant-name">78온더 라이즈</div>
+              <div class="score">
+                감동(4점)
+              </div>
+            </li>
+            <li>
+              <div class="user-id">선우지환</div>
+              <div class="title">모던한식의 정수를 느끼기에 부족함이 없는 곳 모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
+              <div class="restaurant-name">78온더 라이즈</div>
+              <div class="score">
+                감동(4점)
+              </div>
+            </li>
+            <li>
+              <div class="user-id">선우지환</div>
+              <div class="title">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
+              <div class="restaurant-name">78온더 라이즈</div>
+              <div class="score">
+                감동(4점)
+              </div>
+            </li>
+          </ul>
+
+          <div class="pagination">
+            <a href="" class="prev"></a>
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="" class="next"></a>
+          </div>
+        </div> 
+      </div>
+    </div>
+
+    <!-- footer -->
+    <div th:replace="/fragments/main-footer.html"></div>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/commons.js}"></script>
+    <script type="text/javascript" th:src="@{/js/mypage.js}"></script>
+  </div>
+</body>
+</html>

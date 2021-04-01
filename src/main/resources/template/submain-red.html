@@ -129,13 +129,20 @@
         <div class="right-area">
           <dl th:object="${shop}" th:each="shop : ${sidePriority}">
             <a th:href="@{/shop/region/(regionTypeId=${shop.regionTypeId})/shop/(shopId=${shop.shopId})}">
-              <dt th:text="${shop.shopName}"></dt>
+              <dt style="    padding-bottom: 27px;">
+                  <div class="info">
+                    <span class="name" th:text="${shop.shopName}"></span>
+                  </div>
+                  <div style="float: right;color: #c73425;font-size: 15px;">
+                      <span class="name">한식 | 한정식</span>
+                  </div>
+              </dt>
               <dd>
                 <div class="info">
-                  <span class="name" th:text="${shop.address}"></span>
+                  <span style="float:left" class="address" th:text="${shop.address}"></span>
                 </div>
                 <div class="img"></div>
-              </dd>
+              </dd>AuthUserDetails.java
             </a>
           </dl>
         </div>
@@ -167,6 +174,34 @@
     <script>
       document.getElementById("header").className = "header-red";
     </script>
+      <style>
+          .list-section .right-area dl dt .info .name::before {
+              content: "";
+              display: block;
+              position: absolute;
+              left: 0;
+              top: 1px;
+              width: 3px;
+              height: 12px;
+              background: #ff5c17;
+          }
+          .list-section .right-area dl dt .info .name {
+              float: left;
+              padding-left: 8px;
+          }
+
+          .list-section .right-area dl dt .info span {
+              position: relative;
+              display: inline-block;
+              /*font-size: 14px;*/
+              color: #000;
+          }
+          .list-section .right-area dl dd .info .address {
+              float: right;
+              padding-left: 18px;
+              background: url("/images/ico-sm-map.png") 0 -1px no-repeat;
+          }
+      </style>
   </div>
 </body>
 </html>
