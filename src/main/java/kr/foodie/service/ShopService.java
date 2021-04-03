@@ -30,4 +30,7 @@ public class ShopService {
     public List<Shop> getShopDetail(Integer shopId) {
         return shopRepository.findByShopId(shopId);
     }
+    public List<Shop> getShopInfoByType(Integer type) {
+        return shopRepository.findShopInfoByType(type);
+    }
 }
