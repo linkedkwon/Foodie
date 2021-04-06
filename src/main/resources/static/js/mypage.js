@@ -1,12 +1,12 @@
 //check name regular expression
 function checkName(){
 
-    var reg = /^[가-힣]{2,15}$/;
+    var reg = /^[가-힣a-zA-Z]{2,15}$/;
     var name = document.getElementById("user-name").value;
     var msg = document.getElementById("name-msg");
 
     if(name.length == 0) {msg.innerText = "필수 정보입니다."; return false;}
-    if(reg.test(name) == false){msg.innerText = "2~15자 이내의 한글을 사용하세요. (영문, 특수기호, 공백, 숫자 사용 불가)"; return false;}
+    if(reg.test(name) == false){msg.innerText = "2~15자 이내의 한글 또는 영문을 사용하세요. (특수기호, 공백, 숫자 사용 불가)"; return false;}
 
     msg.innerText = "";
     return true;
@@ -71,7 +71,7 @@ function checkPhone(){
     var reg = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
     var msg = document.getElementById("phone-msg");
 
-    if(phone.length == 0){ msg.innerText ="필수 정보입니다."; return false;}
+    if(phone.length == 0){ msg.innerText ="휴대전화를 입력해주세요."; return false;}
     if(reg.test(phone) ==  false){ msg.innerText ="형식에 맞지 않는 번호입니다."; return false;}
     msg.innerText = "";
 

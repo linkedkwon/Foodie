@@ -1,9 +1,10 @@
 package kr.foodie.config.web;
 
+import kr.foodie.config.web.handler.LoginModelHandler;
+import kr.foodie.config.web.handler.AuthenticatedHandler;
 import kr.foodie.config.web.handler.RedirectHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.config.annotation.*;
 
 import java.time.Duration;
@@ -24,7 +25,6 @@ public class WebConfig implements WebMvcConfigurer {
 
         //Base view mapping
         registry.addViewController("/policy").setViewName("policy");
-        registry.addViewController("/join").setViewName("signup");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/submit").setViewName("signup_done");
         registry.addViewController("/help/idInquiry").setViewName("help-id");
@@ -47,6 +47,15 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new RedirectHandler())
                 .addPathPatterns("/help/reset");
 
+        registry.addInterceptor(new AuthenticatedHandler())
+                .addPathPatterns("/")
+                .addPathPatterns("/shop/**")
+                .addPathPatterns("/user/**")
+                .addPathPatterns("/policy")
+                .addPathPatterns("/auth/join/**");
+
+        registry.addInterceptor(new LoginModelHandler())
+                .addPathPatterns("/auth/login");
     }
 
     //Async task to be adding with search, gps

@@ -12,7 +12,7 @@ public enum OAuthIdentifier {
     GOOGLE {
         @Override
         public User toEntity(Map<String, Object> attributes) {
-            return buildMember((String)attributes.get("email"), (String)attributes.get("name"),
+            return buildMember((String)attributes.get("email"), (String)attributes.get("given_name"),
                     "google", (String)attributes.get("sub"));
         }
         @Override

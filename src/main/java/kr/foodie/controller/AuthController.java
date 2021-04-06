@@ -17,7 +17,6 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-
     @GetMapping("/join/user1")
     public String renderSignUpMember(Model model){
         model.addAttribute("user", new User());
@@ -37,10 +36,18 @@ public class AuthController {
     @PostMapping(value = "/register")
     public String register(User user){ return userService.save(user); }
 
+
     @GetMapping("/login/**")
     public String preventSignInAfterAuthenticated(@AuthenticationPrincipal AuthUserDetails userDetails){
         if(userDetails == null)
             return "/login";
+        return "redirect:/";
+    }
+
+    @GetMapping("/join/**")
+    public String preventSignUpAfterAuthenticatd(@AuthenticationPrincipal AuthUserDetails userDetails){
+        if(userDetails == null)
+            return "/auth/join/user1";
         return "redirect:/";
     }
 }

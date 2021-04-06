@@ -17,14 +17,13 @@
                 </div>
             </li>
             <li class="login">
-                <a href="#"><span>로그인/회원가입</span></a>
-
+                <a href="#" th:style="'background:url(' + ${map.get('img-url')} + ');'"><span>로그인/회원가입</span></a>
                 <ul class="login-menu-layer">
                     <li>
-                        <a href="/auth/login">로그인</a>
+                        <a th:href="${map.get('header-li-url-1')}" th:text="${map.get('header-li-menu-1')}">로그인</a>
                     </li>
                     <li>
-                        <a href="/auth/join/user1">회원가입</a>
+                        <a th:href="${map.get('header-li-url-2')}" th:text="${map.get('header-li-menu-2')}">회원가입</a>
                     </li>
                 </ul>
             </li>
