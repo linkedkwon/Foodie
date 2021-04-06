@@ -30,13 +30,13 @@
           <li><a href="/user/pay">프리미엄회원</a></li>
         </ul>
 
-        <form class="inner" id="form-table" th:action="@{/user/info/edit}" th:object="${member}" method="post">
+        <form class="inner" id="form-table" th:action="@{/user/info/edit}" th:object="${user}" method="post">
           <h3>회원정보 수정</h3>
           <div class="form-table">
             <div class="row">
               <div class="th">이름</div>
               <div class="td">
-                <input type="text" id="user-name" name="user_name" th:value="${member.name}" th:field="*{name}"
+                <input type="text" id="user-name" name="user_name" th:value="${user.name}" th:field="*{name}"
                        onblur="checkName()" oninput="oninputName()">
                 <div class="error-next-box" id="name-msg"></div>
               </div>
@@ -44,7 +44,7 @@
             <div class="row">
               <div class="th">이메일</div>
               <div class="td">
-                <input type="text" id="email" name="user_email"  disabled="true" th:value="${member.email}">
+                <input type="text" id="email" name="user_email"  disabled="true" th:value="${user.email}">
                 <input type="text" id="user-email" style="display: none" th:field="*{email}"/>
               </div>
             </div>
@@ -71,7 +71,7 @@
             <div class="row">
               <div class="th">전화번호</div>
               <div class="td">
-                <input type="tel" id="user-tel" name="user_phone" th:value="${member.telNum}" th:field="*{telNum}"
+                <input type="tel" id="user-tel" name="user_phone" th:value="${user.telNum}" th:field="*{telNum}"
                        onblur="checkTel()" oninput="oninputTel()">
                 <div class="error-next-box" id="tel-msg"></div>
               </div>
@@ -80,7 +80,7 @@
             <div class="row">
               <div class="th">휴대전화</div>
               <div class="td">
-                <input type="tel" id="user-phone" name="user_mobile" th:value="${member.phoneNum}" th:field="*{phoneNum}"
+                <input type="tel" id="user-phone" name="user_mobile" th:value="${user.phoneNum}" th:field="*{phoneNum}"
                        onblur="checkPhone()" oninput="oninputPhone()">
                 <div class="error-next-box" id="phone-msg"></div>
               </div>
@@ -90,17 +90,17 @@
               <div class="th">주소</div>
               <div class="td">
                 <div class="addr-box addr1">
-                  <input type="text" id="post-code" name="user_zipcode" disabled="true" th:value="${member.getAddress().split('\+')[0]}">
+                  <input type="text" id="post-code" name="user_zipcode" disabled="true" th:value="${user.getAddress().split('\+')[0]}">
                   <a href="javascript:void(0);" class="btn-sm" onClick="execDaumPostcode()">우편번호 찾기</a>
                 </div>
 
                 <div class="addr-box addr2">
-                  <input type="text" id="address" name="user_add1" disabled="true" th:value="${member.getAddress().toString().split('\+')[1]}">
+                  <input type="text" id="address" name="user_add1" disabled="true" th:value="${user.getAddress().toString().split('\+')[1]}">
                 </div>
 
                 <div class="addr-box addr3">
                   <input type="text" id="detail-address" name="user_add2" disabled="true"
-                         oninput="oninputAddress()" onblur="checkAddress()" th:value="${member.getAddress().toString().split('\+')[2]}">
+                         oninput="oninputAddress()" onblur="checkAddress()" th:value="${user.getAddress().toString().split('\+')[2]}">
                   <input type="text" id="composed-address" style="display:none" th:field="*{address}"/>
                 </div>
                 <div class="error-next-box" id="address-msg"></div>
@@ -111,17 +111,17 @@
           <div class="etc-info">
             <span>
               <label for="email-receiving">이메일 서비스</label>
-              <input type="checkbox" id="email-receiving" th:checked="${member.emailReceivedType.toString().equals('1')}">
+              <input type="checkbox" id="email-receiving" th:checked="${user.emailReceivedType.toString().equals('1')}">
               <input type="text" id="email-receiving-value" style="display:none" th:field="*{emailReceivedType}"/>
             </span>
             <span>
               <label for="sns-receiving">SNS 서비스</label>
-              <input type="checkbox" id="sns-receiving" th:checked="${member.snsReceivedType.toString().equals('1')}">
+              <input type="checkbox" id="sns-receiving" th:checked="${user.snsReceivedType.toString().equals('1')}">
               <input type="text" id="sns-receiving-value" style="display:none" th:field="*{snsReceivedType}"/>
             </span>
 
             <div class="point">
-              나의 포인트 : <span th:text="${member.point}"></span>
+              나의 포인트 : <span th:text="${user.point}"></span>
             </div>
           </div>
           

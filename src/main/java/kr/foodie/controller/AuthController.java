@@ -1,8 +1,8 @@
 package kr.foodie.controller;
 
 import kr.foodie.config.security.auth.AuthUserDetails;
-import kr.foodie.domain.member.Member;
-import kr.foodie.service.MemberService;
+import kr.foodie.domain.user.User;
+import kr.foodie.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -15,21 +15,27 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     @Autowired
-    private MemberService memberService;
+    private UserService userService;
 
 
-    @GetMapping("/join")
-    public String renderSignUp(Model model){
-        model.addAttribute("member", new Member());
+    @GetMapping("/join/user1")
+    public String renderSignUpMember(Model model){
+        model.addAttribute("user", new User());
         return "signup";
+    }
+
+    @GetMapping("/join/user2")
+    public String renderSignUpRestaurant(Model model){
+        model.addAttribute("user", new User());
+        return "signup_restaurants";
     }
 
     @ResponseBody
     @GetMapping(value = "/validate/{email}")
-    public String validateEmail(@PathVariable String email){ return memberService.validateEmail(email); }
+    public String validateEmail(@PathVariable String email){ return userService.validateEmail(email); }
 
     @PostMapping(value = "/register")
-    public String register(Member member){ return memberService.save(member); }
+    public String register(User user){ return userService.save(user); }
 
     @GetMapping("/login/**")
     public String preventSignInAfterAuthenticated(@AuthenticationPrincipal AuthUserDetails userDetails){

@@ -1,7 +1,7 @@
 package kr.foodie.config.security.auth;
 
-import kr.foodie.domain.member.Member;
-import kr.foodie.repo.MemberRepository;
+import kr.foodie.domain.user.User;
+import kr.foodie.repo.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,11 +22,11 @@ import java.util.Map;
 @Service
 public class AuthUserDetailsService implements UserDetailsService, OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-    private final MemberRepository memberRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member entity = memberRepository.findByEmail(username)
+        User entity = userRepository.findByEmail(username)
                 .orElseThrow(()->{
                     return new UsernameNotFoundException(username + "not found");
                 });
@@ -40,11 +40,11 @@ public class AuthUserDetailsService implements UserDetailsService, OAuth2UserSer
         Map<String, OAuthIdentifier> registration = initIdentifier();
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
 
-        Member entity = memberRepository.findByEmail(registration.get(registrationId).getEmail(oAuth2User.getAttributes()))
+        User entity = userRepository.findByEmail(registration.get(registrationId).getEmail(oAuth2User.getAttributes()))
                 .orElseGet(() -> {
-                    Member member = registration.get(registrationId).toEntity(oAuth2User.getAttributes());
-                    memberRepository.save(member);
-                    return member;
+                    User user = registration.get(registrationId).toEntity(oAuth2User.getAttributes());
+                    userRepository.save(user);
+                    return user;
                 });
 
         return new AuthUserDetails(entity);

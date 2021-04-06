@@ -1,7 +1,7 @@
 package kr.foodie.config.security.auth;
 
-import kr.foodie.domain.member.Member;
-import kr.foodie.domain.member.RoleType;
+import kr.foodie.domain.user.RoleType;
+import kr.foodie.domain.user.User;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -11,9 +11,9 @@ public enum OAuthIdentifier {
 
     GOOGLE {
         @Override
-        public Member toEntity(Map<String, Object> attributes) {
+        public User toEntity(Map<String, Object> attributes) {
             return buildMember((String)attributes.get("email"), (String)attributes.get("name"),
-                    "gogole", (String)attributes.get("sub"));
+                    "google", (String)attributes.get("sub"));
         }
         @Override
         public String getEmail(Map<String, Object> attributes){
@@ -22,7 +22,7 @@ public enum OAuthIdentifier {
     },
     KAKAO {
         @Override
-        public Member toEntity(Map<String, Object> attributes){
+        public User toEntity(Map<String, Object> attributes){
             Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
             Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
 
@@ -38,7 +38,7 @@ public enum OAuthIdentifier {
     },
     NAVER {
         @Override
-        public Member toEntity(Map<String, Object> attributes){
+        public User toEntity(Map<String, Object> attributes){
             Map<String, Object> response = (Map<String, Object>) attributes.get("response");
 
             return buildMember((String)response.get("email"), (String) response.get("name"),
@@ -51,16 +51,20 @@ public enum OAuthIdentifier {
         }
     };
 
-    abstract public Member toEntity(Map<String, Object> attributes);
+    abstract public User toEntity(Map<String, Object> attributes);
     abstract public String getEmail(Map<String, Object> attributes);
 
-    protected Member buildMember(String email, String name, String provider, String providerId){
+    protected User buildMember(String email, String name, String provider, String providerId){
         Date time = Calendar.getInstance().getTime();
 
-        return Member.builder()
-                .email(email)
+        return User.builder()
                 .name(name)
-                .memberType("0")
+                .email(email)
+                .address(" + + + ")
+                .emailReceivedType("0")
+                .snsReceivedType("0")
+                .point(0)
+                .userType("0")
                 .role(RoleType.GENERAL)
                 .createdDate(time)
                 .lastModifiedDate(time)

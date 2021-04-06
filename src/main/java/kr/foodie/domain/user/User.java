@@ -1,4 +1,4 @@
-package kr.foodie.domain.member;
+package kr.foodie.domain.user;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,15 +7,15 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 
-
 @Entity
-@Table(name = "\"MEMBER\"")
+@Table(name = "USER")
 @Data
 @NoArgsConstructor
-public class Member {
+public class User {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MEMBER_ID")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "USER_ID")
     private Long id;
 
     @Column(name = "NAME")
@@ -43,11 +43,11 @@ public class Member {
     private String snsReceivedType;
 
     @Column(name = "POINT")
-    private String point;
+    private Integer point;
 
     //0 or 1
-    @Column(name = "MEMBER_TYPE")
-    private String memberType;
+    @Column(name = "USER_TYPE")
+    private String userType;
 
     //premium role type
     @Enumerated(EnumType.STRING)
@@ -69,13 +69,20 @@ public class Member {
     @Column(name = "PROVIDER_ID")
     private String providerId;
 
+    //for oauth
     @Builder
-    public Member(String name, String email, String memberType,
-                  RoleType role, Date createdDate, Date lastModifiedDate ,
-                  String provider, String providerId){
+    public User(String name, String email, String address,
+                String emailReceivedType, String snsReceivedType,
+                int point, String userType,
+                RoleType role, Date createdDate, Date lastModifiedDate ,
+                String provider, String providerId){
         this.name = name;
         this.email = email;
-        this.memberType = memberType;
+        this.address = address;
+        this.emailReceivedType = emailReceivedType;
+        this.snsReceivedType = snsReceivedType;
+        this.point = point;
+        this.userType = userType;
         this.roleType = role;
         this.createdDate = createdDate;
         this.lastModifiedDate = lastModifiedDate;

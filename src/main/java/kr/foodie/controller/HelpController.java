@@ -2,7 +2,7 @@ package kr.foodie.controller;
 
 import kr.foodie.service.CacheService;
 import kr.foodie.service.MailService;
-import kr.foodie.service.MemberService;
+import kr.foodie.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class HelpController {
 
     @Autowired
-    private MemberService memberService;
+    private UserService userService;
 
     @Autowired
     private MailService mailService;
@@ -25,13 +25,13 @@ public class HelpController {
     @ResponseBody
     @PostMapping("/inquiry/id")
     public String validateIdInquiry(String name, String phoneNum){
-        return memberService.inquiryId(name, phoneNum);
+        return userService.inquiryId(name, phoneNum);
     }
 
     @ResponseBody
     @PostMapping("/inquiry/pw")
     public String validatePwInquiry(String email, String phoneNum) throws Exception {
-        String findEmail = memberService.inquiryPw(email, phoneNum);
+        String findEmail = userService.inquiryPw(email, phoneNum);
         if(findEmail.equalsIgnoreCase("1"))
             return "1";
         String code = cacheService.getRandomUserCode(findEmail);
@@ -58,7 +58,7 @@ public class HelpController {
     @PostMapping("/resetPW")
     public String updatePw(String qs, String password){
         String email = cacheService.getEmailByQs(qs);
-        memberService.updatePassword(email, password);
+        userService.updatePassword(email, password);
         return "redirect:/auth/login";
     }
 }

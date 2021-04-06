@@ -1,6 +1,6 @@
 package kr.foodie.config.security.auth;
 
-import kr.foodie.domain.member.Member;
+import kr.foodie.domain.user.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,19 +13,19 @@ import java.util.Map;
 @Data
 public class AuthUserDetails implements UserDetails, OAuth2User {
 
-    private Member member;
+    private User user;
     private Map<String, Object> attributes;
 
-    public AuthUserDetails(Member member) { this.member = member; }
+    public AuthUserDetails(User member) { this.user = member; }
 
     @Override
     public String getPassword() {
-        return member.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return member.getEmail();
+        return user.getEmail();
     }
 
     @Override

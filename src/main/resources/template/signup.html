@@ -24,12 +24,12 @@
   <div id="contents">
     <div class="section-860">
       <ul class="nav-tabs2">
-        <li class="active" attr=""><a href="#tab" target="_self">개인 회원가입</a></li>
-        <li><a href="#tab" target="_self">맛집 회원가입</a></li>
+        <li class="active"><a href="#" >개인 회원가입</a></li>
+        <li><a href="/auth/join/user2">맛집 회원가입</a></li>
       </ul>
 
       <div class="inner" id="tab">
-        <form id="sign-up-form" th:action="@{/auth/register}" th:object="${member}" method="post">
+        <form id="sign-up-form" th:action="@{/auth/register}" th:object="${user}" method="post">
           <!-- STEP1. 회원정보 입력 -->
           <div class="step1-group">
             <h3>STEP1. 회원정보 입력</h3>
@@ -164,7 +164,8 @@
             </dd>
           </dl>
           <!-- Member Type -->
-          <input type="hidden" value="0" id="member-type" th:field="*{memberType}"/>
+          <input type="hidden" id="user-type1" th:field="*{userType}"/>
+          <input type="hidden" id="user-type2"/>
 
           <div class="btn-area">
             <a class="btn btn-primary" onclick="checkFormBeforeSubmit()">가입하기</a>
