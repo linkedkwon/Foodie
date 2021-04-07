@@ -3,6 +3,12 @@ server:
   address: localhost
   port: 8080
 
+tomcat:
+  ajp:
+    protocol: AJP/1.3
+    port: 18009
+    enabled: true
+
 spring:
 #  config:
 #    activate:
@@ -15,12 +21,12 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://183.111.227.104:3306/foodie?useSSL=false&characterEncoding=utf8&serverTimezone=UTC
-    username: root
+    username: test
     password: Foodie123!@#
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect

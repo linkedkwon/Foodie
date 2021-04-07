@@ -40,3 +40,10 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+bootJar{
+    archiveBaseName = 'foodie'
+    archiveFileName = 'foodie.jar'
+    archiveVersion = "0.0.0"
+}
+
