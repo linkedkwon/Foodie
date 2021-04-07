@@ -1,7 +1,8 @@
 package kr.foodie.config.web;
 
-import kr.foodie.config.web.handler.LoginModelHandler;
-import kr.foodie.config.web.handler.AuthenticatedHandler;
+import kr.foodie.config.web.handler.DetailAuthenticatedHandler;
+import kr.foodie.config.web.handler.LoginAuthenticatedHandler;
+import kr.foodie.config.web.handler.CommonAuthenticatedHandler;
 import kr.foodie.config.web.handler.RedirectHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
@@ -47,15 +48,17 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new RedirectHandler())
                 .addPathPatterns("/help/reset");
 
-        registry.addInterceptor(new AuthenticatedHandler())
+        registry.addInterceptor(new CommonAuthenticatedHandler())
                 .addPathPatterns("/")
-                .addPathPatterns("/shop/**")
                 .addPathPatterns("/user/**")
                 .addPathPatterns("/policy")
                 .addPathPatterns("/auth/join/**");
 
-        registry.addInterceptor(new LoginModelHandler())
+        registry.addInterceptor(new LoginAuthenticatedHandler())
                 .addPathPatterns("/auth/login");
+
+        registry.addInterceptor(new DetailAuthenticatedHandler())
+                .addPathPatterns("/shop/**");
     }
 
     //Async task to be adding with search, gps

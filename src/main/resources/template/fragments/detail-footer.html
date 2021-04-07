@@ -1,4 +1,4 @@
-<div class="detail-footer">
+<div class="detail-footer" xmlns:th="http://www.thymeleaf.org">
     <div class="left-area">
         <div class="logo">
             <picture>
@@ -12,8 +12,8 @@
     <ul>
         <li><a href="/policy">개인정보 취급 방침</a></li>
         <li><a href="#">1:1 메일상담</a></li>
-        <li><a href="/auth/login">로그인</a></li>
-        <li><a href="/auth/join">회원가입</a></li>
+        <li><a th:href="${map.get('footer-li-url-1')}" th:text="${map.get('footer-li-name-1')}"></a></li>
+        <li><a th:href="${map.get('footer-li-url-2')}" th:text="${map.get('footer-li-name-2')}"></a></li>
         <li><a href="#">MY푸디 ® 네오비즈</a></li>
     </ul>
 </div>

@@ -10,8 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
+/**
+ * only for detail page as footer template
+ */
 @Component
-public class AuthenticatedHandler implements HandlerInterceptor {
+public class DetailAuthenticatedHandler implements HandlerInterceptor {
 
     private static final String principalValue = "anonymousUser";
 
@@ -32,18 +35,12 @@ public class AuthenticatedHandler implements HandlerInterceptor {
         if(authenticated){
             return Map.of(
                     "footer-li-name-1", "로그아웃", "footer-li-name-2","마이페이지",
-                    "footer-li-url-1","/logout", "footer-li-url-2","/user/info",
-                    "header-li-menu-1","마이페이지", "header-li-menu-2","로그아웃",
-                    "header-li-url-1","/user/info", "header-li-url-2","/logout",
-                    "img-url","/images/ico-sm-heart.png" //to be adding account image
+                    "footer-li-url-1","/logout", "footer-li-url-2","/user/info"
             );
         }
         return Map.of(
                 "footer-li-name-1","로그인", "footer-li-name-2","회원가입",
-                "footer-li-url-1","/auth/login", "footer-li-url-2","/auth/join/user1",
-                "header-li-menu-1","로그인", "header-li-menu-2","회원가입",
-                "header-li-url-1","/auth/login", "header-li-url-2","/auth/join/user1",
-                "img-url","/images/ico-login-red.png"
+                "footer-li-url-1","/auth/login", "footer-li-url-2","/auth/join/user1"
         );
     }
 }

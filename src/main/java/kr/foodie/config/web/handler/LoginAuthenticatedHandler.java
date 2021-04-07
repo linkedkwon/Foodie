@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
- * only for login page
+ * only for login page as footer template
  */
 @Component
-public class LoginModelHandler implements HandlerInterceptor {
+public class LoginAuthenticatedHandler implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response,
