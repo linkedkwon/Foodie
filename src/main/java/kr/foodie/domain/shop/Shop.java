@@ -86,8 +86,8 @@ public class Shop {
     @Column(name = "SHOP_IMAGE")
     private String shopImage;
 
-    @Column(name = "BLOG_KEYWORD")
-    private String blogKeyword;
+    @Column(name = "BLOG_SHOP_ID")
+    private String blogShopId;
 
     @Column(name = "INSTA_KEYWORD")
     private String instaKeyword;

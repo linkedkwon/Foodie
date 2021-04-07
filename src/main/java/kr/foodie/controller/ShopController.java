@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -77,5 +78,33 @@ public class ShopController {
             return mav;
         }
         return null;
+    }
+
+    @RequestMapping(value ="/location/{lat}/{lng}/{shopType}", method= RequestMethod.GET)
+    public ModelAndView getShopListWithLocation(@PathVariable String lat, @PathVariable String lng, @PathVariable String shopType){
+        ModelAndView mav = new ModelAndView();
+        if(shopType.equals("red")){
+            shopType = "0";
+        }else{
+            shopType = "1";
+        }
+        List<Shop> commentList;
+        List<Region> regionInfos = new ArrayList<>();
+
+        Region region = new Region();
+        region.setDistrictName("2KM");
+        region.setProvinceName("범위");
+        regionInfos.add(region);
+
+        commentList = shopService.getShopInfoByAddress(lat, lng, shopType);
+        mav.addObject("payload", commentList);
+        mav.addObject("regionInfo", regionInfos);
+        mav.addObject("location", lat+"/"+lng);
+        if(shopType.equals("0")){
+            mav.setViewName("location-submain-red");
+        }else{
+            mav.setViewName("location-submain-green");
+        }
+        return mav;
     }
 }

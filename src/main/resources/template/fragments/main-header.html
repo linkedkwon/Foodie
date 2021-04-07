@@ -282,22 +282,49 @@
         $("#region4").click(function () {
             console.log('region4_click')
             $(".global-nav").css({"height": "286px"});
-            if (navigator.geolocation) {
-                // 정확한 위치 사용 // 캐시 사용 안함 // timeout 3초 (3000ms)
-                var positionOptions = {enableHighAccuracy: true, maximumAge: 0, timeout: 3000};
-                navigator.geolocation.getCurrentPosition(onGeolocationSuccess, onGeolocationFail, positionOptions);
-            }
+            navigator.geolocation.getCurrentPosition(success, error, options);
+
+
         });
 
-        function onGeolocationSuccess(position) {
-            // 좌표 출력
-            console.log("lat: " + position.coords.latitude + ", lon: " + position.coords.longitude);
-        }
+        var options = {
+            enableHighAccuracy : true,
+            timeout : 5000,
+            maximumAge : 0
+        };
 
-        function onGeolocationFail(error) {
-            // 에러 출력
-            console.log("Error Code: " + error.code + ", Error Description: " + error.message);
-        }
+        function success(pos) {
+            var crd = pos.coords;
+            console.log('위도 : ' + crd.latitude);
+            console.log('경도: ' + crd.longitude);
+            lat = crd.latitude;
+            lon = crd.longitude;
+
+            location.href="/shop/location/" + lat + "/" + lon + "/red";
+            // $.ajax({
+            //     url : 'https://dapi.kakao.com/v2/local/geo/coord2address.json?x=' + lon +'&y=' + lat,
+            //     type : 'GET',
+            //     headers : {
+            //         'Authorization' : 'KakaoAK 70474aee6f5d5b3f646a752c232a52f4'
+            //     },
+            //     success : function(data) {
+            //         console.log(data);
+            //         let depth1 = data.documents[0].address.region_1depth_name;
+            //         let depth2 = data.documents[0].address.region_2depth_name;
+            //         let depth3 = data.documents[0].address.region_3depth_name;
+            //         console.log(depth1)
+            //         console.log(depth2)
+            //
+            //     },
+            //     error: function(e) {
+            //         console.log(e);
+            //     }
+            // });
+    };
+
+        function error(err) {
+            console.warn('ERROR(' + err.code + '): ' + err.message);
+        };
 
 
 

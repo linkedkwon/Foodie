@@ -41,10 +41,20 @@
               <ul class="menu-link">
                 <li class="tab-red">
 <!--                    <span th:text="${location}"></span>-->
-                    <a id="red" th:href="@{/shop/region/{regionId}/red(regionId=${regionInfo[0].regionId})}" class="active">레드 리스트</a>
+<!--                    <a th:if="${location}">-->
+                        <a id="red" th:href="@{/shop/location/{regionId}/red(regionId=${location})}" class="active">레드 리스트</a>
+<!--                    </a>-->
+<!--                    <a th:unless="${not #strings.isEmpty(location)}">-->
+<!--                        <a id="red" th:href="@{/shop/region/{regionId}/red(regionId=${regionInfo[0].regionId})}" class="active">레드 리스트</a>-->
+<!--                    </a>-->
                 </li>
                 <li class="tab-green">
-                    <a id="blue" th:href="@{/shop/region/{regionId}/green(regionId=${regionInfo[0].regionId})}">그린 리스트</a>
+<!--                    <a th:if="${location}">-->
+                        <a id="blue" th:href="@{/shop/location/{regionId}/green(regionId=${location})}">그린 리스트</a>
+<!--                    </a>-->
+<!--                    <a th:unless="${not #strings.isEmpty(location)}">-->
+<!--                        <a id="blue" th:href="@{/shop/region/{regionId}/green(regionId=${regionInfo[0].regionId})}">그린 리스트</a>-->
+<!--                    </a>-->
                 </li>
               </ul>
             </div>
@@ -69,7 +79,7 @@
 
           <ul class="card-list-wrapper">
             <!-- Card item -->
-            <li th:object="${shop}" th:each="shop : ${priority}">
+            <li th:object="${shop}" th:each="shop : ${payload}">
               <a th:href="@{/shop/{shopId}(shopId=${shop.shopId})}">
                 <div class="card-item">
                   <div class="img"></div>
@@ -96,58 +106,58 @@
       </div>
       <!-- 주요지역 추천맛집 END -->
 
-      <div class="ad-banner ad-banner1">
-        <a href="#" class="btn-close"></a>
-      </div>
+<!--      <div class="ad-banner ad-banner1">-->
+<!--        <a href="#" class="btn-close"></a>-->
+<!--      </div>-->
 
-      <div class="list-section">
-        <div class="left-area">
-          <ul>
-            <li th:object="${shop}" th:each="shop : ${payload}">
-              <a th:href="@{/shop/region/(regionTypeId=${shop.regionTypeId})/shop/(shopId=${shop.shopId})}">
-                <div class="card-item">
-                  <div class="img"></div>
-                  <div class="card-data">
-                    <div class="name">
-                      <div th:text="${shop.shopName}"></div>
-                      <div class="categories">
-                        <span th:text="${shop.tag}">한식</span>
-                      </div>
-                    </div>
-                    <ul class="info">
-                      <li class="address" th:text="${shop.address}"></li>
-                      <li class="phone" th:text="${shop.phone}"></li>
-                      <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">
-                    </ul>
-                    <div class="star"></div>
-                  </div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </div>
+<!--      <div class="list-section">-->
+<!--        <div class="left-area">-->
+<!--          <ul>-->
+<!--            <li th:object="${shop}" th:each="shop : ${payload}">-->
+<!--              <a th:href="@{/shop/region/(regionTypeId=${shop.regionTypeId})/shop/(shopId=${shop.shopId})}">-->
+<!--                <div class="card-item">-->
+<!--                  <div class="img"></div>-->
+<!--                  <div class="card-data">-->
+<!--                    <div class="name">-->
+<!--                      <div th:text="${shop.shopName}"></div>-->
+<!--                      <div class="categories">-->
+<!--                        <span th:text="${shop.tag}">한식</span>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <ul class="info">-->
+<!--                      <li class="address" th:text="${shop.address}"></li>-->
+<!--                      <li class="phone" th:text="${shop.phone}"></li>-->
+<!--                      <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">-->
+<!--                    </ul>-->
+<!--                    <div class="star"></div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </a>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
 
-        <div class="right-area">
-          <dl th:object="${shop}" th:each="shop : ${sidePriority}">
-            <a th:href="@{/shop/region/(regionTypeId=${shop.regionTypeId})/shop/(shopId=${shop.shopId})}">
-              <dt style="    padding-bottom: 27px;">
-                  <div class="info">
-                    <span class="name" th:text="${shop.shopName}"></span>
-                  </div>
-                  <div style="float: right;color: #c73425;font-size: 15px;">
-                      <span class="name">한식 | 한정식</span>
-                  </div>
-              </dt>
-              <dd>
-                <div class="info">
-                  <span style="float:left" class="address" th:text="${shop.address}"></span>
-                </div>
-                <div class="img"></div>
-              </dd>
-            </a>
-          </dl>
-        </div>
-      </div>
+<!--        <div class="right-area">-->
+<!--          <dl th:object="${shop}" th:each="shop : ${sidePriority}">-->
+<!--            <a th:href="@{/shop/region/(regionTypeId=${shop.regionTypeId})/shop/(shopId=${shop.shopId})}">-->
+<!--              <dt style="    padding-bottom: 27px;">-->
+<!--                  <div class="info">-->
+<!--                    <span class="name" th:text="${shop.shopName}"></span>-->
+<!--                  </div>-->
+<!--                  <div style="float: right;color: #c73425;font-size: 15px;">-->
+<!--                      <span class="name">한식 | 한정식</span>-->
+<!--                  </div>-->
+<!--              </dt>-->
+<!--              <dd>-->
+<!--                <div class="info">-->
+<!--                  <span style="float:left" class="address" th:text="${shop.address}"></span>-->
+<!--                </div>-->
+<!--                <div class="img"></div>-->
+<!--              </dd>-->
+<!--            </a>-->
+<!--          </dl>-->
+<!--        </div>-->
+<!--      </div>-->
 
       <div class="pagination">
         <a href="" class="prev"></a>

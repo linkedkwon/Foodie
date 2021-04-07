@@ -2,7 +2,6 @@ package kr.foodie.service;
 
 import kr.foodie.domain.category.Category;
 import kr.foodie.domain.shop.Shop;
-import kr.foodie.repo.CategoryRepository;
 import kr.foodie.repo.ShopRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +31,10 @@ public class ShopService {
     }
     public List<Shop> getShopInfoByType(Integer type) {
         return shopRepository.findShopInfoByType(type);
+    }
+
+
+    public List<Shop> getShopInfoByAddress(String lat, String lng, String shopType) {
+        return shopRepository.findByAddressContaining(lat, lng, shopType);
     }
 }

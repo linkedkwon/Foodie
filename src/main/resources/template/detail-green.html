@@ -64,7 +64,7 @@
                 <div class="right-area">
                   <dl>
                     <dt>주소</dt>
-                    <dd th:text="${payload[0].address}"></dd>
+                    <dd id="address" th:text="${payload[0].address}"></dd>
                   </dl>
                   <dl class="line">
                     <dt>전화번호</dt>
@@ -204,13 +204,15 @@
                 <div class="section-header">
                   <h3>MAP</h3>
                   <ul>
-                    <li class="naver"><a href="#">블로그 리뷰 보기</a></li>
-                    <li class="instagram"><a href="#">인스타 이미지 보기</a></li>
+                    <li class="naver"><a target="_blank" th:href="@{https://pcmap.place.naver.com/restaurant/{blogShopId}/review/ugc(blogShopId=${payload[0].blogShopId})}">블로그 리뷰 보기</a></li>
+                    <li class="instagram"><a target="_blank" th:href="@{https://www.instagram.com/explore/tags/{keyword}(keyword=${payload[0].instaKeyword})}">인스타 이미지 보기</a></li>
                   </ul>
                 </div>
                 
                 <div class="section-body">
-                  <div id="restaurant-map"></div>
+                  <div id="restaurant-map">
+                    <div id="map" style="width: 100%; height: 100%"></div>
+                  </div>
                 </div>
               </div>
               <!-- map-section END -->
@@ -263,6 +265,50 @@
 
       </div>
     </div>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4c14aafa4e5ccfc24a35c501adea41eb&libraries=services"></script>
+    <script th:inline="javascript">
+      var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+              mapOption = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+              };
+
+      // 지도를 생성합니다
+      var map = new kakao.maps.Map(mapContainer, mapOption);
+
+      // 주소-좌표 변환 객체를 생성합니다
+      var geocoder = new kakao.maps.services.Geocoder();
+      // var addressShop = document.getElementById("address").value;
+
+      /* <![CDATA[ */
+        var addressShop =  [[ ${payload[0].address } ]]
+      /* ]]> */
+      console.log(addressShop)
+      // 주소로 좌표를 검색합니다
+      geocoder.addressSearch(addressShop, function(result, status) {
+
+        // 정상적으로 검색이 완료됐으면
+        if (status === kakao.maps.services.Status.OK) {
+
+          var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+          // 결과값으로 받은 위치를 마커로 표시합니다
+          var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+          });
+
+          // 인포윈도우로 장소에 대한 설명을 표시합니다
+          var infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="width:150px;text-align:center;padding:6px 0;">HERE !</div>'
+          });
+          infowindow.open(map, marker);
+
+          // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+          map.setCenter(coords);
+        }
+      });
+    </script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
     <script type="text/javascript" th:src="@{/js/commons.js}"></script>
