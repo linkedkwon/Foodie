@@ -8,15 +8,15 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "USER")
 @Data
 @NoArgsConstructor
+@Table(name = "USER")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_ID")
-    private Long id;
+    private Integer id;
 
     @Column(name = "NAME")
     private String name;

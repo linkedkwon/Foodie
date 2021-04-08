@@ -32,124 +32,25 @@
 
         <div class="inner">
           <div class="title-group">
-            <h3>찜한 맛집 목록 <span>(13개)</span></h3>
+            <h3>찜한 맛집 목록 <span th:text="${size}"/></h3>
             <a href="#" class="remove-all">전체삭제</a>
           </div>
           
-          <ul class="likes-list">
+          <ul class="likes-list" th:each="item : ${favoriteShops}">
             <li>
               <a href="#">
                 <div class="card-item">
                   <div class="img"></div>
                   <div class="card-data">
-                    <div class="name">
-                      가온
+                    <div class="name" th:text="${item.shopName}">
                       <div class="categories">
-                        <span>한식</span>
-                        <span>모던한식</span>
-                        <span>요리</span>
+                        <span th:text="${item.tag}"/>
                       </div>
                     </div>
                     <ul class="info">
-                      <li class="address">서울특별시 강남구</li>
-                      <li class="phone">02-545-9845</li>
-                      <li class="description">도자기 명가 광주요에서 운영하는 모던한식당으로, 신라호텔 라연과...</li>
-                    </ul>
-                    <a href="#" class="btn-remove">목록에서 삭제</a>
-                  </div>
-                </div>
-              </a>
-            </li>
-
-            <li>
-              <a href="#">
-                <div class="card-item">
-                  <div class="img"></div>
-                  <div class="card-data">
-                    <div class="name">
-                      가온
-                      <div class="categories">
-                        <span>한식</span>
-                        <span>모던한식</span>
-                        <span>요리</span>
-                      </div>
-                    </div>
-                    <ul class="info">
-                      <li class="address">서울특별시 강남구</li>
-                      <li class="phone">02-545-9845</li>
-                      <li class="description">도자기 명가 광주요에서 운영하는 모던한식당으로, 신라호텔 라연과...</li>
-                    </ul>
-                    <a href="#" class="btn-remove">목록에서 삭제</a>
-                  </div>
-                </div>
-              </a>
-            </li>
-
-            <li>
-              <a href="#">
-                <div class="card-item">
-                  <div class="img"></div>
-                  <div class="card-data">
-                    <div class="name">
-                      가온
-                      <div class="categories">
-                        <span>한식</span>
-                        <span>모던한식</span>
-                        <span>요리</span>
-                      </div>
-                    </div>
-                    <ul class="info">
-                      <li class="address">서울특별시 강남구</li>
-                      <li class="phone">02-545-9845</li>
-                      <li class="description">도자기 명가 광주요에서 운영하는 모던한식당으로, 신라호텔 라연과...</li>
-                    </ul>
-                    <a href="#" class="btn-remove">목록에서 삭제</a>
-                  </div>
-                </div>
-              </a>
-            </li>
-
-            <li>
-              <a href="#">
-                <div class="card-item">
-                  <div class="img"></div>
-                  <div class="card-data">
-                    <div class="name">
-                      가온
-                      <div class="categories">
-                        <span>한식</span>
-                        <span>모던한식</span>
-                        <span>요리</span>
-                      </div>
-                    </div>
-                    <ul class="info">
-                      <li class="address">서울특별시 강남구</li>
-                      <li class="phone">02-545-9845</li>
-                      <li class="description">도자기 명가 광주요에서 운영하는 모던한식당으로, 신라호텔 라연과...</li>
-                    </ul>
-                    <a href="#" class="btn-remove">목록에서 삭제</a>
-                  </div>
-                </div>
-              </a>
-            </li>
-
-            <li>
-              <a href="#">
-                <div class="card-item">
-                  <div class="img"></div>
-                  <div class="card-data">
-                    <div class="name">
-                      가온
-                      <div class="categories">
-                        <span>한식</span>
-                        <span>모던한식</span>
-                        <span>요리</span>
-                      </div>
-                    </div>
-                    <ul class="info">
-                      <li class="address">서울특별시 강남구</li>
-                      <li class="phone">02-545-9845</li>
-                      <li class="description">도자기 명가 광주요에서 운영하는 모던한식당으로, 신라호텔 라연과...</li>
+                      <li class="address" th:text="${item.address}"/>
+                      <li class="phone" th:text="${item.phone}"/>
+                      <li class="description" th:text="${item.history}"/>
                     </ul>
                     <a href="#" class="btn-remove">목록에서 삭제</a>
                   </div>
