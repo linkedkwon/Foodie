@@ -35,7 +35,7 @@ public class CommonAuthenticatedHandler implements HandlerInterceptor {
                     "footer-li-url-1","/logout", "footer-li-url-2","/user/info",
                     "header-li-menu-1","마이페이지", "header-li-menu-2","로그아웃",
                     "header-li-url-1","/user/info", "header-li-url-2","/logout",
-                    "img-url","/images/1223.png" //to be adding account image
+                    "img-url","/images/1223.png"
             );
         }
         return Map.of(
