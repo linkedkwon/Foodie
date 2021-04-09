@@ -11,4 +11,7 @@ public interface FavoriteShopRepository extends JpaRepository<FavoriteShop, Inte
 
     Optional<Integer> countByUserId(int userId);
     Optional<FavoriteShop> findByUserIdAndShopId(int userId, int shopId);
+    void deleteByUserIdAndShopId(int userId, int shopId);
+    void deleteAllByUserId(int userId);
+
 }

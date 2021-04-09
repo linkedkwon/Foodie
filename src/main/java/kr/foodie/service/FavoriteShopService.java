@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.util.*;
+
 
 @Service
 public class FavoriteShopService {
@@ -23,7 +25,8 @@ public class FavoriteShopService {
     @Autowired
     private FavoriteShopRepository favoriteShopRepository;
 
-    public String addFavoriteShop(int userId, int shopId){
+
+    public String addItem(int userId, int shopId){
 
         FavoriteShop entity = favoriteShopRepository.findByUserIdAndShopId(userId, shopId)
                 .orElseGet(() -> {
@@ -35,7 +38,18 @@ public class FavoriteShopService {
 
         entity.setCreatedTime(Calendar.getInstance().getTime());
         favoriteShopRepository.save(entity);
+        return "1";
+    }
 
+    @Transactional
+    public String deleteItem(int userId, int shopId){
+        favoriteShopRepository.deleteByUserIdAndShopId(userId, shopId);
+        return "1";
+    }
+
+    @Transactional
+    public String deleteAllItem(int userId){
+        favoriteShopRepository.deleteAllByUserId(userId);
         return "1";
     }
 
@@ -54,13 +68,15 @@ public class FavoriteShopService {
         query.setFirstResult(idx*5);
         query.setMaxResults(5);
 
+        System.out.println("샵임\n"+query.getResultList());
+
         return query.getResultList();
     }
 
     public List<Pagination> getPagination(int size, int idx){
 
         int len = getLen(size);
-        int lef = (idx/interval)*interval;
+        int lef = (idx / interval) * interval;
         String path = "/user/favorite/";
         List<Pagination> paginations = new ArrayList<>();
 
@@ -89,11 +105,8 @@ public class FavoriteShopService {
         String path = "/user/favorite/";
         Map<String, String> maps = new HashMap<String, String>();
 
-        String prev = idx > 0 ? path+Integer.toString((idx-1)*interval): "javascript:void(0)";
-        String next = idx < len/4 ? path+Integer.toString((idx+1)*interval) : "javascript:void(0)";
-
-        System.out.println("이전"+prev);
-        System.out.println("다음"+next);
+        String prev = idx > 0 ? path+Integer.toString((idx-1) * interval): "javascript:void(0)";
+        String next = idx < len/4 ? path+Integer.toString((idx+1) * interval) : "javascript:void(0)";
 
         maps.put("prev",prev);
         maps.put("next",next);

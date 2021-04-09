@@ -33,7 +33,7 @@
         <div class="inner">
           <div class="title-group">
             <h3>찜한 맛집 목록 <span th:text="${size}"/></h3>
-            <a href="#" class="remove-all">전체삭제</a>
+            <a href="javascript:void(0)" class="remove-all" onclick="deleteFavoriteItemAll()">전체삭제</a>
           </div>
           
           <ul class="likes-list" th:each="item : ${favoriteShops}">
@@ -42,6 +42,7 @@
                 <div class="card-item">
                   <div class="img"></div>
                   <div class="card-data">
+                    <input type="hidden" id="shopId" th:value="${item.shopId}"/>
                     <div class="name" th:text="${item.shopName}">
                     </div>
                     <div class="categories">
@@ -52,7 +53,10 @@
                       <li class="phone" th:text="${item.phone}"/>
                       <li class="description" th:text="${item.history}"/>
                     </ul>
-                    <a href="#" class="btn-remove">목록에서 삭제</a>
+                    <a href="javascript:void(0)" class="btn-remove"
+                       th:onclick="|javascript:deleteFavoriteItem('${item.shopId}')|">
+                      목록에서 삭제
+                    </a>
                   </div>
                 </div>
               </a>

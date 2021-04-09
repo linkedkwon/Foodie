@@ -159,6 +159,48 @@ function checkFormBeforeEdit(){
     form.submit();
 }
 
+function deleteFavoriteItem(shopId){
+    var flag = confirm('정말 삭제하시겠습니까?');
+    if(flag == false)
+        return;
+
+    $.ajax({
+        url: '/user/favorite/delete/item/'+shopId,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            if(data == 1){
+                alert('정상적으로 삭제되었습니다.');
+                window.location.href = "/user/favorite"
+            }
+        },
+        error: function (status, error) {
+            console.log(status, error);
+        }
+    });
+}
+
+function deleteFavoriteItemAll(){
+    var flag = confirm('목록이 모두 삭제됩니다.\n정말 삭제하시겠습니까?');
+    if(flag == false)
+        return;
+
+    $.ajax({
+        url: '/user/favorite/delete/item/all',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            if(data == 1){
+                alert('정상적으로 삭제되었습니다.');
+                window.location.href = "/user/favorite"
+            }
+        },
+        error: function (status, error) {
+            console.log(status, error);
+        }
+    });
+}
+
 function oninputName(){$('#name-msg').text('');}
 function oninputPswd1(){$('#pswd-msg1').text('');}
 function oninputPswd2(){$('#pswd-msg2').text('');}
