@@ -159,7 +159,6 @@ function checkFormBeforeEdit(){
     form.submit();
 }
 
-
 function oninputName(){$('#name-msg').text('');}
 function oninputPswd1(){$('#pswd-msg1').text('');}
 function oninputPswd2(){$('#pswd-msg2').text('');}

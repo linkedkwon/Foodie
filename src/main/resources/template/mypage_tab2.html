@@ -43,9 +43,9 @@
                   <div class="img"></div>
                   <div class="card-data">
                     <div class="name" th:text="${item.shopName}">
-                      <div class="categories">
-                        <span th:text="${item.tag}"/>
-                      </div>
+                    </div>
+                    <div class="categories">
+                      <span class="categories-span" th:text="${item.tag}"></span>
                     </div>
                     <ul class="info">
                       <li class="address" th:text="${item.address}"/>
@@ -60,12 +60,10 @@
           </ul>
 
           <div class="pagination">
-            <a href="" class="prev"></a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="" class="next"></a>
+            <a th:href="${btnUrls.get('prev')}" class="prev"></a>
+            <a th:each="item : ${paginations}" th:href="${item.path}"
+               th:text="${item.idx}" th:class="${item.classValue}"></a>
+            <a th:href="${btnUrls.get('next')}" class="next"></a>
           </div>
         </div>
       </div>

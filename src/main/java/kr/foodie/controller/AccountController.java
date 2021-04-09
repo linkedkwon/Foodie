@@ -25,9 +25,6 @@ public class AccountController {
     private UserService userService;
 
     @Autowired
-    private FavoriteShopService favoriteShopService;
-
-    @Autowired
     private AuthenticationService authenticationService;
 
 
@@ -45,29 +42,7 @@ public class AccountController {
         return "redirect:/user/info";
     }
 
-    @GetMapping({"/favorite","/favorite/{path}"})
-    public String renderUserFavoriteShop(@PathVariable Optional<String> path, Model model,
-                                         @AuthenticationPrincipal AuthUserDetails obj){
 
-        String idx = path.orElseGet(()->{return "0";});
-        int userId = obj.getUser().getId();
-        int size = favoriteShopService.getPageSize(userId);
-        if(size == 0)
-            return "mypage_tab2_nodata";
-
-        List<Shop> list = favoriteShopService.getFavoriteShops(userId, Integer.parseInt(idx));
-        model.addAttribute("size", size);
-        model.addAttribute("favoriteShops", list);
-
-        return "mypage_tab2";
-    }
-
-    @ResponseBody
-    @GetMapping("/favorite/shop/{shopId}")
-    public String addFavoriteShop(@PathVariable String shopId,
-                                  @AuthenticationPrincipal AuthUserDetails obj){
-        return favoriteShopService.addFavoriteShop(obj.getUser().getId(), Integer.parseInt(shopId));
-    }
 
     @GetMapping("/comment")
     public String renderUserComment(){
