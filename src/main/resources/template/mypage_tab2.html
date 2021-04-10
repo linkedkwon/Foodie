@@ -25,20 +25,20 @@
       <div class="section-860">
         <ul class="nav-tabs2">
           <li><a href="/user/info">로그인 정보</a></li>
-          <li class="active"><a href="#">찜한 목록</a></li>
-          <li><a href="/user/comment">내가쓴글</a></li>
+          <li class="active"><a href="">찜한 목록</a></li>
+          <li><a href="/user/review">내가쓴글</a></li>
           <li><a href="/user/pay">프리미엄회원</a></li>
         </ul>
 
         <div class="inner">
           <div class="title-group">
             <h3>찜한 맛집 목록 <span th:text="${size}"/></h3>
-            <a href="javascript:void(0)" class="remove-all" onclick="deleteFavoriteItemAll()">전체삭제</a>
+            <a href="javascript:void(0)" class="remove-all" onclick="displayDeleteAllPopUp()">전체삭제</a>
           </div>
           
           <ul class="likes-list" th:each="item : ${favoriteShops}">
             <li>
-              <a href="#">
+              <a th:href="@{'/shop/'+${item.shopId}}">
                 <div class="card-item">
                   <div class="img"></div>
                   <div class="card-data">
@@ -72,6 +72,28 @@
         </div>
       </div>
     </div>
+
+  <!--modal delete all-->
+  <div class="modal-popup" id="all-delete-modal" style="display: none">
+    <div class="modal-backdrop"></div>
+    <div class="modal-body">
+      <div class="icon">
+        <picture>
+          <source srcset="/images/ico-modal-exmark@2x.png 2x">
+          <img src="/images/ico-modal-exmark.png" alt="">
+        </picture>
+      </div>
+      <div class="message">
+        전체 삭제시 <strong th:text="${size}"></strong>개의 맛집목록이 사라집니다.<br/>
+        삭제하시겠습니까?
+      </div>
+
+      <div class="btn-area">
+        <a href="javascript:void(0)" class="btn btn-primary" onclick="deleteAll()">삭제하기</a>
+        <a href="javascript:void(0)" class="btn btn-disabled" onclick="hideDeleteAllPopUp()">돌아가기</a>
+      </div>
+    </div>
+  </div>
 
     <!-- footer -->
     <div th:replace="/fragments/main-footer.html"></div>

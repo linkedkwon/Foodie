@@ -160,10 +160,6 @@ function checkFormBeforeEdit(){
 }
 
 function deleteFavoriteItem(shopId){
-    var flag = confirm('정말 삭제하시겠습니까?');
-    if(flag == false)
-        return;
-
     $.ajax({
         url: '/user/favorite/delete/item/'+shopId,
         type: 'GET',
@@ -180,10 +176,10 @@ function deleteFavoriteItem(shopId){
     });
 }
 
-function deleteFavoriteItemAll(){
-    var flag = confirm('목록이 모두 삭제됩니다.\n정말 삭제하시겠습니까?');
-    if(flag == false)
-        return;
+function displayDeleteAllPopUp(){ document.getElementById("all-delete-modal").style.display = "block";}
+function hideDeleteAllPopUp(){ document.getElementById("all-delete-modal").style.display = "none";}
+
+function deleteAll(){
 
     $.ajax({
         url: '/user/favorite/delete/item/all',
