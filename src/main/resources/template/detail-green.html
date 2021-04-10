@@ -15,258 +15,258 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/detail.css}" />
 </head>
 <body>
-  <div id="app">
-    <div id="contents" class="detail-green">
+<div id="app">
+  <div id="contents" class="detail-green">
+    <div class="background-wrapper">
+      <a href="javascript:history.back();" class="go-back">뒤로가기</a>
+      <h1>
+        <a href="#">
+          <picture>
+            <source srcset="/images/logo-detail@2x.png 2x">
+            <img src="/images/logo-detail.png" alt="foodie">
+          </picture>
+        </a>
+      </h1>
       <div class="background-wrapper">
-        <a href="javascript:history.back();" class="go-back">뒤로가기</a>
-        <h1>
-          <a href="#">
-            <picture>
-              <source srcset="/images/logo-detail@2x.png 2x">
-              <img src="/images/logo-detail.png" alt="foodie">
-            </picture>
-          </a>
-        </h1>
         <div class="background-wrapper">
-          <div class="background-wrapper">
-            <!-- 실제 컨텐츠 영역 -->
-            <div class="contents">
-              <!-- header-restaurant START -->
-              <div class="header-restaurant">
-                <div class="left-area">
-                  <h2 th:text="${payload[0].shopName}"></h2>
-                  <div class="categories">
-                    <span th:text="${payload[0].tag}"></span>
-                  </div>
-                </div>
-
-                <div class="right-area">
-                  <ul class="scores">
-                    <li>푸디로그 평점(AAA)</li>
-                    <li>오감 평점(5점)</li>
-                  </ul>
-                  <div class="star">
-                    <picture>
-                      <source srcset="/images/ico-detail-star@2x.png 2x">
-                      <img src="/images/ico-detail-star.png" alt="">
-                    </picture>
-                  </div>
-
-                  <a href="#" class="btn-print">인쇄하기</a>
-                </div>
-              </div>
-              <!-- header-restaurant END -->
-
-              <!-- about-restaurant START -->
-              <div class="about-restaurant">
-                <div class="left-area"></div>
-
-                <div class="right-area">
-                  <dl>
-                    <dt>주소</dt>
-                    <dd th:text="${payload[0].address}"></dd>
-                  </dl>
-                  <dl class="line">
-                    <dt>전화번호</dt>
-                    <dd th:text="${payload[0].phone}"></dd>
-                  </dl>
-                  <dl class="line">
-                    <dt>찾아가는 길</dt>
-                    <dd th:text="${payload[0].detailAddress}"></dd>
-                  </dl>
-                  <dl>
-                    <dt>영업시간</dt>
-                    <dd th:text="${payload[0].operationTime}"></dd>
-                  </dl>
-                  <dl class="line">
-                    <dt>휴무일</dt>
-                    <dd th:text="${payload[0].holiday}"></dd>
-                  </dl>
-                  <dl>
-                    <dt>추천메뉴</dt>
-                    <dd th:text="${payload[0].recommandMenu}">닭구이</dd>
-                  </dl>
-                  <dl>
-                    <dt>예약</dt>
-                    <dd th:text="${payload[0].isReservation}"></dd>
-                  </dl>
-                  <dl>
-                    <dt>주차장</dt>
-                    <dd th:text="${payload[0].isParking}"></dd>
-                  </dl>
-                  <dl class="line">
-                    <dt>예산</dt>
-                    <dd th:text="${payload[0].budget}"></dd>
-                  </dl>
-                  <dl>
-                    <dt>포장/배달</dt>
-                    <dd th:text="${payload[0].isDelivery}"></dd>
-                  </dl>
-                  <dl>
-                    <dt>홈페이지</dt>
-                    <dd class="btn-dd">
-                      <div class="util-btn-area">
-                        <a href="javascript:void(0);" class="btn-sm btn-heart" onclick="addFavoriteShop()">찜하기</a>
-                        <a href="#" class="btn-sm btn-siren">오류신고</a>
-                      </div>
-                      
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-              <!-- about-restaurant END -->
-
-              <div class="detail-section hashtag-section">
-                <th:block th:object="${tag}" th:each="tag : ${hashTags}">
-                  <a th:text="${tag.tagName}"></a>
-                </th:block>
-              </div>
-
-              <!-- history-section START -->
-              <div class="detail-section history-section">
-                <div class="section-header">
-                  <h3>HISTORY</h3>
-                </div>
-                <div class="section-body">
-                  <p th:text="${payload[0].history}"></p><br/>
-<!--                  <p>숯불에 굽는 바비큐 치킨 하나로 존재감을 알린 30여년 내력의 집이다. 소금구이를 시키고 소금이나 이 집만의</p>-->
-<!--                  <p>특제 소스에 찍어 먹거나 생맥주를 곁들여 즐기기도 한다. 소금구이 베이스에 양념을 입힌 양념구이도 많이 찾는다. </p>-->
-<!--                  <p>잠시 가게를 접기도 했지만 다시 돌아온 솜씨 좋은 주인이 잘 구워내 쫄깃하면서도 촉촉한 치킨 맛이 일품이다.</p>-->
-                </div>
-              </div>
-              <!-- history-section END -->
-
-              <!-- menu-section START -->
-              <div class="detail-section menu-section">
-                <div class="section-header">
-                  <h3>MENU</h3>
-                </div>
-                
-                <div class="section-body">
-                  <div class="image-thumbnails">
-                    <div class="detail">
-                      <!-- 이미지 추가 -->
-                    </div>
-                    <ul>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                    </ul>
-                  </div>
-
-                   <ul class="info">
-                    <li>
-                      <dl>
-                        <dt>메뉴</dt>
-                        <dd th:text="${payload[0].menu}"></dd>
-                      </dl>
-                    </li>
-                    <li>
-                      <dl>
-                        <dt>부가세</dt>
-                        <dd></dd>
-                      </dl>
-                    </li>
-                   </ul>
-                </div>
-              </div>
-              <!-- menu-section END -->
-
-              <!-- map-section START -->
-              <div class="detail-section map-section">
-                <div class="section-header">
-                  <h3>MAP</h3>
-                  <ul>
-                    <li class="naver"><a href="#">블로그 리뷰 보기</a></li>
-                    <li class="instagram"><a href="#">인스타 이미지 보기</a></li>
-                  </ul>
-                </div>
-                
-                <div class="section-body">
-                  <div id="restaurant-map"></div>
-                </div>
-              </div>
-              <!-- map-section END -->
-
-              <div class="detail-section critique-section">
-                <div class="section-header">
-                  <h3>CRITIQUE</h3>
-                  <span>- 나의 오감을 만족시켰는가?</span>
-                  <div class="score-info">
-                    5.0 탁월 4.5 감동 4.0 좋음 3.0 평범 2.0 실망
-                  </div>
-                </div>
-
-                <div class="section-body">
-                  <div class="btn-score-area">
-                    <a href="#" class="point5"></a>
-                    <a href="#" class="point4_5"></a>
-                    <a href="#" class="point4"></a>
-                    <a href="#" class="point3"></a>
-                    <a href="#" class="point2"></a>
-                  </div>
-
-                  <div class="commnet-form">
-                    <textarea name="" id="" cols="30" rows="10" placeholder="오감평가를 등록하고 포인트를 받아보세요."></textarea>
-                    <a href="#" class="btn btn-primary">등록하기</a>
-                  </div>
-
-                  <ul class="comment-list">
-                    <li>
-                      <span class="user-id">선우지환</span>
-                      <span class="point point4_5"></span>
-                      <div class="comment">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
-                    </li>
-                    <li>
-                      <span class="user-id">선우지환</span>
-                      <span class="point point4_5"></span>
-                      <div class="comment">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
-                    </li>
-                  </ul>
+          <!-- 실제 컨텐츠 영역 -->
+          <div class="contents">
+            <!-- header-restaurant START -->
+            <div class="header-restaurant">
+              <div class="left-area">
+                <h2 th:text="${payload[0].shopName}"></h2>
+                <div class="categories">
+                  <span th:text="${payload[0].tag}"></span>
                 </div>
               </div>
 
+              <div class="right-area">
+                <ul class="scores">
+                  <li>푸디로그 평점(AAA)</li>
+                  <li>오감 평점(5점)</li>
+                </ul>
+                <div class="star">
+                  <picture>
+                    <source srcset="/images/ico-detail-star@2x.png 2x">
+                    <img src="/images/ico-detail-star.png" alt="">
+                  </picture>
+                </div>
+
+                <a href="#" class="btn-print">인쇄하기</a>
+              </div>
             </div>
-            <!-- 실제 컨텐츠 영역 END -->
+            <!-- header-restaurant END -->
+
+            <!-- about-restaurant START -->
+            <div class="about-restaurant">
+              <div class="left-area"></div>
+
+              <div class="right-area">
+                <dl>
+                  <dt>주소</dt>
+                  <dd th:text="${payload[0].address}"></dd>
+                </dl>
+                <dl class="line">
+                  <dt>전화번호</dt>
+                  <dd th:text="${payload[0].phone}"></dd>
+                </dl>
+                <dl class="line">
+                  <dt>찾아가는 길</dt>
+                  <dd th:text="${payload[0].detailAddress}"></dd>
+                </dl>
+                <dl>
+                  <dt>영업시간</dt>
+                  <dd th:text="${payload[0].operationTime}"></dd>
+                </dl>
+                <dl class="line">
+                  <dt>휴무일</dt>
+                  <dd th:text="${payload[0].holiday}"></dd>
+                </dl>
+                <dl>
+                  <dt>추천메뉴</dt>
+                  <dd th:text="${payload[0].recommandMenu}">닭구이</dd>
+                </dl>
+                <dl>
+                  <dt>예약</dt>
+                  <dd th:text="${payload[0].isReservation}"></dd>
+                </dl>
+                <dl>
+                  <dt>주차장</dt>
+                  <dd th:text="${payload[0].isParking}"></dd>
+                </dl>
+                <dl class="line">
+                  <dt>예산</dt>
+                  <dd th:text="${payload[0].budget}"></dd>
+                </dl>
+                <dl>
+                  <dt>포장/배달</dt>
+                  <dd th:text="${payload[0].isDelivery}"></dd>
+                </dl>
+                <dl>
+                  <dt>홈페이지</dt>
+                  <dd class="btn-dd">
+                    <div class="util-btn-area">
+                      <a href="" class="btn-sm btn-heart" onclick="addFavoriteShop()">찜하기</a>
+                      <a href="" class="btn-sm btn-siren">오류신고</a>
+                    </div>
+
+                  </dd>
+                </dl>
+              </div>
+            </div>
+            <!-- about-restaurant END -->
+
+            <div class="detail-section hashtag-section">
+              <th:block th:object="${tag}" th:each="tag : ${hashTags}">
+                <a th:text="${tag.tagName}"></a>
+              </th:block>
+            </div>
+
+            <!-- history-section START -->
+            <div class="detail-section history-section">
+              <div class="section-header">
+                <h3>HISTORY</h3>
+              </div>
+              <div class="section-body">
+                <p th:text="${payload[0].history}"></p><br/>
+                <!--                  <p>숯불에 굽는 바비큐 치킨 하나로 존재감을 알린 30여년 내력의 집이다. 소금구이를 시키고 소금이나 이 집만의</p>-->
+                <!--                  <p>특제 소스에 찍어 먹거나 생맥주를 곁들여 즐기기도 한다. 소금구이 베이스에 양념을 입힌 양념구이도 많이 찾는다. </p>-->
+                <!--                  <p>잠시 가게를 접기도 했지만 다시 돌아온 솜씨 좋은 주인이 잘 구워내 쫄깃하면서도 촉촉한 치킨 맛이 일품이다.</p>-->
+              </div>
+            </div>
+            <!-- history-section END -->
+
+            <!-- menu-section START -->
+            <div class="detail-section menu-section">
+              <div class="section-header">
+                <h3>MENU</h3>
+              </div>
+
+              <div class="section-body">
+                <div class="image-thumbnails">
+                  <div class="detail">
+                    <!-- 이미지 추가 -->
+                  </div>
+                  <ul>
+                    <li>
+                      <a href="#"></a>
+                    </li>
+                    <li>
+                      <a href="#"></a>
+                    </li>
+                    <li>
+                      <a href="#"></a>
+                    </li>
+                    <li>
+                      <a href="#"></a>
+                    </li>
+                    <li>
+                      <a href="#"></a>
+                    </li>
+                    <li>
+                      <a href="#"></a>
+                    </li>
+                    <li>
+                      <a href="#"></a>
+                    </li>
+                    <li>
+                      <a href="#"></a>
+                    </li>
+                    <li>
+                      <a href="#"></a>
+                    </li>
+                    <li>
+                      <a href="#"></a>
+                    </li>
+                  </ul>
+                </div>
+
+                <ul class="info">
+                  <li>
+                    <dl>
+                      <dt>메뉴</dt>
+                      <dd th:text="${payload[0].menu}"></dd>
+                    </dl>
+                  </li>
+                  <li>
+                    <dl>
+                      <dt>부가세</dt>
+                      <dd></dd>
+                    </dl>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- menu-section END -->
+
+            <!-- map-section START -->
+            <div class="detail-section map-section">
+              <div class="section-header">
+                <h3>MAP</h3>
+                <ul>
+                  <li class="naver"><a href="#">블로그 리뷰 보기</a></li>
+                  <li class="instagram"><a href="#">인스타 이미지 보기</a></li>
+                </ul>
+              </div>
+
+              <div class="section-body">
+                <div id="restaurant-map"></div>
+              </div>
+            </div>
+            <!-- map-section END -->
+
+            <div class="detail-section critique-section">
+              <div class="section-header">
+                <h3>CRITIQUE</h3>
+                <span>- 나의 오감을 만족시켰는가?</span>
+                <div class="score-info">
+                  5.0 탁월 4.5 감동 4.0 좋음 3.0 평범 2.0 실망
+                </div>
+              </div>
+
+              <div class="section-body">
+                <div class="btn-score-area">
+                  <a href="javascript:void(0)" class="point5" onclick="clickStarRating(5)"></a>
+                  <a href="javascript:void(0)" class="point4_5" onclick="clickStarRating(4.5)"></a>
+                  <a href="javascript:void(0)" class="point4" onclick="clickStarRating(4)"></a>
+                  <a href="javascript:void(0)" class="point3" onclick="clickStarRating(3)"></a>
+                  <a href="javascript:void(0)" class="point2" onclick="clickStarRating(2)"></a>
+                </div>
+                <input type="hidden" id="start-rating" value="0"/>
+                <div class="commnet-form">
+                  <textarea id="comment" cols="30" rows="10" placeholder="오감평가를 등록하고 포인트를 받아보세요."></textarea>
+                  <a href="javascript:void(0)" class="btn btn-primary" onclick="addReview()">등록하기</a>
+                </div>
+
+                <ul class="comment-list">
+                  <li>
+                    <span class="user-id">선우지환</span>
+                    <span class="point point4_5"></span>
+                    <div class="comment">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
+                  </li>
+                  <li>
+                    <span class="user-id">선우지환</span>
+                    <span class="point point4_5"></span>
+                    <div class="comment">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
           </div>
+          <!-- 실제 컨텐츠 영역 END -->
         </div>
-
-        <!-- detail footer -->
-        <div th:replace="/fragments/detail-footer.html"/>
-
       </div>
+
+      <!-- detail footer -->
+      <div th:replace="/fragments/detail-footer.html"/>
+
     </div>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/commons.js}"></script>
-    <script type="text/javascript" th:src="@{/js/detail.js}"></script>
   </div>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/commons.js}"></script>
+  <script type="text/javascript" th:src="@{/js/detail.js}"></script>
+</div>
 </body>
 </html>

@@ -42,13 +42,6 @@ public class AccountController {
         return "redirect:/user/info";
     }
 
-
-
-    @GetMapping("/comment")
-    public String renderUserComment(){
-        return "mypage_tab3";
-    }
-
     @GetMapping("pay")
     public String renderUserPayInfo(){
         return "mypage_tab4";
