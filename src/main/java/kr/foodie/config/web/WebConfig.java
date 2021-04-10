@@ -52,7 +52,9 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/")
                 .addPathPatterns("/user/**")
                 .addPathPatterns("/policy")
-                .addPathPatterns("/auth/join/**");
+                .addPathPatterns("/auth/join/**")
+                .excludePathPatterns("/user/favorite/shop/*")
+                .excludePathPatterns("/user/favorite/delete/**");
 
         registry.addInterceptor(new LoginAuthenticatedHandler())
                 .addPathPatterns("/auth/login");
