@@ -1,5 +1,6 @@
-<!-- Header -->
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <header id="header" class="">
     <div class="inner-wrapper">
@@ -150,6 +151,7 @@
         console.log(event.target.parentElement)
         $(".top-menu > li").removeClass('active');
         event.target.parentElement.classList.add('active')
+
         $.ajax({
             url: "/category/region/" + type + "?name=" + region_name,
             type:"GET",
@@ -178,7 +180,9 @@
 
         $("#mainCategory").click(function () {
             console.log('main_click')
+            $("li[id*=region]").removeClass("active")
             $("#region1").addClass("active");
+            $("#regionContent1").show();
             $("#regionContent2").hide();
             $("#regionContent3").hide();
             changeRegionCategory1("서울", 'regionDetailContent1', '1')
@@ -331,3 +335,4 @@
     })
     </script>
 </header>
+</html>

@@ -76,7 +76,11 @@ spring:
             enable: true
           auth: true
 
-
+tomcat:
+  ajp:
+    protocol: AJP/1.3
+    port: 18009
+    enabled: true
 
 
 
