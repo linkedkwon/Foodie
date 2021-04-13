@@ -3,15 +3,18 @@ package kr.foodie.controller;
 
 import kr.foodie.config.security.auth.AuthUserDetails;
 import kr.foodie.config.security.session.AuthenticationService;
+import kr.foodie.domain.shop.Shop;
 import kr.foodie.domain.user.User;
+import kr.foodie.service.FavoriteShopService;
 import kr.foodie.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -19,10 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AccountController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    AuthenticationService authenticationService;
+    private AuthenticationService authenticationService;
+
 
     @GetMapping("/info")
     public String renderUserInfo(@AuthenticationPrincipal AuthUserDetails obj, Model model){
@@ -36,16 +40,6 @@ public class AccountController {
         authenticationService.updateAuthentication(user.getEmail());
 
         return "redirect:/user/info";
-    }
-
-    @GetMapping("/wishItem")
-    public String renderUserWishItem(){
-        return "mypage_tab2";
-    }
-
-    @GetMapping("/comment")
-    public String renderUserComment(){
-        return "mypage_tab3";
     }
 
     @GetMapping("pay")

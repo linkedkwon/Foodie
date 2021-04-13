@@ -18,7 +18,7 @@
                 </div>
             </li>
             <li class="login">
-                <a href="#" th:style="'background:url(' + ${map.get('img-url')} + ');'"><span>로그인/회원가입</span></a>
+                <a href="#" th:style="'background-image:url(' + ${map.get('img-url')} + ');'"><span>로그인/회원가입</span></a>
                 <ul class="login-menu-layer">
                     <li>
                         <a th:href="${map.get('header-li-url-1')}" th:text="${map.get('header-li-menu-1')}">로그인</a>
@@ -155,7 +155,7 @@
         $.ajax({
             url: "/category/region/" + type + "?name=" + region_name,
             contentType: "application/json",
-            dataType: "json",
+            dataType: "json",detail-green
             type:"GET",
         }).done(function (fragment) {
             var ul = document.createElement('ul');

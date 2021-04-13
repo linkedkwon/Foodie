@@ -159,6 +159,43 @@ function checkFormBeforeEdit(){
     form.submit();
 }
 
+function deleteFavoriteItem(shopId){
+    $.ajax({
+        url: '/user/favorite/delete/item/'+shopId,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            if(data == 1){
+                alert('정상적으로 삭제되었습니다.');
+                window.location.href = "/user/favorite"
+            }
+        },
+        error: function (status, error) {
+            console.log(status, error);
+        }
+    });
+}
+
+function displayDeleteAllPopUp(){ document.getElementById("all-delete-modal").style.display = "block";}
+function hideDeleteAllPopUp(){ document.getElementById("all-delete-modal").style.display = "none";}
+
+function deleteAll(){
+
+    $.ajax({
+        url: '/user/favorite/delete/item/all',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            if(data == 1){
+                alert('정상적으로 삭제되었습니다.');
+                window.location.href = "/user/favorite"
+            }
+        },
+        error: function (status, error) {
+            console.log(status, error);
+        }
+    });
+}
 
 function oninputName(){$('#name-msg').text('');}
 function oninputPswd1(){$('#pswd-msg1').text('');}
