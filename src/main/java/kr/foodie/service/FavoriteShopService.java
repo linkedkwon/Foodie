@@ -53,7 +53,7 @@ public class FavoriteShopService {
         return "1";
     }
 
-    public int getPageSize(int userId){
+    public int getItemSize(int userId){
         return favoriteShopRepository.countByUserId(userId).orElseGet(()->{return 0;});
     }
 
@@ -67,8 +67,6 @@ public class FavoriteShopService {
         Query query = em.createQuery(jpql);
         query.setFirstResult(idx*5);
         query.setMaxResults(5);
-
-        System.out.println("샵임\n"+query.getResultList());
 
         return query.getResultList();
     }

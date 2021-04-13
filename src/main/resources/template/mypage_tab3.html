@@ -31,7 +31,7 @@
         </ul>
 
         <div class="inner">
-          <h3>내가 쓴 글 <span>(13개)</span></h3>
+          <h3>내가 쓴 글 <span th:text="${size}"></span></h3>
           <ul class="my-comments">
             <li class="title-group">
               <div>닉네임</div>
@@ -39,52 +39,11 @@
               <div>맛집명</div>
               <div>리뷰</div>
             </li>
-            <li>
-              <div class="user-id">선우지환</div>
-              <div class="title">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
-              <div class="restaurant-name">78온더 라이즈</div>
-              <div class="score">
-                감동(4점)
-              </div>
-            </li>
-            <li>
-              <div class="user-id">선우지환</div>
-              <div class="title">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
-              <div class="restaurant-name">78온더 라이즈</div>
-              <div class="score">
-                감동(4점)
-              </div>
-            </li>
-            <li>
-              <div class="user-id">선우지환</div>
-              <div class="title">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
-              <div class="restaurant-name">78온더 라이즈</div>
-              <div class="score">
-                감동(4점)
-              </div>
-            </li>
-            <li>
-              <div class="user-id">선우지환</div>
-              <div class="title">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
-              <div class="restaurant-name">78온더 라이즈</div>
-              <div class="score">
-                감동(4점)
-              </div>
-            </li>
-            <li>
-              <div class="user-id">선우지환</div>
-              <div class="title">모던한식의 정수를 느끼기에 부족함이 없는 곳 모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
-              <div class="restaurant-name">78온더 라이즈</div>
-              <div class="score">
-                감동(4점)
-              </div>
-            </li>
-            <li>
-              <div class="user-id">선우지환</div>
-              <div class="title">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
-              <div class="restaurant-name">78온더 라이즈</div>
-              <div class="score">
-                감동(4점)
+            <li th:each="item : ${reviews}">
+              <div class="user-id" th:text="${item.userName}"></div>
+              <div class="title" th:text="${item.content}"></div>
+              <div class="restaurant-name" th:text="${item.shopName}"></div>
+              <div class="score" th:text="'감동('+${item.starRating}+'점)'">
               </div>
             </li>
           </ul>

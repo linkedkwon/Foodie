@@ -1,12 +1,16 @@
 package kr.foodie.domain.account;
 
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "REVIEW")
 public class Review {
 
@@ -19,9 +23,6 @@ public class Review {
     @Column(name = "USER_ID")
     private Integer userId;
 
-    @Column(name = "USER_NAME")
-    private String userName;
-
     @Column(name = "STAR_RATING")
     private String starRating;
 
@@ -32,11 +33,10 @@ public class Review {
     private Date createdTime;
 
     @Builder
-    public Review(Integer shopId, Integer userId, String userName,
-                  String starRating, String content, Date createdTime) {
+    public Review(Integer shopId, Integer userId, String starRating,
+                  String content, Date createdTime) {
         this.shopId = shopId;
         this.userId = userId;
-        this.userName = userName;
         this.starRating = starRating;
         this.content = content;
         this.createdTime = createdTime;
