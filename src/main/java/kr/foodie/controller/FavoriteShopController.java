@@ -2,6 +2,7 @@ package kr.foodie.controller;
 
 import kr.foodie.config.security.auth.AuthUserDetails;
 import kr.foodie.service.FavoriteShopService;
+import kr.foodie.service.PaginationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -15,9 +16,14 @@ import java.util.Optional;
 @RequestMapping("/user/favorite")
 public class FavoriteShopController {
 
+    private static final String url = "favorite";
+    private static final int interval = 5;
+
     @Autowired
     private FavoriteShopService favoriteShopService;
 
+    @Autowired
+    private PaginationService paginationService;
 
     @ResponseBody
     @GetMapping("/shop/{shopId}")
@@ -38,8 +44,8 @@ public class FavoriteShopController {
 
         model.addAttribute("size", size);
         model.addAttribute("favoriteShops", favoriteShopService.getFavoriteShops(userId, idx));
-        model.addAttribute("paginations", favoriteShopService.getPagination(size, idx));
-        model.addAttribute("btnUrls", favoriteShopService.getPaginationBtn(size, idx));
+        model.addAttribute("paginations", paginationService.getPagination(size, idx, interval, url));
+        model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, interval, url));
 
         return "mypage_tab2";
     }

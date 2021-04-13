@@ -31,7 +31,10 @@
         </ul>
 
         <div class="inner">
-          <h3>내가 쓴 글 <span th:text="${size}"></span></h3>
+          <div class="title-group">
+            <h3>내가 쓴 글<span th:text="${size}"/></h3>
+          </div>
+
           <ul class="my-comments">
             <li class="title-group">
               <div>닉네임</div>
@@ -49,12 +52,10 @@
           </ul>
 
           <div class="pagination">
-            <a href="" class="prev"></a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="" class="next"></a>
+            <a th:href="${btnUrls.get('prev')}" class="prev"></a>
+            <a th:each="item : ${paginations}" th:href="${item.path}"
+               th:text="${item.idx}" th:class="${item.classValue}"></a>
+            <a th:href="${btnUrls.get('next')}" class="next"></a>
           </div>
         </div> 
       </div>

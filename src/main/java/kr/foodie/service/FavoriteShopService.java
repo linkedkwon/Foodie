@@ -1,7 +1,6 @@
 package kr.foodie.service;
 
 import kr.foodie.domain.account.FavoriteShop;
-import kr.foodie.domain.account.Pagination;
 import kr.foodie.domain.shop.Shop;
 import kr.foodie.repo.FavoriteShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import java.util.*;
 @Service
 public class FavoriteShopService {
 
+    private static final int itemInterval = 5;
     private static final int interval = 4;
 
     @PersistenceContext
@@ -65,54 +65,9 @@ public class FavoriteShopService {
                 +"order by f.createdTime desc";
 
         Query query = em.createQuery(jpql);
-        query.setFirstResult(idx*5);
-        query.setMaxResults(5);
+        query.setFirstResult(idx*itemInterval);
+        query.setMaxResults(itemInterval);
 
         return query.getResultList();
-    }
-
-    public List<Pagination> getPagination(int size, int idx){
-
-        int len = getLen(size);
-        int lef = (idx / interval) * interval;
-        String path = "/user/favorite/";
-        List<Pagination> paginations = new ArrayList<>();
-
-        int cnt = 0;
-        String classValue = "";
-        for(int i=lef; i<len;i++){
-            if(cnt++ == interval)
-                return paginations;
-            if(i == idx)
-                classValue = "active";
-
-            paginations.add(Pagination.builder()
-                                .idx(i+1)
-                                .path(path+i)
-                                .classValue(classValue)
-                                .build());
-            classValue = "";
-        }
-        return paginations;
-    }
-
-    public Map<String, String> getPaginationBtn(int size, int idx){
-
-        int len = getLen(size);
-        idx = idx/interval;
-        String path = "/user/favorite/";
-        Map<String, String> maps = new HashMap<String, String>();
-
-        String prev = idx > 0 ? path+Integer.toString((idx-1) * interval): "javascript:void(0)";
-        String next = idx < len/4 ? path+Integer.toString((idx+1) * interval) : "javascript:void(0)";
-
-        maps.put("prev",prev);
-        maps.put("next",next);
-
-        return maps;
-    }
-
-    public static int getLen(int size){
-        return (size % 5 == 0)? size/5 : size/5+1;
     }
 }

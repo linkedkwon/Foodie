@@ -1,6 +1,7 @@
 package kr.foodie.controller;
 
 import kr.foodie.config.security.auth.AuthUserDetails;
+import kr.foodie.service.PaginationService;
 import kr.foodie.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,8 +15,14 @@ import java.util.Optional;
 @RequestMapping("/user/review")
 public class ReviewController {
 
+    private static final String url = "review";
+    private static final int interval = 6;
+
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+    private PaginationService paginationService;
 
     @ResponseBody
     @PostMapping("/item")
@@ -38,6 +45,8 @@ public class ReviewController {
 
         model.addAttribute("size", size);
         model.addAttribute("reviews",reviewService.getItems(userId, idx, username));
+        model.addAttribute("paginations", paginationService.getPagination(size, idx, interval, url));
+        model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, interval, url));
 
         return "mypage_tab3";
     }
