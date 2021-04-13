@@ -154,6 +154,8 @@
 
         $.ajax({
             url: "/category/region/" + type + "?name=" + region_name,
+            contentType: "application/json",
+            dataType: "json",
             type:"GET",
         }).done(function (fragment) {
             var ul = document.createElement('ul');
