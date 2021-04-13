@@ -31,10 +31,12 @@ public class HelpController {
     @ResponseBody
     @PostMapping("/inquiry/pw")
     public String validatePwInquiry(String email, String phoneNum) throws Exception {
+
         String findEmail = userService.inquiryPw(email, phoneNum);
         if(findEmail.equalsIgnoreCase("1"))
             return "1";
         String code = cacheService.getRandomUserCode(findEmail);
+
         mailService.sendCode(findEmail, code);
         return "0";
     }
@@ -42,10 +44,12 @@ public class HelpController {
     @ResponseBody
     @PostMapping("/inquiry/code")
     public String validateUserCode(String email, String code) {
+
         String data = cacheService.checkCode(email, code);
         if(data.contains("1"))
             return data;
         String qs = cacheService.getRandomEmailCode();
+
         cacheService.setEmailQs(qs, email);
         return qs;
     }
@@ -57,8 +61,10 @@ public class HelpController {
 
     @PostMapping("/resetPW")
     public String updatePw(String qs, String password){
+
         String email = cacheService.getEmailByQs(qs);
         userService.updatePassword(email, password);
+
         return "redirect:/auth/login";
     }
 }

@@ -17,7 +17,6 @@ public class PaginationService {
 
         int len = getLen(size, itemInterval);
         int lef = (idx / interval) * interval;
-        String url = "/user/"+path+"/";
         List<Pagination> paginations = new ArrayList<>();
 
         int cnt = 0;
@@ -30,7 +29,7 @@ public class PaginationService {
 
             paginations.add(Pagination.builder()
                     .idx(i+1)
-                    .path(url+i)
+                    .path(path+i)
                     .classValue(classValue)
                     .build());
             classValue = "";
@@ -42,11 +41,10 @@ public class PaginationService {
 
         int len = getLen(size, itemInterval);
         idx = idx/interval;
-        String url = "/user/"+path+"/";
         Map<String, String> maps = new HashMap<String, String>();
 
-        String prev = idx > 0 ? url+Integer.toString((idx-1) * interval): "javascript:void(0)";
-        String next = idx < len/4 ? url+Integer.toString((idx+1) * interval) : "javascript:void(0)";
+        String prev = idx > 0 ? path+Integer.toString((idx-1) * interval): "javascript:void(0)";
+        String next = idx < len/4 ? path+Integer.toString((idx+1) * interval) : "javascript:void(0)";
 
         maps.put("prev",prev);
         maps.put("next",next);

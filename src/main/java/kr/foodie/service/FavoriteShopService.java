@@ -17,7 +17,6 @@ import java.util.*;
 public class FavoriteShopService {
 
     private static final int itemInterval = 5;
-    private static final int interval = 4;
 
     @PersistenceContext
     private EntityManager em;

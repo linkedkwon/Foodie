@@ -2,10 +2,8 @@ package kr.foodie.domain.shop;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -92,4 +90,7 @@ public class Shop {
     @Column(name = "INSTA_KEYWORD")
     private String instaKeyword;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATED_DATE", updatable = false)
+    private Date createdDate;
 }

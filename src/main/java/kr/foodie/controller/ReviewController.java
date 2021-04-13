@@ -15,7 +15,7 @@ import java.util.Optional;
 @RequestMapping("/user/review")
 public class ReviewController {
 
-    private static final String url = "review";
+    private static final String url = "/user/review/";
     private static final int interval = 6;
 
     @Autowired
