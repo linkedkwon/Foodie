@@ -1,13 +1,18 @@
 package kr.foodie.controller;
 
+import kr.foodie.config.security.auth.AuthUserDetails;
 import kr.foodie.domain.shop.HashTag;
-import kr.foodie.domain.shop.Shop;
 import kr.foodie.domain.shop.Region;
+import kr.foodie.domain.shop.Shop;
 import kr.foodie.service.RegionService;
 import kr.foodie.service.ShopService;
 import kr.foodie.service.TagService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -57,7 +62,7 @@ public class ShopController {
     }
 
     @RequestMapping(value ="/{shopId}", method= RequestMethod.GET)
-    public ModelAndView getShopDetail(@PathVariable Integer shopId){
+    public ModelAndView getShopDetail(@PathVariable Integer shopId, @AuthenticationPrincipal AuthUserDetails userDetails){
         ModelAndView mav = new ModelAndView();
 
         List<Shop> commentList;
@@ -65,6 +70,8 @@ public class ShopController {
         commentList = shopService.getShopDetail(shopId);
         hashTags = tagService.getHashTags(shopId);
         mav.addObject("payload", commentList);
+
+        mav.addObject("user", userDetails);
         if(commentList.size() > 0){
             Integer background = commentList.get(0).getBackground();
             if(background == 1){
