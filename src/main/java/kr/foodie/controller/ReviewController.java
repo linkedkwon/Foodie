@@ -37,14 +37,14 @@ public class ReviewController {
 
         int idx = Integer.parseInt(path.orElseGet(()->{return "0";}));
         int userId = userDetails.getUser().getId();
-        int size = reviewService.getItemSize(userId);
+        int size = reviewService.getItemSizeByUserId(userId);
         String username = userDetails.getUser().getName();
 
         if(size == 0)
             return "mypage_tab3_nodata";
 
         model.addAttribute("size", size);
-        model.addAttribute("reviews",reviewService.getItems(userId, idx, username));
+        model.addAttribute("reviews",reviewService.getItemsByUserId(userId, idx, username));
         model.addAttribute("paginations", paginationService.getPagination(size, idx, interval, url));
         model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, interval, url));
 
