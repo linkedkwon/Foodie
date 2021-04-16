@@ -250,9 +250,15 @@
                       <div class="comment" th:text="${item.content}"></div>
                     </li>
                   </ul>
+
+                  <div class="pagination" style="margin-top: 30px;">
+                    <a th:href="${btnUrls.get('prev')}" class="prev"></a>
+                    <a th:each="item : ${paginations}" th:href="${item.path}"
+                       th:text="${item.idx}" th:class="${item.classValue}"></a>
+                    <a th:href="${btnUrls.get('next')}" class="next"></a>
+                  </div>
                 </div>
               </div>
-
             </div>
             <!-- 실제 컨텐츠 영역 END -->
           </div>
