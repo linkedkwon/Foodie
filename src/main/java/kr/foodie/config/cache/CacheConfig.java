@@ -26,8 +26,8 @@ public class CacheConfig {
 
     private CacheManager getCustomCacheManager() {
         CacheManager cacheManager = CacheManager.create(getEhCacheConfiguration());
-        cacheManager.addCache(createCache("userCode"));
-        cacheManager.addCache(createCache("emailCode"));
+        cacheManager.addCache(createCache("authentication-code"));
+        cacheManager.addCache(createCache("encryption-code"));
 
         return cacheManager;
     }

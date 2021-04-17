@@ -233,26 +233,28 @@
                   <a href="javascript:void(0)" class="point2" onclick="clickStarRating(2)"></a>
                 </div>
                 <input type="hidden" id="start-rating" value="0"/>
+
                 <div class="commnet-form">
                   <textarea id="comment" cols="30" rows="10" placeholder="오감평가를 등록하고 포인트를 받아보세요."></textarea>
                   <a href="javascript:void(0)" class="btn btn-primary" onclick="addReview()">등록하기</a>
                 </div>
 
                 <ul class="comment-list">
-                  <li>
-                    <span class="user-id">선우지환</span>
-                    <span class="point point4_5"></span>
-                    <div class="comment">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
-                  </li>
-                  <li>
-                    <span class="user-id">선우지환</span>
-                    <span class="point point4_5"></span>
-                    <div class="comment">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
+                  <li th:each="item : ${reviews}">
+                    <span class="user-id" th:text="${item.userName}"></span>
+                    <span class="point point4_5" th:text="${item.starRating}"></span>
+                    <div class="comment" th:text="${item.content}"></div>
                   </li>
                 </ul>
+
+                <div class="pagination" style="margin-top: 30px;">
+                  <a th:href="${btnUrls.get('prev')}" class="prev"></a>
+                  <a th:each="item : ${paginations}" th:href="${item.path}"
+                     th:text="${item.idx}" th:class="${item.classValue}"></a>
+                  <a th:href="${btnUrls.get('next')}" class="next"></a>
+                </div>
               </div>
             </div>
-
           </div>
           <!-- 실제 컨텐츠 영역 END -->
         </div>

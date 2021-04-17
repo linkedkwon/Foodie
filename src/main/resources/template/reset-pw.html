@@ -42,7 +42,7 @@
                 </div>
 
                 <div>
-                    <form class="form-table-help" id="password-reset-form" action="/help/resetPW" method="post">
+                    <form class="form-table-help" id="password-reset-form" action="/user/pw" method="put">
                         <div class="row">
                             <div class="col2" style="margin-left: 120px;">
                                 <div class="th" style="width: 100px;">비밀번호</div>
@@ -68,7 +68,7 @@
                                 <a class="btn btn-primary" style="width: 335px;" id="submit-btn" onclick="submitPassword()">비밀번호 재설정</a>
                             </div>
                         </div>
-                        <input type="hidden" id="qs" name="qs"/>
+                        <input type="hidden" id="qs" name="encryptedCode"/>
                     </form>
                 </div>
             </div>

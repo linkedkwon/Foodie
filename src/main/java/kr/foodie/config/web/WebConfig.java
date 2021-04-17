@@ -1,8 +1,6 @@
 package kr.foodie.config.web;
 
-import kr.foodie.config.web.handler.DetailAuthenticatedHandler;
-import kr.foodie.config.web.handler.LoginAuthenticatedHandler;
-import kr.foodie.config.web.handler.CommonAuthenticatedHandler;
+import kr.foodie.config.web.handler.AuthenticatedHandler;
 import kr.foodie.config.web.handler.RedirectHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
@@ -43,25 +41,17 @@ public class WebConfig implements WebMvcConfigurer {
          */
     }
 
+    //change to collection
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new RedirectHandler())
                 .addPathPatterns("/help/reset");
 
-        registry.addInterceptor(new CommonAuthenticatedHandler())
+        registry.addInterceptor(new AuthenticatedHandler())
                 .addPathPatterns("/")
-                .addPathPatterns("/user/**")
-                .addPathPatterns("/policy")
-                .addPathPatterns("/auth/join/**")
-                .excludePathPatterns("/user/favorite/shop/*")
-                .excludePathPatterns("/user/favorite/delete/**")
-                .excludePathPatterns("/user/review/item");
-
-        registry.addInterceptor(new LoginAuthenticatedHandler())
-                .addPathPatterns("/auth/login");
-
-        registry.addInterceptor(new DetailAuthenticatedHandler())
-                .addPathPatterns("/shop/**");
+                .addPathPatterns("/user/pw")
+                .addPathPatterns("/help/*")
+                .excludePathPatterns("/inquiry/**");
     }
 
     //Async task to be adding with search, gps

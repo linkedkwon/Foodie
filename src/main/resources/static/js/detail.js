@@ -49,6 +49,7 @@ function addReview(){
         success: function (data) {
             if(data == 1){
                 alert('댓글을 추가하였습니다.');
+                window.location.href = window.location.href;
             }
             else{
                 alert('로그인 후에 댓글을 작성해주세요.');
