@@ -1,70 +1,59 @@
 package kr.foodie.controller;
 
-import kr.foodie.service.CacheService;
+import kr.foodie.config.cache.CacheService;
 import kr.foodie.service.MailService;
 import kr.foodie.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-//related inquiry
+@RequiredArgsConstructor
 @Controller
-@RequestMapping("/help")
 public class HelpController {
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private MailService mailService;
-
-    @Autowired
-    private CacheService cacheService;
-
+    private final UserService userService;
+    private final MailService mailService;
+    private final CacheService cacheService;
 
     @ResponseBody
     @PostMapping("/inquiry/id")
-    public String validateIdInquiry(String name, String phoneNum){
+    public String inquiryId(String name, String phoneNum){
         return userService.inquiryId(name, phoneNum);
     }
 
     @ResponseBody
     @PostMapping("/inquiry/pw")
-    public String validatePwInquiry(String email, String phoneNum) throws Exception {
-
-        String findEmail = userService.inquiryPw(email, phoneNum);
-        if(findEmail.equalsIgnoreCase("1"))
+    public String inquiryPw(String email, String phoneNum) throws Exception {
+        if(userService.inquiryPw(email, phoneNum).equalsIgnoreCase("1"))
             return "1";
-        String code = cacheService.getRandomUserCode(findEmail);
+        mailService.sendCode(email, cacheService.saveAuthCode(email));
 
-        mailService.sendCode(findEmail, code);
         return "0";
     }
 
     @ResponseBody
     @PostMapping("/inquiry/code")
-    public String validateUserCode(String email, String code) {
+    public String inquiryAuthCode(String email, String code) {
+        if(cacheService.findByAuthenticationCode(email, code).equals("0"))
+            return "1";
+        String encryptedCode = cacheService.getRandomEncryptedCode();
+        cacheService.saveEncryptedCodeWithEmail(encryptedCode, email);
 
-        String data = cacheService.checkCode(email, code);
-        if(data.contains("1"))
-            return data;
-        String qs = cacheService.getRandomEmailCode();
-
-        cacheService.setEmailQs(qs, email);
-        return qs;
+        return encryptedCode;
     }
 
-    @GetMapping("/reset")
-    public String renderResetPW(@RequestParam String email){
+    @GetMapping("/help/reset")
+    public String renderResetPw(@RequestParam String email){
         return "reset-pw";
     }
 
-    @PostMapping("/resetPW")
-    public String updatePw(String qs, String password){
-
-        String email = cacheService.getEmailByQs(qs);
-        userService.updatePassword(email, password);
-
+    /**
+     * exceptional(not designed to rest)
+     * only use for help controller with encrypted qs
+     */
+    @PutMapping("/user/pw")
+    public String updatePwByEncryptedCode(String encryptedCode, String password){
+        userService.updatePassword(cacheService.findByEncryptedCode(encryptedCode), password);
         return "redirect:/auth/login";
     }
 }

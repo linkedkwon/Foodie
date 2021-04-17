@@ -41,21 +41,17 @@ public class WebConfig implements WebMvcConfigurer {
          */
     }
 
+    //change to collection
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new RedirectHandler())
                 .addPathPatterns("/help/reset");
 
         registry.addInterceptor(new AuthenticatedHandler())
-                .addPathPatterns("/*")
-                .addPathPatterns("/auth/login")
-                .addPathPatterns("/user/**")
-                .addPathPatterns("/shop/**")
-                .addPathPatterns("/help/**")
-                .addPathPatterns("/auth/join/user/*")
-                .excludePathPatterns("/auth/validate/**")
-                .excludePathPatterns("/help/inquiry/**")
-                .excludePathPatterns("/login");
+                .addPathPatterns("/")
+                .addPathPatterns("/user/pw")
+                .addPathPatterns("/help/*")
+                .excludePathPatterns("/inquiry/**");
     }
 
     //Async task to be adding with search, gps

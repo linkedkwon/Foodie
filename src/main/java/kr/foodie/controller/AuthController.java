@@ -17,13 +17,13 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/join/user1")
+    @GetMapping("/join/user/1")
     public String renderSignUpMember(Model model){
         model.addAttribute("user", new User());
         return "signup";
     }
 
-    @GetMapping("/join/user2")
+    @GetMapping("/join/user/2")
     public String renderSignUpRestaurant(Model model){
         model.addAttribute("user", new User());
         return "signup_restaurants";
