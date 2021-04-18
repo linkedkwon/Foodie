@@ -9,6 +9,7 @@ import kr.foodie.service.ShopService;
 import kr.foodie.service.TagService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +32,16 @@ public class AdminController {
 //        this.regionService = regionService;
     }
 
+    @GetMapping("/main")
+    public String renderAdminShopRed(){
+        return "admin-index";
+    }
+
+    @GetMapping("/shop/detail")
+    public String renderAdminShopDetail(){
+        return "admin-shop-detail";
+    }
+
     @RequestMapping(value ="/shop/{shopType}", method= RequestMethod.GET)
     public ModelAndView getShopList(@PathVariable String shopType){
         ModelAndView mav = new ModelAndView();
@@ -51,11 +62,11 @@ public class AdminController {
 //        mav.addObject("regionInfo", regionInfos);
 //        mav.addObject("priority", commentListWithOrder);
 //        mav.addObject("sidePriority", sideCommentListWithOrder);
-        if(shopType.equals("0")){
-            mav.setViewName("admin-shop-list");
-        }else{
-            mav.setViewName("submain-green");
-        }
+//        if(shopType.equals("0")){
+        mav.setViewName("admin-shop-list");
+//        }else{
+//            mav.setViewName("submain-green");
+//        }
 
         return mav;
     }
