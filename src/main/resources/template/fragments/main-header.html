@@ -2,12 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<header id="header" class="">
+<header id="header" th:fragment="type(type,height)" th:class="${type}">
     <div class="inner-wrapper">
         <a href="#" id="mainCategory" class="btn-category"><span>카테고리</span></a>
-        <a href="/">
-        <h1></h1>
-        </a>
+
+        <div style="width: 196px; margin: 0 auto;">
+            <a href="/"><h1 th:style="${height}"></h1></a>
+        </div>
+
         <ul class="util-menu">
             <li class="search">
                 <a href="#"><span>검색</span></a>
@@ -18,15 +20,20 @@
                 </div>
             </li>
             <li class="login">
-<!--                <a href="#" th:style="'background-image:url(' + ${map.get('img-url')} + ');'"><span>로그인/회원가입</span></a>-->
-<!--                <ul class="login-menu-layer">-->
-<!--                    <li>-->
-<!--                        <a th:href="${map.get('header-li-url-1')}" th:text="${map.get('header-li-menu-1')}">로그인</a>-->
-<!--                    </li>-->
-<!--                    <li>-->
-<!--                        <a th:href="${map.get('header-li-url-2')}" th:text="${map.get('header-li-menu-2')}">회원가입</a>-->
-<!--                    </li>-->
-<!--                </ul>-->
+
+                <a href="#" th:style="${type} == 'header-red'?
+                'background-image:url(' + ${iconNormal} + ');':
+                'background-image:url(' + ${iconRed} + ');'"><span>로그인/회원가입</span></a>
+                <ul class="login-menu-layer">
+                    <li>
+                        <a th:text="${authenticated} == '0'? '로그인':'마이페이지'"
+                           th:href="${authenticated} == '0'? '/auth/login':'/user/info'"></a>
+                    </li>
+                    <li>
+                        <a th:text="${authenticated} == '0'? '회원가입':'로그아웃'"
+                           th:href="${authenticated} == '0'? '/auth/join/user/1':'/logout'"></a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
@@ -62,28 +69,28 @@
                     <li onclick="changeRegionCategory1('세종', 'regionDetailContent1', '1'); return false;"><a href="#">세종</a></li>
                 </ul>
                 <div id="regionDetailContent1">
-<!--                <ul >-->
-                   <!-- <li><a href="#">강남구<span>(376)</span></a></li>
-                    <li><a href="#">강동구<span>(36)</span></a></li>
-                    <li><a href="#">강북구<span>(136)</span></a></li>
-                    <li><a href="#">강서구<span>(83)</span></a></li>
-                    <li><a href="#">관악구<span>(79)</span></a></li>
-                    <li><a href="#">광진구<span>(102)</span></a></li>
-                    <li><a href="#">구로구<span>(4)</span></a></li>
-                    <li><a href="#">금천구<span>(11)</span></a></li>
-                    <li><a href="#">노원구<span>(59)</span></a></li>
-                    <li><a href="#">도봉구<span>(20)</span></a></li>
-                    <li><a href="#">강남구<span>(376)</span></a></li>
-                    <li><a href="#">강동구<span>(36)</span></a></li>
-                    <li><a href="#">강북구<span>(136)</span></a></li>
-                    <li><a href="#">강서구<span>(83)</span></a></li>
-                    <li><a href="#">관악구<span>(79)</span></a></li>
-                    <li><a href="#">광진구<span>(102)</span></a></li>
-                    <li><a href="#">구로구<span>(4)</span></a></li>
-                    <li><a href="#">금천구<span>(11)</span></a></li>
-                    <li><a href="#">노원구<span>(59)</span></a></li>
-                    <li><a href="#">도봉구<span>(20)</span></a></li>-->
-<!--                </ul>-->
+                    <!--                <ul >-->
+                    <!-- <li><a href="#">강남구<span>(376)</span></a></li>
+                     <li><a href="#">강동구<span>(36)</span></a></li>
+                     <li><a href="#">강북구<span>(136)</span></a></li>
+                     <li><a href="#">강서구<span>(83)</span></a></li>
+                     <li><a href="#">관악구<span>(79)</span></a></li>
+                     <li><a href="#">광진구<span>(102)</span></a></li>
+                     <li><a href="#">구로구<span>(4)</span></a></li>
+                     <li><a href="#">금천구<span>(11)</span></a></li>
+                     <li><a href="#">노원구<span>(59)</span></a></li>
+                     <li><a href="#">도봉구<span>(20)</span></a></li>
+                     <li><a href="#">강남구<span>(376)</span></a></li>
+                     <li><a href="#">강동구<span>(36)</span></a></li>
+                     <li><a href="#">강북구<span>(136)</span></a></li>
+                     <li><a href="#">강서구<span>(83)</span></a></li>
+                     <li><a href="#">관악구<span>(79)</span></a></li>
+                     <li><a href="#">광진구<span>(102)</span></a></li>
+                     <li><a href="#">구로구<span>(4)</span></a></li>
+                     <li><a href="#">금천구<span>(11)</span></a></li>
+                     <li><a href="#">노원구<span>(59)</span></a></li>
+                     <li><a href="#">도봉구<span>(20)</span></a></li>-->
+                    <!--                </ul>-->
                 </div>
             </div>
 
@@ -146,195 +153,194 @@
     <!-- Global Navigation END -->
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script th:inline="javascript">
-    function changeRegionCategory1(region_name, className, type){
-        document.getElementById(className).innerHTML = ""
-        console.log(event.target.parentElement)
-        $(".top-menu > li").removeClass('active');
-        event.target.parentElement.classList.add('active')
+        function changeRegionCategory1(region_name, className, type){
+            document.getElementById(className).innerHTML = ""
+            console.log(event.target.parentElement)
+            $(".top-menu > li").removeClass('active');
+            event.target.parentElement.classList.add('active')
 
-        $.ajax({
-            url: "/category/region/" + type + "?name=" + region_name,
-            contentType: "application/json",
-            dataType: "json",
-            type:"GET",
-        }).done(function (fragment) {
-            var ul = document.createElement('ul');
-            ul.setAttribute('class','item-list-wrapper');
+            $.ajax({
+                url: "/category/region/" + type + "?name=" + region_name,
+                contentType: "application/json",
+                dataType: "json",
+                type:"GET",
+            }).done(function (fragment) {
+                var ul = document.createElement('ul');
+                ul.setAttribute('class','item-list-wrapper');
+                document.getElementById(className).appendChild(ul);
+                fragment.forEach(renderProductList);
+                // class="active"
+                function renderProductList(element, index, arr) {
+                    var li = document.createElement('li');
 
-            document.getElementById(className).appendChild(ul);
-            fragment.forEach(renderProductList);
-            // class="active"
-            function renderProductList(element, index, arr) {
-                var li = document.createElement('li');
-
-                ul.appendChild(li);
-                if(type=='2'){
-                    if(element.subwayName != null){
-                        li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.subwayName + "</a>";
+                    ul.appendChild(li);
+                    if(type=='2'){
+                        if(element.subwayName != null){
+                            li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.subwayName + "</a>";
+                        }
+                    }else{
+                        li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.districtName + "";
                     }
-                }else{
-                    li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.districtName + "";
                 }
-            }
-        });
-    }
-    $(document).ready(function () {
+            });
+        }
+        $(document).ready(function () {
 
-        $("#mainCategory").click(function () {
-            console.log('main_click')
-            $("li[id*=region]").removeClass("active")
-            $("#region1").addClass("active");
-            $("#regionContent1").show();
-            $("#regionContent2").hide();
-            $("#regionContent3").hide();
-            changeRegionCategory1("서울", 'regionDetailContent1', '1')
-            $("#regionContent1 .top-menu li:eq(0)").addClass("active");
-            return false;
-        });
+            $("#mainCategory").click(function () {
+                console.log('main_click')
+                $("li[id*=region]").removeClass("active")
+                $("#region1").addClass("active");
+                $("#regionContent1").show();
+                $("#regionContent2").hide();
+                $("#regionContent3").hide();
+                changeRegionCategory1("서울", 'regionDetailContent1', '1')
+                $("#regionContent1 .top-menu li:eq(0)").addClass("active");
+                return false;
+            });
 
-        $("#region1").click(function () {
-            console.log('region_click')
-            $("li[id*=region]").removeClass("active")
-            $("div[id*=regionContent]").hide()
-            $("#region1").addClass("active");
-            $("#regionContent1").show();
-            $("#regionContent1 .top-menu li:eq(0)").addClass("active");
-            $(".global-nav").css({"height": "286px"});
-            return false;
-        });
+            $("#region1").click(function () {
+                console.log('region_click')
+                $("li[id*=region]").removeClass("active")
+                $("div[id*=regionContent]").hide()
+                $("#region1").addClass("active");
+                $("#regionContent1").show();
+                $("#regionContent1 .top-menu li:eq(0)").addClass("active");
+                $(".global-nav").css({"height": "286px"});
+                return false;
+            });
 
-        $("#region2").click(function () {
-            console.log('region2_click')
-            $("li[id*=region]").removeClass("active")
-            $("div[id*=regionContent]").hide()
-            // changeRegionCategory2("수도", 'regionDetailContent2', '2')
-            $("#region2").addClass("active");
-            $("#regionContent2").show();
-            $("#gju").hide()
-            $("#daejun").hide()
-            $("#daegu").hide()
-            $("#busan").hide()
-            $("#regionContent2 .top-menu li:eq(0)").addClass("active");
-            $(".global-nav").css({"height": "500px"});
-            $("#regionDetailContent2 .item-list-wrapper li").css({"margin-bottom": "15px"});
-            return false;
-        });
-        $("#sudoMain").click(function () {
-            $(".top-menu > li").removeClass('active');
-            $("#sudo").show()
-            $("#daejun").hide()
-            $("#daegu").hide()
-            $("#busan").hide()
-            $("#gju").hide()
-            $("#regionContent2 .top-menu li:eq(0)").addClass("active");
-            return false;
-        });
-        $("#busanMain").click(function () {
-            $(".top-menu > li").removeClass('active');
-            $("#sudo").hide()
-            $("#daejun").hide()
-            $("#daegu").hide()
-            $("#busan").show()
-            $("#gju").hide()
-            $("#regionContent2 .top-menu li:eq(1)").addClass("active");
-            return false;
-        });
-        $("#daejunMain").click(function () {
-            $(".top-menu > li").removeClass('active');
-            $("#sudo").hide()
-            $("#daejun").show()
-            $("#daegu").hide()
-            $("#busan").hide()
-            $("#gju").hide()
-            $("#regionContent2 .top-menu li:eq(4)").addClass("active");
-            return false;
-        });
-        $("#daeguMain").click(function () {
-            $(".top-menu > li").removeClass('active');
-            $("#sudo").hide()
-            $("#daejun").hide()
-            $("#daegu").show()
-            $("#busan").hide()
-            $("#gju").hide()
-            $("#regionContent2 .top-menu li:eq(2)").addClass("active");
-            return false;
-        });
-        $("#gjuMain").click(function () {
-            $(".top-menu > li").removeClass('active');
-            $("#sudo").hide()
-            $("#daejun").hide()
-            $("#daegu").hide()
-            $("#busan").hide()
-            $("#gju").show()
-            $("#regionContent2 .top-menu li:eq(3)").addClass("active");
-            return false;
-        });
-        $("#region3").click(function () {
-            console.log('region3_click')
-            $(".global-nav").css({"height": "286px"});
-            $("li[id*=region]").removeClass("active")
-            $("div[id*=regionContent]").hide()
+            $("#region2").click(function () {
+                console.log('region2_click')
+                $("li[id*=region]").removeClass("active")
+                $("div[id*=regionContent]").hide()
+                // changeRegionCategory2("수도", 'regionDetailContent2', '2')
+                $("#region2").addClass("active");
+                $("#regionContent2").show();
+                $("#gju").hide()
+                $("#daejun").hide()
+                $("#daegu").hide()
+                $("#busan").hide()
+                $("#regionContent2 .top-menu li:eq(0)").addClass("active");
+                $(".global-nav").css({"height": "500px"});
+                $("#regionDetailContent2 .item-list-wrapper li").css({"margin-bottom": "15px"});
+                return false;
+            });
+            $("#sudoMain").click(function () {
+                $(".top-menu > li").removeClass('active');
+                $("#sudo").show()
+                $("#daejun").hide()
+                $("#daegu").hide()
+                $("#busan").hide()
+                $("#gju").hide()
+                $("#regionContent2 .top-menu li:eq(0)").addClass("active");
+                return false;
+            });
+            $("#busanMain").click(function () {
+                $(".top-menu > li").removeClass('active');
+                $("#sudo").hide()
+                $("#daejun").hide()
+                $("#daegu").hide()
+                $("#busan").show()
+                $("#gju").hide()
+                $("#regionContent2 .top-menu li:eq(1)").addClass("active");
+                return false;
+            });
+            $("#daejunMain").click(function () {
+                $(".top-menu > li").removeClass('active');
+                $("#sudo").hide()
+                $("#daejun").show()
+                $("#daegu").hide()
+                $("#busan").hide()
+                $("#gju").hide()
+                $("#regionContent2 .top-menu li:eq(4)").addClass("active");
+                return false;
+            });
+            $("#daeguMain").click(function () {
+                $(".top-menu > li").removeClass('active');
+                $("#sudo").hide()
+                $("#daejun").hide()
+                $("#daegu").show()
+                $("#busan").hide()
+                $("#gju").hide()
+                $("#regionContent2 .top-menu li:eq(2)").addClass("active");
+                return false;
+            });
+            $("#gjuMain").click(function () {
+                $(".top-menu > li").removeClass('active');
+                $("#sudo").hide()
+                $("#daejun").hide()
+                $("#daegu").hide()
+                $("#busan").hide()
+                $("#gju").show()
+                $("#regionContent2 .top-menu li:eq(3)").addClass("active");
+                return false;
+            });
+            $("#region3").click(function () {
+                console.log('region3_click')
+                $(".global-nav").css({"height": "286px"});
+                $("li[id*=region]").removeClass("active")
+                $("div[id*=regionContent]").hide()
 
-            changeRegionCategory1("서울", 'regionDetailContent3', '3')
-            $("#region3").addClass("active");
-            $("#regionContent3").show();
-            // if (status == "none") {
-            //     $("#hidden").css("display", "");
-            // } else {
-            //     $("#hidden").css("display", "none");
-            // }
-        });
+                changeRegionCategory1("서울", 'regionDetailContent3', '3')
+                $("#region3").addClass("active");
+                $("#regionContent3").show();
+                // if (status == "none") {
+                //     $("#hidden").css("display", "");
+                // } else {
+                //     $("#hidden").css("display", "none");
+                // }
+            });
 
-        $("#region4").click(function () {
-            console.log('region4_click')
-            $(".global-nav").css({"height": "286px"});
-            navigator.geolocation.getCurrentPosition(success, error, options);
-
-
-        });
-
-        var options = {
-            enableHighAccuracy : true,
-            timeout : 5000,
-            maximumAge : 0
-        };
-
-        function success(pos) {
-            var crd = pos.coords;
-            console.log('위도 : ' + crd.latitude);
-            console.log('경도: ' + crd.longitude);
-            lat = crd.latitude;
-            lon = crd.longitude;
-
-            location.href="/shop/location/" + lat + "/" + lon + "/red";
-            // $.ajax({
-            //     url : 'https://dapi.kakao.com/v2/local/geo/coord2address.json?x=' + lon +'&y=' + lat,
-            //     type : 'GET',
-            //     headers : {
-            //         'Authorization' : 'KakaoAK 70474aee6f5d5b3f646a752c232a52f4'
-            //     },
-            //     success : function(data) {
-            //         console.log(data);
-            //         let depth1 = data.documents[0].address.region_1depth_name;
-            //         let depth2 = data.documents[0].address.region_2depth_name;
-            //         let depth3 = data.documents[0].address.region_3depth_name;
-            //         console.log(depth1)
-            //         console.log(depth2)
-            //
-            //     },
-            //     error: function(e) {
-            //         console.log(e);
-            //     }
-            // });
-    };
-
-        function error(err) {
-            console.warn('ERROR(' + err.code + '): ' + err.message);
-        };
+            $("#region4").click(function () {
+                console.log('region4_click')
+                $(".global-nav").css({"height": "286px"});
+                navigator.geolocation.getCurrentPosition(success, error, options);
 
 
+            });
 
-    })
+            var options = {
+                enableHighAccuracy : true,
+                timeout : 5000,
+                maximumAge : 0
+            };
+
+            function success(pos) {
+                var crd = pos.coords;
+                console.log('위도 : ' + crd.latitude);
+                console.log('경도: ' + crd.longitude);
+                lat = crd.latitude;
+                lon = crd.longitude;
+
+                location.href="/shop/location/" + lat + "/" + lon + "/red";
+                // $.ajax({
+                //     url : 'https://dapi.kakao.com/v2/local/geo/coord2address.json?x=' + lon +'&y=' + lat,
+                //     type : 'GET',
+                //     headers : {
+                //         'Authorization' : 'KakaoAK 70474aee6f5d5b3f646a752c232a52f4'
+                //     },
+                //     success : function(data) {
+                //         console.log(data);
+                //         let depth1 = data.documents[0].address.region_1depth_name;
+                //         let depth2 = data.documents[0].address.region_2depth_name;
+                //         let depth3 = data.documents[0].address.region_3depth_name;
+                //         console.log(depth1)
+                //         console.log(depth2)
+                //
+                //     },
+                //     error: function(e) {
+                //         console.log(e);
+                //     }
+                // });
+            };
+
+            function error(err) {
+                console.warn('ERROR(' + err.code + '): ' + err.message);
+            };
+
+
+
+        })
     </script>
 </header>
 </html>

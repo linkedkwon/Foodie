@@ -243,21 +243,22 @@
                     <a href="javascript:void(0)" class="btn btn-primary" onclick="addReview()">등록하기</a>
                   </div>
 
-                  <ul class="comment-list">
+                  <ul class="comment-list" th:each="item : ${reviews}">
                     <li>
-                      <span class="user-id">선우지환</span>
-                      <span class="point point4_5"></span>
-                      <div class="comment">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
-                    </li>
-                    <li>
-                      <span class="user-id">선우지환</span>
-                      <span class="point point4_5"></span>
-                      <div class="comment">모던한식의 정수를 느끼기에 부족함이 없는 곳.</div>
+                      <span class="user-id" th:text="${item.userName}"></span>
+                      <span class="point point4_5" th:text="${item.starRating}"></span>
+                      <div class="comment" th:text="${item.content}"></div>
                     </li>
                   </ul>
+
+                  <div class="pagination" style="margin-top: 30px;">
+                    <a th:href="${btnUrls.get('prev')}" class="prev"></a>
+                    <a th:each="item : ${paginations}" th:href="${item.path}"
+                       th:text="${item.idx}" th:class="${item.classValue}"></a>
+                    <a th:href="${btnUrls.get('next')}" class="next"></a>
+                  </div>
                 </div>
               </div>
-
             </div>
             <!-- 실제 컨텐츠 영역 END -->
           </div>

@@ -19,13 +19,14 @@
 <body>
 <div id="app">
   <!-- header -->
-  <div th:replace="./fragments/main-header.html"/>
+  <div th:replace="/fragments/main-header.html :: type('default', 'height:114px;')"/>
+
   <!-- Contents -->
   <div id="contents">
     <div class="main-banner">
-      <img class="mySlides" src="../images/1@2x.png" style="width: 100%;height: 100%;">
-      <img class="mySlides" src="../images/2@2x.png" style="width:100%;height: 100%;">
-      <img class="mySlides" src="../images/3@2x.png" style="width:100%;height: 100%;">
+      <img class="mySlides" src="../images/1@2x.png" style="width:auto;height:100%;">
+      <img class="mySlides" src="../images/2@2x.png" style="width:auto;height:100%;">
+      <img class="mySlides" src="../images/3@2x.png" style="width:auto;height:100%;">
 <!--      <button class="w3-button w3-black w3-display-left" style="top: 57%;left: 10%;" onclick="plusDivs(-1)">&#10094;</button>-->
 <!--      <button class="w3-button w3-black w3-display-right"style="top: 57%;right: 10%;" onclick="plusDivs(1)">&#10095;</button>-->
     </div>

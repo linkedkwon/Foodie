@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
     Optional<Integer> countByUserId(int userId);
+    Optional<Integer> countByShopId(int shopId);
 }

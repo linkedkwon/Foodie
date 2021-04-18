@@ -2,6 +2,8 @@ package kr.foodie.service;
 
 import kr.foodie.domain.shop.Shop;
 import kr.foodie.repo.ShopRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,28 +17,36 @@ public class ShopService {
         this.shopRepository = shopRepository;
     }
 
-    public List<Shop> getAdminShopInfos(String shopType) {
-        return shopRepository.findByShopType(shopType);
+    public List<Shop> getShopInfos(String regionTypeId, String shopType, int idx, int interval) {
+        return shopRepository.findByRegionTypeIdAndShopTypeAndOrderIsNull(regionTypeId, shopType,
+                PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
     }
 
-    public List<Shop> getShopInfos(String regionTypeId, String shopType) {
-        return shopRepository.findByRegionTypeIdAndShopTypeAndOrderIsNull(regionTypeId, shopType);
-    }
     public List<Shop> getShopInfosWithOrder(String regionTypeId, String shopType, Integer num) {
         return shopRepository.findByRegionTypeIdAndShopTypeAndOrderIsLessThan(regionTypeId, shopType, num);
     }
+
     public List<Shop> getShopInfosWithSideOrder(String regionTypeId, String shopType, Integer num) {
         return shopRepository.findByRegionTypeIdAndShopTypeAndOrderIsGreaterThan(regionTypeId, shopType, num);
     }
+
     public List<Shop> getShopDetail(Integer shopId) {
         return shopRepository.findByShopId(shopId);
     }
+
     public List<Shop> getShopInfoByType(Integer type) {
         return shopRepository.findShopInfoByType(type);
     }
 
-
     public List<Shop> getShopInfoByAddress(String lat, String lng, String shopType) {
         return shopRepository.findByAddressContaining(lat, lng, shopType);
+    }
+
+    public int getItemSizeByRegionTypeAndShopType(String regionType, String shopType){
+        return shopRepository.countByRegionTypeIdAndShopType(regionType, shopType).orElseGet(()->{return 0;});
+    }
+
+    public List<Shop> getAdminShopInfos(String shopType) {
+        return shopRepository.findByShopType(shopType);
     }
 }

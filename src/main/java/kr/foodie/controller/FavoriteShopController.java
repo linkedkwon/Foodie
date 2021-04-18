@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/user/favorite")
 public class FavoriteShopController {
 
-    private static final String url = "favorite";
+    private static final String url = "/user/favorite/";
     private static final int interval = 5;
 
     @Autowired
