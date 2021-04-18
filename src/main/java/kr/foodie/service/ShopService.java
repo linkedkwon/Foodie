@@ -15,6 +15,10 @@ public class ShopService {
         this.shopRepository = shopRepository;
     }
 
+    public List<Shop> getAdminShopInfos(String shopType) {
+        return shopRepository.findByShopType(shopType);
+    }
+
     public List<Shop> getShopInfos(String regionTypeId, String shopType) {
         return shopRepository.findByRegionTypeIdAndShopTypeAndOrderIsNull(regionTypeId, shopType);
     }

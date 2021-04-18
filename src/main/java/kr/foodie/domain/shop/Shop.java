@@ -1,11 +1,13 @@
 package kr.foodie.domain.shop;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 
 @Entity
@@ -91,5 +93,11 @@ public class Shop {
 
     @Column(name = "INSTA_KEYWORD")
     private String instaKeyword;
+
+    @Column(name = "UPDATED_AT")
+    private Date updatedAt;
+
+    @Column(name = "CREATED_AT")
+    private Date createdAt;
 
 }

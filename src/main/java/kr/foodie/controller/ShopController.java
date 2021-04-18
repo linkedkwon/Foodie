@@ -65,7 +65,7 @@ public class ShopController {
     public ModelAndView getShopDetail(@PathVariable Integer shopId, @AuthenticationPrincipal AuthUserDetails userDetails){
         ModelAndView mav = new ModelAndView();
 
-        List<Shop> commentList;
+        List<Shop> commentList;ShopService.java
         List<HashTag> hashTags;
         commentList = shopService.getShopDetail(shopId);
         hashTags = tagService.getHashTags(shopId);

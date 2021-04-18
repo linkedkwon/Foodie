@@ -38,4 +38,14 @@ public class RouteController {
     public String renderDetailRed(){
         return "detail-red";
     }
+
+    @GetMapping("/admin/index")
+    public String renderAdminIndex(){
+        return "admin-index";
+    }
+
+//    @GetMapping("/admin/shop/red")
+//    public String renderAdminShopRed(){
+//        return "admin-shop-list";
+//    }
 }
