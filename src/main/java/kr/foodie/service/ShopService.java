@@ -19,7 +19,7 @@ public class ShopService {
 
     public List<Shop> getShopInfos(String regionTypeId, String shopType, int idx, int interval) {
         return shopRepository.findByRegionTypeIdAndShopTypeAndOrderIsNull(regionTypeId, shopType,
-                PageRequest.of(idx,interval,Sort.by("createdDate").descending())).getContent();
+                PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
     }
 
     public List<Shop> getShopInfosWithOrder(String regionTypeId, String shopType, Integer num) {

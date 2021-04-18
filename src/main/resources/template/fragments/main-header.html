@@ -152,29 +152,16 @@
     <!-- Global Navigation END -->
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script th:inline="javascript">
-
-    function changeRegionCategory1(region_name, className, type){
-        document.getElementById(className).innerHTML = ""
-        console.log(event.target.parentElement)
-        $(".top-menu > li").removeClass('active');
-        event.target.parentElement.classList.add('active')
-
-        $.ajax({
-            url: "/category/region/" + type + "?name=" + region_name,
-            contentType: "application/json",
-            dataType: "json",detail-green
-            type:"GET",
-        }).done(function (fragment) {
-            var ul = document.createElement('ul');
-            ul.setAttribute('class','item-list-wrapper');
-
         function changeRegionCategory1(region_name, className, type){
             document.getElementById(className).innerHTML = ""
             console.log(event.target.parentElement)
             $(".top-menu > li").removeClass('active');
             event.target.parentElement.classList.add('active')
+
             $.ajax({
                 url: "/category/region/" + type + "?name=" + region_name,
+                contentType: "application/json",
+                dataType: "json",
                 type:"GET",
             }).done(function (fragment) {
                 var ul = document.createElement('ul');
@@ -199,21 +186,11 @@
         }
         $(document).ready(function () {
 
-        $("#mainCategory").click(function () {
-            console.log('main_click')
-            $("li[id*=region]").removeClass("active")
-            $("#region1").addClass("active");
-            $("#regionContent1").show();
-            $("#regionContent2").hide();
-            $("#regionContent3").hide();
-            changeRegionCategory1("서울", 'regionDetailContent1', '1')
-            $("#regionContent1 .top-menu li:eq(0)").addClass("active");
-            return false;
-        });
-
             $("#mainCategory").click(function () {
                 console.log('main_click')
+                $("li[id*=region]").removeClass("active")
                 $("#region1").addClass("active");
+                $("#regionContent1").show();
                 $("#regionContent2").hide();
                 $("#regionContent3").hide();
                 changeRegionCategory1("서울", 'regionDetailContent1', '1')
@@ -304,54 +281,6 @@
                 $("li[id*=region]").removeClass("active")
                 $("div[id*=regionContent]").hide()
 
-
-        $("#region4").click(function () {
-            console.log('region4_click')
-            $(".global-nav").css({"height": "286px"});
-            navigator.geolocation.getCurrentPosition(success, error, options);
-
-
-        });
-
-        var options = {
-            enableHighAccuracy : true,
-            timeout : 5000,
-            maximumAge : 0
-        };
-
-        function success(pos) {
-            var crd = pos.coords;
-            console.log('위도 : ' + crd.latitude);
-            console.log('경도: ' + crd.longitude);
-            lat = crd.latitude;
-            lon = crd.longitude;
-
-            location.href="/shop/location/" + lat + "/" + lon + "/red";
-            // $.ajax({
-            //     url : 'https://dapi.kakao.com/v2/local/geo/coord2address.json?x=' + lon +'&y=' + lat,
-            //     type : 'GET',
-            //     headers : {
-            //         'Authorization' : 'KakaoAK 70474aee6f5d5b3f646a752c232a52f4'
-            //     },
-            //     success : function(data) {
-            //         console.log(data);
-            //         let depth1 = data.documents[0].address.region_1depth_name;
-            //         let depth2 = data.documents[0].address.region_2depth_name;
-            //         let depth3 = data.documents[0].address.region_3depth_name;
-            //         console.log(depth1)
-            //         console.log(depth2)
-            //
-            //     },
-            //     error: function(e) {
-            //         console.log(e);
-            //     }
-            // });
-    };
-
-        function error(err) {
-            console.warn('ERROR(' + err.code + '): ' + err.message);
-        };
-
                 changeRegionCategory1("서울", 'regionDetailContent3', '3')
                 $("#region3").addClass("active");
                 $("#regionContent3").show();
@@ -365,22 +294,51 @@
             $("#region4").click(function () {
                 console.log('region4_click')
                 $(".global-nav").css({"height": "286px"});
-                if (navigator.geolocation) {
-                    // 정확한 위치 사용 // 캐시 사용 안함 // timeout 3초 (3000ms)
-                    var positionOptions = {enableHighAccuracy: true, maximumAge: 0, timeout: 3000};
-                    navigator.geolocation.getCurrentPosition(onGeolocationSuccess, onGeolocationFail, positionOptions);
-                }
+                navigator.geolocation.getCurrentPosition(success, error, options);
+
+
             });
 
-            function onGeolocationSuccess(position) {
-                // 좌표 출력
-                console.log("lat: " + position.coords.latitude + ", lon: " + position.coords.longitude);
-            }
+            var options = {
+                enableHighAccuracy : true,
+                timeout : 5000,
+                maximumAge : 0
+            };
 
-            function onGeolocationFail(error) {
-                // 에러 출력
-                console.log("Error Code: " + error.code + ", Error Description: " + error.message);
-            }
+            function success(pos) {
+                var crd = pos.coords;
+                console.log('위도 : ' + crd.latitude);
+                console.log('경도: ' + crd.longitude);
+                lat = crd.latitude;
+                lon = crd.longitude;
+
+                location.href="/shop/location/" + lat + "/" + lon + "/red";
+                // $.ajax({
+                //     url : 'https://dapi.kakao.com/v2/local/geo/coord2address.json?x=' + lon +'&y=' + lat,
+                //     type : 'GET',
+                //     headers : {
+                //         'Authorization' : 'KakaoAK 70474aee6f5d5b3f646a752c232a52f4'
+                //     },
+                //     success : function(data) {
+                //         console.log(data);
+                //         let depth1 = data.documents[0].address.region_1depth_name;
+                //         let depth2 = data.documents[0].address.region_2depth_name;
+                //         let depth3 = data.documents[0].address.region_3depth_name;
+                //         console.log(depth1)
+                //         console.log(depth2)
+                //
+                //     },
+                //     error: function(e) {
+                //         console.log(e);
+                //     }
+                // });
+            };
+
+            function error(err) {
+                console.warn('ERROR(' + err.code + '): ' + err.message);
+            };
+
+
 
         })
     </script>

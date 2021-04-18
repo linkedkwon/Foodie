@@ -90,7 +90,6 @@ public class Shop {
     @Column(name = "INSTA_KEYWORD")
     private String instaKeyword;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CREATED_DATE", updatable = false)
-    private Date createdDate;
+    @Column(name = "CREATED_AT")
+    private Date createdAt;
 }
