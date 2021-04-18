@@ -1,5 +1,7 @@
 //email validation checked value, user type
-var validationChecked = false;
+var validationEmailChecked = false;
+var validationPhoneChecked = false;
+
 document.getElementById("user-type1").value = "0";
 document.getElementById("user-type2").value = "1";
 
@@ -41,7 +43,7 @@ function checkMailValidation(){
 
     //asynchronous send
     $.ajax({
-        url: '/auth/validate/'+email.value,
+        url: '/auth/validate?email='+email.value,
         type: 'GET',
         dataType: 'json',
         success: function (data) {
@@ -53,7 +55,7 @@ function checkMailValidation(){
             else{
                 msg.style.color = "#440fd3";
                 msg.innerText = "사용 가능한 주소입니다.";
-                validationChecked = true;
+                validationEmailChecked = true;
                 console.log(data);
             }
         },
@@ -118,17 +120,49 @@ function checkTel(){
 function checkPhone(){
 
     //replace hyphen to space
-    var phone = document.getElementById("user-phone").value.replace(/\-/g,'');;
+    var phone = document.getElementById("user-phone").value.replace(/\-/g,'');
     var reg = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
     var msg = document.getElementById("phone-msg");
 
     if(phone.length == 0){ msg.innerText ="필수 정보입니다."; return false;}
     if(reg.test(phone) ==  false){ msg.innerText ="형식에 맞지 않는 번호입니다."; return false;}
-    msg.innerText = "";
+
 
     //Adding hyphen to value
     document.getElementById("user-phone").value = phone.replace(/(^02.{0}|^01.{1}|[0-9]{3)([0-9]+)([0-9]{4})/,"$1-$2-$3");
     return true;
+}
+
+function checkPhoneValidation(){
+
+    if(checkPhone() == false)
+        return;
+
+    var phone = document.getElementById("user-phone")
+        .value.replace(/(^02.{0}|^01.{1}|[0-9]{3)([0-9]+)([0-9]{4})/,"$1-$2-$3");
+    var msg = document.getElementById("phone-msg");
+
+    $.ajax({
+        url: '/auth/validate?phoneNum='+phone,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            if(data == 1){
+                msg.style.color = "#FF0000";
+                msg.innerText = "이미 사용 중인 번호입니다.";
+                phone.innerText = "";
+            }
+            else{
+                msg.style.color = "#440fd3";
+                msg.innerText = "사용 가능한 번호입니다.";
+                validationPhoneChecked = true;
+                console.log(data);
+            }
+        },
+        error: function (status, error) {
+            console.log(status, error);
+        }
+    });
 }
 
 //Access Daum post-code api
@@ -217,14 +251,27 @@ function checkFormBeforeSubmit(){
     var list = [checkName(), checkMail(), checkPassword(),
                 matchPassword(), checkTel(), checkPhone(),
                 checkAddress(), checkInfoReceived()];
-    var msg = document.getElementById("email-msg");
+    var emailMsg = document.getElementById("email-msg");
+    var phoneMsg = document.getElementById("phone-msg");
 
     //email validation checked
-    if(validationChecked == false){
-        msg.style.color = "#FF0000";
-        msg.innerText = "이메일 중복을 확인해주세요";
-        return;
+    var flagCnt = 0;
+
+    if(validationEmailChecked == false){
+        emailMsg.style.color = "#FF0000";
+        emailMsg.innerText = "이메일 중복을 확인해주세요";
+        flagCnt++;
     }
+
+    if(validationPhoneChecked == false){
+        phoneMsg.style.color = "#FF0000";
+        phoneMsg.innerText = "이메일 중복을 확인해주세요";
+        flagCnt++;
+    }
+
+    if(flagCnt > 0)
+        return;
+
     //data checked
     if(list.includes(false)) return;
 
@@ -239,11 +286,11 @@ function checkFormBeforeSubmit(){
 
 //oninput methods to delete error-msg on typing
 function oninputName(){$('#name-msg').text('');}
-function oninputEmail(){$('#email-msg').text(''); validationChecked = false;}
+function oninputEmail(){$('#email-msg').text(''); validationEmailChecked = false;}
 function oninputPswd1(){$('#pswd-msg1').text('');}
 function oninputPswd2(){$('#pswd-msg2').text('');}
 function oninputTel(){$('#tel-msg').text('');}
-function oninputPhone(){$('#phone-msg').text('');}
+function oninputPhone(){$('#phone-msg').text(''); validationPhoneChecked = false;}
 function oninputAddress(){$('#address-msg').text('');}
 //radio button click event
 function clickMailBtn(){document.getElementById("mail-receiving-msg").innerText = "";}

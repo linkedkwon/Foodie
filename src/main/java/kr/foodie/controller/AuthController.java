@@ -3,20 +3,21 @@ package kr.foodie.controller;
 import kr.foodie.config.security.auth.AuthUserDetails;
 import kr.foodie.domain.user.User;
 import kr.foodie.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping(path = "/auth")
 public class AuthController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
+    //rendering
     @GetMapping("/join/user/1")
     public String renderSignUpMember(Model model){
         model.addAttribute("user", new User());
@@ -29,14 +30,24 @@ public class AuthController {
         return "signup_restaurants";
     }
 
+    //check validation(=duplication)
     @ResponseBody
-    @GetMapping(value = "/validate/{email}")
-    public String validateEmail(@PathVariable String email){ return userService.validateEmail(email); }
+    @GetMapping(value = "/validate")
+    public String validateEmail(@RequestParam String email){
+        return userService.findEmailValidation(email);
+    }
 
+    @ResponseBody
+    @GetMapping(value = "/validate")
+    public String validatePhoneNum(@RequestParam String phoneNum){
+        return userService.findPhoneNumValidation(phoneNum);
+    }
+
+    //register
     @PostMapping(value = "/register")
     public String register(User user){ return userService.save(user); }
 
-
+    //prevent direct url after authenticated
     @GetMapping("/login/**")
     public String preventSignInAfterAuthenticated(@AuthenticationPrincipal AuthUserDetails userDetails){
         if(userDetails == null)
@@ -45,9 +56,9 @@ public class AuthController {
     }
 
     @GetMapping("/join/**")
-    public String preventSignUpAfterAuthenticatd(@AuthenticationPrincipal AuthUserDetails userDetails){
+    public String preventSignUpAfterAuthenticated(@AuthenticationPrincipal AuthUserDetails userDetails){
         if(userDetails == null)
-            return "/auth/join/user1";
+            return "/auth/join/user/1";
         return "redirect:/";
     }
 }

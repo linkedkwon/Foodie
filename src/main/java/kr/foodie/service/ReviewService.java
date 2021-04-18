@@ -79,10 +79,6 @@ public class ReviewService {
                 .setFirstResult(idx*itemInterval)
                 .setMaxResults(itemInterval);
 
-        List<ReviewDTO> reviews = query.getResultList();
-
-        System.out.println("리뷰에여\n"+reviews);
-
-        return reviews;
+        return query.getResultList();
     }
 }
