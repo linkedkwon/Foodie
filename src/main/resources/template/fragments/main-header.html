@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <header id="header" th:fragment="type(type,height)" th:class="${type}">
     <div class="inner-wrapper">
@@ -31,7 +30,7 @@
                     </li>
                     <li>
                         <a th:text="${authenticated} == '0'? '회원가입':'로그아웃'"
-                           th:href="${authenticated} == '0'? '/auth/join/user/1':'/logout'"></a>
+                           th:href="${authenticated} == '0'? '/auth/join/user1':'/logout'"></a>
                     </li>
                 </ul>
             </li>
@@ -55,7 +54,7 @@
                     <li onclick="changeRegionCategory1('인천', 'regionDetailContent1', '1'); return false;" ><a href="#">인천</a></li>
                     <li onclick="changeRegionCategory1('대전', 'regionDetailContent1', '1'); return false;"><a href="#">대전</a></li>
                     <li onclick="changeRegionCategory1('광주', 'regionDetailContent1', '1'); return false;"><a href="#">광주</a></li>
-                    <li onclick="changeRegionCategory1('대구', 'regionDetailContent1', '1'); return false;"><a href="#">대구</a></li>
+                    <li onclick="changeRegionCategory1('대구x', 'regionDetailContent1', '1'); return false;"><a href="#">대구</a></li>
                     <li onclick="changeRegionCategory1('울산', 'regionDetailContent1', '1'); return false;"><a href="#">울산</a></li>
                     <li onclick="changeRegionCategory1('부산', 'regionDetailContent1', '1'); return false;"><a href="#">부산</a></li>
                     <li onclick="changeRegionCategory1('강원', 'regionDetailContent1', '1'); return false;"><a href="#">강원</a></li>
@@ -102,7 +101,7 @@
                     <li id="gjuMain" ><a href="#">광주</a></li>
                     <li id="daejunMain" ><a href="#">대전</a></li>
                 </ul>
-                <ul id="sudo" class="top-menu" style="margin-top:4px;">
+                <ul id="sudo" class="top-menu">
                     <li onclick="changeRegionCategory1('1호선', 'regionDetailContent2', '2');  return false;"><a href="#">1호선</a></li>
                     <li onclick="changeRegionCategory1('2호선', 'regionDetailContent2', '2');  return false;"><a href="#">2호선</a></li>
                     <li onclick="changeRegionCategory1('3호선', 'regionDetailContent2', '2');  return false;"><a href="#">3호선</a></li>
@@ -154,6 +153,12 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script th:inline="javascript">
         function changeRegionCategory1(region_name, className, type){
+
+            if(region_name == '1호선'){
+                console.log('1호선 전용');
+                return;
+            }
+
             document.getElementById(className).innerHTML = ""
             console.log(event.target.parentElement)
             $(".top-menu > li").removeClass('active');
@@ -174,16 +179,18 @@
                     var li = document.createElement('li');
 
                     ul.appendChild(li);
+
                     if(type=='2'){
                         if(element.subwayName != null){
                             li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.subwayName + "</a>";
                         }
                     }else{
-                        li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.districtName + "";
+                        li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.districtName + "("+element.districtCnt+")";
                     }
                 }
             });
         }
+
         $(document).ready(function () {
 
             $("#mainCategory").click(function () {
@@ -205,7 +212,7 @@
                 $("#region1").addClass("active");
                 $("#regionContent1").show();
                 $("#regionContent1 .top-menu li:eq(0)").addClass("active");
-                $(".global-nav").css({"height": "286px"});
+                $(".global-nav").css({"height": "315px"});
                 return false;
             });
 
@@ -221,7 +228,7 @@
                 $("#daegu").hide()
                 $("#busan").hide()
                 $("#regionContent2 .top-menu li:eq(0)").addClass("active");
-                $(".global-nav").css({"height": "500px"});
+                $(".global-nav").css({"height": "315px"});
                 $("#regionDetailContent2 .item-list-wrapper li").css({"margin-bottom": "15px"});
                 return false;
             });
@@ -277,7 +284,7 @@
             });
             $("#region3").click(function () {
                 console.log('region3_click')
-                $(".global-nav").css({"height": "286px"});
+                $(".global-nav").css({"height": "315px"});
                 $("li[id*=region]").removeClass("active")
                 $("div[id*=regionContent]").hide()
 
@@ -292,8 +299,7 @@
             });
 
             $("#region4").click(function () {
-                console.log('region4_click')
-                $(".global-nav").css({"height": "286px"});
+                $(".global-nav").css({"height": "315px"});
                 navigator.geolocation.getCurrentPosition(success, error, options);
 
 

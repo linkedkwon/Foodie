@@ -49,12 +49,11 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(new AuthenticatedHandler())
                 .addPathPatterns("/")
-                .addPathPatterns("/user/info")
+                .addPathPatterns("/user/*")
                 .addPathPatterns("/auth/**")
                 .addPathPatterns("/shop/**")
-                .addPathPatterns("/user/pw")
                 .addPathPatterns("/help/*")
-                .excludePathPatterns("/auth/validate/**")
+                .excludePathPatterns("/auth/check/**")
                 .excludePathPatterns("/inquiry/**");
     }
 

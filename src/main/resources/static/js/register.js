@@ -43,7 +43,7 @@ function checkMailValidation(){
 
     //asynchronous send
     $.ajax({
-        url: '/auth/validate?email='+email.value,
+        url: '/auth/check/email/'+email.value,
         type: 'GET',
         dataType: 'json',
         success: function (data) {
@@ -138,19 +138,18 @@ function checkPhoneValidation(){
     if(checkPhone() == false)
         return;
 
-    var phone = document.getElementById("user-phone")
+    var phoneNum = document.getElementById("user-phone")
         .value.replace(/(^02.{0}|^01.{1}|[0-9]{3)([0-9]+)([0-9]{4})/,"$1-$2-$3");
     var msg = document.getElementById("phone-msg");
 
     $.ajax({
-        url: '/auth/validate?phoneNum='+phone,
+        url: '/auth/check/phone/'+phoneNum,
         type: 'GET',
         dataType: 'json',
         success: function (data) {
             if(data == 1){
                 msg.style.color = "#FF0000";
                 msg.innerText = "이미 사용 중인 번호입니다.";
-                phone.innerText = "";
             }
             else{
                 msg.style.color = "#440fd3";

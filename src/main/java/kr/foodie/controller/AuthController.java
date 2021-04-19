@@ -18,13 +18,13 @@ public class AuthController {
     private final UserService userService;
 
     //rendering
-    @GetMapping("/join/user/1")
+    @GetMapping("/join/user1")
     public String renderSignUpMember(Model model){
         model.addAttribute("user", new User());
         return "signup";
     }
 
-    @GetMapping("/join/user/2")
+    @GetMapping("/join/user2")
     public String renderSignUpRestaurant(Model model){
         model.addAttribute("user", new User());
         return "signup_restaurants";
@@ -32,14 +32,14 @@ public class AuthController {
 
     //check validation(=duplication)
     @ResponseBody
-    @GetMapping(value = "/validate")
-    public String validateEmail(@RequestParam String email){
+    @GetMapping(value = "/check/email/{email}")
+    public String validateEmail(@PathVariable String email){
         return userService.findEmailValidation(email);
     }
 
     @ResponseBody
-    @GetMapping(value = "/validate")
-    public String validatePhoneNum(@RequestParam String phoneNum){
+    @GetMapping(value = "/check/phone/{phoneNum}")
+    public String validatePhoneNum(@PathVariable String phoneNum){
         return userService.findPhoneNumValidation(phoneNum);
     }
 
@@ -58,7 +58,7 @@ public class AuthController {
     @GetMapping("/join/**")
     public String preventSignUpAfterAuthenticated(@AuthenticationPrincipal AuthUserDetails userDetails){
         if(userDetails == null)
-            return "/auth/join/user/1";
+            return "/auth/join/user1";
         return "redirect:/";
     }
 }

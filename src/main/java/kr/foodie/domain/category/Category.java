@@ -23,4 +23,7 @@ public class Category {
 
     @Column(name = "REGION_TYPE")
     private String regionType;
+
+    @Column(name = "DISTRICT_COUNT")
+    private Integer districtCnt;
 }
