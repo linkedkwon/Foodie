@@ -49,6 +49,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(new AuthenticatedHandler())
                 .addPathPatterns("/")
+                .addPathPatterns("/*")
                 .addPathPatterns("/user/*")
                 .addPathPatterns("/auth/**")
                 .addPathPatterns("/shop/**")
