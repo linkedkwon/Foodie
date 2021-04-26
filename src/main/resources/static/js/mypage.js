@@ -161,8 +161,8 @@ function checkFormBeforeEdit(){
 
 function deleteFavoriteItem(shopId){
     $.ajax({
-        url: '/user/favorite/delete/item/'+shopId,
-        type: 'GET',
+        url: '/user/favorite/item/'+shopId,
+        type: 'DELETE',
         dataType: 'json',
         success: function (data) {
             if(data == 1){
@@ -182,8 +182,8 @@ function hideDeleteAllPopUp(){ document.getElementById("all-delete-modal").style
 function deleteAll(){
 
     $.ajax({
-        url: '/user/favorite/delete/item/all',
-        type: 'GET',
+        url: '/user/favorite/item',
+        type: 'DELETE',
         dataType: 'json',
         success: function (data) {
             if(data == 1){

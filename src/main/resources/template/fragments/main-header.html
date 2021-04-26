@@ -30,7 +30,7 @@
                     </li>
                     <li>
                         <a th:text="${authenticated} == '0'? '회원가입':'로그아웃'"
-                           th:href="${authenticated} == '0'? '/auth/join/user1':'/logout'"></a>
+                           th:href="${authenticated} == '0'? '/auth/join/user/1':'/logout'"></a>
                     </li>
                 </ul>
             </li>
@@ -133,7 +133,6 @@
                     <li onclick="changeRegionCategory1('대전 1호선', 'regionDetailContent2', '2');  return false;"><a href="#">대전 1호선</a></li>
                 </ul>
                 <ul class="item-list-wrapper" id="regionDetailContent2" style="padding: 3px 0 0 0px;">
-
                 </ul>
             </div>
 
@@ -147,6 +146,7 @@
     <style>
         #regionDetailContent2 > ul > li {
             margin-bottom: 15px !important;
+            width: 160px;
         }
     </style>
     <!-- Global Navigation END -->
@@ -155,7 +155,6 @@
         function changeRegionCategory1(region_name, className, type){
 
             document.getElementById(className).innerHTML = ""
-            console.log(event.target.parentElement)
 
             if(type == 1) {
                 $(".top-menu > li").removeClass('active');
@@ -198,7 +197,6 @@
         $(document).ready(function () {
 
             $("#mainCategory").click(function () {
-                console.log('main_click')
                 $("li[id*=region]").removeClass("active")
                 $("#region1").addClass("active");
                 $("#regionContent1").show();
@@ -210,7 +208,6 @@
             });
 
             $("#region1").click(function () {
-                console.log('region_click')
                 $(".top-menu > li").removeClass("active");
                 $("li[id*=region]").removeClass("active")
                 $("div[id*=regionContent]").hide()
@@ -223,7 +220,6 @@
             });
 
             $("#region2").click(function () {
-                console.log('region2_click')
                 $(".top-menu > li").removeClass("active");
                 $("li[id*=region]").removeClass("active");
                 $("div[id*=regionContent]").hide()
@@ -299,7 +295,6 @@
                 return false;
             });
             $("#region3").click(function () {
-                console.log('region3_click')
                 $(".global-nav").css({"height": "315px"});
                 $("li[id*=region]").removeClass("active")
                 $("div[id*=regionContent]").hide()
@@ -329,8 +324,6 @@
 
             function success(pos) {
                 var crd = pos.coords;
-                console.log('위도 : ' + crd.latitude);
-                console.log('경도: ' + crd.longitude);
                 lat = crd.latitude;
                 lon = crd.longitude;
 

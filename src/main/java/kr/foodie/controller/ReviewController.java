@@ -3,7 +3,7 @@ package kr.foodie.controller;
 import kr.foodie.config.security.auth.AuthUserDetails;
 import kr.foodie.service.PaginationService;
 import kr.foodie.service.ReviewService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/user/review")
 public class ReviewController {
@@ -18,18 +20,8 @@ public class ReviewController {
     private static final String url = "/user/review/";
     private static final int interval = 6;
 
-    @Autowired
-    private ReviewService reviewService;
-
-    @Autowired
-    private PaginationService paginationService;
-
-    @ResponseBody
-    @PostMapping("/item")
-    public String addReview(int shopId, String starRating, String content,
-                            @AuthenticationPrincipal AuthUserDetails userDetails){
-        return reviewService.addItem(userDetails.getUser().getId(), shopId, starRating, content);
-    }
+    private final ReviewService reviewService;
+    private final PaginationService paginationService;
 
     @GetMapping({"","/{path}"})
     public String renderUserReview(@PathVariable Optional<String> path, Model model,
@@ -49,5 +41,19 @@ public class ReviewController {
         model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, interval, url));
 
         return "mypage_tab3";
+    }
+
+    @ResponseBody
+    @PostMapping("/item")
+    public String addReview(int shopId, String starRating, String content,
+                            @AuthenticationPrincipal AuthUserDetails userDetails){
+        return reviewService.addItem(userDetails.getUser().getId(), shopId, starRating, content);
+    }
+
+    @ResponseBody
+    @DeleteMapping("/item/{idx}")
+    public String deleteReview(@PathVariable int idx,
+                               @AuthenticationPrincipal AuthUserDetails userDetails){
+        return "";
     }
 }

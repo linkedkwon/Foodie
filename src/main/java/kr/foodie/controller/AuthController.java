@@ -17,20 +17,18 @@ public class AuthController {
 
     private final UserService userService;
 
-    //rendering
-    @GetMapping("/join/user1")
+    @GetMapping("/join/user/1")
     public String renderSignUpMember(Model model){
         model.addAttribute("user", new User());
         return "signup";
     }
 
-    @GetMapping("/join/user2")
+    @GetMapping("/join/user/2")
     public String renderSignUpRestaurant(Model model){
         model.addAttribute("user", new User());
         return "signup_restaurants";
     }
 
-    //check validation(=duplication)
     @ResponseBody
     @GetMapping(value = "/check/email/{email}")
     public String validateEmail(@PathVariable String email){

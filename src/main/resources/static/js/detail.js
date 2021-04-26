@@ -9,7 +9,7 @@ function addFavoriteShop(){
     const shopId = url.substring(url.lastIndexOf('/') + 1);
 
     $.ajax({
-        url: '/user/favorite/shop/'+shopId,
+        url: '/user/favorite/item/'+shopId,
         type: 'GET',
         dataType: 'json',
         success: function (data) {

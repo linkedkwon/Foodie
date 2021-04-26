@@ -3,7 +3,7 @@ package kr.foodie.controller;
 import kr.foodie.config.security.auth.AuthUserDetails;
 import kr.foodie.service.FavoriteShopService;
 import kr.foodie.service.PaginationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/user/favorite")
 public class FavoriteShopController {
@@ -19,18 +20,8 @@ public class FavoriteShopController {
     private static final String url = "/user/favorite/";
     private static final int interval = 5;
 
-    @Autowired
-    private FavoriteShopService favoriteShopService;
-
-    @Autowired
-    private PaginationService paginationService;
-
-    @ResponseBody
-    @GetMapping("/shop/{shopId}")
-    public String addFavoriteShop(@PathVariable String shopId,
-                                  @AuthenticationPrincipal AuthUserDetails obj){
-        return favoriteShopService.addItem(obj.getUser().getId(), Integer.parseInt(shopId));
-    }
+    private final FavoriteShopService favoriteShopService;
+    private final PaginationService paginationService;
 
     @GetMapping({"","/{path}"})
     public String renderUserFavoriteShop(@PathVariable Optional<String> path, Model model,
@@ -51,15 +42,22 @@ public class FavoriteShopController {
     }
 
     @ResponseBody
-    @GetMapping("/delete/item/{shopId}")
-    public String deleteItem(@PathVariable String shopId,
-                             @AuthenticationPrincipal AuthUserDetails obj){
-        return favoriteShopService.deleteItem(obj.getUser().getId(), Integer.parseInt(shopId));
+    @GetMapping("/item/{idx}")
+    public String addItem(@PathVariable String idx,
+                                  @AuthenticationPrincipal AuthUserDetails obj){
+        return favoriteShopService.addItem(obj.getUser().getId(), Integer.parseInt(idx));
     }
 
     @ResponseBody
-    @GetMapping("/delete/item/all")
-    public String deleteAllItem(@AuthenticationPrincipal AuthUserDetails obj){
+    @DeleteMapping("/item/{idx}")
+    public String deleteItem(@PathVariable String idx,
+                             @AuthenticationPrincipal AuthUserDetails obj){
+        return favoriteShopService.deleteItem(obj.getUser().getId(), Integer.parseInt(idx));
+    }
+
+    @ResponseBody
+    @DeleteMapping("/item")
+    public String deleteItems(@AuthenticationPrincipal AuthUserDetails obj){
         return favoriteShopService.deleteAllItem(obj.getUser().getId());
     }
 }

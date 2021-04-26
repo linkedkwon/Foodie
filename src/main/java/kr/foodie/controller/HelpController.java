@@ -42,17 +42,13 @@ public class HelpController {
         return encryptedCode;
     }
 
-    @GetMapping("/help/reset")
+    @GetMapping("/help/pw")
     public String renderResetPw(@RequestParam String email){
         return "reset-pw";
     }
 
-    /**
-     * exceptional(not designed to rest)
-     * only use for help controller with encrypted qs
-     */
-    @PutMapping("/user/pw")
-    public String updatePwByEncryptedCode(String encryptedCode, String password){
+    @PostMapping("/help/pw")
+    public String updatePwByEncryptedCode(String password, String encryptedCode){
         userService.updatePassword(cacheService.findByEncryptedCode(encryptedCode), password);
         return "redirect:/auth/login";
     }

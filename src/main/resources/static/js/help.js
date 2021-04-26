@@ -109,7 +109,7 @@ function submitCode(){
             }
             else{
                 console.log("성공");
-                window.location.href = "/help/reset?email="+data;
+                window.location.href = "/help/pw?email="+data;
             }
         },
         error: function(status, error){
