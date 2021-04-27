@@ -46,7 +46,15 @@
               <div class="user-id" th:text="${item.userName}"></div>
               <div class="title" th:text="${item.content}"></div>
               <div class="restaurant-name" th:text="${item.shopName}"></div>
-              <div class="score" th:text="'감동('+${item.starRating}+'점)'">
+              <div class="score">
+                <th:block th:switch="${item.starRating}">
+                  <img class="star-img" th:case="5" src="/images/ico-point-5-active.png"/>
+                  <img class="star-img" th:case="4.5" src="/images/ico-point-4_5-active.png"/>
+                  <img class="star-img" th:case="4" src="/images/ico-point-4-active.png"/>
+                  <img class="star-img" th:case="3" src="/images/ico-point-3-active.png"/>
+                  <img class="star-img" th:case="2" src="/images/ico-point-2-active.png"/>
+                </th:block>
+                <span class="score" th:text="'감동('+${item.starRating}+'점)'"/>
               </div>
             </li>
           </ul>
