@@ -33,6 +33,7 @@
         <div class="inner">
           <div class="title-group">
             <h3>내가 쓴 글 <span th:text="${size}"/></h3>
+            <a href="javascript:void(0)" class="remove-all" onclick="displayDeleteAllPopUp()">전체삭제</a>
           </div>
 
           <ul class="my-comments">
@@ -44,7 +45,7 @@
             </li>
             <li th:each="item : ${reviews}">
               <div class="user-id" th:text="${item.userName}"></div>
-              <div class="title" th:text="${item.content}"></div>
+              <div class="title" style="width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" th:text="${item.content}"></div>
               <div class="restaurant-name" th:text="${item.shopName}"></div>
               <div class="score">
                 <th:block th:switch="${item.starRating}">
@@ -56,6 +57,9 @@
                 </th:block>
                 <span class="score" th:text="'감동('+${item.starRating}+'점)'"/>
               </div>
+              <a href="javascript:void(0)" class="delete-btn" th:onclick="|javascript:deleteReview('${item.reviewId}')|">
+                삭제
+              </a>
             </li>
           </ul>
 
@@ -68,6 +72,28 @@
         </div> 
       </div>
     </div>
+
+  <!--modal delete all-->
+  <div class="modal-popup" id="all-delete-modal" style="display: none">
+    <div class="modal-backdrop"></div>
+    <div class="modal-body">
+      <div class="icon">
+        <picture>
+          <source srcset="/images/ico-modal-exmark@2x.png 2x">
+          <img src="/images/ico-modal-exmark.png" alt="">
+        </picture>
+      </div>
+      <div class="message">
+        전체 삭제시 <strong th:text="${size}"></strong>개의 댓글 목록이 사라집니다.<br/>
+        삭제하시겠습니까?
+      </div>
+
+      <div class="btn-area">
+        <a href="javascript:void(0)" class="btn btn-primary" onclick="deleteAll(2)">삭제하기</a>
+        <a href="javascript:void(0)" class="btn btn-disabled" onclick="hideDeleteAllPopUp()">돌아가기</a>
+      </div>
+    </div>
+  </div>
 
     <!-- footer -->
     <div th:replace="/fragments/main-footer.html"></div>

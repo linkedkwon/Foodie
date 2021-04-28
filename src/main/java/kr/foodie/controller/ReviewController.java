@@ -52,8 +52,11 @@ public class ReviewController {
 
     @ResponseBody
     @DeleteMapping("/item/{idx}")
-    public String deleteReview(@PathVariable int idx,
-                               @AuthenticationPrincipal AuthUserDetails userDetails){
-        return "";
+    public String deleteReview(@PathVariable int idx){ return reviewService.deleteItemByReviewId(idx); }
+
+    @ResponseBody
+    @DeleteMapping("/item")
+    public String deleteReviewItems(@AuthenticationPrincipal AuthUserDetails obj){
+        return reviewService.deleteAllItem(obj.getUser().getId());
     }
 }

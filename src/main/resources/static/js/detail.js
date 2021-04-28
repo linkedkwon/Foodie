@@ -87,3 +87,20 @@ function checkBeforeAddReview(){
 
     return starFlag && commentFlag;
 }
+
+function deleteReview(reviewId){
+    $.ajax({
+        url: '/user/review/item/'+reviewId,
+        type: 'DELETE',
+        dataType: 'json',
+        success: function (data) {
+            if(data == 1){
+                alert('정상적으로 삭제되었습니다.');
+                location.reload();
+            }
+        },
+        error: function (status, error) {
+            console.log(status, error);
+        }
+    });
+}

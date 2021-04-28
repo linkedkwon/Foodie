@@ -72,7 +72,7 @@ public class ShopController {
         mav.addObject("paginations", paginationService.getPagination(size, idx, reviewInterval, url));
         mav.addObject("btnUrls", paginationService.getPaginationBtn(size, idx, reviewInterval, url));
         mav.addObject("payload", commentList);
-        mav.addObject("user", userDetails);
+        mav.addObject("userId", (userDetails != null)? userDetails.getUser().getId():0);
 
         if(commentList.size() > 0){
             Integer background = commentList.get(0).getBackground();

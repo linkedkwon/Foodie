@@ -251,6 +251,10 @@
                       <span th:case="2" class="point point2"></span>
                     </th:block>
                     <div class="comment" th:text="${item.content}"></div>
+                    <a href="javascript:void(0)" class="delete-btn" th:style="${item.userId} == ${userId} ? 'display:block' : 'display:none'"
+                       th:onclick="|javascript:deleteReview('${item.reviewId}')|">
+                      삭제
+                    </a>
                   </li>
                 </ul>
 

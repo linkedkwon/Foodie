@@ -179,16 +179,36 @@ function deleteFavoriteItem(shopId){
 function displayDeleteAllPopUp(){ document.getElementById("all-delete-modal").style.display = "block";}
 function hideDeleteAllPopUp(){ document.getElementById("all-delete-modal").style.display = "none";}
 
-function deleteAll(){
+function deleteAll(type){
+
+    var url = (type == 1) ? '/user/favorite/item' : '/user/review/item';
+    var href = (type == 1)? '/user/favorite' : '/user/review';
 
     $.ajax({
-        url: '/user/favorite/item',
+        url: url,
         type: 'DELETE',
         dataType: 'json',
         success: function (data) {
             if(data == 1){
                 alert('정상적으로 삭제되었습니다.');
-                window.location.href = "/user/favorite"
+                window.location.href = href;
+            }
+        },
+        error: function (status, error) {
+            console.log(status, error);
+        }
+    });
+}
+
+function deleteReview(reviewId){
+    $.ajax({
+        url: '/user/review/item/'+reviewId,
+        type: 'DELETE',
+        dataType: 'json',
+        success: function (data) {
+            if(data == 1){
+                alert('정상적으로 삭제되었습니다.');
+                window.location.href = "/user/review"
             }
         },
         error: function (status, error) {
