@@ -15,7 +15,7 @@ public class Region {
 
     @Id
     @Column(name = "REGION_ID")
-    private Long regionId;
+    private Integer regionId;
 
     @Column(name = "PROVINCE_NAME")
     private String provinceName;
