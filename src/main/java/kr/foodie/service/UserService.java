@@ -21,10 +21,14 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public String validateEmail(String email) {
-        if(userRepository.findByEmail(email).isPresent())
-            return "1";
-        return "0";
+    public String findEmailValidation(String email) {
+        return Integer.toString(userRepository.countByEmail(email)
+                .orElseGet(()->{ return 0;}));
+    }
+
+    public String findPhoneNumValidation(String phoneNum){
+        return Integer.toString(userRepository.countByPhoneNum(phoneNum)
+                .orElseGet(()->{ return 0;}));
     }
 
     public String inquiryId(String name, String phoneNum){

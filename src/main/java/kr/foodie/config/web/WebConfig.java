@@ -24,21 +24,11 @@ public class WebConfig implements WebMvcConfigurer {
 
         //Base view mapping
         registry.addViewController("/policy").setViewName("policy");
-        registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/auth/login").setViewName("login");
         registry.addViewController("/submit").setViewName("signup_done");
         registry.addViewController("/help/idInquiry").setViewName("help-id");
         registry.addViewController("/help/pwInquiry").setViewName("help-pswd");
-
-        /**
-        registry.addRedirectViewController("/done","/");
-
-        //Handling any pages not given url
-        registry.addViewController("^(?!(\\/api\\/+|\\/auth\\/+)).*$")
-                .setViewName("error");
-
-        //Handling error for http status
-        registry.addStatusController("/error", HttpStatus.valueOf("404"));
-         */
+        registry.addViewController("/reset").setViewName("reset-pw");
     }
 
     //change to collection
@@ -49,9 +39,18 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(new AuthenticatedHandler())
                 .addPathPatterns("/")
-                .addPathPatterns("/user/pw")
+                .addPathPatterns("/policy")
+                .addPathPatterns("/user/**")
+                .addPathPatterns("/shop/**")
                 .addPathPatterns("/help/*")
-                .excludePathPatterns("/inquiry/**");
+                .addPathPatterns("/auth/**")
+                .addPathPatterns("/help/pw")
+                .addPathPatterns("/help/pw/**")
+                .excludePathPatterns("/auth/check/**")
+                .excludePathPatterns("/inquiry/**")
+                .excludePathPatterns("/user/favorite/shop")
+                .excludePathPatterns("/user/favorite/item/**")
+                .excludePathPatterns("/user/review/item/**");
     }
 
     //Async task to be adding with search, gps

@@ -27,7 +27,6 @@ import javax.sql.DataSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthUserDetailsService authUserDetailsService;
-
     private final DataSource dataSource;
 
     @Override
@@ -60,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
+                .deleteCookies("remember")
                 .clearAuthentication(true)
                     .and()
                 .rememberMe()

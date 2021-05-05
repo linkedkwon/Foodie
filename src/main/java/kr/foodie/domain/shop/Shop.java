@@ -19,6 +19,9 @@ public class Shop {
     @Column(name = "REGION_TYPE_ID")
     private String regionTypeId;
 
+    @Column(name = "REGION_ID")
+    private Integer regionId;
+
     @Column(name = "SUBWAY_TYPE_ID")
     private String subwayTypeId;
 

@@ -9,7 +9,7 @@ function addFavoriteShop(){
     const shopId = url.substring(url.lastIndexOf('/') + 1);
 
     $.ajax({
-        url: '/user/favorite/shop/'+shopId,
+        url: '/user/favorite/item/'+shopId,
         type: 'GET',
         dataType: 'json',
         success: function (data) {
@@ -35,7 +35,7 @@ function addReview(){
     const url = document.location.href;
     const shopId = url.substring(url.lastIndexOf('/') + 1);
 
-    var starRating = document.getElementById("start-rating").value;
+    var starRating = document.getElementById("star-rating").value;
     var content = document.getElementById("comment").value;
 
     $.ajax({
@@ -60,16 +60,23 @@ function addReview(){
         }
     });
 }
-function clickStarRating(idx){
+function clickStarRating(value, idx){
+    document.getElementById("star-rating").value = value;
+    const classList = ['point5', 'point4_5', 'point4',
+                  'point3', 'point2'];
+    const list = $(".btn-score-area > a");
 
-    document.getElementById("start-rating").value = idx;
-    /**
-     * cahnge img of each rating to be adding
-     */
+    for(var i=0; i< list.length; i++) {
+        if(idx == i){
+            list[i].className = classList[i]+"-click";
+            continue;
+        }
+        list[i].className = classList[i];
+    }
 }
 
 function checkBeforeAddReview(){
-    var starRating = document.getElementById("start-rating").value;
+    var starRating = document.getElementById("star-rating").value;
     var comment = document.getElementById("comment").value;
 
     var starFlag = true;
@@ -79,4 +86,21 @@ function checkBeforeAddReview(){
     if(comment.length < 5) commentFlag = false;
 
     return starFlag && commentFlag;
+}
+
+function deleteReview(reviewId){
+    $.ajax({
+        url: '/user/review/item/'+reviewId,
+        type: 'DELETE',
+        dataType: 'json',
+        success: function (data) {
+            if(data == 1){
+                alert('정상적으로 삭제되었습니다.');
+                location.reload();
+            }
+        },
+        error: function (status, error) {
+            console.log(status, error);
+        }
+    });
 }

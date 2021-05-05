@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
@@ -46,7 +47,7 @@ public class ReviewService {
     public List<ReviewDTO> getItemsByUserId(int userId, int idx, String username){
 
         String jpql = "select new kr.foodie.domain.account.ReviewDTO(" +
-                "s.shopId, s.shopName, r.content, r.starRating) "
+                "s.shopId, s.shopName, r.reviewId, r.content, r.starRating) "
                 +"from Shop s right outer join Review r "
                 +"on s.shopId = r.shopId "
                 +"where r.userId ="+ userId
@@ -69,7 +70,7 @@ public class ReviewService {
     public List<ReviewDTO> getItemsByShopId(int shopId, int idx){
 
         String jpql = "select new kr.foodie.domain.account.ReviewDTO(" +
-                "u.name, r.starRating, r.content) "
+                "u.name, r.userId, r.reviewId, r.starRating, r.content) "
                 +"from Review r right outer join User u "
                 +"on r.userId = u.id "
                 +"where r.shopId ="+ shopId
@@ -79,10 +80,18 @@ public class ReviewService {
                 .setFirstResult(idx*itemInterval)
                 .setMaxResults(itemInterval);
 
-        List<ReviewDTO> reviews = query.getResultList();
+        return query.getResultList();
+    }
 
-        System.out.println("리뷰에여\n"+reviews);
+    @Transactional
+    public String deleteItemByReviewId(int reviewId){
+        reviewRepository.deleteByReviewId(reviewId);
+        return "1";
+    }
 
-        return reviews;
+    @Transactional
+    public String deleteAllItem(int userId){
+        reviewRepository.deleteAllByUserId(userId);
+        return "1";
     }
 }

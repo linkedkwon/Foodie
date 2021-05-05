@@ -6,9 +6,11 @@ import kr.foodie.domain.shop.HashTag;
 import kr.foodie.domain.shop.Region;
 import kr.foodie.domain.shop.Shop;
 import kr.foodie.service.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping(path = "/shop/")
 public class ShopController {
@@ -32,42 +35,24 @@ public class ShopController {
     private final ReviewService reviewService;
     private final PaginationService paginationService;
 
-
-    public ShopController(ShopService shopService, TagService tagService,
-                          RegionService regionService, ReviewService reviewService,
-                          PaginationService paginationService) {
-        this.shopService = shopService;
-        this.tagService = tagService;
-        this.regionService = regionService;
-        this.reviewService = reviewService;
-        this.paginationService = paginationService;
-    }
-
     @GetMapping({"region/{regionTypeId}/{shopType}", "region/{regionTypeId}/{shopType}/{path}"})
-    public ModelAndView getCategory(@PathVariable String regionTypeId, @PathVariable String shopType,
-                                    @PathVariable Optional<String> path){
+    public String getCategory(@PathVariable String regionTypeId, @PathVariable String shopType,
+                              @PathVariable Optional<String> path, Model model){
 
         String shopTypeId = shopType.equals("red")? "0" : "1";
         int idx = Integer.parseInt(path.orElseGet(()->{return "0";}));
         int size = shopService.getItemSizeByRegionTypeAndShopType(regionTypeId, shopTypeId);
 
-        ModelAndView mav = new ModelAndView();
+        model.addAttribute("payload", shopService.getShopInfos(regionTypeId, shopTypeId, idx, shopInterval));
+        model.addAttribute("regionInfo", regionService.getRegionInfo(Integer.valueOf(regionTypeId)));
+        model.addAttribute("priority", shopService.getShopInfosWithOrder(regionTypeId, shopTypeId, 9));
+        model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(regionTypeId, shopTypeId, 8));
 
-        mav.addObject("payload", shopService.getShopInfos(regionTypeId, shopTypeId, idx, shopInterval));
-        mav.addObject("regionInfo", regionService.getRegionInfo(Integer.valueOf(regionTypeId)));
-        mav.addObject("priority", shopService.getShopInfosWithOrder(regionTypeId, shopTypeId, 9));
-        mav.addObject("sidePriority", shopService.getShopInfosWithSideOrder(regionTypeId, shopTypeId, 8));
+        model.addAttribute("paginations", paginationService.getPagination(size, idx,shopInterval,"/shop/region/"+regionTypeId+"/"+shopType+"/"));
+        model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/"+regionTypeId+"/"+shopType+"/"));
 
-        mav.addObject("paginations", paginationService.getPagination(size, idx,shopInterval,"/shop/region/"+regionTypeId+"/"+shopType+"/"));
-        mav.addObject("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/"+regionTypeId+"/"+shopType+"/"));
-
-        if(shopType.equals("red"))
-            mav.setViewName("submain-red");
-        else
-            mav.setViewName("submain-green");
-        return mav;
+        return shopType.equals("red")? "submain-red":"submain-green";
     }
-
 
     @GetMapping(value ={"/{shopId}", "/{shopId}/{path}"})
     public ModelAndView getShopDetail(@PathVariable Integer shopId, @PathVariable Optional<Integer> path,
@@ -87,7 +72,7 @@ public class ShopController {
         mav.addObject("paginations", paginationService.getPagination(size, idx, reviewInterval, url));
         mav.addObject("btnUrls", paginationService.getPaginationBtn(size, idx, reviewInterval, url));
         mav.addObject("payload", commentList);
-        mav.addObject("user", userDetails);
+        mav.addObject("userId", (userDetails != null)? userDetails.getUser().getId():0);
 
         if(commentList.size() > 0){
             Integer background = commentList.get(0).getBackground();

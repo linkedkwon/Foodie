@@ -248,7 +248,6 @@
     })
     function changeRegionShopInfo(type, className, tagId){
       document.getElementById(className).innerHTML = ""
-      // console.log(event.target.parentElement)
       $("#" + tagId + " > li").removeClass('active');
       // $("#mainRegion > ul > li").removeClass('active');
       event.target.parentElement.classList.add('active')
@@ -264,7 +263,6 @@
         // class="active"
         function renderProductList(element, index, arr) {
           var li = document.createElement('li');
-          console.log(element)
           ul.appendChild(li);
           li.innerHTML= li.innerHTML
                   + "<a href='/shop/" + element.shopId +"'>"
@@ -290,7 +288,6 @@
     }
     function initialInfo(type, className, tagId){
       document.getElementById(className).innerHTML = ""
-      // console.log(event.target.parentElement)
       // $("#" + tagId + " > li").removeClass('active');
       // $("#mainRegion > ul > li").removeClass('active');
       $.ajax({
@@ -305,7 +302,6 @@
         // class="active"
         function renderProductList(element, index, arr) {
           var li = document.createElement('li');
-          console.log(element)
           ul.appendChild(li);
           li.innerHTML= li.innerHTML
                   + "<a href='/shop/" + element.shopId +"'>"

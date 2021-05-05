@@ -3,19 +3,19 @@ package kr.foodie.controller;
 import kr.foodie.config.security.auth.AuthUserDetails;
 import kr.foodie.domain.user.User;
 import kr.foodie.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping(path = "/auth")
 public class AuthController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("/join/user/1")
     public String renderSignUpMember(Model model){
@@ -30,13 +30,22 @@ public class AuthController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/validate/{email}")
-    public String validateEmail(@PathVariable String email){ return userService.validateEmail(email); }
+    @GetMapping(value = "/check/email/{email}")
+    public String validateEmail(@PathVariable String email){
+        return userService.findEmailValidation(email);
+    }
 
+    @ResponseBody
+    @GetMapping(value = "/check/phone/{phoneNum}")
+    public String validatePhoneNum(@PathVariable String phoneNum){
+        return userService.findPhoneNumValidation(phoneNum);
+    }
+
+    //register
     @PostMapping(value = "/register")
     public String register(User user){ return userService.save(user); }
 
-
+    //prevent direct url after authenticated
     @GetMapping("/login/**")
     public String preventSignInAfterAuthenticated(@AuthenticationPrincipal AuthUserDetails userDetails){
         if(userDetails == null)
@@ -45,7 +54,7 @@ public class AuthController {
     }
 
     @GetMapping("/join/**")
-    public String preventSignUpAfterAuthenticatd(@AuthenticationPrincipal AuthUserDetails userDetails){
+    public String preventSignUpAfterAuthenticated(@AuthenticationPrincipal AuthUserDetails userDetails){
         if(userDetails == null)
             return "/auth/join/user1";
         return "redirect:/";

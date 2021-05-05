@@ -23,7 +23,7 @@
         <a href="#">
           <picture>
             <source srcset="/images/logo-detail@2x.png 2x">
-            <img src="/images/logo-detail.png" alt="foodie">
+            <a href="/"><img src="/images/logo-detail.png" alt="foodie"></a>
           </picture>
         </a>
       </h1>
@@ -106,7 +106,7 @@
                   <dt>홈페이지</dt>
                   <dd class="btn-dd">
                     <div class="util-btn-area">
-                      <a href="" class="btn-sm btn-heart" onclick="addFavoriteShop()">찜하기</a>
+                      <a href="javascript:void(0)" class="btn-sm btn-heart" onclick="addFavoriteShop()">찜하기</a>
                       <a href="" class="btn-sm btn-siren">오류신고</a>
                     </div>
 
@@ -226,13 +226,13 @@
 
               <div class="section-body">
                 <div class="btn-score-area">
-                  <a href="javascript:void(0)" class="point5" onclick="clickStarRating(5)"></a>
-                  <a href="javascript:void(0)" class="point4_5" onclick="clickStarRating(4.5)"></a>
-                  <a href="javascript:void(0)" class="point4" onclick="clickStarRating(4)"></a>
-                  <a href="javascript:void(0)" class="point3" onclick="clickStarRating(3)"></a>
-                  <a href="javascript:void(0)" class="point2" onclick="clickStarRating(2)"></a>
+                  <a href="javascript:void(0)" class="point5" onclick="clickStarRating(5, 0)"></a>
+                  <a href="javascript:void(0)" class="point4_5" onclick="clickStarRating(4.5, 1)"></a>
+                  <a href="javascript:void(0)" class="point4" onclick="clickStarRating(4, 2)"></a>
+                  <a href="javascript:void(0)" class="point3" onclick="clickStarRating(3, 3)"></a>
+                  <a href="javascript:void(0)" class="point2" onclick="clickStarRating(2, 4)"></a>
                 </div>
-                <input type="hidden" id="start-rating" value="0"/>
+                <input type="hidden" id="star-rating" value="0"/>
 
                 <div class="commnet-form">
                   <textarea id="comment" cols="30" rows="10" placeholder="오감평가를 등록하고 포인트를 받아보세요."></textarea>
@@ -243,8 +243,18 @@
 
                   <li th:each="item : ${reviews}">
                     <span class="user-id" th:text="${item.userName}"></span>
-                    <span class="point point4_5" th:text="${item.starRating}"></span>
+                    <th:block th:switch="${item.starRating}">
+                      <span th:case="5" class="point point5"></span>
+                      <span th:case="4.5" class="point point4_5"></span>
+                      <span th:case="4" class="point point4"></span>
+                      <span th:case="3" class="point point3"></span>
+                      <span th:case="2" class="point point2"></span>
+                    </th:block>
                     <div class="comment" th:text="${item.content}"></div>
+                    <a href="javascript:void(0)" class="delete-btn" th:style="${item.userId} == ${userId} ? 'display:block' : 'display:none'"
+                       th:onclick="|javascript:deleteReview('${item.reviewId}')|">
+                      삭제
+                    </a>
                   </li>
                 </ul>
 

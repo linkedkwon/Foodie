@@ -11,4 +11,6 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
     Optional<Integer> countByUserId(int userId);
     Optional<Integer> countByShopId(int shopId);
+    void deleteByReviewId(int reviewId);
+    void deleteAllByUserId(int userId);
 }

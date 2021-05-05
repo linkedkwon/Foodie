@@ -31,8 +31,8 @@ public class CacheService {
                 .toString();
     }
 
-    @Cacheable(cacheNames = encryptedCodeCache, key = "#qs")
-    public String saveEncryptedCodeWithEmail(String qs, String email){
+    @Cacheable(cacheNames = encryptedCodeCache, key = "#code")
+    public String saveEncryptedCodeWithEmail(String code, String email){
         return email;
     }
 
@@ -48,15 +48,17 @@ public class CacheService {
                     .count() > 0 ? "1" : "0";
     }
 
-    @CacheEvict(cacheNames = encryptedCodeCache, key = "#qs")
+    @CacheEvict(cacheNames = encryptedCodeCache, key = "#code")
     public String findByEncryptedCode(String code){
 
         Cache cache = initCacheByCacheName(encryptedCodeCache);
         List keys = cache.getKeys();
 
         for(Object obj : keys){
-            if(keys.contains(code))
+            if(keys.contains(code)) {
+                System.out.println("이메일:"+cache.get(obj).getObjectValue().toString());
                 return cache.get(obj).getObjectValue().toString();
+            }
         }
         return "1";
     }
