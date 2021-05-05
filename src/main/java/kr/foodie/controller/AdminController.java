@@ -87,6 +87,7 @@ public class AdminController {
         ModelAndView mav = new ModelAndView();
         if(shopType.equals("red")){
             shopType = "0";
+            mav.setViewName("admin-shop-red-detail");
         }else{
             shopType = "1";
         }
@@ -104,13 +105,13 @@ public class AdminController {
         mav.addObject("btnUrls", paginationService.getPaginationBtn(size, idx, reviewInterval, url));
         mav.addObject("payload", commentList);
         mav.addObject("hashTags",hashTags);
-        mav.setViewName("admin-shop-detail");
+
         return mav;
     }
 
 
     @ResponseBody
-    @RequestMapping(value ="/{type}/{id}", method= RequestMethod.GET)
+    @RequestMapping(value ="/category/{type}/{id}", method= RequestMethod.GET)
     public List<FoodCategory> getCategorySelectInfos(Model model, @PathVariable String type, @PathVariable Integer id){
         List<FoodCategory> categoryInfoList = null;
         if(type.equals("mfood")){
