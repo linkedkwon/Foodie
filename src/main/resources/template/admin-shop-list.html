@@ -257,101 +257,54 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">맛집목록</h6>
+                            <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">맛집목록</h6>
+                            <button style="float: right">맛집 추가하기</button>
                         </div>
                         <div>
-                        <div style="width: 70%;float: left;">
-                            <div  style="    padding-left: 20px;margin-top: 20px;"> 음식 카테고리</div>
-                            <p style="    padding-left: 20px;margin-top: 20px;">
-                                <select id="table-filter1">
-                                    <option value="">대분류</option>
-                                    <option
-                                            th:each="val : ${categoryInfos}"
-                                            th:value="${val.bCode}"
-                                            th:utext="${val.categoryName}"
-                                    ></option>
-                                </select>
-                                <select id="table-filter2">
-                                    <option value="">중분류</option>
-                                    <option>London</option>
-                                    <option>San</option>
-                                    <option>Engineer</option>
-                                    <option>Developer</option>
-                                </select>
-                                <select id="table-filter3">
-                                    <option value="">소분류</option>
-                                    <option>London</option>
-                                    <option>San</option>
-                                    <option>Engineer</option>
-                                    <option>Developer</option>
-                                </select>
-                                <button value="조회">조회</button>
-                            </p>
-
-                            <div  style="    padding-left: 20px;margin-top: 20px;"> 지역 </div>
-                            <p style="    padding-left: 20px;margin-top: 20px;">
-<!--                            <p th:text="${regionInfos}"></p>-->
-                                <select id="table-filter4">
-                                    <option value="">시</option>
-                                    <option
-                                            th:each="val : ${regionInfos}"
-                                            th:value="${val}"
-                                            th:utext="${val}"
-                                    ></option>
-                                </select>
-                                <select id="table-filter5">
-                                    <option value="">군</option>
-                                    <option>London</option>
-                                    <option>San</option>
-                                    <option>Engineer</option>
-                                    <option>Developer</option>
-                                </select>
-                                <button value="조회">조회</button>
-                            </p>
+                        <div style="width: 100%;float: left;">
+                            <div style="float: left">
+                                <div  style="    padding-left: 20px;margin-top: 20px;"> 음식 카테고리</div>
+                                <p style="    padding-left: 20px;margin-top: 20px;">
+                                    <select id="table-filter1">
+                                        <option value="">대분류</option>
+                                        <option
+                                                th:each="val : ${categoryInfos}"
+                                                th:value="${val.bCode}"
+                                                th:utext="${val.categoryName}"
+                                        ></option>
+                                    </select>
+                                    <select id="table-filter2">
+                                        <option value="">중분류</option>
+<!--                                        <option>London</option>-->
+<!--                                        <option>San</option>-->
+<!--                                        <option>Engineer</option>-->
+<!--                                        <option>Developer</option>-->
+                                    </select>
+                                    <select id="table-filter3">
+                                        <option value="">소분류</option>
+                                    </select>
+                                    <button value="조회" oncli>조회</button>
+                                </p>
+                            </div>
+                            <div style="float: left">
+                                <div  style="    padding-left: 20px;margin-top: 20px;"> 지역 </div>
+                                <p style="    padding-left: 20px;margin-top: 20px;">
+    <!--                            <p th:text="${regionInfos}"></p>-->
+                                    <select id="table-filter4">
+                                        <option value="">시</option>
+                                        <option
+                                                th:each="val : ${regionInfos}"
+                                                th:value="${val}"
+                                                th:utext="${val}"
+                                        ></option>
+                                    </select>
+                                    <select id="table-filter5">
+                                        <option value="">군</option>
+                                    </select>
+                                    <button value="조회">조회</button>
+                                </p>
+                            </div>
                         </div>
-                        <div style="width: 16%;float: left;">
-                           <!-- <div  style="    padding-left: 20px;margin-top: 20px;"> 카데고리</div>
-                            <p style="    padding-left: 20px;margin-top: 20px;">
-                                1차:
-                                <select id="table-filter1">
-                                    <option value="">All</option>
-                                    <option>London</option>
-                                    <option>San</option>
-                                    <option>Engineer</option>
-                                    <option>Developer</option>
-                                </select>
-                                2차:
-                                <select id="table-fil선ter2">
-                                    <option value="">All</option>
-                                    <option>London</option>
-                                    <option>San</option>
-                                    <option>Engineer</option>
-                                    <option>Developer</option>
-                                </select>
-                                3차:
-                                <select id="table-fil선ter2">
-                                    <option value="">All</option>
-                                    <option>London</option>
-                                    <option>San</option>
-                                    <option>Engineer</option>
-                                    <option>Developer</option>
-                                </select>
-                            </p>-->
-                        </div>
-                        <!--<div  style="">
-                            <div  style="    padding-left: 20px;margin-top: 20px;"> 맛집</div>
-                            <p style="    padding-left: 20px;margin-top: 20px;">
-                                맛집
-                                <select id="table-filter1">
-                                    <option value="">All</option>
-                                    <option>London</option>
-                                    <option>San</option>
-                                    <option>Engineer</option>
-                                    <option>Developer</option>
-                                </select>
-                            </p>
-                        </div>
-                        </div>-->
 
                         <div class="card-body">
                             <div class="table-responsive">
@@ -373,7 +326,9 @@
                                         <td th:text="${shop.middleCategory}"></td>
                                         <td th:text="${shop.smallCategory}"></td>
                                         <td th:text="${shop.shopImage}"></td>
-                                        <td th:text="${shop.shopName}"></td>
+                                        <td>
+                                            <a th:href="@{'/admin/shop/red/'+${shop.shopId}}" th:text="${shop.shopName}"> </a>
+                                        </td>
                                         <td th:text="${shop.address}"></td>
                                         <td th:text="${shop.createdAt}"></td>
                                     </tr>
@@ -458,32 +413,94 @@
     <!-- Page level custom scripts -->
     <script th:src="@{/js/demo/datatables-demo.js}"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#example').DataTable( {
-                initComplete: function () {
-                    this.api().columns().every( function () {
-                        var column = this;
-                        var select = $('<select><option value=""></option></select>')
-                            .appendTo( $(column.footer()).empty() )
-                            .on( 'change', function () {
-                                var val = $.fn.dataTable.util.escapeRegex(
-                                    $(this).val()
-                                );
-
-                                column
-                                    .search( val ? '^'+val+'$' : '', true, false )
-                                    .draw();
-                            } );
-
-                        column.data().unique().sort().each( function ( d, j ) {
-                            select.append( '<option value="'+d+'">'+d+'</option>' )
-                        } );
-                    } );
-                }
-            } );
-        } );
-    </script>
 </body>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#example').DataTable( {
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                } );
+            }
+        } );
+
+        $('#table-filter1').change( function(){
+            get_mcode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        function get_mcode(o){
+            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+            console.log(val)
+            $.ajax({
+                type:"get",
+                url:"/admin/mfood/" + val,
+                datatype: "json",
+                success: function(data) {
+                if(data.length > 0) {
+                    $("#table-filter2").find("option").remove().end();
+                    $.each(data, function(key, value) {
+                        $("#table-filter2").append("<option value='" + value.mcode + "'>" + value.categoryName + "</option>");
+                    });
+                } else {
+                    $("#table-filter2").find("option").remove().end().append("<option>NO DATA</option>");
+                    return;
+                }
+            },
+
+            error: function(x, o, e) {
+                var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                alert(msg);
+            }
+            });
+        }
+
+        $('#table-filter2').change( function(){
+            get_scode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        function get_scode(o){
+            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+            console.log(val)
+            $.ajax({
+                type:"get",
+                url:"/admin/sfood/" + val,
+                datatype: "json",
+                success: function(data) {
+                    if(data.length > 0) {
+                        $("#table-filter3").find("option").remove().end();
+                        $.each(data, function(key, value) {
+                            $("#table-filter3").append("<option value='" + value.scode + "'>" + value.categoryName + "</option>");
+                        });
+                    } else {
+                        $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");
+                        return;
+                    }
+                },
+
+                error: function(x, o, e) {
+                    var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                    alert(msg);
+                }
+            });
+        }
+    } );
+
+
+</script>
 
 </html>

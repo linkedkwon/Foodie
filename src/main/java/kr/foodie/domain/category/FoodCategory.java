@@ -14,7 +14,7 @@ public class FoodCategory {
 
     @Id
     @Column(name = "ID")
-    private Long id;
+    private Integer id;
 
     @Column(name = "BCODE")
     private Integer bCode;
