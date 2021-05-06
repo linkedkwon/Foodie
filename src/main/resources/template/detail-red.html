@@ -45,19 +45,24 @@
 
                 <div class="right-area">
                   <ul class="scores">
-                    <li>푸디로그 평점(AAA)</li>
-                    <li>오감 평점(5점)</li>
+                    <li th:text="'푸디로그 평점('+${payload[0].foodieLogRating}+')'"/>
+                    <li th:text="'오감 평점('+${payload[0].tasteRating}+'점)'"/>
                   </ul>
                   <div class="star">
                     <picture>
+                      <!--
                       <source srcset="/images/ico-detail-star@2x.png 2x">
                       <img src="/images/ico-detail-star.png" alt="">
+                      -->
+                      <source srcset="/images/ico-detail-star@2x.png 2x">
+                      <th:block th:switch="${payload[0].foodieLogRating}">
+                        <img th:case="A" src="/images/ico-star-first.png" alt=""/>
+                        <img th:case="AA" src="/images/ico-star-second.png" alt=""/>
+                        <img th:case="AAA" src="/images/ico-star-third.png" alt=""/>
+                      </th:block>
                     </picture>
                   </div>
-
-                  <a href="#" class="btn-print">인쇄하기</a>
                 </div>
-              </div>
               <!-- header-restaurant END -->
 
               <!-- about-restaurant START -->

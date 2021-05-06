@@ -99,4 +99,10 @@ public class Shop {
 
     @Column(name = "CREATED_AT")
     private Date createdAt;
+
+    @Column(name = "FOODIELOG_RATING")
+    private String foodieLogRating;
+
+    @Column(name = "TASTE_RATING")
+    private String tasteRating;
 }
