@@ -43,6 +43,15 @@ public class Shop {
     @Column(name = "TAG")
     private String tag;
 
+    @Column(name = "BIG_CATEGORY")
+    private String bigCategory;
+
+    @Column(name = "MIDDLE_CATEGORY")
+    private String middleCategory;
+
+    @Column(name = "SMALL_CATEGORY")
+    private String smallCategory;
+
     @Column(name = "ADDRESS")
     private String address;
 

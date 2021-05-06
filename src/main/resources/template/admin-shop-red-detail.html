@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Foodie</title>
+
+    <!-- Custom fonts for this template -->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/fontawesome-free/css/all.min.css}">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sb-admin-2.min.css}">
+
+    <!-- Custom styles for this page -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/fontawesome-all.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/adminlte.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin_commons.css}" />
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/manage-restaurants.css}"/>
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="./fragments/admin-sidebar.html"> </div>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                <!-- Sidebar Toggle (Topbar) -->
+                <form class="form-inline">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </form>
+
+                <!-- Topbar Search -->
+                <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                               aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+
+                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                    <li class="nav-item dropdown no-arrow d-sm-none">
+                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <!-- Dropdown - Messages -->
+                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                             aria-labelledby="searchDropdown">
+                            <form class="form-inline mr-auto w-100 navbar-search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control bg-light border-0 small"
+                                           placeholder="Search for..." aria-label="Search"
+                                           aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+
+                    <!-- Nav Item - Alerts -->
+                    <li class="nav-item dropdown no-arrow mx-1">
+                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bell fa-fw"></i>
+                            <!-- Counter - Alerts -->
+                            <span class="badge badge-danger badge-counter">3+</span>
+                        </a>
+                        <!-- Dropdown - Alerts -->
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="alertsDropdown">
+                            <h6 class="dropdown-header">
+                                Alerts Center
+                            </h6>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-primary">
+                                        <i class="fas fa-file-alt text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">December 12, 2019</div>
+                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-success">
+                                        <i class="fas fa-donate text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">December 7, 2019</div>
+                                    $290.29 has been deposited into your account!
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-warning">
+                                        <i class="fas fa-exclamation-triangle text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">December 2, 2019</div>
+                                    Spending Alert: We've noticed unusually high spending for your account.
+                                </div>
+                            </a>
+                            <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                        </div>
+                    </li>
+
+                    <!-- Nav Item - Messages -->
+                    <li class="nav-item dropdown no-arrow mx-1">
+                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-envelope fa-fw"></i>
+                            <!-- Counter - Messages -->
+                            <span class="badge badge-danger badge-counter">7</span>
+                        </a>
+                        <!-- Dropdown - Messages -->
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="messagesDropdown">
+                            <h6 class="dropdown-header">
+                                Message Center
+                            </h6>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                         alt="">
+                                    <div class="status-indicator bg-success"></div>
+                                </div>
+                                <div class="font-weight-bold">
+                                    <div class="text-truncate">Hi there! I am wondering if you can help me with a
+                                        problem I've been having.</div>
+                                    <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                         alt="">
+                                    <div class="status-indicator"></div>
+                                </div>
+                                <div>
+                                    <div class="text-truncate">I have the photos that you ordered last month, how
+                                        would you like them sent to you?</div>
+                                    <div class="small text-gray-500">Jae Chun · 1d</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                         alt="">
+                                    <div class="status-indicator bg-warning"></div>
+                                </div>
+                                <div>
+                                    <div class="text-truncate">Last month's report looks great, I am very happy with
+                                        the progress so far, keep up the good work!</div>
+                                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                         alt="">
+                                    <div class="status-indicator bg-success"></div>
+                                </div>
+                                <div>
+                                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone
+                                        told me that people say this to all dogs, even if they aren't good...</div>
+                                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                        </div>
+                    </li>
+
+                    <div class="topbar-divider d-none d-sm-block"></div>
+
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                            <img class="img-profile rounded-circle"
+                                 src="img/undraw_profile.svg">
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Profile
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Activity Log
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                        <div class="content">
+                            <div class="container-fluid">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title" th:text="${payload[0].shopName}" style="float: left"></h3>
+                                            <button class="btn btn-info btn-sm" style="float: right">가게 이미지</button>
+                                        </div>
+                                        <div class="card-body">
+<!--                                            <div class="form-group">-->
+<!--                                                <label for="restaurants-open-hours">그린/레드</label>-->
+<!--                                                <div class="flex">-->
+<!--                                                    <div class="custom-control custom-radio">-->
+<!--                                                        <input class="custom-control-input" id="page-type-green" type="radio" name="page-type" checked>-->
+<!--                                                        <label class="custom-control-label" for="page-type-green">그린</label>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="custom-control custom-radio">-->
+<!--                                                        <input class="custom-control-input" id="page-type-red" type="radio" name="page-type">-->
+<!--                                                        <label class="custom-control-label" for="page-type-red">레드</label>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="restaurants-name">맛집명</label>
+                                                        <input type="text" th:value="${payload[0].shopName}" class="form-control" id="restaurants-name" placeholder="맛집명" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="restaurants-phone">전화번호</label>
+                                                        <input type="tel" class="form-control" id="restaurants-phone" th:value="${payload[0].phone}" placeholder="전화번호">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="restaurants-open-hours">영업시간</label>
+                                                        <input type="text" class="form-control" id="restaurants-open-hours"  th:value="${payload[0].operationTime}"  placeholder="영업시간">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="restaurants-closed">휴무일</label>
+                                                        <input type="text" class="form-control" id="restaurants-closed" th:value="${payload[0].holiday}" placeholder="휴무일">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="restaurants-open-hours">예약여부</label>
+                                                        <div class="flex">
+                                                            <div class="custom-control custom-radio">
+                                                                <input class="custom-control-input" id="reservation-y" type="radio" name="reservation" th:checked="${payload[0].isReservation} == 'Y'" >
+                                                                <label class="custom-control-label" for="reservation-y">가능</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input class="custom-control-input" id="reservation-n" type="radio" name="reservation" th:checked="${payload[0].isReservation} == 'N'" >
+                                                                <label class="custom-control-label" for="reservation-n">불가능</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="restaurants-closed">주차여부</label>
+                                                        <div class="flex">
+                                                            <div class="custom-control custom-radio">
+                                                                <input class="custom-control-input" id="parking-y" type="radio" name="parking" th:checked="${payload[0].isParking} == 'Y'" >
+                                                                <label class="custom-control-label" for="parking-y">가능</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input class="custom-control-input" id="parking-n" type="radio" name="parking" th:checked="${payload[0].isParking} == 'N'" >
+                                                                <label class="custom-control-label" for="parking-n">불가능</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="recommend-menu">추천메뉴</label>
+                                                        <input type="text" class="form-control" id="recommend-menu" placeholder="추천메뉴" th:value="${payload[0].recommandMenu}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="budget">예산</label>
+                                                        <input type="text" class="form-control" id="budget" placeholder="예산" th:value="${payload[0].budget}">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+<!--                                                        <div class="form-group">-->
+                                                        <label for="restaurants-closed">포장/배달</label>
+                                                        <div class="flex">
+                                                            <div class="custom-control custom-radio">
+                                                                <input class="custom-control-input" id="delivery-y" type="radio" name="delivery"  th:checked="${payload[0].isDelivery} == 'Y'">
+                                                                <label class="custom-control-label" for="delivery-y">가능</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input class="custom-control-input" id="delivery-n" type="radio" name="delivery"  th:checked="${payload[0].isDelivery} == 'N'">
+                                                                <label class="custom-control-label" for="delivery-n">불가능</label>
+                                                            </div>
+                                                        </div>
+<!--                                                        </div>-->
+
+<!--                                                        <label for="delivery">포장/배달</label>-->
+<!--                                                        <input type="text" class="form-control" id="delivery" placeholder="포장/배달" th:value="${payload[0].recommandMenu}">-->
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="website">홈페이지</label>
+                                                        <input type="text" class="form-control" id="website" placeholder="홈페이지" th:value="${payload[0].homepage}">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="review-link-naver">네이버블로그 SHOP ID</label>
+                                                        <input type="text" class="form-control" id="review-link-naver" placeholder="https://blog.naver.com/" th:value="${payload[0].blogShopId}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="review-link-instagram">인스타그램 키워드</label>
+                                                        <input type="text" class="form-control" id="review-link-instagram" placeholder="https://www.instagram.com/" th:value="${payload[0].instaKeyword}">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="restaurants-address-detial">주소</label>
+                                                <input type="text" class="form-control" id="restaurants-address-detial" placeholder="주소" th:value="${payload[0].address}">
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="restaurants-location-detial">찾아가는길(상세주소)</label>
+                                                <input type="text" class="form-control" id="restaurants-location-detial" placeholder="찾아가는길" th:value="${payload[0].detailAddress}">
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="select-tags">태그등록</label>
+                                                        <select class="custom-select" id="select-tags">
+                                                            <option value="" disabled selected>태크등록</option>
+                                                            <option value="치킨">치킨</option>
+                                                            <option value="음식점">음식점</option>
+                                                            <option value="강서구맛집">강서구맛집</option>
+                                                            <option value="바베큐치킨">바베큐치킨</option>
+                                                            <option value="음식점">음식점</option>
+                                                        </select>
+                                                        <div class="flex tag-list"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 기본정보 Card END -->
+
+                            <div class="container-fluid">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">히스토리</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div id="summernote" th:text="${payload[0].history}"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 히스토리 Card END -->
+
+                            <div class="container-fluid">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">메뉴관리</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="restaurants-menu">메뉴</label>
+                                                        <input type="text" class="form-control" id="restaurants-menu" placeholder="메뉴">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="restaurants-vat">부가세</label>
+                                                        <input type="text" class="form-control" id="restaurants-vat" placeholder="부가세">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 메뉴관리 Card END -->
+
+                            <div class="container-fluid">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">댓글관리</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-comments">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">내용</th>
+                                                    <th scope="col" width="100px">작성자</th>
+                                                    <th scope="col" width="60px">평점</th>
+                                                    <th scope="col" width="150px">날짜</th>
+                                                    <th scope="col" width="100px"></th>
+                                                    <th scope="col" width="100px"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>가성비 엉망. 곰탕집 김치와 깍두기가 맛이 전혀없고 수육은 왜 6만원인지 알수없는곳</td>
+                                                    <td>홍길동</td>
+                                                    <td>5</td>
+                                                    <td>2018-04-01 12:14:50</td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm">BEST</button>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm">삭제</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>가성비 엉망. 곰탕집 김치와 깍두기가 맛이 전혀없고 수육은 왜 6만원인지 알수없는곳</td>
+                                                    <td>홍길동</td>
+                                                    <td>4</td>
+                                                    <td>2018-04-01 12:14:50</td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm">BEST</button>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm">삭제</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>가성비 엉망. 곰탕집 김치와 깍두기가 맛이 전혀없고 수육은 왜 6만원인지 알수없는곳</td>
+                                                    <td>the 홍길동</td>
+                                                    <td>3</td>
+                                                    <td>2018-04-01 12:14:50</td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm">BEST</button>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm">삭제</button>
+
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 댓글관리 Card END -->
+
+                        </div>
+<!--                    </div>-->
+
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 맛집 주소검색 Modal팝업 -->
+    <div class="modal fade" id="address-modal" tabindex="-1" role="dialog" aria-labelledby="address-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="address-modal-bael">맛집 주소검색</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="daum-map-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+
+    <!-- Page level custom scripts -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/adminlte.js}"></script>
+    <script th:src="@{/js/admin_commons.js}"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script th:src="@{/js/manage-restaurants.js}"></script>
+
+</body>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+
+        $('#table-filter1').change( function(){
+            get_mcode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        function get_mcode(o){
+            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+            console.log(val)
+            $.ajax({
+                type:"get",
+                url:"/admin/mfood/" + val,
+                datatype: "json",
+                success: function(data) {
+                    if(data.length > 0) {
+                        $("#table-filter2").find("option").remove().end();
+                        $.each(data, function(key, value) {
+                            $("#table-filter2").append("<option value='" + value.mcode + "'>" + value.categoryName + "</option>");
+                        });
+                    } else {
+                        $("#table-filter2").find("option").remove().end().append("<option>NO DATA</option>");
+                        return;
+                    }
+                },
+
+                error: function(x, o, e) {
+                    var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                    alert(msg);
+                }
+            });
+        }
+
+        $('#table-filter2').change( function(){
+            get_scode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        function get_scode(o){
+            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+            console.log(val)
+            $.ajax({
+                type:"get",
+                url:"/admin/sfood/" + val,
+                datatype: "json",
+                success: function(data) {
+                    if(data.length > 0) {
+                        $("#table-filter3").find("option").remove().end();
+                        $.each(data, function(key, value) {
+                            $("#table-filter3").append("<option value='" + value.scode + "'>" + value.categoryName + "</option>");
+                        });
+                    } else {
+                        $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");
+                        return;
+                    }
+                },
+
+                error: function(x, o, e) {
+                    var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                    alert(msg);
+                }
+            });
+        }
+    } );
+
+
+</script>
+
+</html>
