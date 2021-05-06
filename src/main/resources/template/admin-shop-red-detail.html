@@ -305,53 +305,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="restaurants-open-hours">예약여부</label>
-                                                        <div class="flex">
-                                                            <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="reservation-y" type="radio" name="reservation" th:checked="${payload[0].isReservation} == 'Y'" >
-                                                                <label class="custom-control-label" for="reservation-y">가능</label>
-                                                            </div>
-                                                            <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="reservation-n" type="radio" name="reservation" th:checked="${payload[0].isReservation} == 'N'" >
-                                                                <label class="custom-control-label" for="reservation-n">불가능</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="restaurants-closed">주차여부</label>
-                                                        <div class="flex">
-                                                            <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="parking-y" type="radio" name="parking" th:checked="${payload[0].isParking} == 'Y'" >
-                                                                <label class="custom-control-label" for="parking-y">가능</label>
-                                                            </div>
-                                                            <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="parking-n" type="radio" name="parking" th:checked="${payload[0].isParking} == 'N'" >
-                                                                <label class="custom-control-label" for="parking-n">불가능</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="recommend-menu">추천메뉴</label>
-                                                        <input type="text" class="form-control" id="recommend-menu" placeholder="추천메뉴" th:value="${payload[0].recommandMenu}">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="budget">예산</label>
-                                                        <input type="text" class="form-control" id="budget" placeholder="예산" th:value="${payload[0].budget}">
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -385,6 +338,21 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
+                                                        <label for="recommend-menu">추천메뉴</label>
+                                                        <input type="text" class="form-control" id="recommend-menu" placeholder="추천메뉴" th:value="${payload[0].recommandMenu}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="budget">예산</label>
+                                                        <input type="text" class="form-control" id="budget" placeholder="예산" th:value="${payload[0].budget}">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
                                                         <label for="review-link-naver">네이버블로그 SHOP ID</label>
                                                         <input type="text" class="form-control" id="review-link-naver" placeholder="https://blog.naver.com/" th:value="${payload[0].blogShopId}">
                                                     </div>
@@ -393,6 +361,39 @@
                                                     <div class="form-group">
                                                         <label for="review-link-instagram">인스타그램 키워드</label>
                                                         <input type="text" class="form-control" id="review-link-instagram" placeholder="https://www.instagram.com/" th:value="${payload[0].instaKeyword}">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="restaurants-open-hours">예약여부</label>
+                                                        <div class="flex">
+                                                            <div class="custom-control custom-radio">
+                                                                <input class="custom-control-input" id="reservation-y" type="radio" name="reservation" th:checked="${payload[0].isReservation} == 'Y'" >
+                                                                <label class="custom-control-label" for="reservation-y">가능</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input class="custom-control-input" id="reservation-n" type="radio" name="reservation" th:checked="${payload[0].isReservation} == 'N'" >
+                                                                <label class="custom-control-label" for="reservation-n">불가능</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="restaurants-closed">주차여부</label>
+                                                        <div class="flex">
+                                                            <div class="custom-control custom-radio">
+                                                                <input class="custom-control-input" id="parking-y" type="radio" name="parking" th:checked="${payload[0].isParking} == 'Y'" >
+                                                                <label class="custom-control-label" for="parking-y">가능</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input class="custom-control-input" id="parking-n" type="radio" name="parking" th:checked="${payload[0].isParking} == 'N'" >
+                                                                <label class="custom-control-label" for="parking-n">불가능</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -413,7 +414,7 @@
                                                     <div class="form-group">
                                                         <label for="select-tags">태그등록</label>
                                                         <select class="custom-select" id="select-tags">
-                                                            <option value="" disabled selected>태크등록</option>
+                                                            <option value="" disabled selected>해당 목록에서 태그를 선택해주세요</option>
                                                             <option value="치킨">치킨</option>
                                                             <option value="음식점">음식점</option>
                                                             <option value="강서구맛집">강서구맛집</option>
@@ -452,6 +453,17 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
+                                                <label for="restaurants-location-detial">메뉴목록</label>
+                                                <ul id="list">
+                                                    <li> 아이스크림 1800원 </li>
+                                                    <li> 아이스크림 2000원 </li>
+                                                    <li> 아이스크림 1800원 </li>
+                                                    <li> 아이스크림 2000원 </li>
+                                                    <li> 아이스크림 1800원 </li>
+                                                    <li> 아이스크림 2000원 </li>
+                                                </ul>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="restaurants-menu">메뉴</label>
@@ -463,7 +475,7 @@
                                                         <label for="restaurants-vat">부가세</label>
                                                         <input type="text" class="form-control" id="restaurants-vat" placeholder="부가세">
                                                     </div>
-                                                </div>
+                                                </div>clickButton
                                             </div>
                                         </div>
                                     </div>
@@ -490,43 +502,19 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr>
-                                                    <td>가성비 엉망. 곰탕집 김치와 깍두기가 맛이 전혀없고 수육은 왜 6만원인지 알수없는곳</td>
-                                                    <td>홍길동</td>
-                                                    <td>5</td>
-                                                    <td>2018-04-01 12:14:50</td>
-                                                    <td>
-                                                        <button class="btn btn-primary btn-sm">BEST</button>
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-primary btn-sm">삭제</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>가성비 엉망. 곰탕집 김치와 깍두기가 맛이 전혀없고 수육은 왜 6만원인지 알수없는곳</td>
-                                                    <td>홍길동</td>
-                                                    <td>4</td>
-                                                    <td>2018-04-01 12:14:50</td>
-                                                    <td>
-                                                        <button class="btn btn-primary btn-sm">BEST</button>
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-primary btn-sm">삭제</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>가성비 엉망. 곰탕집 김치와 깍두기가 맛이 전혀없고 수육은 왜 6만원인지 알수없는곳</td>
-                                                    <td>the 홍길동</td>
-                                                    <td>3</td>
-                                                    <td>2018-04-01 12:14:50</td>
-                                                    <td>
-                                                        <button class="btn btn-primary btn-sm">BEST</button>
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-primary btn-sm">삭제</button>
-
-                                                    </td>
-                                                </tr>
+                                                    <tr th:each="item : ${reviews}">
+<!--                                                        <td th:text="${item}"></td>-->
+                                                        <td th:text="${item.content}"></td>
+                                                        <td th:text="${item.userName}"></td>
+                                                        <td th:text="${item.starRating}"></td>
+                                                        <td>날짜 추가 필요</td>
+                                                        <td>
+                                                            <button class="btn btn-primary btn-sm">BEST</button>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-primary btn-sm">삭제</button>
+                                                        </td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -626,7 +614,12 @@
 </body>
 <script type="text/javascript">
     $(document).ready(function() {
-
+        var list = document.getElementById('list');
+        function clickButton(){
+            var temp = document.createElement('li');
+            temp.innerHTML = input.value;
+            list.appendChild(temp);
+        }
 
         $('#table-filter1').change( function(){
             get_mcode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
