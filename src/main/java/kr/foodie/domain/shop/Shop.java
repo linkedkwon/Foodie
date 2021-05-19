@@ -22,6 +22,9 @@ public class Shop {
     @Column(name = "REGION_ID")
     private Integer regionId;
 
+    @Column(name = "THEME_LIST")
+    private String themeList;
+
     @Column(name = "SUBWAY_TYPE_ID")
     private String subwayTypeId;
 
@@ -75,6 +78,9 @@ public class Shop {
 
     @Column(name = "IS_PARKING")
     private String isParking;
+
+    @Column(name = "FOODIELOG_RATING")
+    private String foodieLogRating;
 
     @Column(name = "BUDGET")
     private String budget;

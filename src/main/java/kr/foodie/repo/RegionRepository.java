@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface RegionRepository extends JpaRepository<Region, Long> {
     List<Region> findByRegionId(Integer regionId);
+    List<Region> findByRegionType(String regionType);
 }
