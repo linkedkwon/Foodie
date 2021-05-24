@@ -280,16 +280,17 @@
                                         </td>
                                     </tr>
                                     </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th style="    background: aliceblue;">
-                                            <a href="#layer1" id="add_category1"><button class="btn btn-primary">추가 </button></a>
-<!--                                            <a href="#layer2" id="modify_category1"><button class="btn btn-primary"> 수정 </button></a>-->
-<!--                                            <a href="#layer3" id="remove_category1"><button class="btn btn-primary"> 삭제 </button></a>-->
-                                        </th>
-                                    </tr>
-                                    </tfoot>
+<!--                                    <tfoot>-->
+<!--                                    <tr>-->
+
+<!--                                    </tr>-->
+<!--                                    </tfoot>-->
                                 </table>
+                                <div style="    background: aliceblue;" id="tbody1">
+                                    <a href="#layer1" id="add_category1"><button class="btn btn-primary">추가 </button></a>
+                                    <!--                                            <a href="#layer2" id="modify_category1"><button class="btn btn-primary"> 수정 </button></a>-->
+                                    <!--                                            <a href="#layer3" id="remove_category1"><button class="btn btn-primary"> 삭제 </button></a>-->
+                                </div>
                             </div>
 
                             <div class="tableFixHead">
@@ -310,16 +311,17 @@
                                         </td>
                                     </tr>
                                     </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th style="    background: aliceblue;">
-                                            <a href="#layer1" id="add_category2"><button class="btn btn-primary">추가 </button></a>
-                                            <!--                                            <a href="#layer2" id="modify_category1"><button class="btn btn-primary"> 수정 </button></a>-->
-                                            <!--                                            <a href="#layer3" id="remove_category1"><button class="btn btn-primary"> 삭제 </button></a>-->
-                                        </th>
-                                    </tr>
-                                    </tfoot>
+<!--                                    <tfoot>-->
+<!--                                    <tr>-->
+
+<!--                                    </tr>-->
+<!--                                    </tfoot>-->
                                 </table>
+                                <div style="    background: aliceblue;" id="tbody">
+                                    <a href="#layer1" id="add_category2"><button class="btn btn-primary">추가 </button></a>
+                                    <!--                                            <a href="#layer2" id="modify_category1"><button class="btn btn-primary"> 수정 </button></a>-->
+                                    <!--                                            <a href="#layer3" id="remove_category1"><button class="btn btn-primary"> 삭제 </button></a>-->
+                                </div>
                             </div>
 
                         </div>
@@ -537,17 +539,29 @@
 </body>
 
 <style>
-    .tableFixHead          { overflow: auto; height: 540px;margin-left: 50px;}
+    .tableFixHead          {height: 540px;margin-left: 50px;}
     .tableFixHead thead th { position: sticky; top: 0; z-index: 1; text-align: center }
-    .tableFixHead tfoot th { position: sticky; bottom: 0; z-index: 1; height: 100px;     padding-right: 0px;}
+    /*.tableFixHead tfoot th { position: sticky; bottom: 0; z-index: 1; height: 100px;     padding-right: 0px;}*/
 
     /* Just common table stuff. Really. */
     table  { border-collapse: collapse; width: 100%; }
-    th, td { padding: 8px 16px; }
+    th, td { padding: 8px 16px;  width: 216px;}
     th     { background:#eee; }
 
 
 
+    #tbody, #tbody1{
+        padding-left: 20px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        background: aliceblue;
+    }
+
+    tbody {
+        height: 500px;/*your desired max height*/
+        overflow-y: scroll;
+        display:block;
+    }
 
     .pop-layer .pop-container {
         padding: 20px 25px;

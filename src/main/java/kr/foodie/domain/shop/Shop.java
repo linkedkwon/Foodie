@@ -47,13 +47,13 @@ public class Shop {
     private String tag;
 
     @Column(name = "BIG_CATEGORY")
-    private String bigCategory;
+    private Integer bigCategory;
 
     @Column(name = "MIDDLE_CATEGORY")
-    private String middleCategory;
+    private Integer middleCategory;
 
     @Column(name = "SMALL_CATEGORY")
-    private String smallCategory;
+    private Integer smallCategory;
 
     @Column(name = "ADDRESS")
     private String address;

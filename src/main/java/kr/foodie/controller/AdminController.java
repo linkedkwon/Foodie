@@ -1,7 +1,6 @@
 package kr.foodie.controller;
 
 import kr.foodie.domain.category.FoodCategory;
-import kr.foodie.domain.category.FoodCategory;
 import kr.foodie.domain.category.Theme;
 import kr.foodie.domain.shop.HashTag;
 import kr.foodie.domain.shop.HashTagList;
@@ -10,13 +9,11 @@ import kr.foodie.domain.shop.Shop;
 import kr.foodie.service.*;
 import kr.foodie.service.admin.FoodCategoryAdminService;
 import kr.foodie.service.admin.RegionAdminService;
-import org.apache.coyote.Request;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -109,13 +106,42 @@ public class AdminController {
         return mav;
     }
 
+    @RequestMapping(value = "/registerRedShop", method = RequestMethod.GET)
+    public ModelAndView getregisterRedShop(){
+        ModelAndView mav = new ModelAndView();
+        List<Theme> redthemeListInfos;
+        List<Theme> greenthemeListInfos;
+        redthemeListInfos = themeService.getThemeTags(0);
+//        greenthemeListInfos = themeService.getThemeTags(1);
+        mav.setViewName("admin-create-red-shop");
+        mav.addObject("redThemeListInfos", redthemeListInfos);
+//        mav.addObject("greenThemeListInfos", greenthemeListInfos);
+        return mav;
+    }
+
+    @RequestMapping(value = "/registerGreenShop", method = RequestMethod.GET)
+    public ModelAndView getregisterGreenShop(){
+        ModelAndView mav = new ModelAndView();
+//        List<Theme> redthemeListInfos;
+        List<Theme> greenthemeListInfos;
+//        redthemeListInfos = themeService.getThemeTags(0);
+        greenthemeListInfos = themeService.getThemeTags(1);
+        mav.setViewName("admin-create-green-shop");
+//        mav.addObject("redThemeListInfos", redthemeListInfos);
+        mav.addObject("greenThemeListInfos", greenthemeListInfos);
+        return mav;
+    }
+
+
     @RequestMapping(value ="/shop/{shopType}", method= RequestMethod.GET)
     public ModelAndView getShopList(@PathVariable String shopType){
         ModelAndView mav = new ModelAndView();
         if(shopType.equals("red")){
             shopType = "0";
+            mav.setViewName("admin-shop-red-list");
         }else{
             shopType = "1";
+            mav.setViewName("admin-shop-green-list");
         }
         List<Shop> commentList;
         List<FoodCategory> categoryInfos;
@@ -133,7 +159,7 @@ public class AdminController {
 //        mav.addObject("priority", commentListWithOrder);
 //        mav.addObject("sidePriority", sideCommentListWithOrder);
 //        if(shopType.equals("0")){
-        mav.setViewName("admin-shop-list");
+
 
         return mav;
     }
@@ -216,6 +242,33 @@ public class AdminController {
             categoryInfoList = foodCategoryAdminService.updateSeqMinusOne(1, id);
         }
         return categoryInfoList;
+    }
+
+    @ResponseBody
+    @RequestMapping(value ={"/category/{shopType}/filter"}, method= RequestMethod.GET)
+    public List<Shop> filterWithCategory(Model model, @PathVariable String shopType, @RequestParam Integer bCode, @RequestParam Integer mCode, @RequestParam Integer sCode){
+        List<Shop> payload = null;
+        if(shopType.equals("red")){
+            shopType = "0";
+        }else{
+            shopType = "1";
+        }
+
+        if(bCode != 0 && mCode != 0 && sCode != 0) {
+            payload = shopService.getAdminShopInfosWithBcodeAndMcodeAndScode(bCode, mCode, sCode, shopType);
+        }else if (bCode != 0 && mCode != 0 && sCode == 0){
+            payload = shopService.getAdminShopInfosWithBcodeAndMcode(bCode, mCode, shopType);
+        }else if (bCode != 0 && mCode == 0 && sCode == 0){
+            payload = shopService.getAdminShopInfosWithBcode(bCode, shopType);
+        }
+//        if(type.equals("mfood")){
+//            categoryInfoList = foodCategoryAdminService.getAdminRegionMCategory(id);
+//        }else if (type.equals("sfood")){
+//            categoryInfoList = foodCategoryAdminService.getAdminRegionSCategory(id);
+//        }else if(type.equals("bfood")){
+//            categoryInfoList = foodCategoryAdminService.updateSeqMinusOne(1, id);
+//        }
+        return payload;
     }
 
 }

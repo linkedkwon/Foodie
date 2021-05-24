@@ -49,4 +49,14 @@ public class ShopService {
     public List<Shop> getAdminShopInfos(String shopType) {
         return shopRepository.findByShopType(shopType);
     }
+
+    public List<Shop> getAdminShopInfosWithBcode(Integer bCode, String shopType) {
+        return shopRepository.findByBigCategoryAndShopType(bCode, shopType);
+    }
+    public List<Shop> getAdminShopInfosWithBcodeAndMcode(Integer bCode, Integer mCode, String shopType) {
+        return shopRepository.findByBigCategoryAndMiddleCategoryAndShopType(bCode, mCode, shopType);
+    }
+    public List<Shop> getAdminShopInfosWithBcodeAndMcodeAndScode(Integer bCode, Integer mCode, Integer sCode, String shopType) {
+        return shopRepository.findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopType(bCode, mCode, sCode, shopType);
+    }
 }

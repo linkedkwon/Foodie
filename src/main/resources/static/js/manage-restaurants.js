@@ -82,7 +82,7 @@
     })
 
     $('.summernote').summernote({
-        placeholder: 'History를 입력해주세요.',
+        placeholder: 'Menu 를 입력해주세요.',
         height: 300,
         toolbar: [
             ['style', ['style']],
