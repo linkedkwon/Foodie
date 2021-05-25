@@ -259,10 +259,10 @@
                             <div class="container-fluid">
                                 <div class="col-md-12">
                                     <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="card-title" th:text="${payload[0].shopName}" style="float: left"></h3>
-                                            <button class="btn btn-info btn-sm" style="    margin-left: 24px;">가게 이미지</button>
-                                        </div>
+<!--                                        <div class="card-header">-->
+<!--                                            <h3 class="card-title" style="float: left"></h3>-->
+<!--                                            <button class="btn btn-info btn-sm" style="    margin-left: 24px;">가게 이미지</button>-->
+<!--                                        </div>-->
                                         <div class="card-body">
 <!--                                            <div class="form-group">-->
 <!--                                                <label for="restaurants-open-hours">그린/레드</label>-->
@@ -281,13 +281,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="restaurants-name">맛집명</label>
-                                                        <input type="text" th:value="${payload[0].shopName}" class="form-control" id="restaurants-name" placeholder="맛집명" readonly>
+                                                        <input type="text" class="form-control" id="restaurants-name" placeholder="맛집명" >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="restaurants-phone">전화번호</label>
-                                                        <input type="tel" class="form-control" id="restaurants-phone" th:value="${payload[0].phone}" placeholder="전화번호">
+                                                        <input type="tel" class="form-control" id="restaurants-phone"  placeholder="전화번호">
                                                     </div>
                                                 </div>
                                             </div>
@@ -295,13 +295,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="restaurants-manager">담당자</label>
-                                                        <input type="text" th:value="${payload[0].shopName}" class="form-control" id="restaurants-manager" placeholder="맛집명">
+                                                        <input type="text"  class="form-control" id="restaurants-manager" placeholder="맛집명">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="restaurants-manager-phone">담당자 연락처</label>
-                                                        <input type="tel" class="form-control" id="restaurants-manager-phone" th:value="${payload[0].phone}" placeholder="전화번호">
+                                                        <input type="tel" class="form-control" id="restaurants-manager-phone" placeholder="전화번호">
                                                     </div>
                                                 </div>
                                             </div>
@@ -325,11 +325,11 @@
                                                         <label for="website">결재유무</label>
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="is-free-y" type="radio" name="reservation" th:checked="${payload[0].isReservation} == 'Y'" >
+                                                                <input class="custom-control-input" id="is-free-y" type="radio" name="reservation"  >
                                                                 <label class="custom-control-label" for="is-free-y">유료</label>
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="is-free-n" type="radio" name="reservation" th:checked="${payload[0].isReservation} == 'N'" >
+                                                                <input class="custom-control-input" id="is-free-n" type="radio" name="reservation">
                                                                 <label class="custom-control-label" for="is-free-n">무료</label>
                                                             </div>
                                                         </div>
@@ -340,13 +340,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="restaurants-open-hours">영업시간</label>
-                                                        <input type="text" class="form-control" id="restaurants-open-hours"  th:value="${payload[0].operationTime}"  placeholder="영업시간">
+                                                        <input type="text" class="form-control" id="restaurants-open-hours" placeholder="영업시간">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="restaurants-closed">휴무일</label>
-                                                        <input type="text" class="form-control" id="restaurants-closed" th:value="${payload[0].holiday}" placeholder="휴무일">
+                                                        <input type="text" class="form-control" id="restaurants-closed" placeholder="휴무일">
                                                     </div>
                                                 </div>
                                             </div>
@@ -387,7 +387,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="website">홈페이지</label>
-                                                        <input type="text" class="form-control" id="website" placeholder="홈페이지" th:value="${payload[0].homepage}">
+                                                        <input type="text" class="form-control" id="website" placeholder="홈페이지" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -396,13 +396,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="recommend-menu">추천메뉴</label>
-                                                        <input type="text" class="form-control" id="recommend-menu" placeholder="추천메뉴" th:value="${payload[0].recommandMenu}">
+                                                        <input type="text" class="form-control" id="recommend-menu" placeholder="추천메뉴" >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="budget">예산</label>
-                                                        <input type="text" class="form-control" id="budget" placeholder="예산" th:value="${payload[0].budget}">
+                                                        <input type="text" class="form-control" id="budget" placeholder="예산">
                                                     </div>
                                                 </div>
                                             </div>
@@ -411,13 +411,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="review-link-naver">네이버블로그 SHOP ID</label>
-                                                        <input type="text" class="form-control" id="review-link-naver" placeholder="https://blog.naver.com/" th:value="${payload[0].blogShopId}">
+                                                        <input type="text" class="form-control" id="review-link-naver" placeholder="https://blog.naver.com/">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="review-link-instagram">인스타그램 키워드</label>
-                                                        <input type="text" class="form-control" id="review-link-instagram" placeholder="https://www.instagram.com/" th:value="${payload[0].instaKeyword}">
+                                                        <input type="text" class="form-control" id="review-link-instagram" placeholder="https://www.instagram.com/" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -428,11 +428,11 @@
                                                         <label for="restaurants-open-hours">예약여부</label>
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="reservation-y" type="radio" name="reservation" th:checked="${payload[0].isReservation} == 'Y'" >
+                                                                <input class="custom-control-input" id="reservation-y" type="radio" name="reservation">
                                                                 <label class="custom-control-label" for="reservation-y">가능</label>
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="reservation-n" type="radio" name="reservation" th:checked="${payload[0].isReservation} == 'N'" >
+                                                                <input class="custom-control-input" id="reservation-n" type="radio" name="reservation" >
                                                                 <label class="custom-control-label" for="reservation-n">불가능</label>
                                                             </div>
                                                         </div>
@@ -443,11 +443,11 @@
                                                         <label for="restaurants-closed">주차여부</label>
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="parking-y" type="radio" name="parking" th:checked="${payload[0].isParking} == 'Y'" >
+                                                                <input class="custom-control-input" id="parking-y" type="radio" name="parking">
                                                                 <label class="custom-control-label" for="parking-y">가능</label>
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="parking-n" type="radio" name="parking" th:checked="${payload[0].isParking} == 'N'" >
+                                                                <input class="custom-control-input" id="parking-n" type="radio" name="parking">
                                                                 <label class="custom-control-label" for="parking-n">불가능</label>
                                                             </div>
                                                         </div>
@@ -462,11 +462,11 @@
                                                         <label for="restaurants-closed">포장/배달</label>
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="delivery-y" type="radio" name="delivery"  th:checked="${payload[0].isDelivery} == 'Y'">
+                                                                <input class="custom-control-input" id="delivery-y" type="radio" name="delivery"  >
                                                                 <label class="custom-control-label" for="delivery-y">가능</label>
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="delivery-n" type="radio" name="delivery"  th:checked="${payload[0].isDelivery} == 'N'">
+                                                                <input class="custom-control-input" id="delivery-n" type="radio" name="delivery" >
                                                                 <label class="custom-control-label" for="delivery-n">불가능</label>
                                                             </div>
                                                         </div>
@@ -477,17 +477,17 @@
                                                         <label for="restaurants-closed">배경</label>
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_1" type="radio" name="background_type" th:checked="${payload[0].background} == '1'" >
+                                                                <input class="custom-control-input" id="background_type_1" type="radio" name="background_type" >
                                                                 <label class="custom-control-label" for="background_type_1">1번타입(레드)</label>
                                                                 <img src="/images/background_red.png" class="thumbnail" height='30px' />
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_2" type="radio" name="background_type" th:checked="${payload[0].isParking} == '2'" >
+                                                                <input class="custom-control-input" id="background_type_2" type="radio" name="background_type" >
                                                                 <label class="custom-control-label" for="background_type_2">2번타입(그린)</label>
                                                                 <img src="/images/background_green.png" class="thumbnail" height='30px' />
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_3" type="radio" name="background_type" th:checked="${payload[0].isParking} == '3'" >
+                                                                <input class="custom-control-input" id="background_type_3" type="radio" name="background_type">
                                                                 <label class="custom-control-label" for="background_type_3">3번타입(머스타드)</label>
                                                                 <img src="/images/background_mustard.png" class="thumbnail" height='30px' />
                                                             </div>
@@ -551,7 +551,7 @@
                                                 <div class="col-md-6">
                                                     <label for="restaurants-address-detial">주소 (도로명)</label>
                                                     <div style="display: flex;">
-                                                        <input type="text" class="form-control" id="restaurants-address-detial" placeholder="주소" th:value="${payload[0].address}">
+                                                        <input type="text" class="form-control" id="restaurants-address-detial" placeholder="주소" >
                                                         <input type="text" class="form-control" id="restaurants-address-detial-detail" value="3가 1-9">
                                                     </div>
                                                 </div>
@@ -568,9 +568,19 @@
 
                                             <div class="form-group">
                                                 <label for="restaurants-location-detial">찾아가는길(상세주소)</label>
-                                                <input type="text" class="form-control" id="restaurants-location-detial" placeholder="찾아가는길" th:value="${payload[0].detailAddress}">
+                                                <input type="text" class="form-control" id="restaurants-location-detial" placeholder="찾아가는길">
                                             </div>
 
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="restaurants-location-detial">가게 이미지 추가</label>
+                                                    <div style="width: 100px;height: 150px;text-align: center">
+                                                        <img style="width: 100%;height: 100px;" src="/images/no_image.jpeg">
+                                                        <button>추가</button>
+                                                    </div>
+<!--                                                    <input type="text" class="form-control" id="restaurants-location-detial" placeholder="찾아가는길">-->
+                                                </div>
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-6">
 
@@ -592,12 +602,12 @@
                                                         <label for="restaurants-closed">테마별</label>
 <!--                                                        <p th:text="${payload[0].themeList}"></p>-->
                                                         <div class="flex" style="display: block;">
-                                                            <div class="custom-control custom-radio" style="float: left;" th:object="${theme}" th:each="theme : ${themeTags}">
+                                                            <div class="custom-control custom-radio" style="float: left;" th:object="${theme}" th:each="theme : ${redThemeListInfos}">
 <!--                                                                <p th:text="${#lists.contains(#strings.listSplit(payload[0].themeList,','), theme.themeId)}"></p>-->
                                                                 <!--/*@thymesVar id="Arrays" type=""*/-->
 <!--                                                                <p th:text="${#strings.arraySplit(payload[0].themeList, ',')}"></p>-->
 <!--                                                                <p th:text="${payload[0].themeList.split(',')[0]}"></p>-->
-                                                                <input class="custom-control-input" th:id="${theme.themeId}" type="checkbox" name="theme" th:checked="${#lists.contains(#strings.arraySplit(payload[0].themeList,','), theme.themeId)} == True">
+                                                                <input class="custom-control-input" th:id="${theme.themeId}" type="checkbox" name="theme">
                                                                 <label class="custom-control-label" th:for="${theme.themeId}" th:text="${theme.name}"> 가능</label>
                                                             </div>
                                                         </div>
@@ -617,7 +627,7 @@
                                             <h3 class="card-title">히스토리</h3>
                                         </div>
                                         <div class="card-body">
-                                            <div id="summernote" th:text="${payload[0].history}"></div>
+                                            <div id="summernote"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -631,7 +641,7 @@
                                             <h3 class="card-title">메뉴관리</h3>
                                         </div>
                                         <div class="card-body">
-                                            <div class="summernote" th:text="${payload[0].menu}"></div>
+                                            <div class="summernote" ></div>
                                         </div>
 <!--                                        <div class="card-body">-->
                                             <!--<div class="row">
@@ -666,45 +676,6 @@
                             </div>
                             <!-- 메뉴관리 Card END -->
 
-                            <div class="container-fluid">
-                                <div class="col-md-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="card-title">댓글관리 ( 5-탁월 /4.5-감동 /4-좋음 /3-평범 /2-실망 )</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <table class="table table-comments">
-                                                <thead>
-                                                <tr>
-                                                    <th scope="col">내용</th>
-                                                    <th scope="col" width="100px">작성자</th>
-                                                    <th scope="col" width="60px">평점</th>
-                                                    <th scope="col" width="150px">날짜</th>
-                                                    <th scope="col" width="100px"></th>
-                                                    <th scope="col" width="100px"></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr th:each="item : ${reviews}">
-<!--                                                        <td th:text="${item}"></td>-->
-                                                        <td th:text="${item.content}"></td>
-                                                        <td th:text="${item.userName}"></td>
-                                                        <td th:text="${item.starRating}"></td>
-                                                        <td>날짜 추가 필요</td>
-                                                        <td>
-                                                            <button class="btn btn-primary btn-sm">BEST</button>
-                                                        </td>
-                                                        <td>
-                                                            <button class="btn btn-primary btn-sm">삭제</button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 댓글관리 Card END -->
 
                         </div>
 <!--                    </div>-->

@@ -22,6 +22,9 @@ public class Shop {
     @Column(name = "REGION_ID")
     private Integer regionId;
 
+    @Column(name = "THEME_LIST")
+    private String themeList;
+
     @Column(name = "SUBWAY_TYPE_ID")
     private String subwayTypeId;
 
@@ -44,13 +47,13 @@ public class Shop {
     private String tag;
 
     @Column(name = "BIG_CATEGORY")
-    private String bigCategory;
+    private Integer bigCategory;
 
     @Column(name = "MIDDLE_CATEGORY")
-    private String middleCategory;
+    private Integer middleCategory;
 
     @Column(name = "SMALL_CATEGORY")
-    private String smallCategory;
+    private Integer smallCategory;
 
     @Column(name = "ADDRESS")
     private String address;
@@ -75,6 +78,9 @@ public class Shop {
 
     @Column(name = "IS_PARKING")
     private String isParking;
+
+    @Column(name = "FOODIELOG_RATING")
+    private String foodieLogRating;
 
     @Column(name = "BUDGET")
     private String budget;

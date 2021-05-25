@@ -80,4 +80,16 @@
             ['insert', ['link']],
         ]
     })
+
+    $('.summernote').summernote({
+        placeholder: 'Menu 를 입력해주세요.',
+        height: 300,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'paragraph']],
+            ['insert', ['link']],
+        ]
+    })
 })()

@@ -21,4 +21,7 @@ public class TagService {
     public List<HashTag> getHashTags(Integer shopId) {
         return tagRepository.findByShopId(shopId);
     }
+    public List<HashTag> getAllHashTags(Integer shopId) {
+        return tagRepository.findByShopId(shopId);
+    }
 }

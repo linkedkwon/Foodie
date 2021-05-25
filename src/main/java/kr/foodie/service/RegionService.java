@@ -20,4 +20,8 @@ public class RegionService {
     public List<Region> getRegionInfo(Integer regionId) {
         return regionRepository.findByRegionId(regionId);
     }
+
+    public List<Region> getRegionInfoWithType3(String regionType) {
+        return regionRepository.findByRegionType(regionType);
+    }
 }

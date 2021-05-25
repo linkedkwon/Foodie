@@ -250,15 +250,17 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">레드리스트</h1>
+                    <h1 class="h3 mb-2 text-gray-800">그린리스트</h1>
 <!--                    <p th:text="${regionInfos}"></p>-->
-                    <p class="mb-4">레드리스트 관리자 페이지 입니다. <a target="_blank" href="#">레드리스트 이동</a>.</p>
+                    <p class="mb-4">그린리스트 관리자 페이지 입니다. <a target="_blank" href="#">그린리스트 이동</a>.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">맛집목록</h6>
-                            <button style="float: right">맛집 추가하기</button>
+                            <a th:href="@{/admin/registerGreenShop}">
+                                <button class="btn btn-info btn-sm" style="float: right">맛집 추가하기</button>
+                            </a>
                         </div>
                         <div>
                         <div style="width: 100%;">
@@ -309,42 +311,55 @@
                         </div>
 
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered display" id="example" width="100%" cellspacing="0">
+                            <div class="table-responsive" style="width:64%;">
+                                <table class="table table-bordered display" id="example" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th>대분류</th>
-                                        <th>중분류</th>
-                                        <th>소분류</th>
+<!--                                        <th>대분류</th>-->
+<!--                                        <th>중분류</th>-->
+<!--                                        <th>소분류</th>-->
                                         <th>사진</th>
                                         <th>가게이름</th>
-                                        <th>가게주소</th>
+                                        <th>전문가평가</th>
+                                        <th>상세정보입력 여부</th>
+                                        <th>수정일</th>
                                         <th>등록일</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:object="${shop}" th:each="shop : ${payload}">
-                                        <td th:text="${shop.bigCategory}"></td>
-                                        <td th:text="${shop.middleCategory}"></td>
-                                        <td th:text="${shop.smallCategory}"></td>
-                                        <td th:text="${shop.shopImage}">
-                                            <button class="btn btn-info btn-sm">사진</button>
+<!--                                        <td th:text="${shop.bigCategory}"></td>-->
+<!--                                        <td th:text="${shop.middleCategory}"></td>-->
+<!--                                        <td th:text="${shop.smallCategory}"></td>-->
+                                        <td>
+                                            <img th:src="${shop.shopImage}" class="thumbnail" style="width: 80px;height:60px;"/>
                                         </td>
                                         <td>
-                                            <a th:href="@{'/admin/shop/red/'+${shop.shopId}}" th:text="${shop.shopName}"> </a>
+                                            <div>
+                                                <a th:href="@{'/admin/shop/red/'+${shop.shopId}}" th:text="${shop.shopName}"></a>
+                                            </div>
+                                            <div>
+                                                <span th:text="${'주소- ' + shop.address}"></span>
+                                            </div>
                                         </td>
-                                        <td th:text="${shop.address}"></td>
+                                        <td th:text="${shop.foodieLogRating}"></td>
+                                        <td>
+                                            입력완료
+                                        </td>
+                                        <td th:text="${shop.createdAt}"></td>
                                         <td th:text="${shop.createdAt}"></td>
                                     </tr>
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <th>대분류</th>
-                                        <th>중분류</th>
-                                        <th>소분류</th>
+<!--                                        <th>대분류</th>-->
+<!--                                        <th>중분류</th>-->
+<!--                                        <th>소분류</th>-->
                                         <th>사진</th>
                                         <th>가게이름</th>
-                                        <th>가게주소</th>
+                                        <th>전문가평가</th>
+                                        <th>상세정보입력 여부</th>
+                                        <th>수정일</th>
                                         <th>등록일</th>
                                     </tr>
                                     </tfoot>
@@ -420,8 +435,46 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
 </body>
+
+<style>
+    #preview{
+        z-index: 9999;
+        position:absolute;
+        border:0px solid #ccc;
+        background:#333;
+        padding:1px;
+        display:none;
+        color:#fff;
+    }
+</style>
 <script type="text/javascript">
     $(document).ready(function() {
+        var xOffset = 10;
+        var yOffset = 30;
+
+        $(document).on("mouseover",".thumbnail",function(e){ //마우스 오버시
+
+            $("body").append("<p id='preview'><img src='"+ $(this).attr("src") +"' width='400px' /></p>"); //보여줄 이미지를 선언
+            $("#preview")
+                .css("top",(e.pageY - xOffset) + "px")
+                .css("left",(e.pageX + yOffset) + "px")
+                .fadeIn("fast"); //미리보기 화면 설정 셋팅
+        });
+
+        $(document).on("mousemove",".thumbnail",function(e){ //마우스 이동시
+            $("#preview")
+                .css("top",(e.pageY - xOffset) + "px")
+                .css("left",(e.pageX + yOffset) + "px");
+        });
+
+        $(document).on("mouseout",".thumbnail",function(){ //마우스 아웃시
+            $("#preview").remove();
+        });
+
+
+
+
+
         $('#example').DataTable( {
             initComplete: function () {
                 this.api().columns().every( function () {

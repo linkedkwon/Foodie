@@ -28,6 +28,9 @@ public class FoodCategory {
     @Column(name = "LEVEL")
     private Integer level;
 
+    @Column(name = "SEQ")
+    private Integer seq;
+
     @Column(name = "CATEGORY_NAME")
     private String categoryName;
 }
