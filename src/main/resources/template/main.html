@@ -158,9 +158,9 @@
 <!--                      <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">-->
                     </ul>
                     <th:block th:switch="${shop.foodieLogRating}">
-                      <div th:case="A" class="star-first"></div>
-                      <div th:case="AA" class="star-second"></div>
-                      <div th:case="AAA" class="star-third"></div>
+                      <div th:case="A" class="star-first"><img src="../images/ico-star-first.png" class="star-box"></div>
+                      <div th:case="AA" class="star-second"><img src="../images/ico-star-second.png" class="star-box"></div>
+                      <div th:case="AAA" class="star-third"><img src="../images/ico-star-third.png" class="star-box"></div>
                     </th:block>
                   </div>
                 </div>
@@ -201,9 +201,9 @@
                       <!--                      <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">-->
                     </ul>
                     <th:block th:switch="${shop.foodieLogRating}">
-                      <div th:case="A" class="star-first"></div>
-                      <div th:case="AA" class="star-second"></div>
-                      <div th:case="AAA" class="star-third"></div>
+                      <div th:case="A" class="star-first"><img src="../images/ico-star-first.png" class="star-box"></div>
+                      <div th:case="AA" class="star-second"><img src="../images/ico-star-second.png" class="star-box"></div>
+                      <div th:case="AAA" class="star-third"><img src="../images/ico-star-third.png" class="star-box"></div>
                     </th:block>
                   </div>
                 </div>
@@ -273,15 +273,19 @@
           ul.appendChild(li);
 
           var ratingClass="";
+          var src="";
           switch (element.foodieLogRating) {
             case "A":
               ratingClass= "star-first";
+              src="../images/ico-star-first.png";
               break;
             case "AA":
               ratingClass ="star-second";
+              src="../images/ico-star-second.png";
               break;
             case "AAA":
               ratingClass = "star-third";
+              src="../images/ico-star-third.png";
               break;
           }
 
@@ -299,6 +303,7 @@
                   +       "<li class=\"address\">" + element.address + "</li>"
                   +     "</ul>"
                   +     "<div class="+ratingClass+">"
+                  +     "<img src="+src+" class=\"star-box\">"
                   +     "</div>"
                   +     "</div>"
                   +   "</div>"
@@ -326,15 +331,19 @@
           ul.appendChild(li);
 
           var ratingClass="";
+          var src="";
           switch (element.foodieLogRating) {
             case "A":
               ratingClass= "star-first";
+              src="../images/ico-star-first.png";
               break;
             case "AA":
               ratingClass ="star-second";
+              src="../images/ico-star-second.png";
               break;
             case "AAA":
               ratingClass = "star-third";
+              src="../images/ico-star-third.png";
               break;
           }
 
@@ -352,6 +361,7 @@
                   +       "<li class=\"address\">" + element.address + "</li>"
                   +     "</ul>"
                   +     "<div class="+ratingClass+">"
+                  +     "<img src="+src+" class=\"star-box\">"
                   +     "</div>"
                   +     "</div>"
                   +   "</div>"

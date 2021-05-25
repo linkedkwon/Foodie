@@ -86,9 +86,9 @@
                       </li>
                     </ul>
                     <th:block th:switch="${shop.foodieLogRating}">
-                      <div th:case="A" class="star-first"></div>
-                      <div th:case="AA" class="star-second"></div>
-                      <div th:case="AAA" class="star-third"></div>
+                      <div th:case="A" class="star-first"><img src="../images/ico-star-first.png" class="star-box"></div>
+                      <div th:case="AA" class="star-second"><img src="../images/ico-star-second.png" class="star-box"></div>
+                      <div th:case="AAA" class="star-third"><img src="../images/ico-star-third.png" class="star-box"></div>
                     </th:block>
                   </div>
                 </div>
@@ -123,9 +123,9 @@
                       <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">
                     </ul>
                     <th:block th:switch="${shop.foodieLogRating}">
-                      <div th:case="A" class="star-first"></div>
-                      <div th:case="AA" class="star-second"></div>
-                      <div th:case="AAA" class="star-third"></div>
+                      <div th:case="A" class="star-first"><img src="../images/ico-star-first.png" class="star-box"></div>
+                      <div th:case="AA" class="star-second"><img src="../images/ico-star-second.png" class="star-box"></div>
+                      <div th:case="AAA" class="star-third"><img src="../images/ico-star-third.png" class="star-box"></div>
                     </th:block>
                   </div>
                 </div>
