@@ -2,9 +2,11 @@ package kr.foodie.config.web;
 
 import kr.foodie.config.web.handler.AuthenticatedHandler;
 import kr.foodie.config.web.handler.RedirectHandler;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import java.time.Duration;
 
@@ -56,5 +58,10 @@ public class WebConfig implements WebMvcConfigurer {
     //Async task to be adding with search, gps
     @Override
     public void configureAsyncSupport(AsyncSupportConfigurer configurer) {}
+
+    @Bean
+    MappingJackson2JsonView jsonView(){
+        return new MappingJackson2JsonView();
+    }
 
 }

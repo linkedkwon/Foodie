@@ -34,4 +34,10 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
     List<Shop> findByBigCategoryAndMiddleCategoryAndShopType(Integer bCode, Integer mCode, String shopType);
     List<Shop> findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopType(Integer bCode, Integer mCode, Integer sCode, String shopType);
 
+    // region
+    List<Shop> findByShopTypeAndRegionTypeId(String shopType, Integer regionId);
+    List<Shop> findByBigCategoryAndShopTypeAndRegionTypeId(Integer bCode, String shopType, Integer regionId);
+    List<Shop> findByBigCategoryAndMiddleCategoryAndShopTypeAndRegionTypeId(Integer bCode, Integer mCode, String shopType, Integer regionId);
+    List<Shop> findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopTypeAndRegionTypeId(Integer bCode, Integer mCode, Integer sCode, String shopType, Integer regionId);
+
 }

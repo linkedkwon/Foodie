@@ -1,5 +1,9 @@
 package kr.foodie.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import kr.foodie.domain.category.FoodCategory;
 import kr.foodie.domain.category.Theme;
 import kr.foodie.domain.shop.HashTag;
@@ -9,13 +13,15 @@ import kr.foodie.domain.shop.Shop;
 import kr.foodie.service.*;
 import kr.foodie.service.admin.FoodCategoryAdminService;
 import kr.foodie.service.admin.RegionAdminService;
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-import java.util.Optional;
+import javax.xml.crypto.Data;
+import java.util.*;
 
 @Controller
 @RequestMapping(path = "/admin")
@@ -77,6 +83,52 @@ public class AdminController {
         mav.addObject("categoryMInfos", categoryMInfos);
         mav.addObject("categorySInfos", categorySInfos);
         mav.setViewName("admin-register-env");
+        return mav;
+    }
+
+    @RequestMapping(value = "/registerEnvRegion", method = RequestMethod.GET)
+    public ModelAndView getregisterEnvRegion(){
+        ModelAndView mav = new ModelAndView();
+        List<String> regionsInfos;
+        regionsInfos = regionAdminService.getRegionProvinceInfo();
+//        regions = regionAdminService.findRegionProvinceInfoAll();
+//        categoryMInfos = foodCategoryAdminService.getAdminRegionMCategory(100);
+//        categorySInfos = foodCategoryAdminService.getAdminRegionSCategory(1000);
+        mav.addObject("regionInfos", regionsInfos);
+//        mav.addObject("categoryMInfos", categoryMInfos);
+//        mav.addObject("provinceInfos", regions);
+        mav.setViewName("admin-register-env-region");
+        return mav;
+    }
+
+    @RequestMapping(value = "/registerEnvFoodVillege", method = RequestMethod.GET)
+    public ModelAndView getregisterEnvFoodVillege(){
+        ModelAndView mav = new ModelAndView();
+        List<Region> foodRegionInfos;
+        foodRegionInfos = regionAdminService.getRegionFoodRegionInfo();
+        mav.addObject("foodRegionInfos", foodRegionInfos);
+        mav.setViewName("admin-register-env-foodvillege");
+        return mav;
+    }
+
+    @RequestMapping(value = "/registerEnvSubway", method = RequestMethod.GET)
+    public ModelAndView getregisterEnvSubway(@PathVariable String shopType){
+        ModelAndView mav = new ModelAndView();
+        if(shopType.equals("red")){
+            shopType = "0";
+        }else{
+            shopType = "1";
+        }
+        List<FoodCategory> categoryInfos;
+        List<FoodCategory> categoryMInfos;
+        List<FoodCategory> categorySInfos;
+        categoryInfos = foodCategoryAdminService.getAdminRegionBCategory();
+        categoryMInfos = foodCategoryAdminService.getAdminRegionMCategory(100);
+        categorySInfos = foodCategoryAdminService.getAdminRegionSCategory(1000);
+        mav.addObject("categoryInfos", categoryInfos);
+        mav.addObject("categoryMInfos", categoryMInfos);
+        mav.addObject("categorySInfos", categorySInfos);
+        mav.setViewName("admin-register-env-subway");
         return mav;
     }
 
@@ -215,6 +267,13 @@ public class AdminController {
     }
 
     @ResponseBody
+    @RequestMapping(value ="/region/{provinceName}", method= RequestMethod.GET)
+    public List<Region> getRegionDistrictInfo(Model model, @PathVariable String provinceName){
+        List<Region> regionInfos = regionAdminService.getRegionDistrictInfo(provinceName);
+        return regionInfos;
+    }
+
+    @ResponseBody
     @RequestMapping(value ="/category/{type}/movePlusOne/{id}", method= RequestMethod.PUT)
     public List<FoodCategory> moveOne(Model model, @PathVariable String type, @PathVariable Integer id){
         List<FoodCategory> categoryInfoList = null;
@@ -246,7 +305,7 @@ public class AdminController {
 
     @ResponseBody
     @RequestMapping(value ={"/category/{shopType}/filter"}, method= RequestMethod.GET)
-    public List<Shop> filterWithCategory(Model model, @PathVariable String shopType, @RequestParam Integer bCode, @RequestParam Integer mCode, @RequestParam Integer sCode){
+    public List<Shop> filterWithCategory(Model model, @PathVariable String shopType, @RequestParam Integer bCode, @RequestParam Integer mCode, @RequestParam Integer sCode, @RequestParam Integer regionId){
         List<Shop> payload = null;
         if(shopType.equals("red")){
             shopType = "0";
@@ -254,13 +313,24 @@ public class AdminController {
             shopType = "1";
         }
 
-        if(bCode != 0 && mCode != 0 && sCode != 0) {
-            payload = shopService.getAdminShopInfosWithBcodeAndMcodeAndScode(bCode, mCode, sCode, shopType);
-        }else if (bCode != 0 && mCode != 0 && sCode == 0){
-            payload = shopService.getAdminShopInfosWithBcodeAndMcode(bCode, mCode, shopType);
-        }else if (bCode != 0 && mCode == 0 && sCode == 0){
-            payload = shopService.getAdminShopInfosWithBcode(bCode, shopType);
+        if(regionId != 0){
+            if(bCode != 0 && mCode != 0 && sCode != 0) {
+                payload = shopService.getAdminShopInfosWithBcodeAndMcodeAndScodeWithRegionId(bCode, mCode, sCode, shopType, regionId);
+            }else if (bCode != 0 && mCode != 0 && sCode == 0){
+                payload = shopService.getAdminShopInfosWithBcodeAndMcodeWithRegionId(bCode, mCode, shopType, regionId);
+            }else if (bCode != 0 && mCode == 0 && sCode == 0){
+                payload = shopService.getAdminShopInfosWithBcodeWithRegionId(bCode, shopType, regionId);
+            }
+        }else{
+            if(bCode != 0 && mCode != 0 && sCode != 0) {
+                payload = shopService.getAdminShopInfosWithBcodeAndMcodeAndScode(bCode, mCode, sCode, shopType);
+            }else if (bCode != 0 && mCode != 0 && sCode == 0){
+                payload = shopService.getAdminShopInfosWithBcodeAndMcode(bCode, mCode, shopType);
+            }else if (bCode != 0 && mCode == 0 && sCode == 0){
+                payload = shopService.getAdminShopInfosWithBcode(bCode, shopType);
+            }
         }
+
 //        if(type.equals("mfood")){
 //            categoryInfoList = foodCategoryAdminService.getAdminRegionMCategory(id);
 //        }else if (type.equals("sfood")){
@@ -269,6 +339,21 @@ public class AdminController {
 //            categoryInfoList = foodCategoryAdminService.updateSeqMinusOne(1, id);
 //        }
         return payload;
+    }
+
+    @ResponseBody
+    @RequestMapping(value ={"/category/{shopType}/all"}, method= RequestMethod.GET)
+    public Map<String, List> getAllCategory(Model model, @PathVariable String shopType){
+        if(shopType.equals("red")){
+            shopType = "0";
+        }else{
+            shopType = "1";
+        }
+        List<Shop> commentList;
+        commentList = shopService.getAdminShopInfos(shopType);
+        Map<String, List> members = new HashMap<>();
+        members.put("data", commentList);
+        return members;
     }
 
 }

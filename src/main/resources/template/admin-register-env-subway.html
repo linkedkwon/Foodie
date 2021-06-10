@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:>
 
 <head>
@@ -251,28 +251,30 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">해시태그 설정</h1>
+                    <h1 class="h3 mb-2 text-gray-800">등록환경설정</h1>
 <!--                    <p th:text="${regionInfos}"></p>-->
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4" style="    height: 800px;">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">해시태그목록</h6>
+                            <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">맛집목록</h6>
+                            <button class="btn btn-info btn-sm" style="float: right">맛집 추가하기</button>
                         </div>
-                        <div class="card-body" style="  justify-content: center;display: flex ;  margin: auto;">
+                        <div class="card-body" style=" justify-content: center; display: flex ;  margin: auto;">
 
 <!--                            <div class="">-->
                             <div class="tableFixHead">
+                                <div id="categoryHead1">
+                                    <th>1차 카테고리</th>
+                                </div>
+
                                 <table class="table-bordered display" id="example1" style="width: 220px;" cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th>레드리스트 해시태그</th>
-                                    </tr>
-                                    </thead>
+<!--                                    <thead>-->
+<!--                                    </thead>-->
                                     <tbody  id="bcode">
-                                    <tr  th:each="val : ${redHashTagListInfos}">
-                                        <td>
-                                            <input type="checkbox" id="category_1" th:value="${val.tagId}" th:name="${val.tagName}" th:text="${' ' + val.tagName}"/>
+                                    <tr  th:each="val : ${categoryInfos}">
+                                        <td onclick="get_mcode(event)">
+                                            <input type="checkbox" id="category_1" th:value="${val.bCode}" th:name="${val.categoryName}" th:text="${' ' + val.categoryName}"/>
                                             <div style="float: right">
                                                 <a href="javascript:void(0)" data-href="#layer2" id="modify_category1"><i class="fa fa-pencil"> </i></a>
                                                 <a href="javascript:void(0)" data-href="#layer3"  id="remove_category1"><i class=" fa fa-ban"> </i></a>
@@ -286,30 +288,66 @@
 <!--                                    </tr>-->
 <!--                                    </tfoot>-->
                                 </table>
-                                <div style="    background: aliceblue;" id="tbody1">
+                                <div style="    background: aliceblue;" id="stickyId1">
+                                    <a href="" id="move_category1_plus" onclick="move_one(1)"><button class="btn btn-primary">위로 </button></a>
+                                    <a href="" id="move_category1_minus" onclick="minus_one(1)"><button class="btn btn-primary">아래로 </button></a>
                                     <a href="#layer1" id="add_category1"><button class="btn btn-primary">추가 </button></a>
                                     <!--                                            <a href="#layer2" id="modify_category1"><button class="btn btn-primary"> 수정 </button></a>-->
                                     <!--                                            <a href="#layer3" id="remove_category1"><button class="btn btn-primary"> 삭제 </button></a>-->
                                 </div>
                             </div>
-
                             <div class="tableFixHead">
-                                <table class="table-bordered display" id="example2" style="width: 220px;" cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th>그린리스트 해시태그</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody  id="mcode">
-                                    <tr  th:each="val : ${greenHashTagListInfos}">
-                                        <td>
-                                            <input type="checkbox" id="category_2" th:value="${val.tagId}" th:name="${val.tagName}" th:text="${' ' + val.tagName}"/>
-                                            <div style="float: right">
-                                                <a href="javascript:void(0)" data-href="#layer2" id="modify_category2"><i class="fa fa-pencil"> </i></a>
-                                                <a href="javascript:void(0)" data-href="#layer3"  id="remove_category2"><i class=" fa fa-ban"> </i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
+
+                                <div id="categoryHead2">
+                                    <th>2차 카테고리</th>
+                                </div>
+                                <table class="table-bordered display" id="example2"  style="width: 220px;" cellspacing="0">
+<!--                                    <thead>-->
+
+<!--                                    </thead>-->
+                                    <tbody id="mcode">
+                                        <tr  th:each="val : ${categoryMInfos}">
+                                            <td onclick="get_scode(event)">
+                                                <input type="checkbox" id="category_2" th:value="${val.mCode}" th:name="${val.categoryName}" th:text="${' ' + val.categoryName}"/>
+                                                <div style="float: right">
+                                                    <a href="javascript:void(0)" data-href="#layer5" id="modify_category2"><i class="fa fa-pencil"> </i></a>
+                                                    <a href="javascript:void(0)" data-href="#layer6"  id="remove_category2"><i class=" fa fa-ban"> </i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+<!--                                    <tfoot id="stickyId2">-->
+<!--                                    <tr>-->
+
+<!--                                    </tr>-->
+<!--                                    </tfoot>-->
+                                </table>
+                                <div style="background: aliceblue;" id="stickyId2">
+                                    <a href="" id="move_category2_plus"><button class="btn btn-primary">위로 </button></a>
+                                    <a href="" id="move_category2_minus"><button class="btn btn-primary">아래로 </button></a>
+                                    <a href="#layer4" id="add_category2"><button class="btn btn-primary">추가 </button></a>
+                                </div>
+                            </div>
+                            <div class="tableFixHead">
+                                <div id="categoryHead3">
+                                    <th>3차 카테고리</th>
+                                </div>
+                                <table class="table-bordered display" id="example3"  style="width: 220px;" cellspacing="0">
+<!--                                    <thead>-->
+<!--                                    <tr>-->
+<!--                                        <th>3차 카테고리</th>-->
+<!--                                    </tr>-->
+<!--                                    </thead>-->
+                                    <tbody  id="scode">
+                                        <tr  th:each="val : ${categorySInfos}">
+                                            <td>
+                                                <input type="checkbox" id="category_3" th:value="${val.sCode}" th:name="${val.categoryName}" th:text="${' ' + val.categoryName}"/>
+                                                <div style="float: right">
+                                                    <a href="javascript:void(0)" data-href="#layer8" id="modify_category3"><i class="fa fa-pencil"> </i></a>
+                                                    <a href="javascript:void(0)" data-href="#layer9"  id="remove_category3"><i class=" fa fa-ban"> </i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     </tbody>
 <!--                                    <tfoot>-->
 <!--                                    <tr>-->
@@ -317,13 +355,12 @@
 <!--                                    </tr>-->
 <!--                                    </tfoot>-->
                                 </table>
-                                <div style="    background: aliceblue;" id="tbody">
-                                    <a href="#layer1" id="add_category2"><button class="btn btn-primary">추가 </button></a>
-                                    <!--                                            <a href="#layer2" id="modify_category1"><button class="btn btn-primary"> 수정 </button></a>-->
-                                    <!--                                            <a href="#layer3" id="remove_category1"><button class="btn btn-primary"> 삭제 </button></a>-->
+                                <div id="stickyId3">
+                                    <a href="" id="move_category3_plus"><button class="btn btn-primary">위로 </button></a>
+                                    <a href="" id="move_category3_minus"><button class="btn btn-primary">아래로 </button></a>
+                                    <a href="#layer7" id="add_category3"><button class="btn btn-primary">추가 </button></a>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -535,26 +572,30 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stickyfill/2.1.0/stickyfill.min.js"></script>
+    <script th:src="@{/js/sticky.js}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fixed-header-table/1.3.0/jquery.fixedheadertable.min.js"></script>
 
 </body>
 
 <style>
-    .tableFixHead          {height: 540px;margin-left: 50px;}
-    .tableFixHead thead th { position: sticky; top: 0; z-index: 1; text-align: center }
-    /*.tableFixHead tfoot th { position: sticky; bottom: 0; z-index: 1; height: 100px;     padding-right: 0px;}*/
+    .tableFixHead          { height: 540px;margin-left: 50px;}
+    #categoryHead3, #categoryHead2, #categoryHead1 { top: 0; text-align: center }
+    /*.tableFixHead tfoot th { position: fixed; position: sticky; bottom: 0; z-index: 1; height: 100px;     padding-right: 0px;}*/
 
-    /* Just common table stuff. Really. */
+     Just common table stuff. Really.
     table  { border-collapse: collapse; width: 100%; }
-    th, td { padding: 8px 16px;  width: 216px;}
+    th, td { padding: 8px 16px; width: 216px;}
     th     { background:#eee; }
 
-
-
-    #tbody, #tbody1{
+    #stickyId1, #stickyId2, #stickyId3 {
         padding-left: 20px;
         padding-top: 20px;
         padding-bottom: 20px;
         background: aliceblue;
+    }
+    table {
+        overflow-x:scroll;
     }
 
     tbody {
@@ -562,6 +603,9 @@
         overflow-y: scroll;
         display:block;
     }
+
+
+
 
     .pop-layer .pop-container {
         padding: 20px 25px;
@@ -635,12 +679,19 @@
         color: #fff;
     }
 
-    table tbody tr.highlight { background-color: darkgray; }
+    /*table tbody tr.highlight { background-color: darkgray; }*/
 
 </style>
 <script type="text/javascript">
 
     $(document).ready(function() {
+
+        // $("#example3").fixedHeaderTable({ footer: true, cloneHeadToFoot: true, fixedColumn: true, height: 300  });
+
+
+
+
+
         $('#bcode').sortable();
         $('#bcode tr:eq(0)').addClass('highlight');
         // $('#mcode tr:eq(0)').addClass('highlight');
@@ -771,6 +822,273 @@
     }
 
 
+    function move_one(category){
+        var selected = [];
+        var foodType = null;
+        if (category == '1'){
+            category = "#bcode input:checked"
+            foodType = "bfood"
+
+            $(category).each(function() {
+                selected.push($(this).attr('value'));
+            });
+
+            if(selected.length > 1){
+                alert("check number")
+            }else if(selected.length == 0) {
+                alert("check plz")
+            }else if(selected.length ==1 ){
+                $.ajax({
+                    type:"put",
+                    url:"/admin/category/" + foodType + "/movePlusOne/" + selected[0],
+                    datatype: "json",
+                    success: function(data) {
+                        if(data.length > 0) {
+                            $("#bcode").find("td").remove();
+                            $.each(data, function(key, value) {
+                                $("#bcode").append("<tr>" +
+                                    " <td onclick=\"get_mcode(event)\">\n" +
+                                    "     <input type=\"checkbox\" id=\"category_1\" name= '" + value.categoryName + "' text='"+value.categoryName+"' value='" + value.bcode + "'>\n"+value.categoryName +
+                                    "                                                <div style=\"float: right\">\n" +
+                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer2\" id=\"modify_category1\"><i class=\"fa fa-pencil\"> </i></a>\n" +
+                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer3\"  id=\"remove_category1\"><i class=\" fa fa-ban\"> </i></a>\n" +
+                                    "                                                </div>\n" +
+                                    "                                            </td>" +
+                                    "</tr>");
+                            });
+                        } else {
+                            alert("이미 첫번쨰 행입니다.")
+                            return;
+                        }
+                    },
+
+                    error: function(x, o, e) {
+                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                        alert(msg);
+                    }
+                });
+            }
+        }else if(category == "2"){
+            category = "#mcode input:checked"
+            foodType = "mfood"
+
+            $(category).each(function() {
+                selected.push($(this).attr('value'));
+            });
+
+            if(selected.length > 1){
+                alert("check number")
+            }else if(selected.length == 0) {
+                alert("check plz")
+            }else if(selected.length ==1 ){
+                $.ajax({
+                    type:"put",
+                    url:"/admin/category/" + foodType + "/movePlusOne/" + selected[0],
+                    datatype: "json",
+                    success: function(data) {
+                        if(data.length > 0) {
+                            $("#bcode").find("td").remove();
+                            $.each(data, function(key, value) {
+                                $("#bcode").append("<tr>" +
+                                    " <td onclick=\"get_scode(event)\">\n" +
+                                    "     <input type=\"checkbox\" id=\"category_2\" name= '" + value.categoryName + "' text='"+value.categoryName+"' value='" + value.mcode + "'>\n"+value.categoryName +
+                                    "                                                <div style=\"float: right\">\n" +
+                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer5\" id=\"modify_category2\"><i class=\"fa fa-pencil\"> </i></a>\n" +
+                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer6\"  id=\"remove_category2\"><i class=\" fa fa-ban\"> </i></a>\n" +
+                                    "                                                </div>\n" +
+                                    "                                            </td>" +
+                                    "</tr>");
+                            });
+                        } else {
+                            alert("이미 첫번쨰 행입니다.")
+                            return;
+                        }
+                    },
+
+                    error: function(x, o, e) {
+                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                        alert(msg);
+                    }
+                });
+            }
+        }else{
+            category = "#scode input:checked"
+            foodType = "sfood"
+
+            $(category).each(function() {
+                selected.push($(this).attr('value'));
+            });
+
+            if(selected.length > 1){
+                alert("check number")
+            }else if(selected.length == 0) {
+                alert("check plz")
+            }else if(selected.length ==1 ){
+                $("#scode").find("td").remove();
+                $.ajax({
+                    type:"put",
+                    url:"/admin/category/" + foodType + "/movePlusOne/" + selected[0],
+                    datatype: "json",
+                    success: function(data) {
+                        if(data.length > 0) {
+                            $.each(data, function(key, value) {
+                                $("#scode").append("<tr>" +
+                                    " <td>\n" +
+                                    "     <input type=\"checkbox\" id=\"category_3\" name= '" + value.categoryName + "' text='"+value.categoryName+"' value='" + value.scode + "'>\n"+value.categoryName +
+                                    "                                                <div style=\"float: right\">\n" +
+                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer8\" id=\"modify_category3\"><i class=\"fa fa-pencil\"> </i></a>\n" +
+                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer9\"  id=\"remove_category3\"><i class=\" fa fa-ban\"> </i></a>\n" +
+                                    "                                                </div>\n" +
+                                    "                                            </td>" +
+                                    "</tr>");
+                            });
+                        } else {
+                            alert("이미 첫번쨰 행입니다.")
+                            return;
+                        }
+                    },
+
+                    error: function(x, o, e) {
+                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                        alert(msg);
+                    }
+                });
+            }
+        }
+    }
+
+    function minus_one(category){
+        var selected = [];
+        var foodType = null;
+        if (category == '1'){
+            category = "#bcode input:checked"
+            foodType = "bfood"
+            $(category).each(function() {
+                selected.push($(this).attr('value'));
+            });
+
+            if(selected.length > 1){
+                alert("check number")
+            }else if(selected.length == 0) {
+                alert("check plz")
+            }else if(selected.length ==1 ){
+                $.ajax({
+                    type:"put",
+                    url:"/admin/category/" + foodType + "/moveMinusOne/" + selected[0],
+                    datatype: "json",
+                    success: function(data) {
+                        if(data.length > 0) {
+                            $("#bcode").find("td").remove();
+                            $.each(data, function(key, value) {
+                                $("#bcode").append("<tr>" +
+                                    " <td onclick=\"get_mcode(event)\">\n" +
+                                    "     <input type=\"checkbox\" id=\"category_1\" name= '" + value.categoryName + "' text='"+value.categoryName+"' value='" + value.bcode + "'>\n"+value.categoryName +
+                                    "                                                <div style=\"float: right\">\n" +
+                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer2\" id=\"modify_category1\"><i class=\"fa fa-pencil\"> </i></a>\n" +
+                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer3\"  id=\"remove_category1\"><i class=\" fa fa-ban\"> </i></a>\n" +
+                                    "                                                </div>\n" +
+                                    "                                            </td>" +
+                                    "</tr>");
+                            });
+                        } else {
+                            alert("이미 첫번쨰 행입니다.")
+                            return;
+                        }
+                    },
+
+                    error: function(x, o, e) {
+                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                        alert(msg);
+                    }
+                });
+            }
+        }else if(category == "2"){
+            category = "#mcode input:checked"
+            foodType = "mfood"
+            $(category).each(function() {
+                selected.push($(this).attr('value'));
+            });
+
+            if(selected.length > 1){
+                alert("check number")
+            }else if(selected.length == 0) {
+                alert("check plz")
+            }else if(selected.length ==1 ){
+                $.ajax({
+                    type:"put",
+                    url:"/admin/category/" + foodType + "/moveMinusOne/" + selected[0],
+                    datatype: "json",
+                    success: function(data) {
+                        if(data.length > 0) {
+                            $("#bcode").find("td").remove();
+                            $.each(data, function(key, value) {
+                                $("#bcode").append("<tr>" +
+                                    " <td onclick=\"get_scode(event)\">\n" +
+                                    "     <input type=\"checkbox\" id=\"category_2\" name= '" + value.categoryName + "' text='"+value.categoryName+"' value='" + value.mcode + "'>\n"+value.categoryName +
+                                    "                                                <div style=\"float: right\">\n" +
+                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer2\" id=\"modify_category2\"><i class=\"fa fa-pencil\"> </i></a>\n" +
+                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer3\"  id=\"remove_category2\"><i class=\" fa fa-ban\"> </i></a>\n" +
+                                    "                                                </div>\n" +
+                                    "                                            </td>" +
+                                    "</tr>");
+                            });
+                        } else {
+                            alert("이미 첫번쨰 행입니다.")
+                            return;
+                        }
+                    },
+
+                    error: function(x, o, e) {
+                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                        alert(msg);
+                    }
+                });
+            }
+        }else{
+            category = "#scode input:checked"
+            foodType = "sfood"
+
+            $(category).each(function() {
+                selected.push($(this).attr('value'));
+            });
+
+            if(selected.length > 1){
+                alert("check number")
+            }else if(selected.length == 0) {
+                alert("check plz")
+            }else if(selected.length ==1 ){
+                $.ajax({
+                    type:"put",
+                    url:"/admin/category/" + foodType + "/moveMinusOne/" + selected[0],
+                    datatype: "json",
+                    success: function(data) {
+                        if(data.length > 0) {
+                            $("#bcode").find("td").remove();
+                            $.each(data, function(key, value) {
+                                $("#bcode").append("<tr>" +
+                                    " <td>\n" +
+                                    "     <input type=\"checkbox\" id=\"category_3\" name= '" + value.categoryName + "' text='"+value.categoryName+"' value='" + value.scode + "'>\n"+value.categoryName +
+                                    "                                                <div style=\"float: right\">\n" +
+                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer2\" id=\"modify_category3\"><i class=\"fa fa-pencil\"> </i></a>\n" +
+                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer3\"  id=\"remove_category3\"><i class=\" fa fa-ban\"> </i></a>\n" +
+                                    "                                                </div>\n" +
+                                    "                                            </td>" +
+                                    "</tr>");
+                            });
+                        } else {
+                            alert("이미 첫번쨰 행입니다.")
+                            return;
+                        }
+                    },
+
+                    error: function(x, o, e) {
+                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                        alert(msg);
+                    }
+                });
+            }
+        }
+    }
 
     // $(document).ready(function() {
         function get_mcode(event){

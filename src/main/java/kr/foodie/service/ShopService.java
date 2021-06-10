@@ -59,4 +59,20 @@ public class ShopService {
     public List<Shop> getAdminShopInfosWithBcodeAndMcodeAndScode(Integer bCode, Integer mCode, Integer sCode, String shopType) {
         return shopRepository.findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopType(bCode, mCode, sCode, shopType);
     }
+
+
+    public List<Shop> getAdminShopInfosWithRegionId(String shopType, Integer regionId) {
+        return shopRepository.findByShopTypeAndRegionTypeId(shopType, regionId);
+    }
+
+    public List<Shop> getAdminShopInfosWithBcodeWithRegionId(Integer bCode, String shopType, Integer regionId) {
+        return shopRepository.findByBigCategoryAndShopTypeAndRegionTypeId(bCode, shopType, regionId);
+    }
+    public List<Shop> getAdminShopInfosWithBcodeAndMcodeWithRegionId(Integer bCode, Integer mCode, String shopType, Integer regionId) {
+        return shopRepository.findByBigCategoryAndMiddleCategoryAndShopTypeAndRegionTypeId(bCode, mCode, shopType, regionId);
+    }
+    public List<Shop> getAdminShopInfosWithBcodeAndMcodeAndScodeWithRegionId(Integer bCode, Integer mCode, Integer sCode, String shopType, Integer regionId) {
+        return shopRepository.findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopTypeAndRegionTypeId(bCode, mCode, sCode, shopType, regionId);
+    }
+
 }

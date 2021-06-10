@@ -22,5 +22,8 @@ public class RegionAdminService {
     public List<Region> getRegionDistrictInfo(String provinceName) {
         return regionRepository.findRegionDistrictInfo(provinceName);
     }
+    public List<Region> getRegionFoodRegionInfo() {
+        return regionRepository.findRegionFoodRegionInfo();
+    }
 }
 

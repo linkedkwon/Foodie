@@ -14,7 +14,9 @@ public interface RegionAdminRepository extends JpaRepository<Region, Long> {
     @Query(value="select province_name from region where region_type = 1 group by province_name", nativeQuery = true)
     List<String> findRegionProvinceInfo();
 
-    @Query(value="select * from region where region_type = 1 and province_name like '%?1%'", nativeQuery = true)
+    @Query(value="select * from region where region_type = 1 and province_name like %?1%", nativeQuery = true)
     List<Region> findRegionDistrictInfo(String provinceName);
 
+    @Query(value="select * from region where region_type = 3 ", nativeQuery = true)
+    List<Region> findRegionFoodRegionInfo();
 }
