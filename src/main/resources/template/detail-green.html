@@ -96,7 +96,7 @@
                 </dl>
                 <dl class="line">
                   <dt>예산</dt>
-                  <dd th:text="${payload[0].budget}"></dd>
+                  <dd th:text="${userRole}"></dd>
                 </dl>
                 <dl>
                   <dt>포장/배달</dt>
@@ -127,23 +127,27 @@
               <div class="section-header">
                 <h3>HISTORY</h3>
               </div>
-              <div class="section-body">
-                <p th:text="${payload[0].history}"></p><br/>
-                <!--                  <p>숯불에 굽는 바비큐 치킨 하나로 존재감을 알린 30여년 내력의 집이다. 소금구이를 시키고 소금이나 이 집만의</p>-->
-                <!--                  <p>특제 소스에 찍어 먹거나 생맥주를 곁들여 즐기기도 한다. 소금구이 베이스에 양념을 입힌 양념구이도 많이 찾는다. </p>-->
-                <!--                  <p>잠시 가게를 접기도 했지만 다시 돌아온 솜씨 좋은 주인이 잘 구워내 쫄깃하면서도 촉촉한 치킨 맛이 일품이다.</p>-->
+              <div class="section-body" >
+
+                <p th:if="${userRole} == 'GENERAL'">결제 후 정보 제공이 가능합니다.</p><br/>
+                <p th:unless="${userRole} == 'GENERAL'"  th:text="${payload[0].history}"></p>
               </div>
             </div>
             <!-- history-section END -->
-
+            <div class="ad-banner" style="width: 100%">
+              <a href="#" class="btn-close"></a>
+            </div>
             <!-- menu-section START -->
-            <div class="detail-section menu-section">
+            <div class="detail-section menu-section" style="padding-top: 20px;">
               <div class="section-header">
                 <h3>MENU</h3>
               </div>
 
               <div class="section-body">
-                <div class="image-thumbnails">
+                <div th:if="${userRole} == 'GENERAL'" style="padding-bottom: 20px;">
+                  <p>결제 후 정보 제공이 가능합니다.</p>
+                </div>
+                <div th:unless="${userRole} == 'GENERAL'" class="image-thumbnails">
                   <div class="detail">
                     <!-- 이미지 추가 -->
                   </div>
@@ -211,6 +215,7 @@
 
               <div class="section-body">
                 <div id="restaurant-map"></div>
+                <div id="clickLatlng"></div>
               </div>
             </div>
             <!-- map-section END -->
@@ -280,6 +285,83 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
   <script type="text/javascript" th:src="@{/js/commons.js}"></script>
   <script type="text/javascript" th:src="@{/js/detail.js}"></script>
+
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4c14aafa4e5ccfc24a35c501adea41eb&libraries=services"></script>
+  <script th:inline="javascript">
+    var mapContainer = document.getElementById('restaurant-map'), // 지도를 표시할 div
+            mapOption = {
+              center: new kakao.maps.LatLng(38.00994423, 126.9531742), // 지도의 중심좌표
+              level: 6 // 지도의 확대 레벨 (레벨 클수록 축소)
+            };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption);  // 지도를 생성합니다
+
+
+    // 주소-좌표 변환 객체를 생성합니다
+    var geocoder = new kakao.maps.services.Geocoder();
+
+    /*<![CDATA[*/
+
+    var address_name = /*[[ ${payload[0].address} ]]*/;
+
+    /*]]*/
+
+    // 주소로 좌표를 검색합니다
+    geocoder.addressSearch(address_name, function(result, status) {
+
+      // 정상적으로 검색이 완료됐으면
+      if (status === kakao.maps.services.Status.OK) {
+
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+          map: map,
+          position: coords
+        });
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+      }
+    });
+
+    // 지도를 클릭한 위치에 표출할 마커입니다
+    var marker = new kakao.maps.Marker({
+      // 지도 중심좌표에 마커를 생성합니다
+      position: map.getCenter()
+    });
+    // 지도에 마커를 표시합니다
+    marker.setMap(map);
+
+    // 지도에 클릭 이벤트를 등록합니다
+    // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+    kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
+      // 클릭한 위도, 경도 정보를 가져옵니다
+      var latlng = mouseEvent.latLng;
+
+      // 마커 위치를 클릭한 위치로 옮깁니다
+      marker.setPosition(latlng);
+
+      var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+      message += '경도는 ' + latlng.getLng() + ' 입니다';
+
+      var resultDiv = document.getElementById('clickLatlng');
+      resultDiv.innerHTML = message;
+
+    });
+
+    // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+    var mapTypeControl = new kakao.maps.MapTypeControl();
+
+    // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+    // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+    map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+    // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+    var zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+  </script>
 </div>
 </body>
 </html>
