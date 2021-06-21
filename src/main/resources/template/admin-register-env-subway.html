@@ -257,7 +257,12 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4" style="    height: 800px;">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">맛집목록</h6>
+                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> 카테고리설정 ( <a href="/admin/registerEnv/red">레드리스트</a> / <a href="/admin/registerEnv/green">그린리스트</a>)</h6>
+                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvTheme"> 테마설정 </a></h6>
+                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvHastag"> 해시태그설정 </a></h6>
+                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvRegion">지역설정 </a></h6>
+                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvFoodVillege"> 맛집촌설정 </a></h6>
+                            <h6 class="m-0 font-weight-bold text-primary" style="padding-left: 20px; float: left;"> <a class=" text-primary" href="/admin/registerEnvSubway"> 역세권설정 </a></h6>
                             <button class="btn btn-info btn-sm" style="float: right">맛집 추가하기</button>
                         </div>
                         <div class="card-body" style=" justify-content: center; display: flex ;  margin: auto;">
@@ -265,7 +270,7 @@
 <!--                            <div class="">-->
                             <div class="tableFixHead">
                                 <div id="categoryHead1">
-                                    <th>1차 카테고리</th>
+                                    <th>지역</th>
                                 </div>
 
                                 <table class="table-bordered display" id="example1" style="width: 220px;" cellspacing="0">
@@ -274,7 +279,7 @@
                                     <tbody  id="bcode">
                                     <tr  th:each="val : ${categoryInfos}">
                                         <td onclick="get_mcode(event)">
-                                            <input type="checkbox" id="category_1" th:value="${val.bCode}" th:name="${val.categoryName}" th:text="${' ' + val.categoryName}"/>
+                                            <input type="checkbox" id="category_1" th:value="${val}" th:name="${val}" th:text="${' ' + val}"/>
                                             <div style="float: right">
                                                 <a href="javascript:void(0)" data-href="#layer2" id="modify_category1"><i class="fa fa-pencil"> </i></a>
                                                 <a href="javascript:void(0)" data-href="#layer3"  id="remove_category1"><i class=" fa fa-ban"> </i></a>
@@ -299,7 +304,7 @@
                             <div class="tableFixHead">
 
                                 <div id="categoryHead2">
-                                    <th>2차 카테고리</th>
+                                    <th>호선</th>
                                 </div>
                                 <table class="table-bordered display" id="example2"  style="width: 220px;" cellspacing="0">
 <!--                                    <thead>-->
@@ -330,7 +335,7 @@
                             </div>
                             <div class="tableFixHead">
                                 <div id="categoryHead3">
-                                    <th>3차 카테고리</th>
+                                    <th>역이름</th>
                                 </div>
                                 <table class="table-bordered display" id="example3"  style="width: 220px;" cellspacing="0">
 <!--                                    <thead>-->
@@ -579,6 +584,9 @@
 </body>
 
 <style>
+    a{
+        color: black;
+    }
     .tableFixHead          { height: 540px;margin-left: 50px;}
     #categoryHead3, #categoryHead2, #categoryHead1 { top: 0; text-align: center }
     /*.tableFixHead tfoot th { position: fixed; position: sticky; bottom: 0; z-index: 1; height: 100px;     padding-right: 0px;}*/
@@ -1100,15 +1108,16 @@
             // console.log(val.children[0].value)
             $.ajax({
                 type:"get",
-                url:"/admin/category/mfood/" + val,
+                url:"/admin/region/type/2/" + val,
                 datatype: "json",
                 success: function(data) {
                 if(data.length > 0) {
                     $("#mcode").find("td").remove();
+                    $("#scode").find("td").remove();
                     $.each(data, function(key, value) {
                         $("#mcode").append("<tr>" +
                             " <td onclick=\"get_scode(event)\">\n" +
-                            "     <input type=\"checkbox\" id=\"category_2\" name= '" + value.categoryName + "' text='"+value.categoryName+"' value='" + value.mcode + "'>\n" + value.categoryName +
+                            "     <input type=\"checkbox\" id=\"category_2\" name= '" + val + "' text='"+value+"' value='" + value + "'>\n" + value +
                             "                                                <div style=\"float: right\">\n" +
                             "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer2\" id=\"modify_category2\"><i class=\"fa fa-pencil\"> </i></a>\n" +
                             "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer3\"  id=\"remove_category2\"><i class=\" fa fa-ban\"> </i></a>\n" +
@@ -1137,11 +1146,13 @@
             $('#example2').on('click', 'tbody tr', function(event) {
                 $(this).addClass('highlight').siblings().removeClass('highlight');
             });
-            console.log($(this))
-            var val = event.currentTarget.children[0].value; // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+            console.log(event.currentTarget.children[0])
+            var value = event.currentTarget.children[0].value;
+            var val = event.currentTarget.children[0].name;// 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+            console.log(value + "////////" + val)
             $.ajax({
                 type:"get",
-                url:"/admin/category/sfood/" + val,
+                url:"/admin/region/type/2/" + value + "/" + val,
                 datatype: "json",
                 success: function(data) {
                     if(data.length > 0) {
@@ -1149,7 +1160,7 @@
                         $.each(data, function(key, value) {
                             $("#scode").append("<tr>" +
                                 " <td>\n" +
-                                "     <input type=\"checkbox\" id=\"category_3\" name= '" + value.categoryName + "' text='"+value.categoryName+"' value='" + value.scode + "'>\n" + value.categoryName +
+                                "     <input type=\"checkbox\" id=\"category_3\" name= '" + value.subwayName + "' text='"+value.subwayName+"' value='" + value.regionId + "'>\n" + value.subwayName +
                                 "                                                <div style=\"float: right\">\n" +
                                 "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer8\" id=\"modify_category3\"><i class=\"fa fa-pencil\"> </i></a>\n" +
                                 "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer9\"  id=\"remove_category3\"><i class=\" fa fa-ban\"> </i></a>\n" +

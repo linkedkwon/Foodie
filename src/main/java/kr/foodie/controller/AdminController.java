@@ -112,22 +112,13 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/registerEnvSubway", method = RequestMethod.GET)
-    public ModelAndView getregisterEnvSubway(@PathVariable String shopType){
+    public ModelAndView getregisterEnvSubway(){
         ModelAndView mav = new ModelAndView();
-        if(shopType.equals("red")){
-            shopType = "0";
-        }else{
-            shopType = "1";
-        }
-        List<FoodCategory> categoryInfos;
+        List<String> categoryInfos;
         List<FoodCategory> categoryMInfos;
         List<FoodCategory> categorySInfos;
-        categoryInfos = foodCategoryAdminService.getAdminRegionBCategory();
-        categoryMInfos = foodCategoryAdminService.getAdminRegionMCategory(100);
-        categorySInfos = foodCategoryAdminService.getAdminRegionSCategory(1000);
+        categoryInfos = regionAdminService.getRegionProvinceInfoWithRegionType2();
         mav.addObject("categoryInfos", categoryInfos);
-        mav.addObject("categoryMInfos", categoryMInfos);
-        mav.addObject("categorySInfos", categorySInfos);
         mav.setViewName("admin-register-env-subway");
         return mav;
     }
@@ -270,6 +261,19 @@ public class AdminController {
     @RequestMapping(value ="/region/{provinceName}", method= RequestMethod.GET)
     public List<Region> getRegionDistrictInfo(Model model, @PathVariable String provinceName){
         List<Region> regionInfos = regionAdminService.getRegionDistrictInfo(provinceName);
+        return regionInfos;
+    }
+    @ResponseBody
+    @RequestMapping(value ="/region/type/2/{provinceName}", method= RequestMethod.GET)
+    public List<String> getRegionDistrictInfoWithRegionType2(Model model, @PathVariable String provinceName){
+        List<String> regionInfos = regionAdminService.getRegionDistrictInfoWithRegionType2(provinceName);
+        return regionInfos;
+    }
+
+    @ResponseBody
+    @RequestMapping(value ="/region/type/2/{provinceName}/{districtName}", method= RequestMethod.GET)
+    public List<Region> getRegionSubwayInfoWithRegionType2(Model model, @PathVariable String provinceName, @PathVariable String districtName){
+        List<Region> regionInfos = regionAdminService.getRegionSubwayInfoWithRegionType2(districtName, provinceName);
         return regionInfos;
     }
 
