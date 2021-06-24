@@ -208,8 +208,8 @@
               <div class="section-header">
                 <h3>MAP</h3>
                 <ul>
-                  <li class="naver"><a href="#">블로그 리뷰 보기</a></li>
-                  <li class="instagram"><a href="#">인스타 이미지 보기</a></li>
+                  <li class="naver"><a th:href="@{'https://pcmap.place.naver.com/restaurant/'+ ${payload[0].blogShopId} + '/review/ugc'}" target="_blank">블로그 리뷰 보기</a></li>
+                  <li class="instagram"><a th:href="@{'https://www.instagram.com/explore/tags/'+ ${payload[0].instaKeyword}}" target="_blank">인스타 이미지 보기</a></li>
                 </ul>
               </div>
 

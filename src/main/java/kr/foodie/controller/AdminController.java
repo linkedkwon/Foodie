@@ -6,10 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import kr.foodie.domain.category.FoodCategory;
 import kr.foodie.domain.category.Theme;
-import kr.foodie.domain.shop.HashTag;
-import kr.foodie.domain.shop.HashTagList;
-import kr.foodie.domain.shop.Region;
-import kr.foodie.domain.shop.Shop;
+import kr.foodie.domain.shop.*;
 import kr.foodie.service.*;
 import kr.foodie.service.admin.FoodCategoryAdminService;
 import kr.foodie.service.admin.RegionAdminService;
@@ -84,6 +81,24 @@ public class AdminController {
         mav.addObject("categorySInfos", categorySInfos);
         mav.setViewName("admin-register-env");
         return mav;
+    }
+
+    @RequestMapping(value = "/recommand/main/region", method = RequestMethod.GET)
+    public ModelAndView getRecommandMainRegion(){
+        ModelAndView mav = new ModelAndView();
+//        mav.addObject("payload", shopService.getShopInfoByType(18));
+        mav.setViewName("admin-recommand-main-region");
+        return mav;
+    }
+
+    @ResponseBody
+    @RequestMapping(value ={"/recommand/main/regionInfo/{shopType}"}, method= RequestMethod.GET)
+    public Map<String, List> getRecommandMainRegionInfo(Model model, @PathVariable Integer shopType){
+        List<Shop> commentList;
+        commentList = shopService.getShopInfoByType(shopType);
+        Map<String, List> members = new HashMap<>();
+        members.put("data", commentList);
+        return members;
     }
 
     @RequestMapping(value = "/registerEnvRegion", method = RequestMethod.GET)
