@@ -67,8 +67,10 @@ public class AdminController {
         ModelAndView mav = new ModelAndView();
         if(shopType.equals("red")){
             shopType = "0";
+            mav.setViewName("admin-register-env-red");
         }else{
             shopType = "1";
+            mav.setViewName("admin-register-env-green");
         }
         List<FoodCategory> categoryInfos;
         List<FoodCategory> categoryMInfos;
@@ -79,7 +81,7 @@ public class AdminController {
         mav.addObject("categoryInfos", categoryInfos);
         mav.addObject("categoryMInfos", categoryMInfos);
         mav.addObject("categorySInfos", categorySInfos);
-        mav.setViewName("admin-register-env");
+//        mav.setViewName("admin-register-env");
         return mav;
     }
 
@@ -100,6 +102,61 @@ public class AdminController {
         members.put("data", commentList);
         return members;
     }
+
+    @RequestMapping(value = "/recommand/other/region", method = RequestMethod.GET)
+    public ModelAndView getRecommandOtherRegion(){
+        ModelAndView mav = new ModelAndView();
+//        mav.addObject("payload", shopService.getShopInfoByType(18));
+        mav.setViewName("admin-recommand-other-region");
+        return mav;
+    }
+
+//    @ResponseBody
+//    @RequestMapping(value ={"/recommand/other/regionInfo/{shopType}"}, method= RequestMethod.GET)
+//    public Map<String, List> getRecommandOtherRegionInfo(Model model, @PathVariable Integer shopType){
+//        List<Shop> commentList;
+//        commentList = shopService.getShopInfoByType(shopType);
+//        Map<String, List> members = new HashMap<>();
+//        members.put("data", commentList);
+//        return members;
+//    }
+
+
+    @RequestMapping(value = "/recommand/best/red", method = RequestMethod.GET)
+    public ModelAndView getRecommandBestRedRegion(){
+        ModelAndView mav = new ModelAndView();
+//        mav.addObject("payload", shopService.getShopInfoByType(18));
+        mav.setViewName("admin-recommand-best-red-region");
+        return mav;
+    }
+
+//    @ResponseBody
+//    @RequestMapping(value ={"/recommand/best/red/regionInfo/{shopType"}, method= RequestMethod.GET)
+//    public Map<String, List> getRecommandBestRedRegionInfo(Model model, @PathVariable Integer shopType){
+//        List<Shop> commentList;
+//        commentList = shopService.getShopInfoByType(shopType);
+//        Map<String, List> members = new HashMap<>();
+//        members.put("data", commentList);
+//        return members;
+//    }
+
+    @RequestMapping(value = "/recommand/best/green", method = RequestMethod.GET)
+    public ModelAndView getRecommandBestGreenRegion(){
+        ModelAndView mav = new ModelAndView();
+//        mav.addObject("payload", shopService.getShopInfoByType(18));
+        mav.setViewName("admin-recommand-best-green-region");
+        return mav;
+    }
+
+//    @ResponseBody
+//    @RequestMapping(value ={"/recommand/best/green/regionInfo/{shopType"}, method= RequestMethod.GET)
+//    public Map<String, List> getRecommandBestGreenRegionInfo(Model model, @PathVariable Integer shopType){
+//        List<Shop> commentList;
+//        commentList = shopService.getShopInfoByType(shopType);
+//        Map<String, List> members = new HashMap<>();
+//        members.put("data", commentList);
+//        return members;
+//    }
 
     @RequestMapping(value = "/registerEnvRegion", method = RequestMethod.GET)
     public ModelAndView getregisterEnvRegion(){

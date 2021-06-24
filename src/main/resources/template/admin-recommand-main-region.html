@@ -263,7 +263,7 @@
 <!--                            </a>-->
                         </div>
                         <div>
-                        <div style="width: 100%;">
+                        <div style="width: 30%;">
                             <div style="display: inline-flex;padding-top:25px;">
                                 <div  style="    padding-left: 20px;width: 120px;"> 지역 </div>
                                 <p style="    padding-left: 20px;">
@@ -282,22 +282,40 @@
 <!---->
 <!--                            </div>-->
                         </div>
-
-                        <div class="card-body">
+                        <div>
+                            <div class="card-body" style="font-size: 24px;padding-bottom: 0px;">< 선택 리스트 ></div>
+                            <div class="card-body">
                             <div class="table-responsive" style="width:100%;">
                                 <table class="table table-bordered display" id="example" cellspacing="0">
                                     <thead>
                                     <tr>
                                         <th style="text-align: center" >사진</th>
                                         <th>가게이름</th>
-                                        <th>전문가평가</th>
-                                        <th>상세정보입력 여부</th>
-                                        <th>수정일</th>
-                                        <th>등록일</th>
                                         <th>상태</th>
                                     </tr>
                                     </thead>
                                 </table>
+                            </div>
+                        </div>
+                        </div>
+                        <div>
+                            <div class="card-body" style="font-size: 24px;padding-bottom: 0px;">< 가게 리스트 ></div>
+                            <div class="card-body">
+                                <div class="table-responsive" style="width:100%;">
+                                    <table class="table table-bordered display" id="example1" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th style="text-align: center" >사진</th>
+                                            <th>가게이름</th>
+                                            <th>전문가평가</th>
+                                            <th>상세정보입력 여부</th>
+                                            <th>수정일</th>
+                                            <th>등록일</th>
+                                            <th>상태</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -416,6 +434,27 @@
         });
 
 
+        $('#example1').DataTable( {
+            "ajax": "/admin/recommand/main/regionInfo/1",
+            "columns": [
+                { 'data': "shopImage", 'render': function (data) { return '<img src="' + data + '" class="thumbnail" style="width: 80px;height:60px;" />'; } },
+                { "data": "shopName" , 'render': function  ( data, type, row ) { return '<div><a href="/admin/shop/red/'+ row.shopId +'">'+ data + '</a></div><div><span> 주소 -'+ row.address +'</span></div>'; } },
+                { "data": "foodieLogRating" },
+                { "data": "isReservation" },
+                { "data": "updatedAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
+                { "data": "createdAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
+                { "data": "shopName", 'render': function  ( data, type, row ) { return '<button value="row.shopId"> 올리기 </button>' }  },
+            ],
+            "columnDefs": [
+                { "width": "50px", "targets": 0, "className": "data_table" },
+                { "width": "200px", "targets": 1, "className": "data_table"  },
+                { "width": "60px", "targets": 2, "className": "data_table"  },
+                { "width": "60px", "targets": 3, "className": "data_table"  },
+                { "width": "160px", "targets": 4, "className": "data_table"  },
+                { "width": "160px", "targets": 5, "className": "data_table"  },
+                { "width": "60px", "targets": 6, "className": "data_table"  },
+            ]
+        } );
 
 
 
@@ -431,20 +470,20 @@
 
                 { 'data': "shopImage", 'render': function (data) { return '<img src="' + data + '" class="thumbnail" style="width: 80px;height:60px;" />'; } },
                 { "data": "shopName" , 'render': function  ( data, type, row ) { return '<div><a href="/admin/shop/red/'+ row.shopId +'">'+ data + '</a></div><div><span> 주소 -'+ row.address +'</span></div>'; } },
-                { "data": "foodieLogRating" },
-                { "data": "isReservation" },
-                { "data": "updatedAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
-                { "data": "createdAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
+                // { "data": "foodieLogRating" },
+                // { "data": "isReservation" },
+                // { "data": "updatedAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
+                // { "data": "createdAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
                 { "data": "shopName", 'render': function  ( data, type, row ) { return '<button value="row.shopId"> 내리기 </button>' }  },
             ],
             "columnDefs": [
                 { "width": "50px", "targets": 0, "className": "data_table" },
                 { "width": "200px", "targets": 1, "className": "data_table"  },
+                // { "width": "60px", "targets": 2, "className": "data_table"  },
+                // { "width": "60px", "targets": 3, "className": "data_table"  },
+                // { "width": "160px", "targets": 4, "className": "data_table"  },
+                // { "width": "160px", "targets": 5, "className": "data_table"  },
                 { "width": "60px", "targets": 2, "className": "data_table"  },
-                { "width": "60px", "targets": 3, "className": "data_table"  },
-                { "width": "160px", "targets": 4, "className": "data_table"  },
-                { "width": "160px", "targets": 5, "className": "data_table"  },
-                { "width": "60px", "targets": 6, "className": "data_table"  },
             ],
             initComplete: function () {
                 this.api().columns().every( function () {
