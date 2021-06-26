@@ -2,6 +2,8 @@ package kr.foodie.domain.account;
 
 import lombok.*;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 public class ReviewDTO {
@@ -26,6 +28,16 @@ public class ReviewDTO {
     public ReviewDTO(String userName, int userId, int reviewId, String starRating, String content){
         this.userName = userName;
         this.userId = userId;
+        this.reviewId = reviewId;
+        this.content = content;
+        this.starRating = starRating;
+    }
+
+    public ReviewDTO(int shopId, String shopName, int userId, String userName, int reviewId, String starRating, String content){
+        this.shopId = shopId;
+        this.shopName = shopName;
+        this.userId = userId;
+        this.userName = userName;
         this.reviewId = reviewId;
         this.content = content;
         this.starRating = starRating;

@@ -2,6 +2,7 @@ package kr.foodie.service;
 
 import kr.foodie.domain.account.Review;
 import kr.foodie.domain.account.ReviewDTO;
+import kr.foodie.domain.shop.Region;
 import kr.foodie.repo.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,6 +84,20 @@ public class ReviewService {
         return query.getResultList();
     }
 
+    public List<ReviewDTO> getAllReviews(){
+
+        String jpql;
+        jpql = "select new kr.foodie.domain.account.ReviewDTO("
+                +"r.shopId, s.shopName,r.userId,  u.name,  r.reviewId, r.starRating, r.content) "
+                +"from Review r left join User u "
+                +"on r.userId = u.id "
+                +"left join Shop s "
+                +"on s.shopId = r.shopId";
+
+        TypedQuery<ReviewDTO> query = em.createQuery(jpql, ReviewDTO.class);
+        return query.getResultList();
+    }
+
     @Transactional
     public String deleteItemByReviewId(int reviewId){
         reviewRepository.deleteByReviewId(reviewId);
@@ -94,4 +109,5 @@ public class ReviewService {
         reviewRepository.deleteAllByUserId(userId);
         return "1";
     }
+
 }

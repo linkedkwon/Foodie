@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import kr.foodie.domain.account.Review;
+//import kr.foodie.domain.account.ReviewAdmin;
+import kr.foodie.domain.account.ReviewDTO;
 import kr.foodie.domain.category.FoodCategory;
 import kr.foodie.domain.category.Theme;
 import kr.foodie.domain.shop.*;
@@ -147,6 +150,22 @@ public class AdminController {
         mav.setViewName("admin-recommand-best-green-region");
         return mav;
     }
+
+    @RequestMapping(value = "/comment/all", method = RequestMethod.GET)
+    public ModelAndView getAllComment(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("admin-comment-list");
+        return mav;
+    }
+
+    @ResponseBody
+    @RequestMapping(value ={"/comment/all/info"}, method= RequestMethod.GET)
+    public Map<String, List> getAllCommentInfo(Model model){
+        Map<String, List> members = new HashMap<>();
+        members.put("data", reviewService.getAllReviews());
+        return members;
+    }
+
 
 //    @ResponseBody
 //    @RequestMapping(value ={"/recommand/best/green/regionInfo/{shopType"}, method= RequestMethod.GET)
