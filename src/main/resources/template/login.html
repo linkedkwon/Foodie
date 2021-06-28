@@ -65,8 +65,39 @@
     </div>
 
     <!-- footer -->
-    <div th:replace="./fragments/main-footer.html"></div>
-
+    <footer id="footer">
+      <div class="left-area">
+        <div class="logo">
+          <picture>
+            <source srcset="/images/logo-footer@2x.png 2x">
+            <img src="/images/logo-footer.png" alt="foodie">
+          </picture>
+        </div>
+        <div class="copyright"><small>Copyright <span>® 네오비즈</span>All Rights Reserved.</small></div>
+        <div class="company-info">
+          <ul>
+            <li>네오비즈설립일 : 2002년 12월 24일</li>
+            <li>대표: 최유식</li>
+            <li>개인정보책임자 : 박기향</li>
+          </ul>
+          <ul>
+            <li>주소 : 경기도 고양시 일산서구 가좌1로10 512-1301</li>
+            <li>사업자등록번호 : 210-09-30249통신판매업신고 : 제 959호</li>
+            <li>대표전화 : 070-8724-6001</li>
+          </ul>
+        </div>
+      </div>
+      <div class="right-area">
+        <ul>
+          <li><a href="/policy">개인정보 취급 방침</a></li>
+          <li><a href="#">1:1 문의하기</a></li>
+          <li><a href="/auth/login">로그인</a></li>
+          <li><a href="/auth/join/user/1">회원가입</a></li>
+          <li><a href="javascript:void(0)">MY푸디 ® 네오비즈</a></li>
+        </ul>
+      </div>
+    </footer>
+    <!--footer-->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
     <script type="text/javascript" th:src="@{/js/commons.js}"></script>

@@ -71,14 +71,16 @@ public class User {
 
     //for oauth
     @Builder
-    public User(String name, String email, String address,
-                String emailReceivedType, String snsReceivedType,
+    public User(String name, String email, String password, String address,
+                String phoneNum, String emailReceivedType, String snsReceivedType,
                 int point, String userType,
                 RoleType role, Date createdDate, Date lastModifiedDate ,
                 String provider, String providerId){
         this.name = name;
         this.email = email;
+        this.password = password;
         this.address = address;
+        this.phoneNum = phoneNum;
         this.emailReceivedType = emailReceivedType;
         this.snsReceivedType = snsReceivedType;
         this.point = point;
