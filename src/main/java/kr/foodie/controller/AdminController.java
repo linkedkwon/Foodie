@@ -10,6 +10,7 @@ import kr.foodie.domain.account.ReviewDTO;
 import kr.foodie.domain.category.FoodCategory;
 import kr.foodie.domain.category.Theme;
 import kr.foodie.domain.shop.*;
+import kr.foodie.domain.user.User;
 import kr.foodie.service.*;
 import kr.foodie.service.admin.FoodCategoryAdminService;
 import kr.foodie.service.admin.RegionAdminService;
@@ -39,10 +40,11 @@ public class AdminController {
     private final PaginationService paginationService;
     private final ThemeService themeService;
     private final RegionService regionService;
+    private final UserService userService;
 
     public AdminController(ShopService shopService, TagService tagService,
                            RegionAdminService regionAdminService, FoodCategoryAdminService foodCategoryAdminService,
-                           ReviewService reviewService, PaginationService paginationService, ThemeService themeService, RegionService regionService, TagListService tagListService) {
+                           ReviewService reviewService, PaginationService paginationService, ThemeService themeService, RegionService regionService, TagListService tagListService, UserService userService) {
         this.shopService = shopService;
         this.tagService = tagService;
 //        this.regionService = regionService;
@@ -53,6 +55,7 @@ public class AdminController {
         this.themeService = themeService;
         this.regionService = regionService;
         this.tagListService = tagListService;
+        this.userService = userService;
     }
 
     @GetMapping("/main")
@@ -266,6 +269,64 @@ public class AdminController {
         return mav;
     }
 
+    @RequestMapping(value = "/userList", method = RequestMethod.GET)
+    public ModelAndView getUserListPage(){
+        ModelAndView mav = new ModelAndView();
+//        List<Theme> redthemeListInfos;
+//        List<Theme> greenthemeListInfos;
+//        redthemeListInfos = themeService.getThemeTags(0);
+//        greenthemeListInfos = themeService.getThemeTags(1);
+        mav.setViewName("admin-user-list");
+//        mav.addObject("redThemeListInfos", redthemeListInfos);
+//        mav.addObject("greenThemeListInfos", greenthemeListInfos);
+        return mav;
+    }
+
+    @ResponseBody
+    @RequestMapping(value ={"/user/{userType}/all"}, method= RequestMethod.GET)
+    public Map<String, List> getUserList(@PathVariable String userType){
+        if(userType.equals("0")){
+            userType = "0";
+        }else{
+            userType = "1";
+        }
+//        List<User> userList;
+//        userList = userService.getAllUserInfo(userType);
+        Map<String, List> members = new HashMap<>();
+        members.put("data", userService.getAllUserInfo(userType));
+        return members;
+    }
+
+//    @RequestMapping(value ="/user/{userType}/all", method= RequestMethod.GET)
+//    public ModelAndView getUserList(@PathVariable String userType){
+//        ModelAndView mav = new ModelAndView();
+//        if(userType.equals("0")){
+//            userType = "0";
+//            mav.setViewName("admin-user-list");
+//        }else{
+//            userType = "1";
+//            mav.setViewName("admin-shop-green-list");
+//        }
+//        List<User> userList;
+//        List<FoodCategory> categoryInfos;
+//        List<Shop> sideCommentListWithOrder;
+//        List<String> regionInfos;
+//        regionInfos = regionAdminService.getRegionProvinceInfo();
+//        categoryInfos = foodCategoryAdminService.getAdminRegionBCategory();
+//        userList = userService.getAllUserInfo(userType);
+//        commentListWithOrder = shopService.getShopInfosWithOrder(regionTypeId, shopType, 9);
+//        sideCommentListWithOrder = shopService.getShopInfosWithSideOrder(regionTypeId, shopType, 8);
+//        mav.addObject("payload", userList);
+//        mav.addObject("categoryInfos", categoryInfos);
+//        mav.addObject("regionInfos", regionInfos);
+//        mav.addObject("regionInfo", regiaonInfos);
+//        mav.addObject("priority", commentListWithOrder);
+//        mav.addObject("sidePriority", sideCommentListWithOrder);
+//        if(shopType.equals("0")){
+
+
+//        return mav;
+//    }
 
     @RequestMapping(value ="/shop/{shopType}", method= RequestMethod.GET)
     public ModelAndView getShopList(@PathVariable String shopType){

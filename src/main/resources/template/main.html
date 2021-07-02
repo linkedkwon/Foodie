@@ -25,9 +25,9 @@
   <!-- Contents -->
   <div id="contents">
     <div class="main-banner">
-      <img class="mySlides" src="../images/1@2x.png" style="width:auto;height:100%;">
-      <img class="mySlides" src="../images/2@2x.png" style="width:auto;height:100%;">
-      <img class="mySlides" src="../images/3@2x.png" style="width:auto;height:100%;">
+      <img class="mySlides" src="../images/1@2x.png" style="width:1300px;height:100%;">
+      <img class="mySlides" src="../images/2@2x.png" style="width:1300px;height:100%;">
+      <img class="mySlides" src="../images/3@2x.png" style="width:1300px;height:100%;">
 <!--      <button class="w3-button w3-black w3-display-left" style="top: 57%;left: 10%;" onclick="plusDivs(-1)">&#10094;</button>-->
 <!--      <button class="w3-button w3-black w3-display-right"style="top: 57%;right: 10%;" onclick="plusDivs(1)">&#10095;</button>-->
     </div>
@@ -132,7 +132,7 @@
 
       <!-- 레드리스트 -->
       <div class="best-recommend-box">
-        <div class="left-area" style="width: 268px">
+        <div class="left-area" style="width: 265px">
           <img src="../images/1211@2x.png" style="width: 100%;    height: 620px;">
 <!--          <h4>#레드리스트</h4>-->
 <!--          <p>Foodie, 맛의 즐거움을<br/>공유하다.</p>-->
@@ -140,12 +140,12 @@
 
 <!--          </div>-->
         </div>
-        <div class="right-area" style="width: 938px;">
+        <div class="right-area" style="width: 803px;">
           <ul class="card-list-wrapper">
             <!-- Card item -->
-            <li th:object="${shop}" th:each="shop : ${redCommentList}" style="margin:26px 8px 0">
+            <li th:object="${shop}" th:each="shop : ${redCommentList}" style="margin: 26px 5px 0px 0px;">
               <a th:href="@{/shop/{shopId}(shopId=${shop.shopId})}">
-                <div class="card-item" style="width: 302px">
+                <div class="card-item" style="width: 265px">
                   <div class="img"></div>
                   <div class="card-data">
                     <div class="name">
@@ -171,7 +171,7 @@
 
       <!-- 그린리스트 -->
       <div class="best-recommend-box green">
-        <div class="left-area"  style="width: 268px">
+        <div class="left-area"  style="width: 265px">
           <img src="../images/1212@2x.png" style="width: 100%;    height: 620px;">
 <!--          <h4>#그린리스트</h4>-->
 <!--          <p>산, 들, 바다 <br/>내안의 나를 힐링시키다.</p>-->
@@ -179,12 +179,12 @@
 
 <!--          </div>-->
         </div>
-        <div class="right-area" style="width: 938px;">
+        <div class="right-area" style="width: 803px;">
           <ul class="card-list-wrapper">
             <!-- Card item -->
-            <li th:object="${shop}" th:each="shop : ${greenCommentList}" style="margin:26px 8px 0">
+            <li th:object="${shop}" th:each="shop : ${greenCommentList}" style="margin:26px 5px 0px 0px;">
               <a th:href="@{/shop/{shopId}(shopId=${shop.shopId})}">
-                <div class="card-item" style="width: 302px">
+                <div class="card-item" style="width: 265px">
                   <div class="img"></div>
                   <div class="card-data">
                     <div class="name">
@@ -216,7 +216,7 @@
     <!-- 기타지역 추천맛집 END -->
 
   </div>
-  <div class="foodie-illustration"></div>
+  <div class="foodie-illustration" style="background-size: contain"></div>
   <!-- footer -->
   <div th:replace="./fragments/main-footer.html"></div>
 

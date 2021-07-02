@@ -15,14 +15,14 @@
     background:#ddd
 }
 .main-section{
-    width:1387px;
+    width:1100px;
     position:relative;
     margin:0 auto 36px;
     padding-bottom:64px;
     border-bottom:1px solid #d6d6d6
 }
 .main-section .inner{
-    width:1244px;
+    width:1100px;
     margin:0 auto;
     position:relative
 }
@@ -75,14 +75,14 @@
     text-align:center
 }
 .main-section .card-list-wrapper{
-    width:1252px;
+    width:1100px;
     margin-top:16px
 }
 .main-section .card-list-wrapper>li{
-    width:309px;
+    width:270px;
     float:left;
     margin:0 2px 8px;
-    padding:8px 6px 6px;
+    padding:8px 6px 6px 0px;
     box-sizing:border-box;
     border:1px solid transparent;
     border-radius:2.5px
@@ -91,7 +91,7 @@
     border-color:#ff662e
 }
 .main-section .card-list-wrapper .card-item{
-    width:296px
+    width:265px
 }
 .main-section .card-list-wrapper .card-item .img{
     width:100%;
@@ -156,7 +156,7 @@
     line-height:41px
 }
 .main-section.recommend-restaurants3{
-    width:1237px;
+    width:1100px;
     padding-top:30px;
     border-width:0
 }
@@ -218,7 +218,7 @@
     top:-36px
 }
 .main-section .best-recommend-box .right-area .card-list-wrapper>li{
-    width:302px;
+    width:270px;
     padding:0;
     border-width:0;
     margin:26px 16px 0

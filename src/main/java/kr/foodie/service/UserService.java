@@ -1,5 +1,6 @@
 package kr.foodie.service;
 
+import kr.foodie.domain.shop.Shop;
 import kr.foodie.domain.user.RoleType;
 import kr.foodie.domain.user.User;
 import kr.foodie.repo.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 @Service
@@ -97,4 +99,8 @@ public class UserService {
 
         userRepository.save(entity);
     }
+    public List<User> getAllUserInfo(String userType) {
+        return userRepository.findAllByUserType(userType);
+    }
+
 }
