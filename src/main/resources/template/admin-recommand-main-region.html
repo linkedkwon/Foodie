@@ -277,6 +277,8 @@
                                     </select>
                                 </p>
                                 <button class="btn btn-info btn-sm" value="조회" style="    width: 100px;margin-left: 14px;margin-top: -2px;height: 37px;" onclick="filterFoodCategory()">조회</button>
+<!--                                <input type="text" class="form-control">-->
+                                <button class="btn btn-info btn-sm" value="상점조회" id="search_list_detail" style="    width: 100px;margin-left: 14px;margin-top: -2px;height: 37px;">상점조회</button>
                             </div>
 <!--                            <div>-->
 <!---->
@@ -297,26 +299,6 @@
                                 </table>
                             </div>
                         </div>
-                        </div>
-                        <div>
-                            <div class="card-body" style="font-size: 24px;padding-bottom: 0px;">< 가게 리스트 ></div>
-                            <div class="card-body">
-                                <div class="table-responsive" style="width:100%;">
-                                    <table class="table table-bordered display" id="example1" cellspacing="0">
-                                        <thead>
-                                        <tr>
-                                            <th style="text-align: center" >사진</th>
-                                            <th>가게이름</th>
-                                            <th>전문가평가</th>
-                                            <th>상세정보입력 여부</th>
-                                            <th>수정일</th>
-                                            <th>등록일</th>
-                                            <th>상태</th>
-                                        </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -367,6 +349,36 @@
         </div>
     </div>
 
+
+    <!-- 맛집 주소검색 Modal팝업 -->
+    <div class="modal fade" id="search_list" tabindex="-1" role="dialog" aria-labelledby="address-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="address-modal-bael">가게 리스트 검색</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="detail_list">
+                        <div class="table-responsive" style="width:100%;">
+                            <table class="table table-bordered display" id="example3" cellspacing="0" style="width: 100%;">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: center" >사진</th>
+                                    <th>가게이름</th>
+                                    <th>등록</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap core JavaScript-->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
@@ -387,6 +399,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
+        <script th:src="@{/js/admin-recommand.js}"></script>
 </body>
 
 <style>
@@ -433,6 +446,20 @@
             $("#preview").remove();
         });
 
+        $('#example3').DataTable( {
+            "ajax": "/admin/recommand/main/regionInfo/1",
+            "columns": [
+                { 'data': "shopImage", 'render': function (data) { return '<img src="' + data + '" class="thumbnail" style="width: 80px;height:60px;" />'; } },
+                { "data": "shopName" , 'render': function  ( data, type, row ) { return '<div><a href="/admin/shop/red/'+ row.shopId +'">'+ data + '</a></div><div><span> 주소 -'+ row.address +'</span></div>'; } },
+                { "data": "shopName", 'render': function  ( data, type, row ) { return '<button value="row.shopId" onclick="registerShop()"> 등록 </button>' }  },
+            ],
+            "columnDefs": [
+                { "width": "50px", "targets": 0, "className": "data_table" },
+                { "width": "200px", "targets": 1, "className": "data_table"  },
+                { "width": "60px", "targets": 2, "className": "data_table"  },
+            ]
+        } );
+
 
         $('#example1').DataTable( {
             "ajax": "/admin/recommand/main/regionInfo/1",
@@ -474,7 +501,7 @@
                 // { "data": "isReservation" },
                 // { "data": "updatedAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
                 // { "data": "createdAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
-                { "data": "shopName", 'render': function  ( data, type, row ) { return '<button value="row.shopId"> 내리기 </button>' }  },
+                { "data": "shopName", 'render': function  ( data, type, row ) { return '<button value="row.shopId"> 올리기 </button>' }  },
             ],
             "columnDefs": [
                 { "width": "50px", "targets": 0, "className": "data_table" },
@@ -621,7 +648,9 @@
             }
         }
     } );
-
+    function registerShop(){
+        alert("등록되었습니다")
+    }
     function filterFoodCategory(){
         console.log('00000')
         var bCode = $('#table-filter1 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기

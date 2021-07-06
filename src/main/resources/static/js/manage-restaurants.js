@@ -64,9 +64,45 @@
         }).embed($mapContainer.get(0));
     });
 
+
     $('#address-modal').on("hidden.bs.modal", function() {
         $("#daum-map-container").remove();
     })
+
+    // 지도검색
+    $("#search_list_detail").on("click", function() {
+        console.log("click")
+        $('#search_list').modal({
+            keyboard: false
+        })
+    });
+
+    $('#search_list').on("shown.bs.modal", function() {
+        $('#search_list').find(".modal-body").html("<div id=\"daum-map-container\"></div>")
+        var $this = $(this);
+        var $mapContainer = $("#daum-map-container");
+        var $input = $("#restaurants-address-detial");
+
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var jibunAddress = data.jibunAddress;
+                var roadAddress = data.roadAddress;
+                var sido = data.sido;
+                var sigungu = data.sigungu;
+                var dong = data.bname;
+
+                $input.val(roadAddress);
+                $this.modal("hide");
+            },
+            width : '100%',
+        }).embed($mapContainer.get(0));
+    });
+
+
+    $('#search_list').on("hidden.bs.modal", function() {
+        $("#daum-map-container").remove();
+    })
+
 
     // init summernote Wyswig
     $('#summernote').summernote({
