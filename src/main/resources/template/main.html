@@ -25,9 +25,9 @@
   <!-- Contents -->
   <div id="contents">
     <div class="main-banner">
-      <img class="mySlides" src="../images/1@2x.png" style="width:1300px;height:100%;">
-      <img class="mySlides" src="../images/2@2x.png" style="width:1300px;height:100%;">
-      <img class="mySlides" src="../images/3@2x.png" style="width:1300px;height:100%;">
+      <img class="mySlides" src="../images/1@2x.png" style="width:100%;height:100%;">
+      <img class="mySlides" src="../images/2@2x.png" style="width:100%;height:100%;">
+      <img class="mySlides" src="../images/3@2x.png" style="width:100%;height:100%;">
 <!--      <button class="w3-button w3-black w3-display-left" style="top: 57%;left: 10%;" onclick="plusDivs(-1)">&#10094;</button>-->
 <!--      <button class="w3-button w3-black w3-display-right"style="top: 57%;right: 10%;" onclick="plusDivs(1)">&#10095;</button>-->
     </div>
@@ -149,9 +149,9 @@
                   <div class="img"></div>
                   <div class="card-data">
                     <div class="name">
-                      <div th:text="${shop.shopName}"></div>
+                      <div class="hide-text-1" th:text="${shop.shopName}"></div>
                       <div class="categories">
-                        <span th:text="${shop.tag}">한식</span>
+                        <span class="hide-text-1" th:text="${shop.tag}">한식</span>
                       </div>
                     </div>
                     <ul class="info">
@@ -159,7 +159,11 @@
 <!--                      <li class="phone" th:text="${shop.phone}"></li>-->
 <!--                      <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">-->
                     </ul>
-                    <div class="star"></div>
+                    <th:block th:switch="${shop.foodieLogRating}">
+                      <div th:case="A" class="star-position"><img src="../images/ico-star-first.png" class="star-box"></div>
+                      <div th:case="AA" class="star-position"><img src="../images/ico-star-second.png" class="star-box"></div>
+                      <div th:case="AAA" class="star-position"><img src="../images/ico-star-third.png" class="star-box"></div>
+                    </th:block>
                   </div>
                 </div>
               </a>
@@ -188,9 +192,9 @@
                   <div class="img"></div>
                   <div class="card-data">
                     <div class="name">
-                      <div th:text="${shop.shopName}"></div>
+                      <div class="hide-text-1" th:text="${shop.shopName}"></div>
                       <div class="categories">
-                        <span th:text="${shop.tag}">한식</span>
+                        <span class="hide-text-1" th:text="${shop.tag}">한식</span>
                       </div>
                     </div>
                     <ul class="info">
@@ -198,7 +202,11 @@
                       <!--                      <li class="phone" th:text="${shop.phone}"></li>-->
                       <!--                      <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">-->
                     </ul>
-                    <div class="star"></div>
+                    <th:block th:switch="${shop.foodieLogRating}">
+                      <div th:case="A" class="star-position"><img src="../images/ico-star-first.png" class="star-box"></div>
+                      <div th:case="AA" class="star-position"><img src="../images/ico-star-second.png" class="star-box"></div>
+                      <div th:case="AAA" class="star-position"><img src="../images/ico-star-third.png" class="star-box"></div>
+                    </th:block>
                   </div>
                 </div>
               </a>
@@ -266,20 +274,36 @@
         function renderProductList(element, index, arr) {
           var li = document.createElement('li');
           ul.appendChild(li);
+
+          var src="";
+          switch (element.foodieLogRating) {
+            case "A":
+              src="../images/ico-star-first.png";
+              break;
+            case "AA":
+              src="../images/ico-star-second.png";
+              break;
+            case "AAA":
+              src="../images/ico-star-third.png";
+              break;
+          }
+
           li.innerHTML= li.innerHTML
                   + "<a href='/shop/" + element.shopId +"'>"
                   +   "<div class=\"card-item\">"
                   +     "<div class=\"img\"></div>"
                   +     "<div class=\"card-data\">"
-                  +     "<div class=\"name\">" + element.shopName
+                  +     "<div class=\"name\">"
+                  +       "<div class=\"hide-text-1\">" + element.shopName + "</div>"
                   +       "<div class=\"categories\">"
-                  +           "<span>" + element.tag + "</span>"
+                  +           "<span class=\"hide-text-1\">" + element.tag + "</span>"
                   +       "</div>"
                   +     "</div>"
                   +     "<ul class=\"info\">"
                   +       "<li class=\"address\">" + element.address + "</li>"
                   +     "</ul>"
-                  +     "<div class=\"star\">"
+                  +     "<div class=\"star-position\">"
+                  +     "<img src="+src+" class=\"star-box\">"
                   +     "</div>"
                   +     "</div>"
                   +   "</div>"
@@ -305,20 +329,36 @@
         function renderProductList(element, index, arr) {
           var li = document.createElement('li');
           ul.appendChild(li);
+
+          var src="";
+          switch (element.foodieLogRating) {
+            case "A":
+              src="../images/ico-star-first.png";
+              break;
+            case "AA":
+              src="../images/ico-star-second.png";
+              break;
+            case "AAA":
+              src="../images/ico-star-third.png";
+              break;
+          }
+
           li.innerHTML= li.innerHTML
                   + "<a href='/shop/" + element.shopId +"'>"
                   +   "<div class=\"card-item\">"
                   +     "<div class=\"img\"></div>"
                   +     "<div class=\"card-data\">"
-                  +     "<div class=\"name\">" + element.shopName
+                  +     "<div class=\"name\">"
+                  +       "<div class=\"hide-text-1\">" + element.shopName + "</div>"
                   +       "<div class=\"categories\">"
-                  +           "<span>" + element.tag + "</span>"
+                  +           "<span class=\"hide-text-1\">" + element.tag + "</span>"
                   +       "</div>"
                   +     "</div>"
                   +     "<ul class=\"info\">"
                   +       "<li class=\"address\">" + element.address + "</li>"
                   +     "</ul>"
-                  +     "<div class=\"star\">"
+                  +     "<div class=\"star-position\">"
+                  +     "<img src="+src+" class=\"star-box\">"
                   +     "</div>"
                   +     "</div>"
                   +   "</div>"
