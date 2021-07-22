@@ -264,7 +264,7 @@ function checkFormBeforeSubmit(){
 
     if(validationPhoneChecked == false){
         phoneMsg.style.color = "#FF0000";
-        phoneMsg.innerText = "이메일 중복을 확인해주세요";
+        phoneMsg.innerText = "휴대전화 중복을 확인해주세요";
         flagCnt++;
     }
 
