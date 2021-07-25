@@ -17,17 +17,17 @@ public class ShopService {
         this.shopRepository = shopRepository;
     }
 
-    public List<Shop> getShopInfos(String regionTypeId, String shopType, int idx, int interval) {
-        return shopRepository.findByRegionTypeIdAndShopTypeAndOrderIsNull(regionTypeId, shopType,
+    public List<Shop> getShopInfos(Integer regionId, String shopType, int idx, int interval) {
+        return shopRepository.findByRegionIdAndShopTypeAndOrderIsNull(regionId, shopType,
                 PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
     }
 
-    public List<Shop> getShopInfosWithOrder(String regionTypeId, String shopType, Integer num) {
-        return shopRepository.findByRegionTypeIdAndShopTypeAndOrderIsLessThan(regionTypeId, shopType, num);
+    public List<Shop> getShopInfosWithOrder(Integer regionId, String shopType, Integer num) {
+        return shopRepository.findByRegionIdAndShopTypeAndOrderIsLessThan(regionId, shopType, num);
     }
 
-    public List<Shop> getShopInfosWithSideOrder(String regionTypeId, String shopType, Integer num) {
-        return shopRepository.findByRegionTypeIdAndShopTypeAndOrderIsGreaterThan(regionTypeId, shopType, num);
+    public List<Shop> getShopInfosWithSideOrder(Integer regionId, String shopType, Integer num) {
+        return shopRepository.findByRegionIdAndShopTypeAndOrderIsGreaterThan(regionId, shopType, num);
     }
 
     public List<Shop> getShopDetail(Integer shopId) {
@@ -38,12 +38,25 @@ public class ShopService {
         return shopRepository.findShopInfoByType(type);
     }
 
+    public List<Shop> getShopInfoByAddressName(String address, Integer type) {
+        return shopRepository.getShopInfoByAddressName(address, type);
+    }
+
+    public List<Shop> insertShopInfo(Integer shopId, Integer type){
+        shopRepository.insertMainRecommand(shopId, type);
+        return shopRepository.findShopInfoByType(type);
+    }
+    public List<Shop> deleteShopInfo(Integer shopId, Integer type){
+        shopRepository.deleteMainRecommand(shopId, type);
+        return shopRepository.findShopInfoByType(type);
+    }
+
     public List<Shop> getShopInfoByAddress(String lat, String lng, String shopType) {
         return shopRepository.findByAddressContaining(lat, lng, shopType);
     }
 
-    public int getItemSizeByRegionTypeAndShopType(String regionType, String shopType){
-        return shopRepository.countByRegionTypeIdAndShopType(regionType, shopType).orElseGet(()->{return 0;});
+    public int getItemSizeByRegionTypeAndShopType(Integer regionId, String shopType){
+        return shopRepository.countByRegionIdAndShopType(regionId, shopType).orElseGet(()->{return 0;});
     }
 
     public List<Shop> getAdminShopInfos(String shopType) {
@@ -62,17 +75,17 @@ public class ShopService {
 
 
     public List<Shop> getAdminShopInfosWithRegionId(String shopType, Integer regionId) {
-        return shopRepository.findByShopTypeAndRegionTypeId(shopType, regionId);
+        return shopRepository.findByShopTypeAndRegionId(shopType, regionId);
     }
 
     public List<Shop> getAdminShopInfosWithBcodeWithRegionId(Integer bCode, String shopType, Integer regionId) {
-        return shopRepository.findByBigCategoryAndShopTypeAndRegionTypeId(bCode, shopType, regionId);
+        return shopRepository.findByBigCategoryAndShopTypeAndRegionId(bCode, shopType, regionId);
     }
     public List<Shop> getAdminShopInfosWithBcodeAndMcodeWithRegionId(Integer bCode, Integer mCode, String shopType, Integer regionId) {
-        return shopRepository.findByBigCategoryAndMiddleCategoryAndShopTypeAndRegionTypeId(bCode, mCode, shopType, regionId);
+        return shopRepository.findByBigCategoryAndMiddleCategoryAndShopTypeAndRegionId(bCode, mCode, shopType, regionId);
     }
     public List<Shop> getAdminShopInfosWithBcodeAndMcodeAndScodeWithRegionId(Integer bCode, Integer mCode, Integer sCode, String shopType, Integer regionId) {
-        return shopRepository.findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopTypeAndRegionTypeId(bCode, mCode, sCode, shopType, regionId);
+        return shopRepository.findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopTypeAndRegionId(bCode, mCode, sCode, shopType, regionId);
     }
 
 }

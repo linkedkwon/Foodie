@@ -272,11 +272,11 @@
                                         <option value="1">서울</option>
                                         <option value="2">부산</option>
                                         <option value="3">강원</option>
-                                        <option value="4">전남</option>
+                                        <option value="4">전라남도</option>
                                         <option value="5">제주</option>
                                     </select>
                                 </p>
-                                <button class="btn btn-info btn-sm" value="조회" style="    width: 100px;margin-left: 14px;margin-top: -2px;height: 37px;" onclick="filterFoodCategory()">조회</button>
+                                <button class="btn btn-info btn-sm" value="조회" style="    width: 100px;margin-left: 14px;margin-top: -2px;height: 37px;" onclick="filterRecommnadList()">조회</button>
 <!--                                <input type="text" class="form-control">-->
                                 <button class="btn btn-info btn-sm" value="상점조회" id="search_list_detail" style="    width: 100px;margin-left: 14px;margin-top: -2px;height: 37px;">상점조회</button>
                             </div>
@@ -451,7 +451,7 @@
             "columns": [
                 { 'data': "shopImage", 'render': function (data) { return '<img src="' + data + '" class="thumbnail" style="width: 80px;height:60px;" />'; } },
                 { "data": "shopName" , 'render': function  ( data, type, row ) { return '<div><a href="/admin/shop/red/'+ row.shopId +'">'+ data + '</a></div><div><span> 주소 -'+ row.address +'</span></div>'; } },
-                { "data": "shopName", 'render': function  ( data, type, row ) { return '<button value="row.shopId" onclick="registerShop()"> 등록 </button>' }  },
+                { "data": "shopName", 'render': function  ( data, type, row ) { return '<button value="row.shopId" onclick="registerShop(' + row.shopId + ')"> 등록 </button>' }  },
             ],
             "columnDefs": [
                 { "width": "50px", "targets": 0, "className": "data_table" },
@@ -460,28 +460,6 @@
             ]
         } );
 
-
-        $('#example1').DataTable( {
-            "ajax": "/admin/recommand/main/regionInfo/1",
-            "columns": [
-                { 'data': "shopImage", 'render': function (data) { return '<img src="' + data + '" class="thumbnail" style="width: 80px;height:60px;" />'; } },
-                { "data": "shopName" , 'render': function  ( data, type, row ) { return '<div><a href="/admin/shop/red/'+ row.shopId +'">'+ data + '</a></div><div><span> 주소 -'+ row.address +'</span></div>'; } },
-                { "data": "foodieLogRating" },
-                { "data": "isReservation" },
-                { "data": "updatedAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
-                { "data": "createdAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
-                { "data": "shopName", 'render': function  ( data, type, row ) { return '<button value="row.shopId"> 올리기 </button>' }  },
-            ],
-            "columnDefs": [
-                { "width": "50px", "targets": 0, "className": "data_table" },
-                { "width": "200px", "targets": 1, "className": "data_table"  },
-                { "width": "60px", "targets": 2, "className": "data_table"  },
-                { "width": "60px", "targets": 3, "className": "data_table"  },
-                { "width": "160px", "targets": 4, "className": "data_table"  },
-                { "width": "160px", "targets": 5, "className": "data_table"  },
-                { "width": "60px", "targets": 6, "className": "data_table"  },
-            ]
-        } );
 
 
 
@@ -501,7 +479,7 @@
                 // { "data": "isReservation" },
                 // { "data": "updatedAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
                 // { "data": "createdAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
-                { "data": "shopName", 'render': function  ( data, type, row ) { return '<button value="row.shopId"> 올리기 </button>' }  },
+                { "data": "shopName", 'render': function  ( data, type, row ) { return '<button value="row.shopId" onclick="deleteShop(' + row.shopId + ')"> 내리기 </button>' }  },
             ],
             "columnDefs": [
                 { "width": "50px", "targets": 0, "className": "data_table" },
@@ -534,133 +512,100 @@
             }
         } );
 
-        $('#table-filter1').change( function(){
-            get_mcode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-        });
 
-
-        function get_mcode(o){
-            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            console.log(val)
-            if(val != ''){
-                $.ajax({
-                    type:"get",
-                    url:"/admin/category/mfood/" + val,
-                    datatype: "json",
-                    success: function(data) {
-                    if(data.length > 0) {
-                        $("#table-filter2").find("option").remove().end();
-                        $("#table-filter2").append("<option>중분류</option>");
-                        $.each(data, function(key, value) {
-                            $("#table-filter2").append("<option value='" + value.mcode + "'>" + value.categoryName + "</option>");
-                        });
-                        console.log(data[0])
-                    } else {
-                        $("#table-filter2").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                        $("#table-filter3").find("option").remove().end();
-                        $("#table-filter3").append("<option value='0'>NO DATA</option>");
-                        return;
-                    }
-                },
-
-                error: function(x, o, e) {
-                    var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                    alert(msg);
-                }
-                });
-            }else {
-                $("#table-filter2").find("option").remove().end();
-                $("#table-filter2").append("<option value='0'>중분류</option>");
-                $("#table-filter3").find("option").remove().end();
-                $("#table-filter3").append("<option value='0'>소분류</option>");
-            }
-        }
-
-        $('#table-filter2').change( function(){
-            get_scode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-        });
-
-        function get_scode(o){
-            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            console.log(val)
-            if(val != '') {
-                $.ajax({
-                    type: "get",
-                    url: "/admin/category/sfood/" + val,
-                    datatype: "json",
-                    success: function (data) {
-                        if (data.length > 0) {
-                            $("#table-filter3").find("option").remove().end();
-                            $.each(data, function (key, value) {
-                                $("#table-filter3").append("<option value='" + value.scode + "'>" + value.categoryName + "</option>");
-                            });
-                        } else {
-                            $("#table-filter3").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                            return;
-                        }
-                    },
-
-                    error: function (x, o, e) {
-                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                        alert(msg);
-                    }
-                });
-            }else{
-                $("#table-filter3").find("option").remove().end();
-                $("#table-filter3").append("<option value='0'>소분류 </option>");
-            }
-        }
-
-
-
-        $('#table-filter4').change( function(){
-            get_detail_region( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-        });
-
-        function get_detail_region(o){
-            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            console.log(val)
-            if(val != ''){
-                $.ajax({
-                    type:"get",
-                    url:"/admin/region/" + val,
-                    datatype: "json",
-                    success: function(data) {
-                        if(data.length > 0) {
-                            $("#table-filter5").find("option").remove().end();
-                            $.each(data, function(key, value) {
-                                $("#table-filter5").append("<option value='" + value.regionId + "'>" + value.districtName + "</option>");
-                            });
-                        } else {
-                            $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");
-                            return;
-                        }
-                    },
-
-                    error: function(x, o, e) {
-                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                        alert(msg);
-                    }
-                });
-            }else{
-                $("#table-filter5").find("option").remove().end();
-                $("#table-filter5").append("<option>군</option>");
-            }
-        }
     } );
-    function registerShop(){
-        alert("등록되었습니다")
-    }
-    function filterFoodCategory(){
-        console.log('00000')
-        var bCode = $('#table-filter1 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+    function registerShop(shopId){
+        var shopId = shopId;
+        var val = $( '#table-filter1 option:selected').val();
+        $('#example').dataTable().fnClearTable();
+        $.ajax({
+            type:"post",
+            url:"/admin/recommand/update/main/regionInfo/address/" + val +"/shop/" + shopId,
+            datatype: "json",
+            success: function(data) {
+                console.log(data);
+                if(data == null){
+                    alert("이미 8개의 행이 다 등록되어있습니다.")
+                }else if(data.data.length > 0) {
+                    alert(data.data);
+                    var response_data = [];
+                    for (step = 0; step < data.data.length; step++) {
+                        // Runs 5 times, with values of step 0 through 4.
+                        response_data.push(data.data[step])
+                    }
+                    console.log(response_data)
+                    // $('#example tbody tr').replaceWith(data);
+                    // $('#payload tr').remove();
+                    // $('#payload').html(data);
+                    $('#example').dataTable().fnAddData(response_data);
+                    // $.each(data, function(key, value) {
+                    //     $("#example tbody").append("<tr>" +
+                    //         "<td> hihihii </td>" +
+                    //         "<td> hihihii </td>" +
+                    //         "<td> hihihii </td>" +
+                    //         "<td> hihihii </td>" +
+                    //         "<td> hihihii </td>" +
+                    //         "</tr>");
+                    // });
+                }else{
+                    alert("unkown error")
+                }
+            },
 
-        var query = null;
-        console.log(bCode)
+            error: function(x, o, e) {
+                var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                alert(msg);
+            }
+        });
+    }
+    function deleteShop(shopId){
+        var shopId = shopId;
+        var val = $( '#table-filter1 option:selected').val();
+        $('#example').dataTable().fnClearTable();
+        $.ajax({
+            type:"delete",
+            url:"/admin/recommand/update/main/regionInfo/address/" + val +"/shop/" + shopId,
+            datatype: "json",
+            success: function(data) {
+                console.log(data);
+                alert("삭제완료");
+                if(data.data.length > 0) {
+                    var response_data = [];
+                    for (step = 0; step < data.data.length; step++) {
+                        // Runs 5 times, with values of step 0 through 4.
+                        response_data.push(data.data[step])
+                    }
+                    console.log(response_data)
+                    // $('#example tbody tr').replaceWith(data);
+                    // $('#payload tr').remove();
+                    // $('#payload').html(data);
+                    $('#example').dataTable().fnAddData(response_data);
+                    // $.each(data, function(key, value) {
+                    //     $("#example tbody").append("<tr>" +
+                    //         "<td> hihihii </td>" +
+                    //         "<td> hihihii </td>" +
+                    //         "<td> hihihii </td>" +
+                    //         "<td> hihihii </td>" +
+                    //         "<td> hihihii </td>" +
+                    //         "</tr>");
+                    // });
+
+                }
+            },
+
+            error: function(x, o, e) {
+                var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                alert(msg);
+            }
+        });
+    }
+    function filterRecommnadList(){
+        var val = $( '#table-filter1 option:selected').val();
+        console.log(val)
         $('#example').dataTable().fnClearTable();
         $.ajax({
             type:"get",
-            url:"/admin/recommand/main/regionInfo/" + bCode,
+            url:"/admin/recommand/main/regionInfo/" + val,
             datatype: "json",
             success: function(data) {
                 if(data.data.length > 0) {
@@ -695,7 +640,6 @@
             }
         });
     }
-
     $('.selectpicker').selectpicker();
 
 </script>

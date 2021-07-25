@@ -35,21 +35,21 @@ public class ShopController {
     private final ReviewService reviewService;
     private final PaginationService paginationService;
 
-    @GetMapping({"region/{regionTypeId}/{shopType}", "region/{regionTypeId}/{shopType}/{path}"})
-    public String getCategory(@PathVariable String regionTypeId, @PathVariable String shopType,
+    @GetMapping({"region/{regionId}/{shopType}", "region/{regionId}/{shopType}/{path}"})
+    public String getCategory(@PathVariable Integer regionId, @PathVariable String shopType,
                               @PathVariable Optional<String> path, Model model){
 
         String shopTypeId = shopType.equals("red")? "0" : "1";
         int idx = Integer.parseInt(path.orElseGet(()->{return "0";}));
-        int size = shopService.getItemSizeByRegionTypeAndShopType(regionTypeId, shopTypeId);
+        int size = shopService.getItemSizeByRegionTypeAndShopType(regionId, shopTypeId);
 
-        model.addAttribute("payload", shopService.getShopInfos(regionTypeId, shopTypeId, idx, shopInterval));
-        model.addAttribute("regionInfo", regionService.getRegionInfo(Integer.valueOf(regionTypeId)));
-        model.addAttribute("priority", shopService.getShopInfosWithOrder(regionTypeId, shopTypeId, 9));
-        model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(regionTypeId, shopTypeId, 8));
+        model.addAttribute("payload", shopService.getShopInfos(regionId, shopTypeId, idx, shopInterval));
+        model.addAttribute("regionInfo", regionService.getRegionInfo(Integer.valueOf(regionId)));
+        model.addAttribute("priority", shopService.getShopInfosWithOrder(regionId, shopTypeId, 9));
+        model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(regionId, shopTypeId, 8));
 
-        model.addAttribute("paginations", paginationService.getPagination(size, idx,shopInterval,"/shop/region/"+regionTypeId+"/"+shopType+"/"));
-        model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/"+regionTypeId+"/"+shopType+"/"));
+        model.addAttribute("paginations", paginationService.getPagination(size, idx,shopInterval,"/shop/region/"+regionId+"/"+shopType+"/"));
+        model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/"+regionId+"/"+shopType+"/"));
 
         return shopType.equals("red")? "submain-red":"submain-green";
     }

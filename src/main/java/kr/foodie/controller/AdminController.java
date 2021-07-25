@@ -109,6 +109,45 @@ public class AdminController {
         return members;
     }
 
+    @ResponseBody
+    @RequestMapping(value ={"/recommand/main/regionInfo/{type}/address/{address}"}, method= RequestMethod.GET)
+    public Map<String, List> getRecommandMainRegionInfoWithAddress(Model model, @PathVariable String address, @PathVariable Integer type){
+        List<Shop> commentList;
+        commentList = shopService.getShopInfoByAddressName(address, type);
+        Map<String, List> members = new HashMap<>();
+        members.put("data", commentList);
+        return members;
+    }
+
+    @ResponseBody
+    @RequestMapping(value ={"/recommand/update/main/regionInfo/address/{addressId}/shop/{shopId}"}, method= RequestMethod.POST)
+    public Map<String, List> updateRecommandMainRegionInfoWithAddress(Model model, @PathVariable Integer addressId, @PathVariable Integer shopId){
+        List<Shop> commentList;
+        List<Shop> currentList;
+        Map<String, List> members = new HashMap<>();
+        currentList = shopService.getShopInfoByType(addressId);
+        if(currentList.size()>7){
+            members.put("data", null);
+        }else{
+            commentList = shopService.insertShopInfo(shopId, addressId);
+            members.put("data", commentList);
+        }
+
+
+        return members;
+    }
+
+    @ResponseBody
+    @RequestMapping(value ={"/recommand/update/main/regionInfo/address/{addressId}/shop/{shopId}"}, method= RequestMethod.DELETE)
+    public Map<String, List> deleteRecommandMainRegionInfoWithAddress(Model model, @PathVariable Integer addressId, @PathVariable Integer shopId){
+        List<Shop> commentList;
+        List<Shop> currentList;
+        Map<String, List> members = new HashMap<>();
+        commentList = shopService.deleteShopInfo(shopId, addressId);
+        members.put("data", commentList);
+        return members;
+    }
+
     @RequestMapping(value = "/recommand/other/region", method = RequestMethod.GET)
     public ModelAndView getRecommandOtherRegion(){
         ModelAndView mav = new ModelAndView();

@@ -16,8 +16,8 @@ public class Shop {
     @Column(name = "SHOP_ID")
     private Integer shopId;
 
-    @Column(name = "REGION_TYPE_ID")
-    private String regionTypeId;
+//    @Column(name = "REGION_TYPE_ID")
+//    private String regionTypeId;
 
     @Column(name = "REGION_ID")
     private Integer regionId;
