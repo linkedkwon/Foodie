@@ -42,15 +42,27 @@
 
               <div class="right-area">
                 <ul class="scores">
-                  <li>푸디로그 평점(AAA)</li>
-                  <li>오감 평점(5점)</li>
+                  <li th:text="|푸디로그 평점(${payload[0].foodieLogRating})|"></li>
+                  <li th:text="|오감 평점(${payload[0].tasteRating}점)|"></li>
                 </ul>
-                <div class="star">
-                  <picture>
-                    <source srcset="/images/ico-detail-star@2x.png 2x">
-                    <img src="/images/ico-detail-star.png" alt="">
-                  </picture>
-                </div>
+
+                <th:block th:switch="${payload[0].foodieLogRating}">
+                  <div class="star" th:case="A">
+                    <picture>
+                      <img src="/images/ico-detail-star-first.png">
+                    </picture>
+                  </div>
+                  <div class="star" th:case="AA">
+                    <picture>
+                      <img src="/images/ico-detail-star-second.png">
+                    </picture>
+                  </div>
+                  <div class="star" th:case="AAA">
+                    <picture>
+                      <img src="/images/ico-detail-star-third.png">
+                    </picture>
+                  </div>
+                </th:block>
 
                 <a href="#" class="btn-print">인쇄하기</a>
               </div>
@@ -225,17 +237,17 @@
                 <h3>CRITIQUE</h3>
                 <span>- 나의 오감을 만족시켰는가?</span>
                 <div class="score-info">
-                  5.0 탁월 4.5 감동 4.0 좋음 3.0 평범 2.0 실망
+                  5.0 탁월 4.0 감동 3.0 좋음 2.0 평범 1.0 실망
                 </div>
               </div>
 
               <div class="section-body">
                 <div class="btn-score-area">
-                  <a href="javascript:void(0)" class="point5" onclick="clickStarRating(5, 0)"></a>
-                  <a href="javascript:void(0)" class="point4_5" onclick="clickStarRating(4.5, 1)"></a>
-                  <a href="javascript:void(0)" class="point4" onclick="clickStarRating(4, 2)"></a>
-                  <a href="javascript:void(0)" class="point3" onclick="clickStarRating(3, 3)"></a>
-                  <a href="javascript:void(0)" class="point2" onclick="clickStarRating(2, 4)"></a>
+                  <a href="javascript:void(0)" class="point5" onclick="clickStarRating(5,0)"></a>
+                  <a href="javascript:void(0)" class="point4" onclick="clickStarRating(4,1)"></a>
+                  <a href="javascript:void(0)" class="point3" onclick="clickStarRating(3,2)"></a>
+                  <a href="javascript:void(0)" class="point2" onclick="clickStarRating(2,3)"></a>
+                  <a href="javascript:void(0)" class="point1" onclick="clickStarRating(1,4)"></a>
                 </div>
                 <input type="hidden" id="star-rating" value="0"/>
 
@@ -250,10 +262,10 @@
                     <span class="user-id" th:text="${item.userName}"></span>
                     <th:block th:switch="${item.starRating}">
                       <span th:case="5" class="point point5"></span>
-                      <span th:case="4.5" class="point point4_5"></span>
                       <span th:case="4" class="point point4"></span>
                       <span th:case="3" class="point point3"></span>
                       <span th:case="2" class="point point2"></span>
+                      <span th:case="1" class="point point1"></span>
                     </th:block>
                     <div class="comment" th:text="${item.content}"></div>
                     <a href="javascript:void(0)" class="delete-btn" th:style="${item.userId} == ${userId} ? 'display:block' : 'display:none'"

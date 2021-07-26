@@ -21,12 +21,13 @@ public class AccountController {
 
     @GetMapping("")
     public String renderUserInfo(@AuthenticationPrincipal AuthUserDetails obj, Model model){
-        model.addAttribute(obj.getUser());
+        model.addAttribute(userService.findUserByEmail(obj.getUser().getEmail()));
         return "mypage_tab1";
     }
 
     @PostMapping("")
-    public String editUserInfo(User user){
+    public String editUserInfo(@AuthenticationPrincipal AuthUserDetails obj, User user){
+        user.setPhoneNum(obj.getUser().getPhoneNum());
         userService.update(user);
         authenticationService.updateAuthentication(user.getEmail());
         return "redirect:/user/info";

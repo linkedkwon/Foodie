@@ -1,6 +1,5 @@
 package kr.foodie.service;
 
-import kr.foodie.domain.shop.Shop;
 import kr.foodie.domain.user.RoleType;
 import kr.foodie.domain.user.User;
 import kr.foodie.repo.UserRepository;
@@ -31,6 +30,15 @@ public class UserService {
     public String findPhoneNumValidation(String phoneNum){
         return Integer.toString(userRepository.countByPhoneNum(phoneNum)
                 .orElseGet(()->{ return 0;}));
+    }
+
+    public User findUserByEmail(String email){
+        User entity = userRepository.findByEmail(email)
+                        .orElseGet(() -> {
+                            User user = new User();
+                            return user;
+                        });
+        return entity;
     }
 
     public String inquiryId(String name, String phoneNum){

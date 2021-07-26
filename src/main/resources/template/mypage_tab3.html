@@ -44,20 +44,26 @@
               <div>리뷰</div>
             </li>
             <li th:each="item : ${reviews}">
-              <div class="user-id" th:text="${item.userName}"></div>
-              <div class="title" style="width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" th:text="${item.content}"></div>
-              <div class="restaurant-name" th:text="${item.shopName}"></div>
+              <div class="user-id">
+                <div class="comment-overflow" th:text="${item.userName}" style="width: 120px;"></div>
+              </div>
+              <div class="title">
+                <div class="comment-overflow" th:text="${item.content}" style="width: 270px;"></div>
+              </div>
+              <div class="restaurant-name">
+                <div class="comment-overflow" th:text="${item.shopName}" style="width: 130px;"></div>
+              </div>
               <div class="score">
                 <th:block th:switch="${item.starRating}">
                   <img class="star-img" th:case="5" src="/images/ico-point-5-active.png"/>
-                  <img class="star-img" th:case="4.5" src="/images/ico-point-4_5-active.png"/>
                   <img class="star-img" th:case="4" src="/images/ico-point-4-active.png"/>
                   <img class="star-img" th:case="3" src="/images/ico-point-3-active.png"/>
                   <img class="star-img" th:case="2" src="/images/ico-point-2-active.png"/>
+                  <img class="star-img" th:case="1" src="/images/ico-point-1-active.png"/>
                 </th:block>
-                <span class="score" th:text="'감동('+${item.starRating}+'점)'"/>
+                <div class="score" th:text="'감동('+${item.starRating}+'점)'" style="width: 50px;"/>
               </div>
-              <a href="javascript:void(0)" class="delete-btn" th:onclick="|javascript:deleteReview('${item.reviewId}')|">
+              <a href="javascript:void(0)" class="delete-btn" th:onclick="|javascript:deleteReview('${item.reviewId}')|" style="width: 48px; margin-left: 50px">
                 삭제
               </a>
             </li>

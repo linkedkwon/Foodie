@@ -62,8 +62,8 @@ function addReview(){
 }
 function clickStarRating(value, idx){
     document.getElementById("star-rating").value = value;
-    const classList = ['point5', 'point4_5', 'point4',
-                  'point3', 'point2'];
+    const classList = ['point5', 'point4', 'point3',
+                  'point2', 'point1'];
     const list = $(".btn-score-area > a");
 
     for(var i=0; i< list.length; i++) {

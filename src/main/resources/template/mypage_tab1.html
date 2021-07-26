@@ -44,7 +44,7 @@
             <div class="row">
               <div class="th">이메일</div>
               <div class="td">
-                <input type="text" id="email" name="user_email"  disabled="true" th:value="${user.email}">
+                <input type="text" id="email" name="user_email" disabled="true" th:value="${user.email}">
                 <input type="text" id="user-email" style="display: none" th:field="*{email}"/>
               </div>
             </div>
@@ -80,7 +80,7 @@
             <div class="row">
               <div class="th">휴대전화</div>
               <div class="td">
-                <input type="tel" id="user-phone" name="user_mobile" th:value="${user.phoneNum}" th:field="*{phoneNum}"
+                <input type="tel" id="user-phone" name="user_mobile" disabled="true" th:value="${user.phoneNum}" th:field="*{phoneNum}"
                        onblur="checkPhone()" oninput="oninputPhone()">
                 <div class="error-next-box" id="phone-msg"></div>
               </div>
