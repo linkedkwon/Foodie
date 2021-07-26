@@ -15,13 +15,12 @@ public class MailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    //to be changing with mailDTO after received specification
     @Async
     public void sendCode(String email, String code) throws Exception{
         MimeMessage message = javaMailSender.createMimeMessage();
         message.setSubject("Foodie 인증코드");
         message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
         message.setText("인증코드입니다.\n"+code);
-       javaMailSender.send(message);
+        javaMailSender.send(message);
     }
 }
