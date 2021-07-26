@@ -4,25 +4,30 @@ import kr.foodie.domain.shop.Shop;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface ShopRepository extends JpaRepository<Shop, Long> {
 
-    Page<Shop> findByRegionTypeIdAndShopTypeAndOrderIsNull(String regionType, String shopType, Pageable pageable);
+    Page<Shop> findByRegionIdAndShopTypeAndOrderIsNull(Integer regionId, String shopType, Pageable pageable);
 
-    List<Shop> findByRegionTypeIdAndShopTypeAndOrderIsLessThan(String regionType, String shopType, Integer num);
-    List<Shop> findByRegionTypeIdAndShopTypeAndOrderIsGreaterThan(String regionType, String shopType, Integer num);
+    List<Shop> findByRegionIdAndShopTypeAndOrderIsLessThan(Integer regionId, String shopType, Integer num);
+    List<Shop> findByRegionIdAndShopTypeAndOrderIsGreaterThan(Integer regionId, String shopType, Integer num);
     List<Shop> findByShopId(Integer shopId);
 
-    Optional<Integer> countByRegionTypeIdAndShopType(String regionType, String shopType);
+    Optional<Integer> countByRegionIdAndShopType(Integer regionId, String shopType);
 
     @Query(value="select * from shop where shop_id in (select shop_id from main_board where type = ?1)", nativeQuery = true)
     List<Shop> findShopInfoByType(Integer type);
+
+    @Query(value="select * from shop where address like %?1% and shop_id not in (select shop_id from main_board where type=?2)", nativeQuery = true)
+    List<Shop> getShopInfoByAddressName(String address, Integer type);
 
     @Query(value="SELECT * ,(6371*acos(cos(radians(?1))*cos(radians(slLat))*cos(radians(slLng)-radians(?2))+sin(radians(?1))*sin(radians(slLat)))) AS distance from shop where shop_type = ?3 having distance <= 2 order by distance", nativeQuery = true)
     List<Shop> findByAddressContaining(String lat, String lng, String shopType);
@@ -34,9 +39,18 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
     List<Shop> findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopType(Integer bCode, Integer mCode, Integer sCode, String shopType);
 
     // region
-    List<Shop> findByShopTypeAndRegionTypeId(String shopType, Integer regionId);
-    List<Shop> findByBigCategoryAndShopTypeAndRegionTypeId(Integer bCode, String shopType, Integer regionId);
-    List<Shop> findByBigCategoryAndMiddleCategoryAndShopTypeAndRegionTypeId(Integer bCode, Integer mCode, String shopType, Integer regionId);
-    List<Shop> findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopTypeAndRegionTypeId(Integer bCode, Integer mCode, Integer sCode, String shopType, Integer regionId);
+    List<Shop> findByShopTypeAndRegionId(String shopType, Integer regionId);
+    List<Shop> findByBigCategoryAndShopTypeAndRegionId(Integer bCode, String shopType, Integer regionId);
+    List<Shop> findByBigCategoryAndMiddleCategoryAndShopTypeAndRegionId(Integer bCode, Integer mCode, String shopType, Integer regionId);
+    List<Shop> findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopTypeAndRegionId(Integer bCode, Integer mCode, Integer sCode, String shopType, Integer regionId);
 
+    @Transactional
+    @Modifying
+    @Query(value="insert into main_board(shop_id, type) values (?1, ?2)", nativeQuery = true)
+    void insertMainRecommand(Integer shopId, Integer type);
+
+    @Transactional
+    @Modifying
+    @Query(value="delete from main_board where shop_id = ?1 and type = ?2", nativeQuery = true)
+    void deleteMainRecommand(Integer shopId, Integer type);
 }

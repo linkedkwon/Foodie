@@ -43,14 +43,16 @@
             keyboard: false
         })
 
-        var val = $( '#table-filter1 option:selected').val();
+        var val = $( '#table-filter1 option:selected').text();
+        var type = $( '#table-filter1 option:selected').val();
         console.log('value'+ val)
         $('#example3').dataTable().fnClearTable();
         $.ajax({
             type:"get",
-            url:"/admin/recommand/main/regionInfo/" + val,
+            url:"/admin/recommand/main/regionInfo/" + type + "/address/" + encodeURI(val),
             datatype: "json",
             success: function(data) {
+                console.log(data.data)
                 if(data.data.length > 0) {
                     var response_data = [];
                     for (step = 0; step < data.data.length; step++) {
