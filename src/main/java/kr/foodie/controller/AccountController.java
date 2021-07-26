@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 
 @RequiredArgsConstructor
 @Controller
@@ -27,7 +29,11 @@ public class AccountController {
 
     @PostMapping("")
     public String editUserInfo(@AuthenticationPrincipal AuthUserDetails obj, User user){
-        user.setPhoneNum(obj.getUser().getPhoneNum());
+
+        String phoneNum = Optional.ofNullable(user.getPhoneNum())
+                                  .orElseGet(()->{return obj.getUser().getPhoneNum();});
+        user.setPhoneNum(phoneNum);
+
         userService.update(user);
         authenticationService.updateAuthentication(user.getEmail());
         return "redirect:/user/info";

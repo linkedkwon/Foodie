@@ -80,8 +80,10 @@
             <div class="row">
               <div class="th">휴대전화</div>
               <div class="td">
-                <input type="tel" id="user-phone" name="user_mobile" disabled="true" th:value="${user.phoneNum}" th:field="*{phoneNum}"
-                       onblur="checkPhone()" oninput="oninputPhone()">
+                <input type="tel" id="user-phone" name="user_mobile" th:value="${user.phoneNum}" th:field="*{phoneNum}"
+                       onblur="checkPhone()" oninput="oninputPhone()" disabled="true">
+                <a href="javascript:void(0);" class="btn-sm" id="phone-modify-btn" onclick="clickChangePhoneBtn()">변경</a>
+                <a href="javascript:void(0);" class="btn-sm" id="phone-check" onclick="checkPhoneValidation()" style="display: none">중복확인</a>
                 <div class="error-next-box" id="phone-msg"></div>
               </div>
             </div>
