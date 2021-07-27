@@ -11,10 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -23,7 +20,6 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
-@RequestMapping(path = "/shop/")
 public class ShopController {
 
     private static final int shopInterval = 14;
@@ -35,7 +31,7 @@ public class ShopController {
     private final ReviewService reviewService;
     private final PaginationService paginationService;
 
-    @GetMapping({"region/{regionId}/{shopType}", "region/{regionId}/{shopType}/{path}"})
+    @GetMapping({"/shop/region/{regionId}/{shopType}", "/shop/region/{regionId}/{shopType}/{path}"})
     public String getCategory(@PathVariable Integer regionId, @PathVariable String shopType,
                               @PathVariable Optional<String> path, Model model){
 
@@ -54,8 +50,9 @@ public class ShopController {
         return shopType.equals("red")? "submain-red":"submain-green";
     }
 
-    @GetMapping(value ={"/{shopId}", "/{shopId}/{path}"})
-    public ModelAndView getShopDetail(@PathVariable Integer shopId, @PathVariable Optional<Integer> path,
+    @GetMapping(value ="/shop")
+    public ModelAndView getShopDetail(@RequestParam(value = "id") Integer shopId,
+                                      @RequestParam(value = "page", defaultValue = "0") Integer page,
                                       @AuthenticationPrincipal AuthUserDetails userDetails){
         ModelAndView mav = new ModelAndView();
 
@@ -64,9 +61,9 @@ public class ShopController {
         commentList = shopService.getShopDetail(shopId);
         hashTags = tagService.getHashTags(shopId);
 
-        int idx = path.orElseGet(()->{return 0;});
+        int idx = page;
         int size = reviewService.getItemSizeByShopId(shopId);
-        String url = "/shop/"+shopId+"/";
+        String url = "/shop?id="+ shopId +"&?page=";
 
         mav.addObject("reviews", reviewService.getItemsByShopId(shopId, idx));
         mav.addObject("paginations", paginationService.getPagination(size, idx, reviewInterval, url));

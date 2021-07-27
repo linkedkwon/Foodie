@@ -14,7 +14,6 @@ public class PaginationService {
     private static final int interval = 4;
 
     public List<Pagination> getPagination(int size, int idx, int itemInterval, String path){
-
         int len = getLen(size, itemInterval);
         int lef = (idx / interval) * interval;
         List<Pagination> paginations = new ArrayList<>();
@@ -38,13 +37,11 @@ public class PaginationService {
     }
 
     public Map<String, String> getPaginationBtn(int size, int idx, int itemInterval, String path){
-
         int len = getLen(size, itemInterval);
-        idx = idx/interval;
         Map<String, String> maps = new HashMap<String, String>();
 
-        String prev = idx > 0 ? path+Integer.toString((idx-1) * interval): "javascript:void(0)";
-        String next = idx < len/4 ? path+Integer.toString((idx+1) * interval) : "javascript:void(0)";
+        String prev = idx > 0 ? path+Integer.toString(idx-1): "javascript:void(0)";
+        String next = idx+1 < len ? path+Integer.toString(idx+1) : "javascript:void(0)";
 
         maps.put("prev",prev);
         maps.put("next",next);

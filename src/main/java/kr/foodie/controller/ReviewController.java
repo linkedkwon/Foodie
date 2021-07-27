@@ -45,9 +45,10 @@ public class ReviewController {
 
     @ResponseBody
     @PostMapping("/item")
-    public String addReview(int shopId, String starRating, String content,
+    public String addReview(String shopId, String starRating, String content,
                             @AuthenticationPrincipal AuthUserDetails userDetails){
-        return reviewService.addItem(userDetails.getUser().getId(), shopId, starRating, content);
+
+        return reviewService.addItem(userDetails.getUser().getId(), Integer.parseInt(shopId), starRating, content);
     }
 
     @ResponseBody
