@@ -39,11 +39,12 @@ public class ShopController {
         int idx = Integer.parseInt(path.orElseGet(()->{return "0";}));
         int size = shopService.getItemSizeByRegionTypeAndShopType(regionId, shopTypeId);
 
-        model.addAttribute("payload", shopService.getShopInfos(regionId, shopTypeId, idx, shopInterval));
         model.addAttribute("regionInfo", regionService.getRegionInfo(Integer.valueOf(regionId)));
         model.addAttribute("priority", shopService.getShopInfosWithOrder(regionId, shopTypeId, 9));
         model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(regionId, shopTypeId, 8));
 
+        //pagination
+        model.addAttribute("payload", shopService.getShopInfos(regionId, shopTypeId, idx, shopInterval));
         model.addAttribute("paginations", paginationService.getPagination(size, idx,shopInterval,"/shop/region/"+regionId+"/"+shopType+"/"));
         model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/"+regionId+"/"+shopType+"/"));
 

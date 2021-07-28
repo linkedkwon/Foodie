@@ -256,9 +256,17 @@
                   </div>
 
                   <ul class="comment-list">
+                    <li th:each="item : ${reviews}" th:style="${item.bestComment == '1'?'background-color: #f2f6ff;':''}">
+                      <th:block th:switch="${item.bestComment}">
+                        <div th:case="1" style="flex-direction: column; font-size: 16px; font-weight: 400; margin-top: -15px;">
+                          <div style="height: 19px; line-height: 19px; margin-bottom: 5px; background: #9872ff; color: white; font-size: 12px; text-align: center; width: 45px;">BEST</div>
+                          <span class="user-id" th:text="${item.userName}"></span>
+                        </div>
+                        <div th:case="0">
+                          <span class="user-id" th:text="${item.userName}"></span>
+                        </div>
+                      </th:block>
 
-                    <li th:each="item : ${reviews}">
-                      <span class="user-id" th:text="${item.userName}"></span>
                       <th:block th:switch="${item.starRating}">
                         <span th:case="5" class="point point5"></span>
                         <span th:case="4" class="point point4"></span>
