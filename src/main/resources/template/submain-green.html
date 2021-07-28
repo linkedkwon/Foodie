@@ -69,9 +69,9 @@
           <ul class="card-list-wrapper">
             <!-- Card item -->
             <li th:object="${shop}" th:each="shop : ${priority}">
-              <a th:href="@{'/shop/'+${shop.shopId}}">
+              <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
                 <div class="card-item">
-                  <div class="img"></div>
+                  <div class="img" style="width: 99%"></div>
                   <div class="card-data">
                     <div class="name">
                       <div class="hide-text-1" th:text="${shop.shopName}"></div>
@@ -107,7 +107,7 @@
         <div class="left-area">
           <ul>
             <li th:object="${shop}" th:each="shop : ${payload}">
-              <a th:href="@{'/shop/'+${shop.shopId}}">
+              <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
                 <div class="card-item">
                   <div class="img"></div>
                   <div class="card-data">
@@ -136,7 +136,7 @@
 
         <div class="right-area">
           <dl th:object="${shop}" th:each="shop : ${sidePriority}">
-            <a th:href="@{'/shop/'+${shop.shopId}}">
+            <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
               <dt style="    padding-bottom: 27px;">
                 <div class="info">
                   <span class="name" th:text="${shop.shopName}"></span>

@@ -52,7 +52,7 @@ public class ShopController {
 
     @GetMapping(value ="/shop")
     public ModelAndView getShopDetail(@RequestParam(value = "id") Integer shopId,
-                                      @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                      @RequestParam(value = "page") Integer page,
                                       @AuthenticationPrincipal AuthUserDetails userDetails){
         ModelAndView mav = new ModelAndView();
 
@@ -63,7 +63,7 @@ public class ShopController {
 
         int idx = page;
         int size = reviewService.getItemSizeByShopId(shopId);
-        String url = "/shop?id="+ shopId +"&?page=";
+        String url = "/shop?id="+ shopId +"&page=";
 
         mav.addObject("reviews", reviewService.getItemsByShopId(shopId, idx));
         mav.addObject("paginations", paginationService.getPagination(size, idx, reviewInterval, url));

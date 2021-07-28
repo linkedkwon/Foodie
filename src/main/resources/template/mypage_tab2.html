@@ -38,7 +38,7 @@
           
           <ul class="likes-list" th:each="item : ${favoriteShops}">
             <li>
-              <a th:href="@{'/shop/'+${item.shopId}}">
+              <a th:href="@{'/shop?id='+${item.shopId}+'&page=0'}">
                 <div class="card-item">
                   <div class="img"></div>
                   <div class="card-data">

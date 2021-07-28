@@ -26,6 +26,18 @@ function addFavoriteShop(){
     });
 }
 
+function getParam(sname) {
+
+    var params = location.search.substr(location.search.indexOf("?") + 1);
+    var sval = "";
+    params = params.split("&");
+    for (var i = 0; i < params.length; i++) {
+        temp = params[i].split("=");
+        if ([temp[0]] == sname) { sval = temp[1]; }
+    }
+    return sval;
+}
+
 function addReview(){
     if(checkBeforeAddReview()!=true) {
         alert("내용을 다시 한 번 확인해주세요.");
@@ -33,7 +45,9 @@ function addReview(){
     }
     //shop_id extracted on url
     const url = document.location.href;
-    const shopId = url.substring(url.lastIndexOf('/') + 1);
+    const shopId = getParam("id");
+
+    console.log('샵아이디',shopId);
 
     var starRating = document.getElementById("star-rating").value;
     var content = document.getElementById("comment").value;
@@ -56,10 +70,11 @@ function addReview(){
             }
         },
         error: function (status, error) {
-            alert('로그인 후에 댓글을 작성해주세요.');
+            alert('eror 로그인 후에 댓글을 작성해주세요.');
         }
     });
 }
+
 function clickStarRating(value, idx){
     document.getElementById("star-rating").value = value;
     const classList = ['point5', 'point4', 'point3',
