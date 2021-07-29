@@ -2,7 +2,6 @@ package kr.foodie.service;
 
 import kr.foodie.domain.account.Review;
 import kr.foodie.domain.account.ReviewDTO;
-import kr.foodie.domain.shop.Region;
 import kr.foodie.repo.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,7 +52,7 @@ public class ReviewService {
                 +"from Shop s right outer join Review r "
                 +"on s.shopId = r.shopId "
                 +"where r.userId ="+ userId
-                +"order by r.createdTime desc";
+                +"order by r.bestComment desc, r.createdTime desc";
 
         TypedQuery<ReviewDTO> query = em.createQuery(jpql, ReviewDTO.class)
                                         .setFirstResult(idx*itemInterval)

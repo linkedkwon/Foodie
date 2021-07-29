@@ -258,8 +258,8 @@
                   <ul class="comment-list">
                     <li th:each="item : ${reviews}" th:style="${item.bestComment == '1'?'background-color: #f2f6ff;':''}">
                       <th:block th:switch="${item.bestComment}">
-                        <div th:case="1" style="flex-direction: column; font-size: 16px; font-weight: 400; margin-top: -15px;">
-                          <div style="height: 19px; line-height: 19px; margin-bottom: 5px; background: #9872ff; color: white; font-size: 12px; text-align: center; width: 45px;">BEST</div>
+                        <div class="li-div-best" th:case="1">
+                          <div class="best-div">BEST</div>
                           <span class="user-id" th:text="${item.userName}"></span>
                         </div>
                         <div th:case="0">
@@ -275,10 +275,14 @@
                         <span th:case="1" class="point point1"></span>
                       </th:block>
                       <div class="comment" th:text="${item.content}"></div>
-                      <a href="javascript:void(0)" class="delete-btn" th:style="${item.userId} == ${userId} ? 'display:block' : 'display:none'"
-                         th:onclick="|javascript:deleteReview('${item.reviewId}')|">
-                        삭제
-                      </a>
+
+                      <th:block th:switch="${item.bestComment}">
+                        <a th:case="0" href="javascript:void(0)" class="delete-btn-detail"
+                           th:style="${item.userId} == ${userId} ? 'display:block' : 'display:none'"
+                           th:onclick="|javascript:deleteReview('${item.reviewId}')|">
+                          삭제
+                        </a>
+                      </th:block>
                     </li>
                   </ul>
 

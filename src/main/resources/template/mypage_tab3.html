@@ -63,9 +63,12 @@
                 </th:block>
                 <div class="score" th:text="'감동('+${item.starRating}+'점)'" style="width: 50px;"/>
               </div>
-              <a href="javascript:void(0)" class="delete-btn" th:onclick="|javascript:deleteReview('${item.reviewId}')|" style="width: 48px; margin-left: 50px">
-                삭제
-              </a>
+              <th:block th:switch="${item.bestComment}">
+                <a th:case='1' class="best-div-mypage">BEST</a>
+                <a th:case='0' href="javascript:void(0)" class="delete-btn" th:onclick="|javascript:deleteReview('${item.reviewId}')|" style="width: 48px; margin-left: 50px">
+                  삭제
+                </a>
+              </th:block>
             </li>
           </ul>
 
