@@ -22,5 +22,43 @@ function checkInquiryFormBeforeSubmit(){
     alert('문의를 작성하였습니다.');
 }
 
+function deleteInquiry(inquiryId){
+    $.ajax({
+        url: '/user/inquiry/item/'+inquiryId,
+        type: 'DELETE',
+        dataType: 'json',
+        success: function (data) {
+            if(data == 1){
+                alert('정상적으로 삭제되었습니다.');
+                window.location.href = "/user/inquiry"
+            }
+        },
+        error: function (status, error) {
+            console.log(status, error);
+        }
+    });
+}
+
+function deleteAll(){
+    $.ajax({
+        url: "/user/inquiry/item",
+        type: 'DELETE',
+        dataType: 'json',
+        success: function (data) {
+            if(data == 1){
+                alert('정상적으로 삭제되었습니다.');
+                window.location.href = "/user/inquiry";
+            }
+        },
+        error: function (status, error) {
+            console.log(status, error);
+        }
+    });
+}
+
+function displayDeleteAllPopUp(){ document.getElementById("all-delete-modal").style.display = "block";}
+function hideDeleteAllPopUp(){ document.getElementById("all-delete-modal").style.display = "none";}
+
 function oninputTitle(){$('#input-title').val(''); $('#input-title').css('color','#898989');}
 function oninputContent(){$('#input-content').val(''); $('#input-content').css('color','#898989');}
+
