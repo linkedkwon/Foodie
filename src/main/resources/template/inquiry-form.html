@@ -11,46 +11,41 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/reset.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/commons.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/inquiry.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/help.css}"/>
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/help.css}" />
 </head>
 <body>
-<div id="app">
+    <div id="app">
+        <!-- header -->
+        <div th:replace="./fragments/main-header.html :: type('default', 'height:114px;')"/>
 
-    <!-- header -->
-    <div th:replace="./fragments/main-header.html :: type('default', 'height:114px;')"/>
+        <!-- Contents -->
+        <div id="contents">
+            <div class="policy-wrapper">
+                <div class="header">문의하기</div>
 
-    <!-- Contents -->
-    <div id="contents">
-        <div class="policy-wrapper">
-            <div class="header">문의하기</div>
-            <div class="contents">
-                <form class="form-table-help" id="password-reset-form" action="/help/pw" method="post">
-                    <div class="row">
-                        <div class="col2" style="margin-left: 120px;">
-                            <div class="th" style="width: 100px;">제목</div>
-                            <div class="td">
-                                <input type="text" id="user-password1" name="password" value="제목을 입력해주세요."/>
-                                <div class="error-next-box" id="error-password1-msg"></div>
-                            </div>
-                        </div>
+                <div class="contents">
+                    <div>
+                        <span class="caption-text">제목</span>
+                        <input class="input-box1" type="text" value="제목을 입력해주세요."/>
                     </div>
-                    <div class="row">
-                        <div class="col2" style="margin-left: 120px;">
-                            <div class="th" style="width: 100px;">내용</div>
-                            <div class="td">
-                                <input type="text" id="user-password2" name="user-password2" value="문의할 내용을 입력해주세요."/>
-                                <div class="error-next-box" id="error-password2-msg"></div>
-                            </div>
+                    <div>
+                        <div style="float: left">
+                            <span class="caption-text">내용</span>
                         </div>
+                        <textarea class="input-box2">문의할 내용을 입력해주세요.</textarea>
                     </div>
-                </form>
+                    <div class="btn-inner">
+                        <a class="btn btn-primary" style="width: 120px;">문의하기</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- footer -->
-    <div th:replace="./fragments/main-footer.html"></div>
+        <!-- footer -->
+        <div th:replace="./fragments/main-footer.html"></div>
 
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
