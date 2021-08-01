@@ -26,21 +26,23 @@
             <div class="policy-wrapper">
                 <div class="header">문의하기</div>
 
-                <div class="contents">
-                    <div>
-                        <span class="caption-text">제목</span>
-                        <input class="input-box1" type="text" value="제목을 입력해주세요."/>
-                    </div>
-                    <div>
-                        <div style="float: left">
-                            <span class="caption-text">내용</span>
+                <form id="inquiry-form" method="post" action="/inquiry/create">
+                    <div class="contents">
+                        <div>
+                            <span class="caption-text">제목</span>
+                            <input class="input-box1" id="input-title" name="title" type="text" value="제목을 입력해주세요." onfocus="oninputTitle()"/>
                         </div>
-                        <textarea class="input-box2">문의할 내용을 입력해주세요.</textarea>
+                        <div>
+                            <div style="float: left">
+                                <span class="caption-text">내용</span>
+                            </div>
+                            <textarea class="input-box2" id="input-content" name="content" onfocus="oninputContent()">문의할 내용을 입력해주세요.</textarea>
+                        </div>
+                        <div class="btn-inner">
+                            <a class="btn btn-primary" style="width: 120px;" onclick="checkInquiryFormBeforeSubmit()">문의하기</a>
+                        </div>
                     </div>
-                    <div class="btn-inner">
-                        <a class="btn btn-primary" style="width: 120px;">문의하기</a>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
 
@@ -50,6 +52,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
     <script type="text/javascript" th:src="@{/js/commons.js}"></script>
+    <script type="text/javascript" th:src="@{/js/inquiry.js}"></script>
 </div>
 </body>
 </html>
