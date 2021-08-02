@@ -16,24 +16,31 @@ public class ReviewDTO {
     private int reviewId;
     private String content;
     private String url;
+    private String bestComment;
 
-    public ReviewDTO(int shopId, String shopName, int reviewId, String content, String starRating) {
+    public ReviewDTO(int shopId, String shopName, int reviewId, String content,
+                     String starRating, String bestComment) {
         this.shopId = shopId;
         this.shopName = shopName;
         this.reviewId = reviewId;
         this.content = content;
         this.starRating = starRating;
+        this.bestComment = bestComment;
+
     }
 
-    public ReviewDTO(String userName, int userId, int reviewId, String starRating, String content){
+    public ReviewDTO(String userName, int userId, int reviewId, String starRating,
+                     String content, String bestComment){
         this.userName = userName;
         this.userId = userId;
         this.reviewId = reviewId;
         this.content = content;
         this.starRating = starRating;
+        this.bestComment = bestComment;
     }
 
-    public ReviewDTO(int shopId, String shopName, int userId, String userName, int reviewId, String starRating, String content){
+    public ReviewDTO(int shopId, String shopName, int userId, String userName, int reviewId,
+                     String starRating, String content, String bestComment){
         this.shopId = shopId;
         this.shopName = shopName;
         this.userId = userId;
@@ -41,5 +48,6 @@ public class ReviewDTO {
         this.reviewId = reviewId;
         this.content = content;
         this.starRating = starRating;
+        this.bestComment = bestComment;
     }
 }

@@ -82,6 +82,9 @@ public class Shop {
     @Column(name = "FOODIELOG_RATING")
     private String foodieLogRating;
 
+    @Column(name = "TASTE_RATING")
+    private String tasteRating;
+
     @Column(name = "BUDGET")
     private String budget;
 

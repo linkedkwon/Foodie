@@ -1,6 +1,5 @@
 package kr.foodie.repo;
 
-import kr.foodie.domain.shop.MainBoard;
 import kr.foodie.domain.shop.Shop;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

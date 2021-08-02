@@ -49,7 +49,7 @@ public class AuthController {
     @GetMapping("/login/**")
     public String preventSignInAfterAuthenticated(@AuthenticationPrincipal AuthUserDetails userDetails){
         if(userDetails == null)
-            return "/login";
+            return "login";
         return "redirect:/";
     }
 

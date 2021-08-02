@@ -40,7 +40,7 @@ spring:
             client-id: 70474aee6f5d5b3f646a752c232a52f4
             client-secret: foodie
             client-name: kakao
-            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            redirect-uri: http://foodie365.cafe24.com/login/oauth2/code/kakao
             client-authentication-method: POST
             authorization-grant-type: authorization_code
 
@@ -48,7 +48,7 @@ spring:
             client-id: d58QPtWutbf8KvOcNeHT
             client-secret: sj1Zv1B2AI
             client-name: naver
-            redirect-uri: http://localhost:8080/login/oauth2/code/naver
+            redirect-uri: http://foodie365.cafe24.com/login/oauth2/code/naver
             client-authentication-method: POST
             authorization-grant-type: authorization_code
 
@@ -75,9 +75,6 @@ spring:
           starttls:
             enable: true
           auth: true
-
-
-
 
 
 

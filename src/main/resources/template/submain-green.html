@@ -69,23 +69,27 @@
           <ul class="card-list-wrapper">
             <!-- Card item -->
             <li th:object="${shop}" th:each="shop : ${priority}">
-              <a th:href="@{'/shop/'+${shop.shopId}}">
+              <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
                 <div class="card-item">
-                  <div class="img"></div>
+                  <div class="img" style="width: 99%"></div>
                   <div class="card-data">
                     <div class="name">
-                      <div th:text="${shop.shopName}"></div>
+                      <div class="hide-text-1" th:text="${shop.shopName}"></div>
                       <div class="categories">
-                        <span th:text="${shop.tag}"></span>
+                        <span class="hide-text-1" th:text="${shop.tag}"></span>
                       </div>
                     </div>
                     <ul class="info">
-                      <li class="address" th:text="${shop.address}"></li>
-                      <li class="phone" th:text="${shop.phone}"></li>
-                      <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">
+                      <li class="address" th:text="${shop.address}" style="width: 200px;"></li>
+                      <li class="phone" th:text="${shop.phone}" style="width: 200px;"></li>
+                      <li class="description" th:text="${#strings.abbreviate(shop.history,50)}">
                       </li>
                     </ul>
-                    <div class="star"></div>
+                    <th:block th:switch="${shop.foodieLogRating}">
+                      <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
+                      <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
+                      <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
+                    </th:block>
                   </div>
                 </div>
               </a>
@@ -103,22 +107,26 @@
         <div class="left-area">
           <ul>
             <li th:object="${shop}" th:each="shop : ${payload}">
-              <a th:href="@{'/shop/'+${shop.shopId}}">
+              <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
                 <div class="card-item">
                   <div class="img"></div>
                   <div class="card-data">
                     <div class="name">
-                      <div th:text="${shop.shopName}"></div>
+                      <div class="hide-text-2" th:text="${shop.shopName}"></div>
                       <div class="categories">
-                        <span th:text="${shop.tag}">한식</span>
+                        <span class="hide-text-2" th:text="${shop.tag}">한식</span>
                       </div>
                     </div>
                     <ul class="info">
-                      <li class="address" th:text="${shop.address}"></li>
-                      <li class="phone" th:text="${shop.phone}"></li>
+                      <li class="address" th:text="${shop.address}" style="width: 280px;"></li>
+                      <li class="phone" th:text="${shop.phone}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></li>
                       <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">
                     </ul>
-                    <div class="star"></div>
+                    <th:block th:switch="${shop.foodieLogRating}">
+                      <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
+                      <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
+                      <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
+                    </th:block>
                   </div>
                 </div>
               </a>
@@ -128,7 +136,7 @@
 
         <div class="right-area">
           <dl th:object="${shop}" th:each="shop : ${sidePriority}">
-            <a th:href="@{'/shop/'+${shop.shopId}}">
+            <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
               <dt style="    padding-bottom: 27px;">
                 <div class="info">
                   <span class="name" th:text="${shop.shopName}"></span>

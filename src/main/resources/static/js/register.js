@@ -253,7 +253,7 @@ function checkFormBeforeSubmit(){
     var emailMsg = document.getElementById("email-msg");
     var phoneMsg = document.getElementById("phone-msg");
 
-    //email validation checked
+    //email phone validation checked
     var flagCnt = 0;
 
     if(validationEmailChecked == false){
@@ -264,7 +264,7 @@ function checkFormBeforeSubmit(){
 
     if(validationPhoneChecked == false){
         phoneMsg.style.color = "#FF0000";
-        phoneMsg.innerText = "이메일 중복을 확인해주세요";
+        phoneMsg.innerText = "휴대전화 중복을 확인해주세요";
         flagCnt++;
     }
 

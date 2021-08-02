@@ -38,7 +38,7 @@
           
           <ul class="likes-list" th:each="item : ${favoriteShops}">
             <li>
-              <a th:href="@{'/shop/'+${item.shopId}}">
+              <a th:href="@{'/shop?id='+${item.shopId}+'&page=0'}">
                 <div class="card-item">
                   <div class="img"></div>
                   <div class="card-data">
@@ -49,7 +49,7 @@
                       <span class="categories-span" th:text="${item.tag}"></span>
                     </div>
                     <ul class="info">
-                      <li class="address" th:text="${item.address}"/>
+                      <li class="address" th:text="${item.address}" style="width: 400px;"/>
                       <li class="phone" th:text="${item.phone}"/>
                       <li class="description" th:text="${item.history}"/>
                     </ul>

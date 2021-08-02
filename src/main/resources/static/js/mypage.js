@@ -1,3 +1,5 @@
+var validationPhoneChecked = true;
+
 //check name regular expression
 function checkName(){
 
@@ -55,7 +57,11 @@ function checkTel(){
     var msg = document.getElementById("tel-msg");
 
     if(tel.length == 0){ msg.innerText = ""; return true;}
-    if(reg.test(tel) ==  false){ msg.innerText = "형식에 맞지 않는 번호입니다."; return false;}
+    if(reg.test(tel) ==  false){
+        msg.style.color = "#FF0000";
+        msg.innerText = "형식에 맞지 않는 번호입니다.";
+        return false;
+    }
     msg.innerText = "";
 
     //Adding hyphen to input value
@@ -141,6 +147,37 @@ function setEmail(){
     email.value = document.getElementById("email").value;
 }
 
+function checkPhoneValidation(){
+
+    if(checkPhone() == false)
+        return;
+
+    var phoneNum = document.getElementById("user-phone")
+        .value.replace(/(^02.{0}|^01.{1}|[0-9]{3)([0-9]+)([0-9]{4})/,"$1-$2-$3");
+    var msg = document.getElementById("phone-msg");
+
+    $.ajax({
+        url: '/auth/check/phone/'+phoneNum,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            if(data == 1){
+                msg.style.color = "#FF0000";
+                msg.innerText = "이미 사용 중인 번호입니다.";
+            }
+            else{
+                msg.style.color = "#440fd3";
+                msg.innerText = "사용 가능한 번호입니다.";
+                validationPhoneChecked = true;
+                console.log(data);
+            }
+        },
+        error: function (status, error) {
+            console.log(status, error);
+        }
+    });
+}
+
 function checkFormBeforeEdit(){
     //1. 체크박스 값 히든에 박기
     //2. 주소 합성해서 넣기
@@ -148,6 +185,20 @@ function checkFormBeforeEdit(){
     var list = [checkName(), checkPassword(),
         matchPassword(), checkTel(), checkPhone(),
         checkAddress()];
+
+    var phoneMsg = document.getElementById("phone-msg");
+
+    //email phone validation checked
+    var flagCnt = 0;
+
+    if(validationPhoneChecked == false){
+        phoneMsg.style.color = "#FF0000";
+        phoneMsg.innerText = "휴대전화 중복을 확인해주세요";
+        flagCnt++;
+    }
+
+    if(flagCnt > 0)
+        return;
 
     if(list.includes(false)) return;
 
@@ -221,5 +272,12 @@ function oninputName(){$('#name-msg').text('');}
 function oninputPswd1(){$('#pswd-msg1').text('');}
 function oninputPswd2(){$('#pswd-msg2').text('');}
 function oninputTel(){$('#tel-msg').text('');}
-function oninputPhone(){$('#phone-msg').text('');}
+function oninputPhone(){$('#phone-msg').text(''); validationPhoneChecked = false;}
 function oninputAddress(){$('#address-msg').text('');}
+
+function clickChangePhoneBtn(){
+    document.getElementById("phone-modify-btn").style.display='none';
+    document.getElementById("phone-check").style.display='initial';
+    $('#user-phone').attr('disabled', false);
+    validationPhoneChecked = false;
+}
