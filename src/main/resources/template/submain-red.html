@@ -72,7 +72,7 @@
             <li th:object="${shop}" th:each="shop : ${priority}">
                 <a th:href="@{'/shop/'+${shop.shopId}}">
                 <div class="card-item">
-                  <div class="img"></div>
+                  <img class="img" th:src="${shop.shopImage}"></img>
                   <div class="card-data">
                     <div class="name">
                       <div th:text="${shop.shopName}"></div>
@@ -101,7 +101,7 @@
       </div>
 
       <div class="list-section">
-        <div class="left-area">
+        <div th:if="${sidePriority.size() > 0 }" class="left-area">
           <ul>
             <li th:object="${shop}" th:each="shop : ${payload}">
                 <a th:href="@{'/shop/'+${shop.shopId}}">
@@ -127,7 +127,33 @@
           </ul>
         </div>
 
-        <div class="right-area">
+        <div th:unless="${sidePriority.size() > 0 }" class="left-area" style="width: 100%">
+          <ul>
+              <li style="width: 47%" th:object="${shop}" th:each="shop : ${payload}">
+                  <a th:href="@{'/shop/'+${shop.shopId}}">
+                      <div class="card-item">
+                          <div class="img"></div>
+                          <div class="card-data">
+                              <div class="name">
+                                  <div th:text="${shop.shopName}"></div>
+                                  <div class="categories">
+                                      <span th:text="${shop.tag}">한식</span>
+                                  </div>
+                              </div>
+                              <ul class="info">
+                                  <li class="address" th:text="${shop.address}"></li>
+                                  <li class="phone" th:text="${shop.phone}"></li>
+                                  <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">
+                              </ul>
+                              <div class="star"></div>
+                          </div>
+                      </div>
+                  </a>
+              </li>
+          </ul>
+        </div>
+
+        <div th:if="${sidePriority.size() > 0 }" class="right-area">
           <dl th:object="${shop}" th:each="shop : ${sidePriority}">
             <a th:href="@{'/shop/'+${shop.shopId}}">
               <dt style="    padding-bottom: 27px;">

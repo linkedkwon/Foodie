@@ -26,10 +26,10 @@ public class Shop {
     private String themeList;
 
     @Column(name = "SUBWAY_TYPE_ID")
-    private String subwayTypeId;
+    private Integer subwayTypeId;
 
     @Column(name = "VILLAGE_TYPE_ID")
-    private String villageTypeId;
+    private Integer villageTypeId;
 
     @Column(name = "SHOP_TYPE")
     private String shopType;
@@ -47,13 +47,13 @@ public class Shop {
     private String tag;
 
     @Column(name = "BIG_CATEGORY")
-    private Integer bigCategory;
+    private String bigCategory;
 
     @Column(name = "MIDDLE_CATEGORY")
-    private Integer middleCategory;
+    private String middleCategory;
 
     @Column(name = "SMALL_CATEGORY")
-    private Integer smallCategory;
+    private String smallCategory;
 
     @Column(name = "ADDRESS")
     private String address;

@@ -1,5 +1,7 @@
 package kr.foodie.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.foodie.config.security.auth.AuthUserDetails;
 import kr.foodie.domain.shop.HashTag;
 
@@ -7,6 +9,7 @@ import kr.foodie.domain.shop.Region;
 import kr.foodie.domain.shop.Shop;
 import kr.foodie.service.*;
 import lombok.RequiredArgsConstructor;
+import net.minidev.json.JSONObject;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import org.springframework.stereotype.Controller;
@@ -19,7 +22,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @Controller
@@ -46,6 +52,27 @@ public class ShopController {
         model.addAttribute("payload", shopService.getShopInfos(regionId, shopTypeId, idx, shopInterval));
         model.addAttribute("regionInfo", regionService.getRegionInfo(Integer.valueOf(regionId)));
         model.addAttribute("priority", shopService.getShopInfosWithOrder(regionId, shopTypeId, 9));
+        model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(regionId, shopTypeId, 8));
+
+        model.addAttribute("paginations", paginationService.getPagination(size, idx,shopInterval,"/shop/region/"+regionId+"/"+shopType+"/"));
+        model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/"+regionId+"/"+shopType+"/"));
+
+        return shopType.equals("red")? "submain-red":"submain-green";
+    }
+
+    @GetMapping({"region/subway/{regionId}/{shopType}", "region/{regionId}/{shopType}/{path}"})
+    public String getCategory2(@PathVariable Integer regionId, @PathVariable String shopType,
+                              @PathVariable Optional<String> path, Model model) throws JsonProcessingException {
+
+        String shopTypeId = shopType.equals("red")? "0" : "1";
+        int idx = Integer.parseInt(path.orElseGet(()->{return "0";}));
+        int size = shopService.getItemSizeByRegionTypeAndShopType(regionId, shopTypeId);
+
+        model.addAttribute("payload", shopService.getSubwayShopInfos(regionId, shopTypeId, idx, shopInterval));
+
+
+        model.addAttribute("regionInfo", regionService.getRegionInfo(regionId));
+        model.addAttribute("priority", shopService.getSubwayShopInfosWithOrder(regionId, shopTypeId, 9));
         model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(regionId, shopTypeId, 8));
 
         model.addAttribute("paginations", paginationService.getPagination(size, idx,shopInterval,"/shop/region/"+regionId+"/"+shopType+"/"));

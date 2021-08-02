@@ -21,6 +21,14 @@ public class ShopService {
         return shopRepository.findByRegionIdAndShopTypeAndOrderIsNull(regionId, shopType,
                 PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
     }
+    public List<Shop>  getSubwayShopInfos(Integer regionId, String shopType, int idx, int interval) {
+        return shopRepository.findBySubwayTypeIdAndShopTypeAndOrderIsNull(regionId, shopType,
+                PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
+    }
+
+    public List<Shop> getSubwayShopInfosWithOrder(Integer regionId, String shopType, Integer num) {
+        return shopRepository.findBySubwayTypeIdAndShopTypeAndOrderIsLessThan(regionId, shopType, num);
+    }
 
     public List<Shop> getShopInfosWithOrder(Integer regionId, String shopType, Integer num) {
         return shopRepository.findByRegionIdAndShopTypeAndOrderIsLessThan(regionId, shopType, num);

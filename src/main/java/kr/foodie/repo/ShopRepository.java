@@ -17,6 +17,8 @@ import java.util.Optional;
 public interface ShopRepository extends JpaRepository<Shop, Long> {
 
     Page<Shop> findByRegionIdAndShopTypeAndOrderIsNull(Integer regionId, String shopType, Pageable pageable);
+    Page<Shop> findBySubwayTypeIdAndShopTypeAndOrderIsNull(Integer regionId, String shopType, Pageable pageable);
+    List<Shop> findBySubwayTypeIdAndShopTypeAndOrderIsLessThan(Integer regionId, String shopType, Integer num);
 
     List<Shop> findByRegionIdAndShopTypeAndOrderIsLessThan(Integer regionId, String shopType, Integer num);
     List<Shop> findByRegionIdAndShopTypeAndOrderIsGreaterThan(Integer regionId, String shopType, Integer num);
