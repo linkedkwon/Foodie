@@ -9,10 +9,9 @@
     <title>Foodie</title>
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/reset.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/commons.css}" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/commons.css}"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css"/>
 </head>
 <body>
 <div id="app">
@@ -22,22 +21,20 @@
 
     <!-- Contents -->
     <div id="contents">
-        <h2>MY PAGE</h2>
-        <div class="section-860" style="height: 400px">
-            <ul class="nav-tabs2">
-                <li><a href="/user/info">로그인 정보</a></li>
-                <li><a href="/user/favorite">찜한 목록</a></li>
-                <li class="active"><a href="">내가쓴글</a></li>
-                <li><a href="/user/inquiry">문의내역</a></li>
-                <li><a href="/user/pay">프리미엄회원</a></li>
-            </ul>
-
-            <div class="inner">
-                <div class="title-group">
-                    <h3>내가 쓴 글 <span>(0개)</span></h3>
+        <div class="policy-wrapper" style="width: 1000px;">
+            <div class="header">문의내역</div>
+            <div class="contents">
+                <div>
+                    <h2 style="color: #ff5c17; margin-bottom: 20px;">문의내역</h2>
+                    <p th:text="${item.title}" style="color: #000; margin-bottom: 20px;"></p>
+                    <p th:text="${item.content}"></p>
                 </div>
-
-                <div class="no-data">&lt;작성한 댓글 목록이 없습니다.&gt;</div>
+                <div>
+                    <h2 style="margin-top: 15px; margin-bottom: 15px; color: #ff5c17">답변내용</h2>
+                    <div style="border: solid 0.8px #d3d3d3; border-radius: 10px; height: 400px; padding: 20px 20px 20px 20px;">
+                        <p th:text="${item.comment}" style="height: 300px;"></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

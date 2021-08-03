@@ -1,135 +1,110 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="format-detection" content="telephone=no">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="format-detection" content="telephone=no">
 
-  <title>Foodie</title>
+    <title>Foodie</title>
 
-  <link rel="stylesheet" type="text/css" th:href="@{/css/reset.css}"/>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
-  <link rel="stylesheet" type="text/css" th:href="@{/css/commons.css}" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" />
-  <link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/reset.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/commons.css}" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/inquiry.css}"/>
 </head>
 <body>
 <div id="app">
-  <!-- header -->
-  <div th:replace="./fragments/main-header.html :: type('default', 'height:114px;')"/>
-    
+    <!-- header -->
+    <div th:replace="./fragments/main-header.html :: type('default', 'height:114px;')"/>
+
     <!-- Contents -->
     <div id="contents">
-      <h2>MY PAGE</h2>
-      <div class="section-860">
-        <ul class="nav-tabs2">
-          <li><a href="/user/info">로그인 정보</a></li>
-          <li><a href="/user/favorite">찜한 목록</a></li>
-          <li><a href="/user/review">내가쓴글</a></li>
-          <li class="active"><a href="">프리미엄회원</a></li>
-        </ul>
-
-        <div class="inner">
-          <div class="section1">
-            <h3>프리미엄 회원</h3>
-            <ul class="benefits">
-              <li>광고 없는 푸디 이용가능.</li>
-              <li>전문가 평가, 큐레이션 등 미식정보 열람.</li>
-              <li>이벤트, 행사 우선권 부여.</li>
+        <h2>MY PAGE</h2>
+        <div class="section-860">
+            <ul class="nav-tabs2">
+                <li class="active"><a href="">로그인 정보</a></li>
+                <li><a href="/user/favorite">찜한 목록</a></li>
+                <li><a href="/user/review">내가쓴글</a></li>
+                <li class="active"><a href="">문의내역</a></li>
+                <li><a href="/user/pay">프리미엄회원</a></li>
             </ul>
-          </div>
-          
-          <div class="section2">
-            <h3>STEP1. 이용권 선택</h3>
-            <ul class="premium-products">
-              <li class="coupon-30 active">
-                <a href="#">
-                  <div class="title">30일 이용권</div>
-                  <div class="desc"><span>이용요금 3300원</span></div>
-                </a>
-              </li>
-              <li class="coupon-90 active">
-                <a href="#">
-                  <div class="title">90일 이용권</div>
-                  <div class="desc"><span>이용요금 6600원</span></div>
-                </a>
-              </li>
-              <li class="coupon-365 active">
-                <a href="#">
-                  <div class="title">365일 이용권</div>
-                  <div class="desc"><span>이용요금 9900원</span></div>
-                </a>
-              </li>
-            </ul>
-          </div>
 
-          <div class="section3">
-            <h3>STEP2. 결제수단 선택</h3>
+            <div class="inner">
+                <div class="title-group">
+                    <h3>내가 쓴 문의 내역 <span th:text="${size}"/></h3>
+                    <a href="javascript:void(0)" class="remove-all" onclick="displayDeleteAllPopUp()">전체삭제</a>
+                </div>
 
-            <div class="payments">
-              <dl class="default-payment">
-                <dt>일반결제</dt>
-                <dd>
-                  <a href="#">신용카드 결제</a>
-                  <a href="#">무통장 입금</a>
-                  <a href="#">휴대폰 결제</a>
-                  <a href="#">포인트 결제</a>
-                </dd>
-              </dl>
+                <ul class="my-comments">
+                    <li class="title-group">
+                        <div>제목</div>
+                        <div>내용</div>
+                        <div>작성일시s</div>
+                        <div style="margin-left: 5px;">답변여부</div>
+                    </li>
+                    <li th:each="item : ${inquiries}">
+                            <div class="user-id">
+                                <a class="inquiry-link" th:href="@{'/user/inquiry/detail/'+${item.inquiryId}}">
+                                    <div class="comment-overflow" th:text="${item.title}" style="width: 120px;"></div>
+                                </a>
+                            </div>
+                            <div class="title" style="flex: 0 0 300px">
+                                <a class="inquiry-link" th:href="@{'/user/inquiry/detail/'+${item.inquiryId}}">
+                                    <div class="comment-overflow" th:text="${item.content}" style="width: 270px;"></div>
+                                </a>
+                            </div>
+                            <div class="restaurant-name">
+                                <a class="inquiry-link" th:href="@{'/user/inquiry/detail/'+${item.inquiryId}}">
+                                    <div class="comment-overflow" th:text="${item.modifiedTime}" style="width: 130px;"></div>
+                                </a>
+                            </div>
+                            <div class="score" style="width: 120px;">
+                                <th:block th:if="${item.comment.length>0}">
+                                    <a class="best-div-mypage" style="margin-left: 0px; line-height: 3.7; left: -15px;">답변완료</a>
+                                </th:block>
+                                <th:block th:if="${item.comment.length == 0}">
+                                    <div class="score" style="width: 50px; margin-top: 15px;">대기중</div>
+                                </th:block>
+                            </div>
+                            <a href="javascript:void(0)" class="delete-btn" th:onclick="|javascript:deleteInquiry('${item.inquiryId}')|" style="width: 48px; margin-left: 10px">
+                                삭제
+                            </a>
+                    </li>
+                </ul>
 
-              <dl class="simple-payment">
-                <dt>간편결제</dt>
-                <dd>
-                  <a href="#">
-                    <picture>
-                      <source srcset="/images/btn-naverpay@2x.png 2x">
-                      <img src="/images/btn-naverpay.png" alt="네이버페이">
-                    </picture>
-                  </a>
-                  <a href="#">
-                    <picture>
-                      <source srcset="/images/btn-kakaopay@2x.png 2x">
-                      <img src="/images/btn-kakaopay.png" alt="카카오페이">
-                    </picture>
-                  </a>
-                </dd>
-              </dl>
+                <div class="pagination">
+                    <a th:href="${btnUrls.get('prev')}" class="prev"></a>
+                    <a th:each="item : ${paginations}" th:href="${item.path}"
+                       th:text="${item.idx}" th:class="${item.classValue}"></a>
+                    <a th:href="${btnUrls.get('next')}" class="next"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--modal delete all-->
+    <div class="modal-popup" id="all-delete-modal" style="display: none">
+        <div class="modal-backdrop"></div>
+        <div class="modal-body">
+            <div class="icon">
+                <picture>
+                    <source srcset="/images/ico-modal-exmark@2x.png 2x">
+                    <img src="/images/ico-modal-exmark.png" alt="">
+                </picture>
+            </div>
+            <div class="message">
+                전체 삭제시 <strong th:text="${size}"></strong>개의 문의 목록이 사라집니다.<br/>
+                삭제하시겠습니까?
             </div>
 
-            <div class="bank-transfer">
-              <p>입금하실 분의 성명과 연락처를 정확하게 기재해주세요.</p>
-              <div class="form-table">
-                <div class="row">
-                  <div class="th">이름</div>
-                  <div class="td">
-                    <input type="text" name="user_name">
-                    <span class="err">*입력하신 성명과 실제 입금자과 다를시 결제 승인에 어려움이 있습니다.</span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="th">연락처</div>
-                  <div class="td">
-                    <input type="text" name="user_modile">
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="th">이메일</div>
-                  <div class="td">
-                    <input type="text" name="user_email">
-                  </div>
-                </div>
-              </div>
-              <div class="noti">입금계좌 - 국민은행 354602-04-043865 박기향</div>
+            <div class="btn-area">
+                <a href="javascript:void(0)" class="btn btn-primary" onclick="deleteAll()">삭제하기</a>
+                <a href="javascript:void(0)" class="btn btn-disabled" onclick="hideDeleteAllPopUp()">돌아가기</a>
             </div>
-          </div>
-
-          <div class="btn-area">
-            <a href="#" class="btn btn-primary">결제하기</a>
-          </div>
-        </div> 
-      </div>
+        </div>
     </div>
 
     <!-- footer -->
@@ -137,7 +112,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
     <script type="text/javascript" th:src="@{/js/commons.js}"></script>
-    <script type="text/javascript" th:src="@{/js/mypage.js}"></script>
-  </div>
+    <script type="text/javascript" th:src="@{/js/inquiry.js}"></script>
+</div>
 </body>
 </html>

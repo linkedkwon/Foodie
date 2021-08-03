@@ -10,6 +10,6 @@ public class PaymentController {
 
     @GetMapping("")
     public String renderUserPayment(){
-        return "mypage_tab4";
+        return "mypage_tab5";
     }
 }
