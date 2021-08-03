@@ -27,13 +27,18 @@
                 <div>
                     <h2 style="color: #ff5c17; margin-bottom: 20px;">문의내역</h2>
                     <p th:text="${item.title}" style="color: #000; margin-bottom: 20px;"></p>
-                    <p th:text="${item.content}"></p>
+                    <p th:text="${item.content}" style="white-space:pre;"></p>
                 </div>
                 <div>
-                    <h2 style="margin-top: 15px; margin-bottom: 15px; color: #ff5c17">답변내용</h2>
-                    <div style="border: solid 0.8px #d3d3d3; border-radius: 10px; height: 400px; padding: 20px 20px 20px 20px;">
-                        <p th:text="${item.comment}" style="height: 300px;"></p>
-                    </div>
+                    <th:block th:if="${item.comment.length == 0}">
+                        <h2 style="margin-top: 15px; margin-bottom: 15px; color: #ff5c17">답변 대기 중입니다.</h2>
+                    </th:block>
+                    <th:block th:if="${item.comment.length>0}">
+                        <h2 style="margin-top: 15px; margin-bottom: 15px; color: #ff5c17">답변내용</h2>
+                        <div style="border: solid 0.8px #d3d3d3; border-radius: 10px; height: 180px; padding: 20px 20px 20px 20px; background-color: #FDFDFD;">
+                            <p th:text="${item.comment}" style="white-space:pre;"></p>
+                        </div>
+                    </th:block>
                 </div>
             </div>
         </div>

@@ -28,7 +28,7 @@ public class InquiryService {
                                 .userId(userId)
                                 .userName(userName)
                                 .title(title)
-                                .content(content.replaceAll("\r\n", "<br>"))
+                                .content(content)
                                 .comment("")
                                 .createdTime(Calendar.getInstance().getTime())
                                 .modifiedTime(Calendar.getInstance().getTime()).build());
@@ -54,8 +54,6 @@ public class InquiryService {
 
     public Inquiry getInquiryByInquiryId(long inquiryId){
         Inquiry inquiry = inquiryRepository.getInquiryByInquiryId(inquiryId);
-        System.out.println("돌고래"+inquiry.getComment().replace("\r\n","<br>"));
-        System.out.println("돌고래"+inquiry.getComment());
         return inquiry;
     }
 
