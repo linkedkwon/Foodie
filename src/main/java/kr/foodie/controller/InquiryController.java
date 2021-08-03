@@ -4,6 +4,7 @@ import kr.foodie.config.security.auth.AuthUserDetails;
 import kr.foodie.service.InquiryService;
 import kr.foodie.service.PaginationService;
 import lombok.RequiredArgsConstructor;
+import org.dom4j.rule.Mode;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +28,6 @@ public class InquiryController {
         return "inquiry-form";
     }
 
-
     @GetMapping({"/user/inquiry", "/user/inquiry/{path}"})
     public String renderInquiryList(@PathVariable Optional<String> path, Model model,
                                     @AuthenticationPrincipal AuthUserDetails userDetails){
@@ -44,6 +44,13 @@ public class InquiryController {
         model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, interval, url));
 
         return "mypage_tab4";
+    }
+
+    @GetMapping("/user/inquiry/detail/{path}")
+    public String renderInquiryDetail(@PathVariable String path, Model model){
+
+        model.addAttribute("item", inquiryService.getInquiryByInquiryId(Long.parseLong(path)));
+        return "inquiry-detail";
     }
 
     @PostMapping("/inquiry/create")

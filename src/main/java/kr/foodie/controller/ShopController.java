@@ -51,7 +51,7 @@ public class ShopController {
         return shopType.equals("red")? "submain-red":"submain-green";
     }
 
-    @GetMapping(value ="/shop")
+    @GetMapping("/shop")
     public ModelAndView getShopDetail(@RequestParam(value = "id") Integer shopId,
                                       @RequestParam(value = "page") Integer page,
                                       @AuthenticationPrincipal AuthUserDetails userDetails){

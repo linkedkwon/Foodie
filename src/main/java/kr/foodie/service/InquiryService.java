@@ -28,7 +28,7 @@ public class InquiryService {
                                 .userId(userId)
                                 .userName(userName)
                                 .title(title)
-                                .content(content)
+                                .content(content.replaceAll("\r\n", "<br>"))
                                 .comment("")
                                 .createdTime(Calendar.getInstance().getTime())
                                 .modifiedTime(Calendar.getInstance().getTime()).build());
@@ -50,6 +50,13 @@ public class InquiryService {
         query.setMaxResults(itemInterval);
 
         return query.getResultList();
+    }
+
+    public Inquiry getInquiryByInquiryId(long inquiryId){
+        Inquiry inquiry = inquiryRepository.getInquiryByInquiryId(inquiryId);
+        System.out.println("돌고래"+inquiry.getComment().replace("\r\n","<br>"));
+        System.out.println("돌고래"+inquiry.getComment());
+        return inquiry;
     }
 
     @Transactional

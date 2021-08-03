@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/commons.css}" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" />
     <link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/inquiry.css}"/>
 </head>
 <body>
 <div id="app">
@@ -45,15 +46,20 @@
                         <div style="margin-left: 5px;">답변여부</div>
                     </li>
                     <li th:each="item : ${inquiries}">
-                        <a href="/">
                             <div class="user-id">
-                                <div class="comment-overflow" th:text="${item.title}" style="width: 120px;"></div>
+                                <a class="inquiry-link" th:href="@{'/user/inquiry/detail/'+${item.inquiryId}}">
+                                    <div class="comment-overflow" th:text="${item.title}" style="width: 120px;"></div>
+                                </a>
                             </div>
                             <div class="title" style="flex: 0 0 300px">
-                                <div class="comment-overflow" th:text="${item.content}" style="width: 270px;"></div>
+                                <a class="inquiry-link" th:href="@{'/user/inquiry/detail/'+${item.inquiryId}}">
+                                    <div class="comment-overflow" th:text="${item.content}" style="width: 270px;"></div>
+                                </a>
                             </div>
                             <div class="restaurant-name">
-                                <div class="comment-overflow" th:text="${item.modifiedTime}" style="width: 130px;"></div>
+                                <a class="inquiry-link" th:href="@{'/user/inquiry/detail/'+${item.inquiryId}}">
+                                    <div class="comment-overflow" th:text="${item.modifiedTime}" style="width: 130px;"></div>
+                                </a>
                             </div>
                             <div class="score" style="width: 120px;">
                                 <th:block th:if="${item.comment.length>0}">
@@ -66,7 +72,6 @@
                             <a href="javascript:void(0)" class="delete-btn" th:onclick="|javascript:deleteInquiry('${item.inquiryId}')|" style="width: 48px; margin-left: 10px">
                                 삭제
                             </a>
-                        </a>
                     </li>
                 </ul>
 

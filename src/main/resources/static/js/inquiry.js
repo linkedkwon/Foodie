@@ -59,6 +59,18 @@ function deleteAll(){
 function displayDeleteAllPopUp(){ document.getElementById("all-delete-modal").style.display = "block";}
 function hideDeleteAllPopUp(){ document.getElementById("all-delete-modal").style.display = "none";}
 
-function oninputTitle(){$('#input-title').val(''); $('#input-title').css('color','#898989');}
-function oninputContent(){$('#input-content').val(''); $('#input-content').css('color','#898989');}
+function oninputTitle(){
+    var title = $('#input-title').val();
+    if(title == '제목을 입력해주세요.' || title == '제목을 다시 확인해주세요.') {
+        $('#input-title').val('');
+        $('#input-title').css('color', '#898989');
+    }
+}
+function oninputContent(){
+    var content = $('#input-content').val();
+    if(content == '문의할 내용을 입력해주세요.' || content == '내용을 다시 확인해주세요.') {
+        $('#input-content').val('');
+        $('#input-content').css('color', '#898989');
+    }
+}
 

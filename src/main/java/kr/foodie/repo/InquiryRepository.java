@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
 
     Optional<Integer> countByUserId(int userId);
+    Inquiry getInquiryByInquiryId(long inquiryId);
     void deleteByInquiryId(long inquiryId);
     void deleteAllByUserId(int userId);
 }
