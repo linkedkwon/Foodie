@@ -22,7 +22,7 @@ public class InquiryController {
     private final InquiryService inquiryService;
     private final PaginationService paginationService;
 
-    @GetMapping("/inquiry/new")
+    @GetMapping("/user/inquiry/new")
     public String renderInquiryForm(){
         return "inquiry-form";
     }
@@ -45,7 +45,6 @@ public class InquiryController {
 
         return "mypage_tab4";
     }
-
 
     @PostMapping("/inquiry/create")
     public String createInquiry(String title, String content,

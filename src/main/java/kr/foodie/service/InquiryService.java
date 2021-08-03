@@ -43,7 +43,7 @@ public class InquiryService {
         String jpql = "select i "
                 +"from Inquiry i "
                 +"where i.userId = " + userId
-                +"order by i.modifiedTime desc";
+                +"order by i.comment desc, i.modifiedTime desc";
 
         Query query = em.createQuery(jpql);
         query.setFirstResult(idx * itemInterval);
