@@ -288,11 +288,21 @@
                 </div>
               </div>
 
-              <div class="pagination" style="margin-top: 30px;">
-                <a th:href="${btnUrls.get('prev')}" class="prev"></a>
+              <div class="pagination">
+                <th:block th:if="${btnUrls.get('prev') != 'javascript:void(0)'}">
+                  <a th:href="${btnUrls.get('prev')}" class="prev"></a>
+                </th:block>
+                <th:block th:if="${btnUrls.get('prev') == 'javascript:void(0)'}">
+                  <div style="width: 20px"></div>
+                </th:block>
                 <a th:each="item : ${paginations}" th:href="${item.path}"
                    th:text="${item.idx}" th:class="${item.classValue}"></a>
-                <a th:href="${btnUrls.get('next')}" class="next"></a>
+                <th:block th:if="${btnUrls.get('next') != 'javascript:void(0)'}">
+                  <a th:href="${btnUrls.get('next')}" class="next"></a>
+                </th:block>
+                <th:block th:if="${btnUrls.get('next') == 'javascript:void(0)'}">
+                  <div style="width: 20px"></div>
+                </th:block>
               </div>
             </div>
             <!-- 실제 컨텐츠 영역 END -->
