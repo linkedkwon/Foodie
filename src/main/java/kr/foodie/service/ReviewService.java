@@ -55,7 +55,7 @@ public class ReviewService {
                 +"order by r.bestComment desc, r.createdTime desc";
 
         TypedQuery<ReviewDTO> query = em.createQuery(jpql, ReviewDTO.class)
-                                        .setFirstResult(idx*itemInterval)
+                                        .setFirstResult(idx * itemInterval)
                                         .setMaxResults(itemInterval);
 
         List<ReviewDTO> reviews = query.getResultList();

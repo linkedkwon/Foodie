@@ -28,4 +28,7 @@ public class Region {
 
     @Column(name = "SUBWAY_NAME")
     private String subwayName;
+
+    @Column(name = "DISTRICT_COUNT")
+    private Integer districtCnt;
 }

@@ -40,10 +40,12 @@ public class ShopController {
 
     @GetMapping({"/shop/region/{regionId}/{shopType}", "/shop/region/{regionId}/{shopType}/{path}"})
     public String getCategory(@PathVariable Integer regionId, @PathVariable String shopType,
-                              @PathVariable Optional<String> path, Model model){
+                              @PathVariable Optional<String> path, Model model) {
 
-        String shopTypeId = shopType.equals("red")? "0" : "1";
-        int idx = Integer.parseInt(path.orElseGet(()->{return "0";}));
+        String shopTypeId = shopType.equals("red") ? "0" : "1";
+        int idx = Integer.parseInt(path.orElseGet(() -> {
+            return "0";
+        }));
         int size = shopService.getItemSizeByRegionTypeAndShopType(regionId, shopTypeId);
 
         model.addAttribute("regionInfo", regionService.getRegionInfo(Integer.valueOf(regionId)));
@@ -53,18 +55,20 @@ public class ShopController {
 
         //pagination
         model.addAttribute("payload", shopService.getShopInfos(regionId, shopTypeId, idx, shopInterval));
-        model.addAttribute("paginations", paginationService.getPagination(size, idx,shopInterval,"/shop/region/"+regionId+"/"+shopType+"/"));
-        model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/"+regionId+"/"+shopType+"/"));
+        model.addAttribute("paginations", paginationService.getPagination(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
+        model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
 
-        return shopType.equals("red")? "submain-red":"submain-green";
+        return shopType.equals("red") ? "submain-red" : "submain-green";
     }
 
     @GetMapping({"/shop/region/subway/{regionId}/{shopType}", "region/{regionId}/{shopType}/{path}"})
     public String getCategory2(@PathVariable Integer regionId, @PathVariable String shopType,
-                              @PathVariable Optional<String> path, Model model) throws JsonProcessingException {
+                               @PathVariable Optional<String> path, Model model) throws JsonProcessingException {
 
-        String shopTypeId = shopType.equals("red")? "0" : "1";
-        int idx = Integer.parseInt(path.orElseGet(()->{return "0";}));
+        String shopTypeId = shopType.equals("red") ? "0" : "1";
+        int idx = Integer.parseInt(path.orElseGet(() -> {
+            return "0";
+        }));
         int size = shopService.getItemSizeByRegionTypeAndShopType(regionId, shopTypeId);
 
         model.addAttribute("payload", shopService.getSubwayShopInfos(regionId, shopTypeId, idx, shopInterval));
@@ -74,16 +78,16 @@ public class ShopController {
         model.addAttribute("priority", shopService.getSubwayPremiumShopInfos(regionId, shopTypeId));
         model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(regionId, shopTypeId));
 
-        model.addAttribute("paginations", paginationService.getPagination(size, idx,shopInterval,"/shop/region/"+regionId+"/"+shopType+"/"));
-        model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/"+regionId+"/"+shopType+"/"));
+        model.addAttribute("paginations", paginationService.getPagination(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
+        model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
 
-        return shopType.equals("red")? "submain-red":"submain-green";
+        return shopType.equals("red") ? "submain-red" : "submain-green";
     }
 
-    @GetMapping(value ="/shop")
+    @GetMapping(value = "/shop")
     public ModelAndView getShopDetail(@RequestParam(value = "id") Integer shopId,
                                       @RequestParam(value = "page") Integer page,
-                                      @AuthenticationPrincipal AuthUserDetails userDetails){
+                                      @AuthenticationPrincipal AuthUserDetails userDetails) {
         ModelAndView mav = new ModelAndView();
 
         List<Shop> commentList;
@@ -93,25 +97,25 @@ public class ShopController {
 
         int idx = page;
         int size = reviewService.getItemSizeByShopId(shopId);
-        String url = "/shop?id="+ shopId +"&page=";
+        String url = "/shop?id=" + shopId + "&page=";
 
         mav.addObject("reviews", reviewService.getItemsByShopId(shopId, idx));
         mav.addObject("paginations", paginationService.getPagination(size, idx, reviewInterval, url));
         mav.addObject("btnUrls", paginationService.getPaginationBtn(size, idx, reviewInterval, url));
         mav.addObject("payload", commentList);
-        mav.addObject("userId", (userDetails != null)? userDetails.getUser().getId():0);
-        mav.addObject("userRole", (userDetails != null)? userDetails.getUser().getRoleType():"GENERAL");
+        mav.addObject("userId", (userDetails != null) ? userDetails.getUser().getId() : 0);
+        mav.addObject("userRole", (userDetails != null) ? userDetails.getUser().getRoleType() : "GENERAL");
 
-        if(commentList.size() > 0){
+        if (commentList.size() > 0) {
             Integer background = commentList.get(0).getBackground();
-            if(background == 1){
+            if (background == 1) {
                 mav.setViewName("detail-green");
-            }else if (background == 2){
+            } else if (background == 2) {
                 mav.setViewName("detail-red");
-            }else{
+            } else {
                 mav.setViewName("detail-mustard");
             }
-            mav.addObject("hashTags",hashTags);
+            mav.addObject("hashTags", hashTags);
             return mav;
         }
         return null;
@@ -127,9 +131,9 @@ public class ShopController {
     @RequestMapping(value ="/location/{lat}/{lng}/{shopType}", method= RequestMethod.GET)
     public ModelAndView getShopListWithLocation(@PathVariable String lat, @PathVariable String lng, @PathVariable String shopType){
         ModelAndView mav = new ModelAndView();
-        if(shopType.equals("red")){
+        if (shopType.equals("red")) {
             shopType = "0";
-        }else{
+        } else {
             shopType = "1";
         }
         List<Shop> commentList;
@@ -143,10 +147,10 @@ public class ShopController {
         commentList = shopService.getShopInfoByAddress(lat, lng, shopType);
         mav.addObject("payload", commentList);
         mav.addObject("regionInfo", regionInfos);
-        mav.addObject("location", lat+"/"+lng);
-        if(shopType.equals("0")){
+        mav.addObject("location", lat + "/" + lng);
+        if (shopType.equals("0")) {
             mav.setViewName("location-submain-red");
-        }else{
+        }else {
             mav.setViewName("location-submain-green");
         }
         return mav;

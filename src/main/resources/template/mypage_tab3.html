@@ -27,6 +27,7 @@
           <li><a href="/user/info">로그인 정보</a></li>
           <li><a href="/user/favorite">찜한 목록</a></li>
           <li class="active"><a href="">내가쓴글</a></li>
+          <li><a href="/user/inquiry">문의내역</a></li>
           <li><a href="/user/pay">프리미엄회원</a></li>
         </ul>
 
@@ -47,7 +48,7 @@
               <div class="user-id">
                 <div class="comment-overflow" th:text="${item.userName}" style="width: 120px;"></div>
               </div>
-              <div class="title">
+              <div class="title" style="flex: 0 0 300px">
                 <div class="comment-overflow" th:text="${item.content}" style="width: 270px;"></div>
               </div>
               <div class="restaurant-name">
@@ -73,10 +74,20 @@
           </ul>
 
           <div class="pagination">
-            <a th:href="${btnUrls.get('prev')}" class="prev"></a>
+            <th:block th:if="${btnUrls.get('prev') != 'javascript:void(0)'}">
+              <a th:href="${btnUrls.get('prev')}" class="prev"></a>
+            </th:block>
+            <th:block th:if="${btnUrls.get('prev') == 'javascript:void(0)'}">
+              <div style="width: 20px"></div>
+            </th:block>
             <a th:each="item : ${paginations}" th:href="${item.path}"
                th:text="${item.idx}" th:class="${item.classValue}"></a>
-            <a th:href="${btnUrls.get('next')}" class="next"></a>
+            <th:block th:if="${btnUrls.get('next') != 'javascript:void(0)'}">
+              <a th:href="${btnUrls.get('next')}" class="next"></a>
+            </th:block>
+            <th:block th:if="${btnUrls.get('next') == 'javascript:void(0)'}">
+              <div style="width: 20px"></div>
+            </th:block>
           </div>
         </div> 
       </div>
