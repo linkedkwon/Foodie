@@ -36,6 +36,7 @@
 <!--                <span>지역별</span>-->
                 <span th:text="${regionInfo[0].getProvinceName()}"></span>
                 <span th:text="${regionInfo[0].getDistrictName()}"></span>
+                <span th:if="${regionInfo[0].getSubwayName() != null}" th:text="${regionInfo[0].getSubwayName()}"></span>
               </div>
 
               <ul class="menu-link">
@@ -54,13 +55,14 @@
                 <a href="#" class="filter-btn">필터설정</a>
                 <div class="filter-body-layer">
                   <p>나의 상황에 맞는 필터를 선택해보세요.</p>
-                  <ul>
-                    <li><a href="#">24시간 </a></li>
-                    <li><a href="#">채식주의자</a></li>
-                    <li><a href="#">프로포즈</a></li>
-                    <li><a href="#">외국인</a></li>
-                    <li><a href="#">분위기</a></li>
-                  </ul>
+                    <ul id="filter_theme">
+                        <li th:object="${theme}" th:each="theme : ${themeList}">
+                            <a href="#">
+                                <label th:for="${theme.getThemeId()}" th:text="${theme.getName()}"></label>
+                                <input type="checkbox" th:id="${theme.getThemeId()}" th:value="${theme.getName()}">
+                            </a>
+                        </li>
+                    </ul>
                 </div>
               </div>
             </div>
@@ -138,7 +140,7 @@
         <div th:unless="${sidePriority.size() > 0 }" class="left-area" style="width: 100%">
           <ul>
               <li style="width: 47%" th:object="${shop}" th:each="shop : ${payload}">
-                  <a th:href="@{'/shop/'+${shop.shopId}}">
+                  <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
                       <div class="card-item">
                           <div class="img"></div>
                           <div class="card-data">
@@ -233,6 +235,28 @@
               float: right;
               padding-left: 18px;
               background: url("/images/ico-sm-map.png") 0 -1px no-repeat;
+          }
+          #filter_theme li {
+              float:left;
+              width: 110px;
+          }
+          #filter_theme li a:hover{
+              color: #ff571a;
+          }
+          /* Checkbox element, when checked */
+          #filter_theme input:checked + label {
+              color: #ff571a;
+          }
+          #filter_theme li a input{
+              width: 14px;
+              height: 14px;
+              padding: 4px 3px 5px;
+              border: solid 0.5px #d3d3d3;
+              background-color: #ffffff;
+              position: relative;
+              top: -4px;
+              margin: 4px 15px 9px 0px;
+              float: right;
           }
       </style>
   </div>

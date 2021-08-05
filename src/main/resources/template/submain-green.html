@@ -35,6 +35,7 @@
               <div class="addr-info">
                 <span th:text="${regionInfo[0].getProvinceName()}"></span>
                 <span th:text="${regionInfo[0].getDistrictName()}"></span>
+                <span th:if="${regionInfo[0].getSubwayName() != null}" th:text="${regionInfo[0].getSubwayName()}"></span>
               </div>
 
               <ul class="menu-link">
@@ -53,12 +54,13 @@
                 <a href="#" class="filter-btn">필터설정</a>
                 <div class="filter-body-layer">
                   <p>나의 상황에 맞는 필터를 선택해보세요.</p>
-                  <ul>
-                    <li><a href="#">24시간 </a></li>
-                    <li><a href="#">채식주의자</a></li>
-                    <li><a href="#">프로포즈</a></li>
-                    <li><a href="#">외국인</a></li>
-                    <li><a href="#">분위기</a></li>
+                  <ul id="filter_theme">
+                    <li th:object="${theme}" th:each="theme : ${themeList}">
+                      <a id="filter_anchor">
+                        <label th:for="${theme.getThemeId()}" th:text="${theme.getName()}"></label>
+                        <input type="checkbox" th:id="${theme.getThemeId()}" th:value="${theme.getName()}">
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -178,6 +180,31 @@
     <script type="text/javascript" th:src="@{/js/commons.js}"></script>
     <!--added header name to change-->
     <script>document.getElementById("header").className = "header-red";</script>
+    <script>
+      $(document).ready(function() {
+        $('#filter_theme').on('click', '#filter_anchor', function(){
+          console.log($(this).attr);
+          filter_items()
+        });
+      });
+
+      function filter_items(){
+        var data=$("#input").val();
+
+        var messageDTO={
+          result:data
+        };
+
+        $.ajax({
+          url: "/dataSend",
+          data: messageDTO,
+          type:"POST",
+        }).done(function (fragment) {
+          // $('#example tbody tr').replaceWith(data);
+          $("#resultDiv").replaceWith(fragment);
+        });
+      }
+    </script>
     <style>
       .list-section .right-area dl dt .info .name::before {
         content: "";
@@ -193,7 +220,28 @@
         float: left;
         padding-left: 8px;
       }
-
+      #filter_theme li {
+        float:left;
+        width: 110px;
+      }
+      #filter_theme li a:hover{
+        color: #ff571a;
+      }
+      /* Checkbox element, when checked */
+      #filter_theme input:checked + label {
+        color: #ff571a;
+      }
+      #filter_theme li a input{
+        width: 14px;
+        height: 14px;
+        padding: 4px 3px 5px;
+        border: solid 0.5px #d3d3d3;
+        background-color: #ffffff;
+        position: relative;
+        top: -4px;
+        margin: 4px 15px 9px 0px;
+        float: right;
+      }
       .list-section .right-area dl dt .info span {
         position: relative;
         display: inline-block;

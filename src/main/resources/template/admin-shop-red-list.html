@@ -550,6 +550,7 @@
                     success: function (data) {
                         if (data.length > 0) {
                             $("#table-filter3").find("option").remove().end();
+                            $("#table-filter3").append("<option>소분류</option>");
                             $.each(data, function (key, value) {
                                 $("#table-filter3").append("<option value='" + value.scode + "'>" + value.categoryName + "</option>");
                             });
@@ -587,6 +588,7 @@
                     success: function(data) {
                         if(data.length > 0) {
                             $("#table-filter5").find("option").remove().end();
+                            $("#table-filter4").append("<option>중분류</option>");
                             $.each(data, function(key, value) {
                                 $("#table-filter5").append("<option value='" + value.regionId + "'>" + value.districtName + "</option>");
                             });

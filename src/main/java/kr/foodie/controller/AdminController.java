@@ -383,7 +383,7 @@ public class AdminController {
         List<String> regionInfos;
         regionInfos = regionAdminService.getRegionProvinceInfo();
         categoryInfos = foodCategoryAdminService.getAdminRegionBCategory();
-        commentList = shopService.getAdminShopInfos(shopType);
+        commentList = shopService.getTop50AdminShopInfos(shopType);
 //        commentListWithOrder = shopService.getShopInfosWithOrder(regionTypeId, shopType, 9);
 //        sideCommentListWithOrder = shopService.getShopInfosWithSideOrder(regionTypeId, shopType, 8);
         mav.addObject("payload", commentList);
@@ -545,7 +545,7 @@ public class AdminController {
             shopType = "1";
         }
         List<Shop> commentList;
-        commentList = shopService.getAdminShopInfos(shopType);
+        commentList = shopService.getTop50AdminShopInfos(shopType);
         Map<String, List> members = new HashMap<>();
         members.put("data", commentList);
         return members;

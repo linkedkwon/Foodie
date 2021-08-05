@@ -37,8 +37,11 @@ public class Shop {
     @Column(name = "Background")
     private Integer background;
 
-    @Column(name = "order")
-    private Integer order;
+    @Column(name = "PremiumRegisterDate")
+    private Date premiumRegisterDate;
+
+    @Column(name = "SHOP_PAID")
+    private String shopPaid;
 
     @Column(name = "SHOP_NAME")
     private String shopName;

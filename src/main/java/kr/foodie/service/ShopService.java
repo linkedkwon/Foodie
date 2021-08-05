@@ -18,24 +18,30 @@ public class ShopService {
     }
 
     public List<Shop> getShopInfos(Integer regionId, String shopType, int idx, int interval) {
-        return shopRepository.findByRegionIdAndShopTypeAndOrderIsNull(regionId, shopType,
+        return shopRepository.findByRegionIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(regionId, shopType,
                 PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
     }
     public List<Shop>  getSubwayShopInfos(Integer regionId, String shopType, int idx, int interval) {
-        return shopRepository.findBySubwayTypeIdAndShopTypeAndOrderIsNull(regionId, shopType,
+        return shopRepository.findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(regionId, shopType,
                 PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
     }
 
-    public List<Shop> getSubwayShopInfosWithOrder(Integer regionId, String shopType, Integer num) {
-        return shopRepository.findBySubwayTypeIdAndShopTypeAndOrderIsLessThan(regionId, shopType, num);
+    public List<Shop> getSubwayPremiumShopInfos(Integer regionId, String shopType) {
+        return shopRepository.findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(regionId, shopType);
     }
 
-    public List<Shop> getShopInfosWithOrder(Integer regionId, String shopType, Integer num) {
-        return shopRepository.findByRegionIdAndShopTypeAndOrderIsLessThan(regionId, shopType, num);
+    public List<Shop> getShopPremiumInfos(Integer regionId, String shopType) {
+        return shopRepository.findByRegionIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(regionId, shopType);
     }
 
-    public List<Shop> getShopInfosWithSideOrder(Integer regionId, String shopType, Integer num) {
-        return shopRepository.findByRegionIdAndShopTypeAndOrderIsGreaterThan(regionId, shopType, num);
+
+//    사이드에 그린리스트<-> 레드리스트 우선순위 지정필요
+    public List<Shop> getShopInfosWithSideOrder(Integer regionId, String shopType) {
+        if(shopType.equals("1")){
+            return shopRepository.findTop5ByRegionIdAndShopType(regionId, "0");
+        }else{
+            return shopRepository.findTop5ByRegionIdAndShopType(regionId, "1");
+        }
     }
 
     public List<Shop> getShopDetail(Integer shopId) {
@@ -69,6 +75,10 @@ public class ShopService {
 
     public List<Shop> getAdminShopInfos(String shopType) {
         return shopRepository.findByShopType(shopType);
+    }
+
+    public List<Shop> getTop50AdminShopInfos(String shopType) {
+        return shopRepository.findTop50ByShopType(shopType);
     }
 
     public List<Shop> getAdminShopInfosWithBcode(Integer bCode, String shopType) {

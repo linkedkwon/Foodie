@@ -79,7 +79,7 @@
           <ul class="card-list-wrapper">
             <!-- Card item -->
             <li th:object="${shop}" th:each="shop : ${payload}">
-              <a th:href="@{/shop/{shopId}(shopId=${shop.shopId})}">
+                <a th:href="'shop?id='+${shop.shopId}+'&page=0'">
                 <div class="card-item">
                   <div class="img"></div>
                   <div class="card-data">

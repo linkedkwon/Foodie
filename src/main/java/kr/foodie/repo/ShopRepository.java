@@ -1,5 +1,6 @@
 package kr.foodie.repo;
 
+import kr.foodie.domain.category.Theme;
 import kr.foodie.domain.shop.Shop;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,13 +16,15 @@ import java.util.Optional;
 @Repository
 public interface ShopRepository extends JpaRepository<Shop, Long> {
 
-    Page<Shop> findByRegionIdAndShopTypeAndOrderIsNull(Integer regionId, String shopType, Pageable pageable);
-    Page<Shop> findBySubwayTypeIdAndShopTypeAndOrderIsNull(Integer regionId, String shopType, Pageable pageable);
-    List<Shop> findBySubwayTypeIdAndShopTypeAndOrderIsLessThan(Integer regionId, String shopType, Integer num);
+    Page<Shop> findByRegionIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer regionId, String shopType, Pageable pageable);
+    Page<Shop> findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer regionId, String shopType, Pageable pageable);
+    List<Shop> findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(Integer regionId, String shopType);
 
-    List<Shop> findByRegionIdAndShopTypeAndOrderIsLessThan(Integer regionId, String shopType, Integer num);
-    List<Shop> findByRegionIdAndShopTypeAndOrderIsGreaterThan(Integer regionId, String shopType, Integer num);
+    List<Shop> findByRegionIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(Integer regionId, String shopType);
+
+    List<Shop> findTop5ByRegionIdAndShopType(Integer regionId, String shopType);
     List<Shop> findByShopId(Integer shopId);
+
 
     Optional<Integer> countByRegionIdAndShopType(Integer regionId, String shopType);
 
@@ -36,6 +39,7 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
 
     //admin
     List<Shop> findByShopType(String shopType);
+    List<Shop> findTop50ByShopType(String shopType);
     List<Shop> findByBigCategoryAndShopType(Integer bCode, String shopType);
     List<Shop> findByBigCategoryAndMiddleCategoryAndShopType(Integer bCode, Integer mCode, String shopType);
     List<Shop> findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopType(Integer bCode, Integer mCode, Integer sCode, String shopType);

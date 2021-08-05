@@ -36,6 +36,7 @@ public class ShopController {
     private final RegionService regionService;
     private final ReviewService reviewService;
     private final PaginationService paginationService;
+    private final ThemeService themeService;
 
     @GetMapping({"/shop/region/{regionId}/{shopType}", "/shop/region/{regionId}/{shopType}/{path}"})
     public String getCategory(@PathVariable Integer regionId, @PathVariable String shopType,
@@ -46,8 +47,9 @@ public class ShopController {
         int size = shopService.getItemSizeByRegionTypeAndShopType(regionId, shopTypeId);
 
         model.addAttribute("regionInfo", regionService.getRegionInfo(Integer.valueOf(regionId)));
-        model.addAttribute("priority", shopService.getShopInfosWithOrder(regionId, shopTypeId, 9));
-        model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(regionId, shopTypeId, 8));
+        model.addAttribute("priority", shopService.getShopPremiumInfos(regionId, shopTypeId));
+        model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(regionId, shopTypeId));
+        model.addAttribute("themeList", themeService.getThemeTags(Integer.valueOf(shopTypeId)));
 
         //pagination
         model.addAttribute("payload", shopService.getShopInfos(regionId, shopTypeId, idx, shopInterval));
@@ -57,7 +59,7 @@ public class ShopController {
         return shopType.equals("red")? "submain-red":"submain-green";
     }
 
-    @GetMapping({"region/subway/{regionId}/{shopType}", "region/{regionId}/{shopType}/{path}"})
+    @GetMapping({"/shop/region/subway/{regionId}/{shopType}", "region/{regionId}/{shopType}/{path}"})
     public String getCategory2(@PathVariable Integer regionId, @PathVariable String shopType,
                               @PathVariable Optional<String> path, Model model) throws JsonProcessingException {
 
@@ -68,9 +70,9 @@ public class ShopController {
         model.addAttribute("payload", shopService.getSubwayShopInfos(regionId, shopTypeId, idx, shopInterval));
 
 
-        model.addAttribute("regionInfo", regionService.getRegionInfo(regionId));
-        model.addAttribute("priority", shopService.getSubwayShopInfosWithOrder(regionId, shopTypeId, 9));
-        model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(regionId, shopTypeId, 8));
+        model.addAttribute("regionInfo", regionService.getRegionInfo(Integer.valueOf(regionId)));
+        model.addAttribute("priority", shopService.getSubwayPremiumShopInfos(regionId, shopTypeId));
+        model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(regionId, shopTypeId));
 
         model.addAttribute("paginations", paginationService.getPagination(size, idx,shopInterval,"/shop/region/"+regionId+"/"+shopType+"/"));
         model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/"+regionId+"/"+shopType+"/"));
@@ -114,6 +116,13 @@ public class ShopController {
         }
         return null;
     }
+
+    @GetMapping(value ="/shop/region/{regionId}/{shopType}")
+    public ModelAndView filterShopInfos(@PathVariable Integer shopId,
+                                      @RequestParam(value = "page") Integer page,
+                                      @AuthenticationPrincipal AuthUserDetails userDetails) {
+    }
+
 
     @RequestMapping(value ="/location/{lat}/{lng}/{shopType}", method= RequestMethod.GET)
     public ModelAndView getShopListWithLocation(@PathVariable String lat, @PathVariable String lng, @PathVariable String shopType){
