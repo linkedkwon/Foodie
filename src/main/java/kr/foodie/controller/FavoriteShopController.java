@@ -43,8 +43,7 @@ public class FavoriteShopController {
 
     @ResponseBody
     @GetMapping("/item/{idx}")
-    public String addItem(@PathVariable String idx,
-                                  @AuthenticationPrincipal AuthUserDetails obj){
+    public String addItem(@PathVariable String idx, @AuthenticationPrincipal AuthUserDetails obj){
         return favoriteShopService.addItem(obj.getUser().getId(), Integer.parseInt(idx));
     }
 

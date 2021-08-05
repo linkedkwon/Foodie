@@ -121,12 +121,13 @@ public class ShopController {
         return null;
     }
 
+    /**
     @GetMapping(value ="/shop/region/{regionId}/{shopType}")
     public ModelAndView filterShopInfos(@PathVariable Integer shopId,
                                       @RequestParam(value = "page") Integer page,
                                       @AuthenticationPrincipal AuthUserDetails userDetails) {
     }
-
+    */
 
     @RequestMapping(value ="/location/{lat}/{lng}/{shopType}", method= RequestMethod.GET)
     public ModelAndView getShopListWithLocation(@PathVariable String lat, @PathVariable String lng, @PathVariable String shopType){

@@ -3,11 +3,18 @@
  * add FavoriteShop
  * ajax data 1 : success, 0 : fail(not authenticated)
  */
-function addFavoriteShop(){
-    //shop_id extracted on url
-    const url = document.location.href;
-    const shopId = url.substring(url.lastIndexOf('/') + 1);
 
+function getParameter(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function addFavoriteShop(){
+
+    var shopId = getParameter("id");
+    console.log('shopId', shopId);
     $.ajax({
         url: '/user/favorite/item/'+shopId,
         type: 'GET',
