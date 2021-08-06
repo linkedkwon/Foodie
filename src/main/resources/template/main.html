@@ -159,10 +159,13 @@
 <!--                      <li class="phone" th:text="${shop.phone}"></li>-->
 <!--                      <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">-->
                     </ul>
-                    <th:block th:switch="${shop.foodieLogRating}">
-                      <div th:case="A" class="star-position"><img src="../images/ico-star-first.png" class="star-box"></div>
-                      <div th:case="AA" class="star-position"><img src="../images/ico-star-second.png" class="star-box"></div>
-                      <div th:case="AAA" class="star-position"><img src="../images/ico-star-third.png" class="star-box"></div>
+
+                    <th:block th:if="${shop.foodieLogRating.length > 0}">
+                      <th:block th:switch="${shop.foodieLogRating}">
+                        <div th:case="A" class="star-position"><img src="../images/ico-star-first.png" class="star-box"></div>
+                        <div th:case="AA" class="star-position"><img src="../images/ico-star-second.png" class="star-box"></div>
+                        <div th:case="AAA" class="star-position"><img src="../images/ico-star-third.png" class="star-box"></div>
+                      </th:block>
                     </th:block>
                   </div>
                 </div>
@@ -202,10 +205,13 @@
                       <!--                      <li class="phone" th:text="${shop.phone}"></li>-->
                       <!--                      <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">-->
                     </ul>
-                    <th:block th:switch="${shop.foodieLogRating}">
-                      <div th:case="A" class="star-position"><img src="../images/ico-star-first.png" class="star-box"></div>
-                      <div th:case="AA" class="star-position"><img src="../images/ico-star-second.png" class="star-box"></div>
-                      <div th:case="AAA" class="star-position"><img src="../images/ico-star-third.png" class="star-box"></div>
+
+                    <th:block th:if="${shop.foodieLogRating.length > 0}">
+                      <th:block th:switch="${shop.foodieLogRating}">
+                        <div th:case="A" class="star-position"><img src="../images/ico-star-first.png" class="star-box"></div>
+                        <div th:case="AA" class="star-position"><img src="../images/ico-star-second.png" class="star-box"></div>
+                        <div th:case="AAA" class="star-position"><img src="../images/ico-star-third.png" class="star-box"></div>
+                      </th:block>
                     </th:block>
                   </div>
                 </div>
@@ -275,8 +281,30 @@
           var li = document.createElement('li');
           ul.appendChild(li);
 
+          var rating = element.foodieLogRating;
+          if(rating == null || rating == ''){
+            li.innerHTML= li.innerHTML
+                    + "<a href='/shop?id=" + element.shopId + "&page=0'>"
+                    +   "<div class=\"card-item\">"
+                    +     "<div class=\"img\"></div>"
+                    +     "<div class=\"card-data\">"
+                    +     "<div class=\"name\">"
+                    +       "<div class=\"hide-text-1\">" + element.shopName + "</div>"
+                    +       "<div class=\"categories\">"
+                    +           "<span class=\"hide-text-1\">" + element.tag + "</span>"
+                    +       "</div>"
+                    +     "</div>"
+                    +     "<ul class=\"info\">"
+                    +       "<li class=\"address\">" + element.address + "</li>"
+                    +     "</ul>"
+                    +     "</div>"
+                    +   "</div>"
+                    + "</a>";
+            return;
+          }
+
           var src="";
-          switch (element.foodieLogRating) {
+          switch (rating) {
             case "A":
               src="../images/ico-star-first.png";
               break;
@@ -287,7 +315,6 @@
               src="../images/ico-star-third.png";
               break;
           }
-
           li.innerHTML= li.innerHTML
                   + "<a href='/shop?id=" + element.shopId + "&page=0'>"
                   +   "<div class=\"card-item\">"
@@ -303,15 +330,15 @@
                   +       "<li class=\"address\">" + element.address + "</li>"
                   +     "</ul>"
                   +     "<div class=\"star-position\">"
-                  +     "<img src="+src+" class=\"star-box\">"
-                  +     "</div>"
+                  +       "<img src="+src+" class=\"star-box\">"
                   +     "</div>"
                   +   "</div>"
-                  + "</a>";
-
+                  + "</div>"
+                  +"</a>";
         }
       });
     }
+
     function initialInfo(type, className, tagId){
       document.getElementById(className).innerHTML = ""
       // $("#" + tagId + " > li").removeClass('active');
@@ -330,8 +357,30 @@
           var li = document.createElement('li');
           ul.appendChild(li);
 
+          var rating = element.foodieLogRating;
+          if(rating == null || rating == ''){
+            li.innerHTML= li.innerHTML
+                    + "<a href='/shop?id=" + element.shopId + "&page=0'>"
+                    +   "<div class=\"card-item\">"
+                    +     "<div class=\"img\"></div>"
+                    +     "<div class=\"card-data\">"
+                    +     "<div class=\"name\">"
+                    +       "<div class=\"hide-text-1\">" + element.shopName + "</div>"
+                    +       "<div class=\"categories\">"
+                    +           "<span class=\"hide-text-1\">" + element.tag + "</span>"
+                    +       "</div>"
+                    +     "</div>"
+                    +     "<ul class=\"info\">"
+                    +       "<li class=\"address\">" + element.address + "</li>"
+                    +     "</ul>"
+                    +     "</div>"
+                    +   "</div>"
+                    + "</a>";
+            return;
+          }
+
           var src="";
-          switch (element.foodieLogRating) {
+          switch (rating) {
             case "A":
               src="../images/ico-star-first.png";
               break;
@@ -342,7 +391,6 @@
               src="../images/ico-star-third.png";
               break;
           }
-
           li.innerHTML= li.innerHTML
                   + "<a href='/shop?id=" + element.shopId + "&page=0'>"
                   +   "<div class=\"card-item\">"
@@ -358,12 +406,11 @@
                   +       "<li class=\"address\">" + element.address + "</li>"
                   +     "</ul>"
                   +     "<div class=\"star-position\">"
-                  +     "<img src="+src+" class=\"star-box\">"
-                  +     "</div>"
+                  +       "<img src="+src+" class=\"star-box\">"
                   +     "</div>"
                   +   "</div>"
-                  + "</a>";
-
+                  + "</div>"
+                  +"</a>";
         }
       });
     }

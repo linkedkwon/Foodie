@@ -47,7 +47,6 @@ function getParam(sname) {
 
 function addReview(){
     if(checkBeforeAddReview()!=true) {
-        alert("내용을 다시 한 번 확인해주세요.");
         return;
     }
     //shop_id extracted on url
@@ -104,9 +103,15 @@ function checkBeforeAddReview(){
     var starFlag = true;
     var commentFlag = true;
 
-    if(starRating == 0) starFlag = false;
-    if(comment.length < 5) commentFlag = false;
-
+    if(starRating == 0) {
+        alert("오감 평점을 선택해주세요.");
+        starFlag = false;
+    }else {
+        if (comment.length < 2 || comment.length > 300) {
+            alert("댓글은 2~300자 내외로 작성해야 합니다.");
+            commentFlag = false;
+        }
+    }
     return starFlag && commentFlag;
 }
 

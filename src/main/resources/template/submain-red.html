@@ -155,7 +155,11 @@
                                   <li class="phone" th:text="${shop.phone}"></li>
                                   <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">
                               </ul>
-                              <div class="star"></div>
+                              <th:block th:switch="${shop.foodieLogRating}">
+                                  <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
+                                  <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
+                                  <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
+                              </th:block>
                           </div>
                       </div>
                   </a>
@@ -178,7 +182,11 @@
                 <div class="info">
                   <span style="float:left" class="address" th:text="${shop.address}"></span>
                 </div>
-                <div class="img"></div>
+                  <th:block th:switch="${shop.foodieLogRating}">
+                      <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
+                      <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
+                      <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
+                  </th:block>
               </dd>
             </a>
           </dl>

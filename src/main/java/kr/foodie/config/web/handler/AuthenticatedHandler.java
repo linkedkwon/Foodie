@@ -29,6 +29,6 @@ public class AuthenticatedHandler implements HandlerInterceptor {
         }
         modelAndView.addObject("authenticated","1");
         modelAndView.addObject("iconRed","/images/1223.png");
-        modelAndView.addObject("iconNormal","/images/1223.png");
+        modelAndView.addObject("iconNormal","/images/1224.png");
     }
 }
