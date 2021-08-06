@@ -156,4 +156,10 @@ public class ShopController {
         }
         return mav;
     }
+
+    @ResponseBody
+    @GetMapping("/shop/report")
+    public String inquiryReport(@AuthenticationPrincipal AuthUserDetails userDetails){
+        return userDetails == null ? "0" : "1";
+    }
 }

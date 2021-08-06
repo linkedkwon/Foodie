@@ -126,3 +126,22 @@ function deleteReview(reviewId){
         }
     });
 }
+
+function inquiryBtn(){
+    $.ajax({
+        url: '/shop/report',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            if(data == 1){
+                window.location.href = "/user/inquiry/new"
+            }else{
+                alert('로그인 후에 시도해주세요.');
+            }
+        },
+        error: function (status, error) {
+            console.log(status, error);
+            alert('로그인 후에 시도해주세요.');
+        }
+    });
+}

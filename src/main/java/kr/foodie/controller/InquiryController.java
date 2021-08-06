@@ -4,7 +4,6 @@ import kr.foodie.config.security.auth.AuthUserDetails;
 import kr.foodie.service.InquiryService;
 import kr.foodie.service.PaginationService;
 import lombok.RequiredArgsConstructor;
-import org.dom4j.rule.Mode;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

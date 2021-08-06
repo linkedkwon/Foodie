@@ -44,10 +44,10 @@
                 </div>
 
                 <div class="right-area">
-                  <ul class="scores">
-                    <li th:text="|푸디로그 평점(${payload[0].foodieLogRating})|"></li>
-                    <li th:text="|오감 평점(${payload[0].tasteRating}점)|"></li>
-                  </ul>
+                  <div class="util-btn-area">
+                    <a href="javascript:void(0)" class="btn-sm btn-heart" onclick="addFavoriteShop()">찜하기</a>
+                    <a href="javascript:void(0)" class="btn-sm btn-siren" onclick="inquiryBtn()">오류신고</a>
+                  </div>
 
                   <th:block th:switch="${payload[0].foodieLogRating}">
                     <div class="star" th:case="A">
@@ -121,10 +121,9 @@
                     <dt>홈페이지</dt>
                     <dd class="btn-dd">
                       <div class="util-btn-area">
-                        <a href="javascript:void(0);" class="btn-sm btn-heart" onclick="addFavoriteShop()">찜하기</a>
-                        <a href="#" class="btn-sm btn-siren">오류신고</a>
+                        <a href="javascript:void(0)" class="btn-sm btn-heart" onclick="addFavoriteShop()">찜하기</a>
+                        <a href="javascript:void(0)" class="btn-sm btn-siren" onclick="inquiryBtn()">오류신고</a>
                       </div>
-                      
                     </dd>
                   </dl>
                 </div>
