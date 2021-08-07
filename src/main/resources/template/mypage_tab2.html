@@ -41,7 +41,8 @@
             <li>
               <a th:href="@{'/shop?id='+${item.shopId}+'&page=0'}">
                 <div class="card-item">
-                  <div class="img"></div>
+                  <div class="img" th:style="'background-image:url('+${item.shopImage}+'); background-size:contain;'">
+                  </div>
                   <div class="card-data">
                     <input type="hidden" id="shopId" th:value="${item.shopId}"/>
                     <div class="name" th:text="${item.shopName}">
@@ -70,6 +71,7 @@
             </th:block>
             <th:block th:if="${btnUrls.get('prev') == 'javascript:void(0)'}">
               <div style="width: 20px"></div>
+            </th:block>
             </th:block>
             <a th:each="item : ${paginations}" th:href="${item.path}"
                th:text="${item.idx}" th:class="${item.classValue}"></a>

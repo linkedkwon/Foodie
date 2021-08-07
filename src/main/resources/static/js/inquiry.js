@@ -8,7 +8,7 @@ function checkInquiryFormBeforeSubmit(){
         $('#input-title').css('color','#FF0000')
         $('#input-title').val('제목은 4~100자 내외로 작성해야 합니다.');
         flag = false;
-    }else if(title == '제목을 입력해주세요.' || title == '제목을 다시 확인해주세요.'){
+    }else if(title == '제목을 입력해주세요.' || title == '제목을 다시 확인해주세요.' || title == '제목은 4~100자 내외로 작성해야 합니다.'){
         $('#input-title').css('color','#FF0000')
         $('#input-title').val('제목을 다시 확인해주세요.');
         flag = false;
@@ -18,7 +18,7 @@ function checkInquiryFormBeforeSubmit(){
         $('#input-content').css('color','#FF0000')
         $('#input-content').val('내용은 4~1000자 내외로 작성해야 합니다.');
         flag = false;
-    }else if(content == '문의할 내용을 입력해주세요.' || content == '내용을 다시 확인해주세요.'){
+    }else if(content == '문의할 내용을 입력해주세요.' || content == '내용을 다시 확인해주세요.' || content == '내용은 4~1000자 내외로 작성해야 합니다.'){
         $('#input-content').css('color','#FF0000')
         $('#input-content').val('내용을 다시 확인해주세요.');
     }

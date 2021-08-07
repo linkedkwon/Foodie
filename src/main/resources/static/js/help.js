@@ -12,7 +12,7 @@ function onClickInquiryEmail(){
 
 
     $.ajax({
-        url: '/inquiry/id',
+        url: '/help/search/id',
         type: 'POST',
         data : {
             name:name,
@@ -52,7 +52,7 @@ function onClickInquiryPswd(){
     if(email_flag || phone_flag) return;
 
     $.ajax({
-        url: '/inquiry/pw',
+        url: '/help/search/pw',
         type: 'POST',
         data : {
             email:email,
@@ -94,7 +94,7 @@ function submitCode(){
     var code = document.getElementById("receive-code").value;
 
     $.ajax({
-        url: '/inquiry/code',
+        url: '/help/code',
         type: 'POST',
         data : {
             email: email,

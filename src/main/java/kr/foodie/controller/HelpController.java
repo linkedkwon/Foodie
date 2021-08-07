@@ -16,13 +16,14 @@ public class HelpController {
     private final CacheService cacheService;
 
     @ResponseBody
-    @PostMapping("/inquiry/id")
+    @PostMapping("/help/search/id")
     public String inquiryId(String name, String phoneNum){
+
         return userService.inquiryId(name, phoneNum);
     }
 
     @ResponseBody
-    @PostMapping("/inquiry/pw")
+    @PostMapping("/help/search/pw")
     public String inquiryPw(String email, String phoneNum) throws Exception {
         if(userService.inquiryPw(email, phoneNum).equalsIgnoreCase("1"))
             return "1";
@@ -32,7 +33,7 @@ public class HelpController {
     }
 
     @ResponseBody
-    @PostMapping("/inquiry/code")
+    @PostMapping("/help/code")
     public String inquiryAuthCode(String email, String code) {
         if(cacheService.findByAuthenticationCode(email, code).equals("0"))
             return "1";
