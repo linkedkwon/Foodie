@@ -55,11 +55,14 @@
                 <a href="#" class="filter-btn">필터설정</a>
                 <div class="filter-body-layer">
                   <p>나의 상황에 맞는 필터를 선택해보세요.</p>
+                    <input type="hidden" id="regionId" th:value="${regionInfo[0].regionId}">
+                    <input type="hidden" id="regionType" value="red">
+
                     <ul id="filter_theme">
                         <li th:object="${theme}" th:each="theme : ${themeList}">
-                            <a href="#">
+                            <a id="filter_anchor">
                                 <label th:for="${theme.getThemeId()}" th:text="${theme.getName()}"></label>
-                                <input type="checkbox" th:id="${theme.getThemeId()}" th:value="${theme.getName()}">
+                                <input type="checkbox" name="checkbox" th:id="${theme.getThemeId()}" th:value="${theme.getName()}">
                             </a>
                         </li>
                     </ul>
@@ -108,7 +111,7 @@
 
       <div class="list-section">
         <div th:if="${sidePriority.size() > 0 }" class="left-area">
-          <ul>
+          <ul id="payload">
             <li th:object="${shop}" th:each="shop : ${payload}">
                 <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
                 <div class="card-item">
@@ -138,7 +141,7 @@
         </div>
 
         <div th:unless="${sidePriority.size() > 0 }" class="left-area" style="width: 100%">
-          <ul>
+          <ul id="payload" >
               <li style="width: 47%" th:object="${shop}" th:each="shop : ${payload}">
                   <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
                       <div class="card-item">
@@ -224,8 +227,66 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
     <script type="text/javascript" th:src="@{/js/commons.js}"></script>
     <!--added header name to change-->
+    <script>document.getElementById("header").className = "header-red";</script>
     <script>
-      document.getElementById("header").className = "header-red";
+      $(document).ready(function() {
+          $('#filter_theme').on('click', '#filter_anchor', function(){
+              filter_items();
+          });
+      });
+
+      function filter_items(){
+          var filters = []
+          $("input[name=checkbox]:checked").each(function() {
+              filters.push($(this).val());
+          });
+          console.log(filters)
+
+          var regionId = $('#regionId').val();
+          var regionType = $('#regionType').val();
+
+
+          $.ajax({
+              url: "/filter/shop?filter="+filters+"&regionId=" + regionId + "&regionType="+regionType,
+              // data: messageDTO,
+              type:"GET",
+          }).done(function (fragment) {
+              // $('#example tbody tr').replaceWith(data);
+              console.log(fragment.payload);
+              $('#payload').empty();
+              var star_tag;
+              $.each(fragment.payload, function(key, value) {
+                  if(value.foodieLogRating == "A"){
+                      star_tag = '<div class="star-position"><img src="/images/ico-star-first.png"className="star-box"></div>'
+                  }else if(value.foodieLogRating == "AA"){
+                      star_tag = '<div class="star-position"><img src="/images/ico-star-second.png"className="star-box"></div>'
+                  }else {
+                      star_tag = '<div class="star-position"><img src="/images/ico-star-third.png"className="star-box"></div>'
+                  }
+                  $("#payload").append("<li style=\"width: 47%\">\n" +
+                      "                  <a href='/shop?id='"+value.shopId + "&page=0" + ">\n" +
+                      "                      <div class=\"card-item\">\n" +
+                      "                          <div class=\"img\"></div>\n" +
+                      "                          <div class=\"card-data\">\n" +
+                      "                              <div class=\"name\">\n" +
+                      "                                  <div>" + value.shopName + "</div>\n" +
+                      "                                  <div class=\"categories\">\n" +
+                      "                                      <span>" + value.tag + "</span>\n" +
+                      "                                  </div>\n" +
+                      "                              </div>\n" +
+                      "                              <ul class=\"info\">\n" +
+                      "                                  <li class=\"address\">" +  value.address + "</li>\n" +
+                      "                                  <li class=\"phone\">" + value.phone + "</li>\n" +
+                      "                                  <li class=\"description\">" + jQuery.trim(value.history).substring(0, 40).split(" ").slice(0, -1).join(" ") + "..." + "</li>\n" +
+                      "                              </ul>\n" +
+                      star_tag +
+                      "                          </div>\n" +
+                      "                      </div>\n" +
+                      "                  </a>\n" +
+                      "              </li>");
+              });
+          });
+      }
     </script>
       <style>
           .list-section .right-area dl dt .info .name::before {
@@ -256,7 +317,7 @@
           }
           #filter_theme li {
               float:left;
-              width: 110px;
+              width: 127px;
           }
           #filter_theme li a:hover{
               color: #ff571a;

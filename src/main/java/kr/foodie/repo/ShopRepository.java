@@ -25,6 +25,9 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
     List<Shop> findTop5ByRegionIdAndShopType(Integer regionId, String shopType);
     List<Shop> findByShopId(Integer shopId);
 
+    @Query(value="select * from shop where shop_type=?1 and region_id=?2 and theme_list like %?3%", nativeQuery = true)
+    List<Shop> findByShopTypeAndRegionAndThemeList(String shopTypeId, Integer regionId, String Filter);
+
 
     Optional<Integer> countByRegionIdAndShopType(Integer regionId, String shopType);
 

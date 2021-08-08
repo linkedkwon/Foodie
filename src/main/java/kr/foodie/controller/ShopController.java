@@ -17,10 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -121,13 +118,32 @@ public class ShopController {
         return null;
     }
 
-    /**
-    @GetMapping(value ="/shop/region/{regionId}/{shopType}")
-    public ModelAndView filterShopInfos(@PathVariable Integer shopId,
-                                      @RequestParam(value = "page") Integer page,
-                                      @AuthenticationPrincipal AuthUserDetails userDetails) {
+    @ResponseBody
+    @GetMapping(value ="/filter/shop")
+    public Map<String, List> filterShopInfos(@RequestParam(value = "regionId") Integer regionId, @RequestParam(value = "regionType") String regionType, @RequestParam(value = "filter") String filterItems) {
+        Map<String, List> results = new HashMap<>();
+        String shopTypeId = regionType.equals("red") ? "0" : "1";
+        List<Shop> filtertList;
+        filtertList = shopService.getFilterShopList(shopTypeId, regionId, filterItems);
+        results.put("payload", filtertList);
+
+//        List<Shop> commentList;
+
+
+//        mav.addObject("payload", commentList);
+        return results;
     }
-    */
+//    @GetMapping(value ="/filter/shop")
+//    public ModelAndView filterShopInfos(@RequestParam(value = "regionId") Integer regionId, @RequestParam(value = "regionType") String regionType, @RequestParam(value = "filter") String filterItems) {
+//        ModelAndView mav = new ModelAndView();
+//        List<Shop> commentList;
+//        String shopTypeId = regionType.equals("red") ? "0" : "1";
+//        commentList = shopService.getFilterShopList(shopTypeId, regionId, filterItems);
+//        mav.addObject("payload", commentList);
+//
+//        return regionType.equals("red") ? "submain-red" : "submain-green";
+//    }
+
 
     @RequestMapping(value ="/location/{lat}/{lng}/{shopType}", method= RequestMethod.GET)
     public ModelAndView getShopListWithLocation(@PathVariable String lat, @PathVariable String lng, @PathVariable String shopType){

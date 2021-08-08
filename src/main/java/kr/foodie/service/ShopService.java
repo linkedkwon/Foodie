@@ -48,6 +48,10 @@ public class ShopService {
         return shopRepository.findByShopId(shopId);
     }
 
+    public List<Shop> getFilterShopList(String shopTypeId, Integer regionId, String filterItems) {
+        return shopRepository.findByShopTypeAndRegionAndThemeList(shopTypeId, regionId, filterItems);
+    }
+
     public List<Shop> getShopInfoByType(Integer type) {
         return shopRepository.findShopInfoByType(type);
     }
