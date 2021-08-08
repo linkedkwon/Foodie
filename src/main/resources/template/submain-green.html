@@ -54,11 +54,14 @@
                 <a href="#" class="filter-btn">필터설정</a>
                 <div class="filter-body-layer">
                   <p>나의 상황에 맞는 필터를 선택해보세요.</p>
+                  <input type="hidden" id="regionId" th:value="${regionInfo[0].regionId}">
+                  <input type="hidden" id="regionType" value="green">
+
                   <ul id="filter_theme">
                     <li th:object="${theme}" th:each="theme : ${themeList}">
                       <a id="filter_anchor">
                         <label th:for="${theme.getThemeId()}" th:text="${theme.getName()}"></label>
-                        <input type="checkbox" th:id="${theme.getThemeId()}" th:value="${theme.getName()}">
+                        <input type="checkbox" name="checkbox" th:id="${theme.getThemeId()}" th:value="${theme.getName()}">
                       </a>
                     </li>
                   </ul>
@@ -193,25 +196,29 @@
     <script>
       $(document).ready(function() {
         $('#filter_theme').on('click', '#filter_anchor', function(){
-          console.log($(this).attr);
-          filter_items()
+          filter_items();
         });
       });
 
       function filter_items(){
-        var data=$("#input").val();
+        var filters = []
+        $("input[name=checkbox]:checked").each(function() {
+          // console.log( 'checkbox값 : '+$(this).val() );
+          filters.push($(this).val());
+        });
 
-        var messageDTO={
-          result:data
-        };
+
+        var regionId = $('#regionId').val();
+        var regionType = $('#regionType').val();
+
 
         $.ajax({
-          url: "/dataSend",
-          data: messageDTO,
-          type:"POST",
+          url: "/filter/shop?filter="+filters+"&regionId=" + regionId + "&regionType="+regionType,
+          // data: messageDTO,
+          type:"GET",
         }).done(function (fragment) {
           // $('#example tbody tr').replaceWith(data);
-          $("#resultDiv").replaceWith(fragment);
+          $("#themeList").replaceWith(fragment);
         });
       }
     </script>
@@ -232,7 +239,7 @@
       }
       #filter_theme li {
         float:left;
-        width: 110px;
+        width: 127px;
       }
       #filter_theme li a:hover{
         color: #ff571a;
