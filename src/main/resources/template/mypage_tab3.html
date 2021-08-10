@@ -40,7 +40,7 @@
           <ul class="my-comments">
             <li class="title-group">
               <div>닉네임</div>
-              <div>내용</div>
+              <div style="flex: 0 0 300px;">내용</div>
               <div>맛집명</div>
               <div>리뷰</div>
             </li>
@@ -62,7 +62,7 @@
                   <img class="star-img" th:case="2" src="/images/ico-point-2-active.png"/>
                   <img class="star-img" th:case="1" src="/images/ico-point-1-active.png"/>
                 </th:block>
-                <div class="score" th:text="'감동('+${item.starRating}+'점)'" style="width: 50px;"/>
+                <div class="score" th:text="'감동('+${item.starRating}+'점)'" style="width: 50px; font-size: 10px;"/>
               </div>
               <th:block th:switch="${item.bestComment}">
                 <a th:case='1' class="best-div-mypage">BEST</a>
