@@ -87,8 +87,7 @@
                     <ul class="info">
                       <li class="address" th:text="${shop.address}" style="width: 200px;"></li>
                       <li class="phone" th:text="${shop.phone}" style="width: 200px;"></li>
-                      <li class="description" th:text="${#strings.abbreviate(shop.history,50)}">
-                      </li>
+                      <li class="description" th:text="${#strings.abbreviate(shop.history,50)}"></li>
                     </ul>
                     <th:block th:switch="${shop.foodieLogRating}">
                       <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
@@ -125,7 +124,7 @@
                     <ul class="info">
                       <li class="address" th:text="${shop.address}" style="width: 280px;"></li>
                       <li class="phone" th:text="${shop.phone}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></li>
-                      <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">
+                      <li class="description" th:text="${#strings.abbreviate(shop.history,40)}"></li>
                     </ul>
                     <th:block th:switch="${shop.foodieLogRating}">
                       <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
@@ -147,18 +146,19 @@
                   <span class="name" th:text="${shop.shopName}"></span>
                 </div>
                 <div style="float: right;color: #c73425;font-size: 15px;">
-                  <span class="name">한식 | 한정식</span>
+                  <span class="name" th:text="${shop.shopAlias}"></span>|
+                  <span class="name" th:text="${shop.shopCharge}"></span>
                 </div>
               </dt>
               <dd>
                 <div class="info">
                   <span style="float:left" class="address" th:text="${shop.address}"></span>
                 </div>
-                <th:block th:switch="${shop.foodieLogRating}">
-                  <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
-                  <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
-                  <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
-                </th:block>
+                <!--                  <th:block th:switch="${shop.foodieLogRating}">-->
+                <!--                      <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>-->
+                <!--                      <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>-->
+                <!--                      <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>-->
+                <!--                  </th:block>-->
               </dd>
             </a>
           </dl>
@@ -266,7 +266,7 @@
       .list-section .right-area dl dt .info span {
         position: relative;
         display: inline-block;
-        /*font-size: 14px;*/
+        font-size: 14px;
         color: #000;
       }
       .list-section .right-area dl dd .info .address {

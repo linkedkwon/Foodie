@@ -141,7 +141,7 @@
               <div class="section-body" >
 
                 <p th:if="${userRole} == 'GENERAL'">결제 후 정보 제공이 가능합니다.</p><br/>
-                <p th:unless="${userRole} == 'GENERAL'"  th:text="${payload[0].history}"></p>
+                <p th:unless="${userRole} == 'GENERAL'"  th:utext="${payload[0].history}"></p>
               </div>
             </div>
             <!-- history-section END -->
@@ -159,39 +159,13 @@
                   <p>결제 후 정보 제공이 가능합니다.</p>
                 </div>
                 <div th:unless="${userRole} == 'GENERAL'" class="image-thumbnails">
+
                   <div class="detail">
                     <!-- 이미지 추가 -->
                   </div>
                   <ul>
-                    <li>
-                      <a href="#"></a>
-                    </li>
-                    <li>
-                      <a href="#"></a>
-                    </li>
-                    <li>
-                      <a href="#"></a>
-                    </li>
-                    <li>
-                      <a href="#"></a>
-                    </li>
-                    <li>
-                      <a href="#"></a>
-                    </li>
-                    <li>
-                      <a href="#"></a>
-                    </li>
-                    <li>
-                      <a href="#"></a>
-                    </li>
-                    <li>
-                      <a href="#"></a>
-                    </li>
-                    <li>
-                      <a href="#"></a>
-                    </li>
-                    <li>
-                      <a href="#"></a>
+                    <li th:each="item : ${payload[0].menuImages.split(',')}">
+                      <img th:src='${item.replace("[", "").replace("]", "")}' style="width: 100%;height: 100%;">
                     </li>
                   </ul>
                 </div>

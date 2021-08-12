@@ -88,8 +88,7 @@
                     <ul class="info">
                       <li class="address" th:text="${shop.address}" style="width: 200px;"></li>
                       <li class="phone" th:text="${shop.phone}" style="width: 200px;"></li>
-                      <li class="description" th:text="${#strings.abbreviate(shop.history,50)}">
-                      </li>
+                      <li class="description" th:text="${#strings.abbreviate(shop.history,30)}"></li>
                     </ul>
                     <th:block th:switch="${shop.foodieLogRating}">
                       <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
@@ -126,12 +125,12 @@
                     <ul class="info">
                       <li class="address" th:text="${shop.address}" style="width: 280px;"></li>
                       <li class="phone" th:text="${shop.phone}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></li>
-                      <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">
+                        <li class="description" th:text="${#strings.abbreviate(shop.history,30)}"></li>
                     </ul>
                     <th:block th:switch="${shop.foodieLogRating}">
-                      <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
-                      <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
-                      <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
+                        <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
+                        <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
+                        <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
                     </th:block>
                   </div>
                 </div>
@@ -150,13 +149,15 @@
                               <div class="name">
                                   <div th:text="${shop.shopName}"></div>
                                   <div class="categories">
-                                      <span th:text="${shop.tag}">한식</span>
+                                      <span th:text="${shop.shopName}"></span>
+                                      <span th:text="${shop.shopAlias}"></span>
+                                      <span th:text="${shop.shopCharge}"></span>
                                   </div>
                               </div>
                               <ul class="info">
                                   <li class="address" th:text="${shop.address}"></li>
                                   <li class="phone" th:text="${shop.phone}"></li>
-                                  <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">
+                                  <li class="description" th:utext="${#strings.abbreviate(shop.history,30)}"></li>
                               </ul>
                               <th:block th:switch="${shop.foodieLogRating}">
                                   <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
@@ -178,25 +179,26 @@
                     <span class="name" th:text="${shop.shopName}"></span>
                   </div>
                   <div style="float: right;color: #c73425;font-size: 15px;">
-                      <span class="name">한식 | 한정식</span>
+                      <span class="name" th:text="${shop.shopAlias}"></span>
+                      <span class="name" th:text="${shop.shopCharge}"></span>
                   </div>
               </dt>
               <dd>
                 <div class="info">
                   <span style="float:left" class="address" th:text="${shop.address}"></span>
                 </div>
-                  <th:block th:switch="${shop.foodieLogRating}">
-                      <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
-                      <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
-                      <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
-                  </th:block>
+<!--                  <th:block th:switch="${shop.foodieLogRating}">-->
+<!--                      <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>-->
+<!--                      <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>-->
+<!--                      <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>-->
+<!--                  </th:block>-->
               </dd>
             </a>
           </dl>
         </div>
       </div>
 
-        <div class="pagination">
+        <div class="pagination" >
             <th:block th:if="${btnUrls.get('prev') != 'javascript:void(0)'}">
                 <a th:href="${btnUrls.get('prev')}" class="prev"></a>
             </th:block>
@@ -212,7 +214,9 @@
                 <div style="width: 20px"></div>
             </th:block>
         </div>
-
+        <section>
+            <div id="pagination" class="custom-paginationjs"></div>
+        </section>
       <div class="ad-banner ad-banner2">
         <a href="#" class="btn-close"></a>
       </div>
@@ -224,6 +228,15 @@
     <div th:replace="./fragments/main-footer.html"></div>
 
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
     <script type="text/javascript" th:src="@{/js/commons.js}"></script>
     <!--added header name to change-->
@@ -252,39 +265,59 @@
               type:"GET",
           }).done(function (fragment) {
               // $('#example tbody tr').replaceWith(data);
-              console.log(fragment.payload);
-              $('#payload').empty();
+
               var star_tag;
-              $.each(fragment.payload, function(key, value) {
-                  if(value.foodieLogRating == "A"){
-                      star_tag = '<div class="star-position"><img src="/images/ico-star-first.png"className="star-box"></div>'
-                  }else if(value.foodieLogRating == "AA"){
-                      star_tag = '<div class="star-position"><img src="/images/ico-star-second.png"className="star-box"></div>'
-                  }else {
-                      star_tag = '<div class="star-position"><img src="/images/ico-star-third.png"className="star-box"></div>'
+              let container = $('#pagination');
+              container.pagination({
+                  nextClass: 'next',
+                  classPrefix: 'custom-paginationjs',
+                  className: 'custom-paginationjs',
+                  showPageNumbers: true,
+                  showPrevious: false,
+                  showNext: true,
+                  showNavigator: false,
+                  showFirstOnEllipsisShow: false,
+                  showLastOnEllipsisShow: false,
+                  dataSource: fragment.payload,
+                  callback: function (data, pagination) {
+                      console.log(data + '99');
+                      $('#payload').empty();
+                      $('.pagination').remove();
+                      $.each(data, function(key, value) {
+
+                          if(value.foodieLogRating == "A"){
+                              star_tag = '<div class="star-position"><img src="/images/ico-star-first.png" className="star-box"></div>'
+                          }else if(value.foodieLogRating == "AA"){
+                              star_tag = '<div class="star-position"><img src="/images/ico-star-second.png" className="star-box"></div>'
+                          }else {
+                              star_tag = '<div class="star-position"><img src="/images/ico-star-third.png" className="star-box"></div>'
+                          }
+                          $("#payload").append("<li style=\"width: 47%\">\n" +
+                              "                  <a href='/shop?id='"+value.shopId + "&page=0" + ">\n" +
+                              "                      <div class=\"card-item\">\n" +
+                              "                          <div class=\"img\"></div>\n" +
+                              "                          <div class=\"card-data\">\n" +
+                              "                              <div class=\"name\">\n" +
+                              "                                  <div>" + value.shopName + "</div>\n" +
+                              "                                  <div class=\"categories\">\n" +
+                              "                                      <span>" + value.shopAlias + "|" + value.shopCharge + "</span>\n" +
+                              "                                  </div>\n" +
+                              "                              </div>\n" +
+                              "                              <ul class=\"info\">\n" +
+                              "                                  <li class=\"address\">" +  value.address + "</li>\n" +
+                              "                                  <li class=\"phone\">" + value.phone + "</li>\n" +
+                              "                                  <li class=\"description\">" + jQuery.trim(value.history).substring(0, 40).split(" ").slice(0, -1).join(" ") + "..." + "</li>\n" +
+                              "                              </ul>\n" +
+                              star_tag +
+                              "                          </div>\n" +
+                              "                      </div>\n" +
+                              "                  </a>\n" +
+                              "              </li>");
+                      });
                   }
-                  $("#payload").append("<li style=\"width: 47%\">\n" +
-                      "                  <a href='/shop?id='"+value.shopId + "&page=0" + ">\n" +
-                      "                      <div class=\"card-item\">\n" +
-                      "                          <div class=\"img\"></div>\n" +
-                      "                          <div class=\"card-data\">\n" +
-                      "                              <div class=\"name\">\n" +
-                      "                                  <div>" + value.shopName + "</div>\n" +
-                      "                                  <div class=\"categories\">\n" +
-                      "                                      <span>" + value.tag + "</span>\n" +
-                      "                                  </div>\n" +
-                      "                              </div>\n" +
-                      "                              <ul class=\"info\">\n" +
-                      "                                  <li class=\"address\">" +  value.address + "</li>\n" +
-                      "                                  <li class=\"phone\">" + value.phone + "</li>\n" +
-                      "                                  <li class=\"description\">" + jQuery.trim(value.history).substring(0, 40).split(" ").slice(0, -1).join(" ") + "..." + "</li>\n" +
-                      "                              </ul>\n" +
-                      star_tag +
-                      "                          </div>\n" +
-                      "                      </div>\n" +
-                      "                  </a>\n" +
-                      "              </li>");
-              });
+              })
+
+
           });
       }
     </script>
@@ -336,6 +369,53 @@
               top: -4px;
               margin: 4px 15px 9px 0px;
               float: right;
+          }
+          .custom-paginationjs{
+              display:flex;
+              display:-webkit-flex;
+              justify-content:center;
+              align-items:center
+          }
+          .custom-paginationjs a{
+              width:20px;
+              height:20px;
+              margin:0 4px;
+              line-height:18px;
+              opacity:.5;
+              font-size:14px;
+              font-weight:300;
+              text-align:center;
+              color:#707070
+          }
+          .paginationjs .paginationjs-pages li.active>a {
+              height: 30px;
+              line-height: 30px;
+              color: black;
+              background: white !important;
+              opacity: 1 !important;
+          }
+          .custom-paginationjs li {
+              border: 0px solid white !important;
+          }
+          .custom-paginationjs .custom-paginationjs-ellipsis{
+              display: none !important;
+          }
+          .custom-paginationjs a.active{
+              opacity:1;
+              color:#000
+          }
+          .custom-paginationjs a.next,.custom-paginationjs a.prev{
+              width:24px;
+              height:24px;
+              opacity:1
+          }
+          .custom-paginationjs a.prev{
+              background:url('/images/ico-page-prev.png') 0 0 no-repeat;
+              /*opacity: 0;*/
+          }
+          .paginationjs .paginationjs-pages li:last-child {
+              background:url('/images/ico-page-next.png') 0 0 no-repeat;
+              /*opacity: 0;*/
           }
       </style>
   </div>

@@ -1,7 +1,6 @@
 package kr.foodie.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.foodie.config.security.auth.AuthUserDetails;
 import kr.foodie.domain.shop.HashTag;
 
@@ -9,7 +8,6 @@ import kr.foodie.domain.shop.Region;
 import kr.foodie.domain.shop.Shop;
 import kr.foodie.service.*;
 import lombok.RequiredArgsConstructor;
-import net.minidev.json.JSONObject;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import org.springframework.stereotype.Controller;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @Controller
@@ -118,14 +114,43 @@ public class ShopController {
         return null;
     }
 
+//    public List<Shop> containsName(final List<Shop> list, final String name){
+//        return list.stream().filter(o -> o.getThemeList().contains(name)).findFirst();
+//    }
+
     @ResponseBody
     @GetMapping(value ="/filter/shop")
-    public Map<String, List> filterShopInfos(@RequestParam(value = "regionId") Integer regionId, @RequestParam(value = "regionType") String regionType, @RequestParam(value = "filter") String filterItems) {
+    public Map<String, List> filterShopInfos(@RequestParam(value = "regionId") Integer regionId, @RequestParam(value = "regionType") String regionType, @RequestParam(value = "filter") String filterItems, Model model) {
         Map<String, List> results = new HashMap<>();
         String shopTypeId = regionType.equals("red") ? "0" : "1";
-        List<Shop> filtertList;
-        filtertList = shopService.getFilterShopList(shopTypeId, regionId, filterItems);
-        results.put("payload", filtertList);
+        List<Shop> filterList;
+        List<Shop> resultFilterList = new ArrayList<>();
+        String[] items = filterItems.split(",");
+
+        if(items.length > 0) {
+            filterList = shopService.getFilterShopList(shopTypeId, regionId, items[0]);
+            if (items.length > 1) {
+                for (int i = 1; i < items.length; i++) {
+                    for (int j = 0; j < filterList.size(); j++) {
+                        if (filterList.get(j).getThemeList().contains(items[i])) {
+                            resultFilterList.add(filterList.get(j));
+                        }
+                    }
+                }
+                results.put("payload", resultFilterList);
+            }else{
+                filterList = shopService.getFilterShopList(shopTypeId, regionId, items[0]);
+                results.put("payload", filterList);
+            }
+        }else{
+            filterList = shopService.getFilterShopList(shopTypeId, regionId, null);
+            results.put("payload", filterList);
+        }
+
+//        int size = filterList.size();
+
+//        model.addAttribute("paginations", paginationService.getPagination(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
+//        model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
 
 //        List<Shop> commentList;
 

@@ -43,6 +43,12 @@ public class Shop {
     @Column(name = "SHOP_PAID")
     private String shopPaid;
 
+    @Column(name = "SHOP_ALIAS")
+    private String shopAlias;
+
+    @Column(name = "SHOP_CHARGE")
+    private String shopCharge;
+
     @Column(name = "SHOP_NAME")
     private String shopName;
 
@@ -83,7 +89,7 @@ public class Shop {
     private String isParking;
 
     @Column(name = "FOODIELOG_RATING")
-    private String foodieLogRating;
+    private String foodieLogRating="";
 
     @Column(name = "TASTE_RATING")
     private String tasteRating;
