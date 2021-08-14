@@ -143,24 +143,30 @@
         <div class="right-area" style="width: 803px;">
           <ul class="card-list-wrapper">
             <!-- Card item -->
+            <!--
+
+             <li th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '오감 평점('+${payload[0].tasteRating}+'점)' : '오감 평점(없음)'"></li>
+             -->
             <li th:object="${shop}" th:each="shop : ${redCommentList}" style="margin: 26px 5px 0px 0px;">
               <a th:href="'shop?id='+${shop.shopId}+'&page=0'">
                 <div class="card-item" style="width: 265px">
-                  <div class="img"></div>
+                  <div class="img" th:style="'background-image:url('+${shop.shopImage}+'); background-size:cover;'"></div>
                   <div class="card-data">
                     <div class="name">
                       <div class="hide-text-1" th:text="${shop.shopName}"></div>
                       <div class="categories">
-                        <span class="hide-text-1" th:text="${shop.tag.length>0} ? ${shop.tag}:''">한식</span>
+                        <span class="hide-text-1" th:text="${not #strings.isEmpty(shop.tag)} ? ${shop.tag}:''" style="height: 12px; margin-top: 5px;">한식</span>
                       </div>
                     </div>
                     <ul class="info">
                       <li class="address" th:text="${shop.address}"></li>
-<!--                      <li class="phone" th:text="${shop.phone}"></li>-->
-<!--                      <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">-->
+                      <!--
+                      <li class="phone" th:text="${shop.phone}"></li>
+                      <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">
+                      -->
                     </ul>
 
-                    <th:block th:if="${shop.foodieLogRating.length > 0}">
+                    <th:block th:if="${not #strings.isEmpty(shop.foodieLogRating)}">
                       <th:block th:switch="${shop.foodieLogRating}">
                         <div th:case="A" class="star-position"><img src="../images/ico-star-first.png" class="star-box"></div>
                         <div th:case="AA" class="star-position"><img src="../images/ico-star-second.png" class="star-box"></div>
@@ -192,21 +198,23 @@
             <li th:object="${shop}" th:each="shop : ${greenCommentList}" style="margin:26px 5px 0px 0px;">
               <a th:href="'shop?id='+${shop.shopId}+'&page=0'">
                 <div class="card-item" style="width: 265px">
-                  <div class="img"></div>
+                  <div class="img" th:style="'background-image:url('+${shop.shopImage}+'); background-size:cover;'"></div>
                   <div class="card-data">
                     <div class="name">
                       <div class="hide-text-1" th:text="${shop.shopName}"></div>
                       <div class="categories">
-                        <span class="hide-text-1" th:text="${shop.tag.length>0} ? ${shop.tag}:''">한식</span>
+                        <span class="hide-text-1" th:text="${not #strings.isEmpty(shop.tag)} ? ${shop.tag}:''" style="height: 12px; margin-top: 5px;">한식</span>
                       </div>
                     </div>
                     <ul class="info">
                       <li class="address" th:text="${shop.address}"></li>
-                      <!--                      <li class="phone" th:text="${shop.phone}"></li>-->
-                      <!--                      <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">-->
+                      <!--
+                      <li class="phone" th:text="${shop.phone}"></li>
+                      <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">
+                      -->
                     </ul>
 
-                    <th:block th:if="${shop.foodieLogRating.length > 0}">
+                    <th:block th:if="${not #strings.isEmpty(shop.foodieLogRating)}">
                       <th:block th:switch="${shop.foodieLogRating}">
                         <div th:case="A" class="star-position"><img src="../images/ico-star-first.png" class="star-box"></div>
                         <div th:case="AA" class="star-position"><img src="../images/ico-star-second.png" class="star-box"></div>
@@ -282,18 +290,20 @@
           ul.appendChild(li);
 
           var rating = element.foodieLogRating;
-          var tag = element.tag.length > 0 ? element.tag : '';
+          var tag = element.tag ? element.tag : '';
 
+          //<div class="img" th:style="'background-image:url('+${shop.shopImage}+'); background-size:contain;'"></div>
           if(rating == null || rating == ''){
             li.innerHTML= li.innerHTML
                     + "<a href='/shop?id=" + element.shopId + "&page=0'>"
                     +   "<div class=\"card-item\">"
-                    +     "<div class=\"img\"></div>"
+                    +     "<div class=\"img\" style=\"background-image:url(" + element.shopImage + "); background-size:cover;\">"
+                    +     "</div>"
                     +     "<div class=\"card-data\">"
                     +     "<div class=\"name\">"
                     +       "<div class=\"hide-text-1\">" + element.shopName + "</div>"
                     +       "<div class=\"categories\">"
-                    +           "<span class=\"hide-text-1\">" + tag + "</span>"
+                    +           "<span class=\"hide-text-1\" style=\"height: 12px; margin-top: 5px;\">" + tag + "</span>"
                     +       "</div>"
                     +     "</div>"
                     +     "<ul class=\"info\">"
@@ -320,12 +330,13 @@
           li.innerHTML= li.innerHTML
                   + "<a href='/shop?id=" + element.shopId + "&page=0'>"
                   +   "<div class=\"card-item\">"
-                  +     "<div class=\"img\"></div>"
+                  +     "<div class=\"img\" style=\"background-image:url(" + element.shopImage + "); background-size:cover;\">"
+                  +     "</div>"
                   +     "<div class=\"card-data\">"
                   +     "<div class=\"name\">"
                   +       "<div class=\"hide-text-1\">" + element.shopName + "</div>"
                   +       "<div class=\"categories\">"
-                  +           "<span class=\"hide-text-1\">" + tag + "</span>"
+                  +           "<span class=\"hide-text-1\" style=\"height: 12px; margin-top: 5px;\">" + tag + "</span>"
                   +       "</div>"
                   +     "</div>"
                   +     "<ul class=\"info\">"
@@ -360,18 +371,19 @@
           ul.appendChild(li);
 
           var rating = element.foodieLogRating;
-          var tag = element.tag.length > 0 ? element.tag : '';
+          var tag = element.tag ? element.tag : '';
 
           if(rating == null || rating == ''){
             li.innerHTML= li.innerHTML
                     + "<a href='/shop?id=" + element.shopId + "&page=0'>"
                     +   "<div class=\"card-item\">"
-                    +     "<div class=\"img\"></div>"
+                    +     "<div class=\"img\" style=\"background-image:url(" + element.shopImage + "); background-size:cover;\">"
+                    +     "</div>"
                     +     "<div class=\"card-data\">"
                     +     "<div class=\"name\">"
                     +       "<div class=\"hide-text-1\">" + element.shopName + "</div>"
                     +       "<div class=\"categories\">"
-                    +           "<span class=\"hide-text-1\">" + tag + "</span>"
+                    +           "<span class=\"hide-text-1\" style=\"height: 12px; margin-top: 5px;\">" + tag + "</span>"
                     +       "</div>"
                     +     "</div>"
                     +     "<ul class=\"info\">"
@@ -398,12 +410,13 @@
           li.innerHTML= li.innerHTML
                   + "<a href='/shop?id=" + element.shopId + "&page=0'>"
                   +   "<div class=\"card-item\">"
-                  +     "<div class=\"img\"></div>"
+                  +     "<div class=\"img\" style=\"background-image:url(" + element.shopImage + "); background-size:cover;\">"
+                  +     "</div>"
                   +     "<div class=\"card-data\">"
                   +     "<div class=\"name\">"
                   +       "<div class=\"hide-text-1\">" + element.shopName + "</div>"
                   +       "<div class=\"categories\">"
-                  +           "<span class=\"hide-text-1\">" + tag + "</span>"
+                  +           "<span class=\"hide-text-1\" style=\"height: 12px; margin-top: 5px;\">" + tag + "</span>"
                   +       "</div>"
                   +     "</div>"
                   +     "<ul class=\"info\">"

@@ -71,6 +71,11 @@ function onClickInquiryPswd(){
                 document.getElementById("success-section").style.display = "block";
                 send_msg.style.color = "#440fd3";
                 send_msg.innerText = "입력하신 메일로 6자리 인증코드가 발송되었습니다. \(유효시간 10분\)";
+
+                $('#receive-code-btn').on("click", function(e){
+                    e.preventDefault();
+                });
+                document.getElementById("receive-code-btn").style.cursor = "default";
             }
         },
         error: function(status, error){
@@ -174,3 +179,15 @@ function oninputCode(){
 }
 function oninputPassword1(){$('#error-password1-msg').text("");}
 function oninputPassword2(){$('#error-password2-msg').text("");}
+
+function onblurPhone(){
+    //replace hyphen to space
+    var phone = document.getElementById("user-phone").value.replace(/\-/g,'');
+    var reg = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
+
+    if(phone.length == 0){return false;}
+    if(reg.test(phone) ==  false){ return false;}
+
+    //Adding hyphen to value
+    document.getElementById("user-phone").value = phone.replace(/(^02.{0}|^01.{1}|[0-9]{3)([0-9]+)([0-9]{4})/,"$1-$2-$3");
+}

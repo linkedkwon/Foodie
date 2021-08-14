@@ -62,15 +62,15 @@
                             <div class="col2">
                                 <div class="th">휴대전화</div>
                                 <div class="td">
-                                    <input type="text" id="user-phone" name="phone-num" oninput="oninputPhone()"/>
+                                    <input type="text" id="user-phone" name="phone-num" oninput="oninputPhone()" onblur="onblurPhone()"/>
                                     <a href="javascript:void(0);" class="btn-sm" id="receive-code-btn" onclick="onClickInquiryPswd()">인증코드 전송</a>
                                     <div class="error-next-box" id="error-phone-msg"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="row-msg">
-                            <div class="col2" style="margin: 0 auto;">
-                                <div class="error-inquiry-box" id="error-inquiry-msg"></div>
+                            <div class="col">
+                                <div class="error-inquiry-box" id="error-inquiry-msg" style="margin: 0 auto; font-size: 13px;"></div>
                             </div>
                         </div>
                         <div class="success-section" id="success-section">
@@ -86,7 +86,7 @@
                             </div>
 
                             <div class="row-code-msg">
-                                <div class="col">
+                                <div class="col2">
                                     <div class="error-next-box" id="send-msg"></div>
                                 </div>
                             </div>
