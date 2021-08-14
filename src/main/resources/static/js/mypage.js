@@ -179,15 +179,12 @@ function checkPhoneValidation(){
 }
 
 function checkFormBeforeEdit(){
-    //1. 체크박스 값 히든에 박기
-    //2. 주소 합성해서 넣기
 
     var list = [checkName(), checkPassword(),
         matchPassword(), checkTel(), checkPhone(),
         checkAddress()];
 
     var phoneMsg = document.getElementById("phone-msg");
-
     //email phone validation checked
     var flagCnt = 0;
 
@@ -200,7 +197,10 @@ function checkFormBeforeEdit(){
     if(flagCnt > 0)
         return;
 
-    if(list.includes(false)) return;
+    for(var i=0; i<list.length;i++){
+        if(list[i] == false)
+            return;
+    }
 
     composeAddress();
     setReceivingInfo();
@@ -278,7 +278,7 @@ function oninputAddress(){$('#address-msg').text('');}
 
 function clickChangePhoneBtn(){
     document.getElementById("phone-modify-btn").style.display='none';
-    document.getElementById("phone-check").style.display='initial';
+    document.getElementById("phone-check").style.display='inline-block';
     $('#user-phone').attr('disabled', false);
     validationPhoneChecked = false;
 }

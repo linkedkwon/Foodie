@@ -50,7 +50,6 @@ function checkMailValidation(){
             if(data == 1){
                 msg.style.color = "#FF0000";
                 msg.innerText = "이미 사용 중인 메일입니다.";
-                email.innerText = "";
             }
             else{
                 msg.style.color = "#440fd3";
@@ -124,7 +123,7 @@ function checkPhone(){
     var reg = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
     var msg = document.getElementById("phone-msg");
 
-    if(phone.length == 0){ msg.innerText ="필수 정보입니다."; return false;}
+    if(phone.length == 0){return false;}
     if(reg.test(phone) ==  false){ msg.innerText ="형식에 맞지 않는 번호입니다."; return false;}
 
 
@@ -208,11 +207,16 @@ function checkInfoReceived(){
     var email_flag = false;
     var sns_flag = false;
 
-    email_radio.forEach(function(e){ if(e.checked == true){ email_flag = true;}});
+    var emailChecked = $('input[name=email_receiving]').is(':checked');
+
+    if(emailChecked) email_flag = true;
+
     if(email_flag) msg1.innerText = "";
     else msg1.innerText = "수신 여부를 체크해주세요.";
 
-    sns_radio.forEach(function(e){ if(e.checked == true){ sns_flag = true}});
+    var snsChecked = $('input[name=sns_receiving]').is(':checked');
+    if(snsChecked) sns_flag = true;
+
     if(sns_flag) msg2.innerText = "";
     else msg2.innerText = "수신 여부를 체크해주세요.";
 
@@ -229,15 +233,8 @@ function composeAddress(){
 
 //convert radio value to string
 function convertRadioToVO(){
-    var email_radio = document.getElementsByName("email_receiving");
-    var sns_radio = document.getElementsByName("sns_receiving");
-
-    email_radio.forEach(function(e){
-        if(e.checked == true) document.getElementById("email-receiving-value").value = e.value;
-    });
-    sns_radio.forEach(function(e){
-        if(e.checked == true) document.getElementById("sns-receiving-value").value = e.value;
-    });
+    document.getElementById("email-receiving-value").value = $('input[name=email_receiving]:checked').val();
+    document.getElementById("sns-receiving-value").value = $('input[name=sns_receiving]:checked').val();
 }
 
 /**
@@ -245,8 +242,6 @@ function convertRadioToVO(){
  * Radio button handled on this
  */
 function checkFormBeforeSubmit(){
-    convertRadioToVO();
-
     var list = [checkName(), checkMail(), checkPassword(),
                 matchPassword(), checkTel(), checkPhone(),
                 checkAddress(), checkInfoReceived()];
@@ -272,8 +267,10 @@ function checkFormBeforeSubmit(){
         return;
 
     //data checked
-    if(list.includes(false)) return;
-
+    for(var i=0; i<list.length;i++){
+        if(list[i] == false)
+            return;
+    }
     //compose address[post-code + address + detail address] and convert radio value to string
     composeAddress();
     convertRadioToVO();

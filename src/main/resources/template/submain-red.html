@@ -116,14 +116,14 @@
                 <div class="card-item">
                   <div class="img"></div>
                   <div class="card-data">
-                    <div class="name">
+                    <div class="name" style="width: 380px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                       <div class="hide-text-2" th:text="${shop.shopName}"></div>
                       <div class="categories">
-                        <span class="hide-text-2" th:text="${shop.tag}">한식</span>
+                        <span class="hide-text-2" th:text="${shop.tag}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
                       </div>
                     </div>
                     <ul class="info">
-                      <li class="address" th:text="${shop.address}" style="width: 280px;"></li>
+                      <li class="address" th:text="${shop.address}" style="width: 380px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></li>
                       <li class="phone" th:text="${shop.phone}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></li>
                         <li class="description" th:text="${#strings.abbreviate(shop.history,30)}"></li>
                     </ul>

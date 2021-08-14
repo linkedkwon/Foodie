@@ -116,13 +116,13 @@
                   <div class="img"></div>
                   <div class="card-data">
                     <div class="name">
-                      <div class="hide-text-2" th:text="${shop.shopName}"></div>
+                      <div class="hide-text-2" th:text="${shop.shopName}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></div>
                       <div class="categories">
-                        <span class="hide-text-2" th:text="${shop.tag}">한식</span>
+                        <span class="hide-text-2" th:text="${shop.tag}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">한식</span>
                       </div>
                     </div>
                     <ul class="info">
-                      <li class="address" th:text="${shop.address}" style="width: 280px;"></li>
+                      <li class="address" th:text="${shop.address}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></li>
                       <li class="phone" th:text="${shop.phone}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></li>
                       <li class="description" th:text="${#strings.abbreviate(shop.history,40)}"></li>
                     </ul>
@@ -176,7 +176,7 @@
            th:text="${item.idx}" th:class="${item.classValue}"></a>
         <th:block th:if="${btnUrls.get('next') != 'javascript:void(0)'}">
           <a th:href="${btnUrls.get('next')}" class="next"></a>
-        </th:block>
+        </th:block>\
         <th:block th:if="${btnUrls.get('next') == 'javascript:void(0)'}">
           <div style="width: 20px"></div>
         </th:block>
