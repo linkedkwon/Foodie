@@ -41,7 +41,7 @@
                 <ul class="my-comments">
                     <li class="title-group">
                         <div>제목</div>
-                        <div>내용</div>
+                        <div style="flex: 0 0 300px;">내용</div>
                         <div>작성일시</div>
                         <div style="margin-left: 5px;">답변여부</div>
                     </li>
@@ -66,7 +66,7 @@
                                     <a class="best-div-mypage" style="margin-left: 0px; line-height: 3.7; left: -15px;">답변완료</a>
                                 </th:block>
                                 <th:block th:if="${item.comment.length == 0}">
-                                    <div class="score" style="width: 50px; margin-top: 15px;">대기중</div>
+                                    <div class="score" style="width: 50px; margin-top: 15px; font-size: 12px;">대기중</div>
                                 </th:block>
                             </div>
                             <a href="javascript:void(0)" class="delete-btn" th:onclick="|javascript:deleteInquiry('${item.inquiryId}')|" style="width: 48px; margin-left: 10px">

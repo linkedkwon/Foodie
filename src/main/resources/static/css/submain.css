@@ -326,7 +326,7 @@
 }
 
 .list-section .right-area dl dd .info {
-    margin-bottom: 12px
+    margin-bottom: 10px
 }
 
 .list-section .right-area dl dd .info::after {
@@ -366,6 +366,7 @@
 }
 
 .list-section .right-area dl dd .img {
+    width: 264px;
     height: 176px;
     background: #ddd
 }

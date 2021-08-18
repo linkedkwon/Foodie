@@ -32,25 +32,23 @@
                     <div class="filter-header">
                         <div class="left-area">
                             <div class="addr-info">
-                                <span th:text="${regionInfo[0].getProvinceName()}"></span>
-                                <span th:text="${regionInfo[0].getDistrictName()}"></span>
-                                <span th:if="${regionInfo[0].getSubwayName() != null}" th:text="${regionInfo[0].getSubwayName()}"></span>
+                                <span th:text="${keyword}">
                             </div>
                             <ul class="menu-link">
                                 <li class="tab-red">
-                                    <a id="red" th:href="@{/shop/region/{regionId}/red(regionId=${regionInfo[0].regionId})}" class="active">레드 리스트</a>
+                                    <a id="red" th:href="@{'/filter/Allshop?filter' + ${keyword} + '&shopType=red'}" class="active">레드 리스트</a>
                                 </li>
                                 <li class="tab-green">
-                                    <a id="blue" th:href="@{/shop/region/{regionId}/green(regionId=${regionInfo[0].regionId})}">그린 리스트</a>
+                                    <a id="blue" th:href="@{'/filter/Allshop?filter' + ${keyword} + '&shopType=green'}">그린 리스트</a>
                                 </li>
                             </ul>
                         </div>
-                        <div class="right-area">
+                        <!--<div class="right-area">
                             <div class="filter-wrapper">
                                 <a href="#" class="filter-btn">필터설정</a>
                                 <div class="filter-body-layer">
                                     <p>나의 상황에 맞는 필터를 선택해보세요.</p>
-                                    <input type="hidden" id="regionId" th:value="${regionInfo[0].regionId}">
+                                    <input type="hidden" id="regionId" th:value="${keyword}">
                                     <input type="hidden" id="regionType" value="red">
                                     <ul id="filter_theme">
                                         <li th:object="${theme}" th:each="theme : ${themeList}">
@@ -62,40 +60,8 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
-
-                    <!-- filter-header END -->
-                    <ul class="card-list-wrapper">
-                        <!-- Card item -->
-                        <li th:object="${shop}" th:each="shop : ${priority}">
-                            <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
-                                <div class="card-item">
-                                    <img class="img" th:src="${shop.shopImage}">
-
-                                    <div class="card-data">
-                                        <div class="name">
-                                            <div class="hide-text-1" th:text="${shop.shopCharge}"></div>
-                                                <div class="categories">
-                                                    <span class="hide-text-1" th:text="${shop.tag}"></span>
-                                                </div>
-                                            </div>
-                                            <ul class="info">
-                                                <li class="address" th:text="${shop.address}" style="width: 200px;"></li>
-                                                <li class="phone" th:text="${shop.phone}" style="width: 200px;"></li>
-                                                <li class="description" th:text="${#strings.abbreviate(shop.history,30)}"></li>
-                                            </ul>
-
-                                        <th:block th:switch="${shop.foodieLogRating}">
-                                            <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
-                                            <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
-                                            <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
-                                        </th:block>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
                 </div>
             </div>
             <!-- 주요지역 추천맛집 END -->
@@ -104,134 +70,37 @@
                 <a href="#" class="btn-close"></a>
             </div>
 
-            <div th:if="${sidePriority.size() > 0 }"  class="list-section">
-                <div class="left-area">
-                    <ul id="payload" >
-                        <li style="width: 46%" th:object="${shop}" th:each="shop : ${payload}">
-                            <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
-                                <div class="card-item">
-                                    <div class="img"></div>
-                                    <div class="card-data">
-                                        <div class="name" style="width: 380px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                            <div class="hide-text-2" th:text="${shop.shopCharge}"></div>
-                                            <div class="categories">
-                                                <span class="hide-text-2" th:text="${shop.tag}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
-                                            </div>
-                                        </div>
-                                        <ul class="info">
-                                            <li class="address" th:text="${shop.address}" style="width: 380px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></li>
-                                            <li class="phone" th:text="${shop.phone}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></li>
-                                            <li class="description" th:text="${#strings.abbreviate(shop.history,30)}"></li>
-                                        </ul>
-                                        <th:block th:switch="${shop.foodieLogRating}">
-                                            <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
-                                            <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
-                                            <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
-                                        </th:block>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="right-area">
-                    <dl th:object="${shop}" th:each="shop : ${sidePriority}">
-                        <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
-                            <dt style="    padding-bottom: 27px;">
-                                <div class="info">
-                                    <span class="name" th:text="${shop.shopCharge}"></span>
-                                </div>
-                                <div style="float: right;color: #c73425;font-size: 15px;">
-                                    <span class="name" th:text="${shop.shopAlias}"></span> |
-                                    <span class="name" th:text="${shop.shopCharge}"></span>
-                                </div>
-                            </dt>
-                            <dd>
-                                <div class="info">
-                                    <span style="float:left" class="address" th:text="${shop.address}"></span>
-                                </div>
-                                <img class="img" th:src="${shop.shopImage}">
-                                <!--                  <th:block th:switch="${shop.foodieLogRating}">-->
-                                <!--                      <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>-->
-                                <!--                      <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>-->
-                                <!--                      <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>-->
-                                <!--                  </th:block>-->
-                            </dd>
-                        </a>
-                    </dl>
-                </div>
-                <!--<dl th:object="${shop}" th:each="shop : ${sidePriority}">
-                    <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
-                        <dt style="    padding-bottom: 27px;">
-                            <div class="info">
-                                <span class="name" th:text="${shop.shopName}"></span>
-                            </div>
-                            <div style="float: right;color: #c73425;font-size: 15px;">
-                                <span class="name" th:text="${shop.shopAlias}"></span>
-                                <span class="name" th:text="${shop.shopCharge}"></span>
-                            </div>
-                        </dt>
-                        <dd>
-                            <div class="info">
-                                <span style="float:left" class="address" th:text="${shop.address}"></span>
-                            </div>
-                        </dd>
-                    </a>
-                </dl>-->
-            </div>
-
-
-            <div th:unless="${sidePriority.size() > 0 }" class="list-section"  style="width: 1130px;">
+            <div class="list-section"  style="width: 1130px;">
                 <div class="left-area" style="width: 100%;">
-                    <ul id="payload">
-                        <li style="width: 47%" th:object="${shop}" th:each="shop : ${payload}">
-                            <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
-                                <div class="card-item">
-                                    <div class="img"></div>
-                                    <div class="card-data">
-                                        <div class="name">
-                                            <div class="hide-text-2" th:text="${shop.shopCharge}"></div>
-                                            <div class="categories">
-                                                <span class="hide-text-2" th:text="${shop.tag}">한식</span>
+                        <ul id="payload">
+                            <li style="width: 47%" th:object="${shop}" th:each="shop : ${payload}">
+                                <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
+                                    <div class="card-item">
+                                        <div class="img"></div>
+                                        <div class="card-data">
+                                            <div class="name">
+                                                <div class="hide-text-2" th:text="${shop.shopCharge}"></div>
+                                                <div class="categories">
+                                                    <span class="hide-text-2" th:text="${shop.tag}">한식</span>
+                                                </div>
                                             </div>
+                                            <ul class="info">
+                                                <li class="address" th:text="${shop.address}" style="width: 280px;"></li>
+                                                <li class="phone" th:text="${shop.phone}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></li>
+                                                <li class="description" th:text="${#strings.abbreviate(shop.history,30)}"></li>
+                                            </ul>
+                                            <th:block th:switch="${shop.foodieLogRating}">
+                                                <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
+                                                <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
+                                                <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
+                                            </th:block>
                                         </div>
-                                        <ul class="info">
-                                            <li class="address" th:text="${shop.address}" style="width: 280px;"></li>
-                                            <li class="phone" th:text="${shop.phone}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></li>
-                                            <li class="description" th:text="${#strings.abbreviate(shop.history,30)}"></li>
-                                        </ul>
-                                        <th:block th:switch="${shop.foodieLogRating}">
-                                            <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
-                                            <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
-                                            <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
-                                        </th:block>
                                     </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
             </div>
-
-            <div class="pagination" >
-                <th:block th:if="${btnUrls.get('prev') != 'javascript:void(0)'}">
-                    <a th:href="${btnUrls.get('prev')}" class="prev"></a>
-                </th:block>
-                <th:block th:if="${btnUrls.get('prev') == 'javascript:void(0)'}">
-                    <div style="width: 20px"></div>
-                </th:block>
-                <a th:each="item : ${paginations}" th:href="${item.path}"
-                   th:text="${item.idx}" th:class="${item.classValue}"></a>
-                <th:block th:if="${btnUrls.get('next') != 'javascript:void(0)'}">
-                    <a th:href="${btnUrls.get('next')}" class="next"></a>
-                </th:block>
-                <th:block th:if="${btnUrls.get('next') == 'javascript:void(0)'}">
-                    <div style="width: 20px"></div>
-                </th:block>
-            </div>
-            <section>
-                <div id="pagination" class="custom-paginationjs"></div>
-            </section>
             <div class="ad-banner ad-banner2">
                 <a href="#" class="btn-close"></a>
             </div>

@@ -28,6 +28,18 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
     @Query(value="select * from shop where shop_type=?1 and region_id=?2 and theme_list like %?3%", nativeQuery = true)
     List<Shop> findByShopTypeAndRegionAndThemeList(String shopTypeId, Integer regionId, String Filter);
 
+    // search - 가게이름
+    @Query(value="select * from shop where shop_type=?1 and shop_name like %?2%", nativeQuery = true)
+    List<Shop> findByShopTypeAndShopName(String shopTypeId, String Filter);
+
+    // search - 내용
+    @Query(value="select * from shop where shop_type=?1 and history like %?2%", nativeQuery = true)
+    List<Shop> findByShopTypeAndHistory(String shopTypeId, String Filter);
+
+    // search - 주소
+    @Query(value="select * from shop where shop_type=?1 and address like %?2%", nativeQuery = true)
+    List<Shop> findByShopTypeAndAddress(String shopTypeId, String Filter);
+
 
     Optional<Integer> countByRegionIdAndShopType(Integer regionId, String shopType);
 
