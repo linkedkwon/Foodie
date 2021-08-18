@@ -16,408 +16,447 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/submain.css}" />
 </head>
 <body>
-  <div id="app">
+    <div id="app">
+        <!-- header -->
+        <div th:replace="./fragments/main-header.html :: type('header-red', '')"/>
 
-    <!-- header -->
-      <div th:replace="./fragments/main-header.html :: type('header-red', '')"/>
-
-    <!-- Contents -->
-    <div id="contents">
-      <div class="main-banner">
-          <img class="mySlides" src="/images/red-name@2x.png" style="width: 100%;height: 100%;">
-      </div>
-
-      <!-- 주요지역 추천맛집 -->
-      <div class="main-section">
-        <div class="inner">
-          <div class="filter-header">
-            <div class="left-area">
-              <div class="addr-info">
-<!--                <span>지역별</span>-->
-                <span th:text="${regionInfo[0].getProvinceName()}"></span>
-                <span th:text="${regionInfo[0].getDistrictName()}"></span>
-                <span th:if="${regionInfo[0].getSubwayName() != null}" th:text="${regionInfo[0].getSubwayName()}"></span>
-              </div>
-
-              <ul class="menu-link">
-                <li class="tab-red">
-<!--                    <span th:text="${location}"></span>-->
-                    <a id="red" th:href="@{/shop/region/{regionId}/red(regionId=${regionInfo[0].regionId})}" class="active">레드 리스트</a>
-                </li>
-                <li class="tab-green">
-                    <a id="blue" th:href="@{/shop/region/{regionId}/green(regionId=${regionInfo[0].regionId})}">그린 리스트</a>
-                </li>
-              </ul>
+        <!-- Contents -->
+        <div id="contents">
+            <div class="main-banner">
+                <img class="mySlides" src="/images/red-name@2x.png" style="width: 100%;height: 100%;">
             </div>
 
-            <div class="right-area">
-              <div class="filter-wrapper">
-                <a href="#" class="filter-btn">필터설정</a>
-                <div class="filter-body-layer">
-                  <p>나의 상황에 맞는 필터를 선택해보세요.</p>
-                    <input type="hidden" id="regionId" th:value="${regionInfo[0].regionId}">
-                    <input type="hidden" id="regionType" value="red">
+            <!-- 주요지역 추천맛집 -->
+            <div class="main-section">
+                <div class="inner">
+                    <div class="filter-header">
+                        <div class="left-area">
+                            <div class="addr-info">
+                                <span th:text="${regionInfo[0].getProvinceName()}"></span>
+                                <span th:text="${regionInfo[0].getDistrictName()}"></span>
+                                <span th:if="${regionInfo[0].getSubwayName() != null}" th:text="${regionInfo[0].getSubwayName()}"></span>
+                            </div>
+                            <ul class="menu-link">
+                                <li class="tab-red">
+                                    <a id="red" th:href="@{/shop/region/{regionId}/red(regionId=${regionInfo[0].regionId})}" class="active">레드 리스트</a>
+                                </li>
+                                <li class="tab-green">
+                                    <a id="blue" th:href="@{/shop/region/{regionId}/green(regionId=${regionInfo[0].regionId})}">그린 리스트</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="right-area">
+                            <div class="filter-wrapper">
+                                <a href="#" class="filter-btn">필터설정</a>
+                                <div class="filter-body-layer">
+                                    <p>나의 상황에 맞는 필터를 선택해보세요.</p>
+                                    <input type="hidden" id="regionId" th:value="${regionInfo[0].regionId}">
+                                    <input type="hidden" id="regionType" value="red">
+                                    <ul id="filter_theme">
+                                        <li th:object="${theme}" th:each="theme : ${themeList}">
+                                            <a id="filter_anchor">
+                                                <label th:for="${theme.getThemeId()}" th:text="${theme.getName()}"></label>
+                                                <input type="checkbox" name="checkbox" th:id="${theme.getThemeId()}" th:value="${theme.getName()}">
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    <ul id="filter_theme">
-                        <li th:object="${theme}" th:each="theme : ${themeList}">
-                            <a id="filter_anchor">
-                                <label th:for="${theme.getThemeId()}" th:text="${theme.getName()}"></label>
-                                <input type="checkbox" name="checkbox" th:id="${theme.getThemeId()}" th:value="${theme.getName()}">
+                    <!-- filter-header END -->
+                    <ul class="card-list-wrapper">
+                        <!-- Card item -->
+                        <li th:object="${shop}" th:each="shop : ${priority}">
+                            <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
+                                <div class="card-item">
+                                    <img class="img" th:src="${shop.shopImage}">
+
+                                    <div class="card-data">
+                                        <div class="name">
+                                            <div class="hide-text-1" th:text="${shop.shopName}"></div>
+                                                <div class="categories">
+                                                    <span class="hide-text-1" th:text="${shop.tag}"></span>
+                                                </div>
+                                            </div>
+                                            <ul class="info">
+                                                <li class="address" th:text="${shop.address}" style="width: 200px;"></li>
+                                                <li class="phone" th:text="${shop.phone}" style="width: 200px;"></li>
+                                                <li class="description" th:text="${#strings.abbreviate(shop.history,30)}"></li>
+                                            </ul>
+
+                                        <th:block th:switch="${shop.foodieLogRating}">
+                                            <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
+                                            <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
+                                            <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
+                                        </th:block>
+                                    </div>
+                                </div>
                             </a>
                         </li>
                     </ul>
                 </div>
-              </div>
             </div>
-          </div>
-          <!-- filter-header END -->
+            <!-- 주요지역 추천맛집 END -->
 
-          <ul class="card-list-wrapper">
-            <!-- Card item -->
-            <li th:object="${shop}" th:each="shop : ${priority}">
-                <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
-                <div class="card-item">
-                  <img class="img" th:src="${shop.shopImage}"></img>
-                  <div class="card-data">
-                    <div class="name">
-                      <div class="hide-text-1" th:text="${shop.shopName}"></div>
-                      <div class="categories">
-                        <span class="hide-text-1" th:text="${shop.tag}"></span>
-                      </div>
-                    </div>
-                    <ul class="info">
-                      <li class="address" th:text="${shop.address}" style="width: 200px;"></li>
-                      <li class="phone" th:text="${shop.phone}" style="width: 200px;"></li>
-                      <li class="description" th:text="${#strings.abbreviate(shop.history,30)}"></li>
+            <div class="ad-banner ad-banner1">
+                <a href="#" class="btn-close"></a>
+            </div>
+
+            <div th:if="${sidePriority.size() > 0 }"  class="list-section">
+                <div class="left-area">
+                    <ul id="payload" >
+                        <li style="width: 46%" th:object="${shop}" th:each="shop : ${payload}">
+                            <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
+                                <div class="card-item">
+                                    <div class="img"></div>
+                                    <div class="card-data">
+                                        <div class="name">
+                                            <div th:text="${shop.shopName}"></div>
+                                            <div class="categories">
+                                                <span th:text="${shop.shopName}"></span>
+                                                <span th:text="${shop.shopAlias}"></span>
+                                                <span th:text="${shop.shopCharge}"></span>
+                                            </div>
+                                        </div>
+                                        <ul class="info">
+                                            <li class="address" th:text="${shop.address}"></li>
+                                            <li class="phone" th:text="${shop.phone}"></li>
+                                            <li class="description" th:utext="${#strings.abbreviate(shop.history,30)}"></li>
+                                        </ul>
+                                        <th:block th:switch="${shop.foodieLogRating}">
+                                            <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
+                                            <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
+                                            <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
+                                        </th:block>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
                     </ul>
-                    <th:block th:switch="${shop.foodieLogRating}">
-                      <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
-                      <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
-                      <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
-                    </th:block>
-                  </div>
                 </div>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <!-- 주요지역 추천맛집 END -->
+                <div class="right-area">
+                    <dl th:object="${shop}" th:each="shop : ${sidePriority}">
+                        <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
+                            <dt style="    padding-bottom: 27px;">
+                                <div class="info">
+                                    <span class="name" th:text="${shop.shopName}"></span>
+                                </div>
+                                <div style="float: right;color: #c73425;font-size: 15px;">
+                                    <span class="name" th:text="${shop.shopAlias}"></span>|
+                                    <span class="name" th:text="${shop.shopCharge}"></span>
+                                </div>
+                            </dt>
+                            <dd>
+                                <div class="info">
+                                    <span style="float:left" class="address" th:text="${shop.address}"></span>
+                                </div>녀
+                                <!--                  <th:block th:switch="${shop.foodieLogRating}">-->
+                                <!--                      <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>-->
+                                <!--                      <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>-->
+                                <!--                      <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>-->
+                                <!--                  </th:block>-->
+                            </dd>
+                        </a>
+                    </dl>
+                </div>
+                <!--<dl th:object="${shop}" th:each="shop : ${sidePriority}">
+                    <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
+                        <dt style="    padding-bottom: 27px;">
+                            <div class="info">
+                                <span class="name" th:text="${shop.shopName}"></span>
+                            </div>
+                            <div style="float: right;color: #c73425;font-size: 15px;">
+                                <span class="name" th:text="${shop.shopAlias}"></span>
+                                <span class="name" th:text="${shop.shopCharge}"></span>
+                            </div>
+                        </dt>
+                        <dd>
+                            <div class="info">
+                                <span style="float:left" class="address" th:text="${shop.address}"></span>
+                            </div>
+                        </dd>
+                    </a>
+                </dl>-->
+            </div>
 
-      <div class="ad-banner ad-banner1">
-        <a href="#" class="btn-close"></a>
-      </div>
 
-      <div class="list-section">
-        <div th:if="${sidePriority.size() > 0 }" class="left-area">
-          <ul id="payload">
-            <li th:object="${shop}" th:each="shop : ${payload}">
-                <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
-                <div class="card-item">
-                  <div class="img"></div>
-                  <div class="card-data">
-                    <div class="name">
-                      <div class="hide-text-2" th:text="${shop.shopName}"></div>
-                      <div class="categories">
-                        <span class="hide-text-2" th:text="${shop.tag}">한식</span>
-                      </div>
-                    </div>
-                    <ul class="info">
-                      <li class="address" th:text="${shop.address}" style="width: 280px;"></li>
-                      <li class="phone" th:text="${shop.phone}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></li>
-                        <li class="description" th:text="${#strings.abbreviate(shop.history,30)}"></li>
+            <div th:unless="${sidePriority.size() > 0 }" class="list-section"  style="width: 1130px;">
+                <div class="left-area" style="width: 100%;">
+                    <ul id="payload">
+                        <li style="width: 47%" th:object="${shop}" th:each="shop : ${payload}">
+                            <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
+                                <div class="card-item">
+                                    <div class="img"></div>
+                                    <div class="card-data">
+                                        <div class="name">
+                                            <div class="hide-text-2" th:text="${shop.shopName}"></div>
+                                            <div class="categories">
+                                                <span class="hide-text-2" th:text="${shop.tag}">한식</span>
+                                            </div>
+                                        </div>
+                                        <ul class="info">
+                                            <li class="address" th:text="${shop.address}" style="width: 280px;"></li>
+                                            <li class="phone" th:text="${shop.phone}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></li>
+                                            <li class="description" th:text="${#strings.abbreviate(shop.history,30)}"></li>
+                                        </ul>
+                                        <th:block th:switch="${shop.foodieLogRating}">
+                                            <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
+                                            <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
+                                            <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
+                                        </th:block>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
                     </ul>
-                    <th:block th:switch="${shop.foodieLogRating}">
-                        <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
-                        <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
-                        <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
-                    </th:block>
-                  </div>
                 </div>
-              </a>
-            </li>
-          </ul>
-        </div>
+            </div>
 
-        <div th:unless="${sidePriority.size() > 0 }" class="left-area" style="width: 100%">
-          <ul id="payload" >
-              <li style="width: 47%" th:object="${shop}" th:each="shop : ${payload}">
-                  <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
-                      <div class="card-item">
-                          <div class="img"></div>
-                          <div class="card-data">
-                              <div class="name">
-                                  <div th:text="${shop.shopName}"></div>
-                                  <div class="categories">
-                                      <span th:text="${shop.shopName}"></span>
-                                      <span th:text="${shop.shopAlias}"></span>
-                                      <span th:text="${shop.shopCharge}"></span>
-                                  </div>
-                              </div>
-                              <ul class="info">
-                                  <li class="address" th:text="${shop.address}"></li>
-                                  <li class="phone" th:text="${shop.phone}"></li>
-                                  <li class="description" th:utext="${#strings.abbreviate(shop.history,30)}"></li>
-                              </ul>
-                              <th:block th:switch="${shop.foodieLogRating}">
-                                  <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
-                                  <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
-                                  <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>
-                              </th:block>
-                          </div>
-                      </div>
-                  </a>
-              </li>
-          </ul>
+            <div class="pagination" >
+                <th:block th:if="${btnUrls.get('prev') != 'javascript:void(0)'}">
+                    <a th:href="${btnUrls.get('prev')}" class="prev"></a>
+                </th:block>
+                <th:block th:if="${btnUrls.get('prev') == 'javascript:void(0)'}">
+                    <div style="width: 20px"></div>
+                </th:block>
+                <a th:each="item : ${paginations}" th:href="${item.path}"
+                   th:text="${item.idx}" th:class="${item.classValue}"></a>
+                <th:block th:if="${btnUrls.get('next') != 'javascript:void(0)'}">
+                    <a th:href="${btnUrls.get('next')}" class="next"></a>
+                </th:block>
+                <th:block th:if="${btnUrls.get('next') == 'javascript:void(0)'}">
+                    <div style="width: 20px"></div>
+                </th:block>
+            </div>
+            <section>
+                <div id="pagination" class="custom-paginationjs"></div>
+            </section>
+            <div class="ad-banner ad-banner2">
+                <a href="#" class="btn-close"></a>
+            </div>
         </div>
+        <div class="foodie-illustration" style="background-size: contain"></div>
 
-        <div th:if="${sidePriority.size() > 0 }" class="right-area">
-          <dl th:object="${shop}" th:each="shop : ${sidePriority}">
-              <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
-              <dt style="    padding-bottom: 27px;">
-                  <div class="info">
-                    <span class="name" th:text="${shop.shopName}"></span>
-                  </div>
-                  <div style="float: right;color: #c73425;font-size: 15px;">
-                      <span class="name" th:text="${shop.shopAlias}"></span>
-                      <span class="name" th:text="${shop.shopCharge}"></span>
-                  </div>
-              </dt>
-              <dd>
-                <div class="info">
-                  <span style="float:left" class="address" th:text="${shop.address}"></span>
-                </div>
-<!--                  <th:block th:switch="${shop.foodieLogRating}">-->
-<!--                      <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>-->
-<!--                      <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>-->
-<!--                      <div th:case="AAA" class="star-position"><img src="/images/ico-star-third.png" class="star-box"></div>-->
-<!--                  </th:block>-->
-              </dd>
-            </a>
-          </dl>
-        </div>
-      </div>
+        <!-- footer -->
+        <div th:replace="./fragments/main-footer.html"></div>
 
-        <div class="pagination" >
-            <th:block th:if="${btnUrls.get('prev') != 'javascript:void(0)'}">
-                <a th:href="${btnUrls.get('prev')}" class="prev"></a>
-            </th:block>
-            <th:block th:if="${btnUrls.get('prev') == 'javascript:void(0)'}">
-                <div style="width: 20px"></div>
-            </th:block>
-            <a th:each="item : ${paginations}" th:href="${item.path}"
-               th:text="${item.idx}" th:class="${item.classValue}"></a>
-            <th:block th:if="${btnUrls.get('next') != 'javascript:void(0)'}">
-                <a th:href="${btnUrls.get('next')}" class="next"></a>
-            </th:block>
-            <th:block th:if="${btnUrls.get('next') == 'javascript:void(0)'}">
-                <div style="width: 20px"></div>
-            </th:block>
-        </div>
-        <section>
-            <div id="pagination" class="custom-paginationjs"></div>
-        </section>
-      <div class="ad-banner ad-banner2">
-        <a href="#" class="btn-close"></a>
-      </div>
-      
+
     </div>
-    <div class="foodie-illustration" style="background-size: contain"></div>
-
-    <!-- footer -->
-    <div th:replace="./fragments/main-footer.html"></div>
-
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
-
-
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/commons.js}"></script>
-    <!--added header name to change-->
-    <script>document.getElementById("header").className = "header-red";</script>
-    <script>
-      $(document).ready(function() {
-          $('#filter_theme').on('click', '#filter_anchor', function(){
-              filter_items();
-          });
-      });
-
-      function filter_items(){
-          var filters = []
-          $("input[name=checkbox]:checked").each(function() {
-              filters.push($(this).val());
-          });
-          console.log(filters)
-
-          var regionId = $('#regionId').val();
-          var regionType = $('#regionType').val();
-
-
-          $.ajax({
-              url: "/filter/shop?filter="+filters+"&regionId=" + regionId + "&regionType="+regionType,
-              // data: messageDTO,
-              type:"GET",
-          }).done(function (fragment) {
-              // $('#example tbody tr').replaceWith(data);
-
-              var star_tag;
-              let container = $('#pagination');
-              container.pagination({
-                  nextClass: 'next',
-                  classPrefix: 'custom-paginationjs',
-                  className: 'custom-paginationjs',
-                  showPageNumbers: true,
-                  showPrevious: false,
-                  showNext: true,
-                  showNavigator: false,
-                  showFirstOnEllipsisShow: false,
-                  showLastOnEllipsisShow: false,
-                  dataSource: fragment.payload,
-                  callback: function (data, pagination) {
-                      console.log(data + '99');
-                      $('#payload').empty();
-                      $('.pagination').remove();
-                      $.each(data, function(key, value) {
-
-                          if(value.foodieLogRating == "A"){
-                              star_tag = '<div class="star-position"><img src="/images/ico-star-first.png" className="star-box"></div>'
-                          }else if(value.foodieLogRating == "AA"){
-                              star_tag = '<div class="star-position"><img src="/images/ico-star-second.png" className="star-box"></div>'
-                          }else {
-                              star_tag = '<div class="star-position"><img src="/images/ico-star-third.png" className="star-box"></div>'
-                          }
-                          $("#payload").append("<li style=\"width: 47%\">\n" +
-                              "                  <a href='/shop?id='"+value.shopId + "&page=0" + ">\n" +
-                              "                      <div class=\"card-item\">\n" +
-                              "                          <div class=\"img\"></div>\n" +
-                              "                          <div class=\"card-data\">\n" +
-                              "                              <div class=\"name\">\n" +
-                              "                                  <div>" + value.shopName + "</div>\n" +
-                              "                                  <div class=\"categories\">\n" +
-                              "                                      <span>" + value.shopAlias + "|" + value.shopCharge + "</span>\n" +
-                              "                                  </div>\n" +
-                              "                              </div>\n" +
-                              "                              <ul class=\"info\">\n" +
-                              "                                  <li class=\"address\">" +  value.address + "</li>\n" +
-                              "                                  <li class=\"phone\">" + value.phone + "</li>\n" +
-                              "                                  <li class=\"description\">" + jQuery.trim(value.history).substring(0, 40).split(" ").slice(0, -1).join(" ") + "..." + "</li>\n" +
-                              "                              </ul>\n" +
-                              star_tag +
-                              "                          </div>\n" +
-                              "                      </div>\n" +
-                              "                  </a>\n" +
-                              "              </li>");
-                      });
-                  }
-              })
-
-
-          });
-      }
-    </script>
-      <style>
-          .list-section .right-area dl dt .info .name::before {
-              content: "";
-              display: block;
-              position: absolute;
-              left: 0;
-              top: 1px;
-              width: 3px;
-              height: 12px;
-              background: #ff5c17;
-          }
-          .list-section .right-area dl dt .info .name {
-              float: left;
-              padding-left: 8px;
-          }
-
-          .list-section .right-area dl dt .info span {
-              position: relative;
-              display: inline-block;
-              /*font-size: 14px;*/
-              color: #000;
-          }
-          .list-section .right-area dl dd .info .address {
-              float: right;
-              padding-left: 18px;
-              background: url("/images/ico-sm-map.png") 0 -1px no-repeat;
-          }
-          #filter_theme li {
-              float:left;
-              width: 127px;
-          }
-          #filter_theme li a:hover{
-              color: #ff571a;
-          }
-          /* Checkbox element, when checked */
-          #filter_theme input:checked + label {
-              color: #ff571a;
-          }
-          #filter_theme li a input{
-              width: 14px;
-              height: 14px;
-              padding: 4px 3px 5px;
-              border: solid 0.5px #d3d3d3;
-              background-color: #ffffff;
-              position: relative;
-              top: -4px;
-              margin: 4px 15px 9px 0px;
-              float: right;
-          }
-          .custom-paginationjs{
-              display:flex;
-              display:-webkit-flex;
-              justify-content:center;
-              align-items:center
-          }
-          .custom-paginationjs a{
-              width:20px;
-              height:20px;
-              margin:0 4px;
-              line-height:18px;
-              opacity:.5;
-              font-size:14px;
-              font-weight:300;
-              text-align:center;
-              color:#707070
-          }
-          .paginationjs .paginationjs-pages li.active>a {
-              height: 30px;
-              line-height: 30px;
-              color: black;
-              background: white !important;
-              opacity: 1 !important;
-          }
-          .custom-paginationjs li {
-              border: 0px solid white !important;
-          }
-          .custom-paginationjs .custom-paginationjs-ellipsis{
-              display: none !important;
-          }
-          .custom-paginationjs a.active{
-              opacity:1;
-              color:#000
-          }
-          .custom-paginationjs a.next,.custom-paginationjs a.prev{
-              width:24px;
-              height:24px;
-              opacity:1
-          }
-          .custom-paginationjs a.prev{
-              background:url('/images/ico-page-prev.png') 0 0 no-repeat;
-              /*opacity: 0;*/
-          }
-          .paginationjs .paginationjs-pages li:last-child {
-              background:url('/images/ico-page-next.png') 0 0 no-repeat;
-              /*opacity: 0;*/
-          }
-      </style>
-  </div>
 </body>
 </html>
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+<script type="text/javascript" th:src="@{/js/commons.js}"></script>
+<!--added header name to change-->
+<script>document.getElementById("header").className = "header-red";</script>
+<script>
+
+    (function($) {
+        $.AdjustZoom = function(options) {
+            var option = {
+                zoomRatio : 100
+            };
+            $.extend(option, options);
+            // 브라우저 배율이 100% 가 아닌 경우 처리
+            if(screen.logicalXDPI != screen.deviceXDPI) {
+                try {
+//                alert(screen.availWidth+", "+screen.logicalXDPI+", "+screen.deviceXDPI);
+                    var ratio = screen.logicalXDPI / screen.deviceXDPI;
+                    var ratio_reverse = screen.deviceXDPI / screen.logicalXDPI;
+                    $('body').css('zoom', ( ratio * option.zoomRatio)+'%');
+                    $('body').width(screen.availWidth * ratio_reverse );
+                }catch (e) {
+                    alert("브라우저 배율 보정 중 오류가 발생하였습니다. 창을 닫은 후 다시 열어 주시기 바랍니다.");
+                }
+            }
+        };
+    })(jQuery);
+
+    $(document).ready(function() {
+        $('#filter_theme').on('click', '#filter_anchor', function(){
+            filter_items();
+        });
+    });
+
+    function filter_items(){
+        var filters = []
+        $("input[name=checkbox]:checked").each(function() {
+            filters.push($(this).val());
+        });
+        console.log(filters)
+
+        var regionId = $('#regionId').val();
+        var regionType = $('#regionType').val();
+
+
+        $.ajax({
+            url: "/filter/shop?filter="+filters+"&regionId=" + regionId + "&regionType="+regionType,
+            // data: messageDTO,
+            type:"GET",
+        }).done(function (fragment) {
+            // $('#example tbody tr').replaceWith(data);
+
+            var star_tag;
+            let container = $('#pagination');
+            container.pagination({
+                nextClass: 'next',
+                classPrefix: 'custom-paginationjs',
+                className: 'custom-paginationjs',
+                showPageNumbers: true,
+                showPrevious: false,
+                showNext: true,
+                showNavigator: false,
+                showFirstOnEllipsisShow: false,
+                showLastOnEllipsisShow: false,
+                dataSource: fragment.payload,
+                callback: function (data, pagination) {
+                    console.log(data + '99');
+                    $('#payload').empty();
+                    $('.pagination').remove();
+                    $.each(data, function(key, value) {
+
+                        if(value.foodieLogRating == "A"){
+                            star_tag = '<div class="star-position"><img src="/images/ico-star-first.png" className="star-box"></div>'
+                        }else if(value.foodieLogRating == "AA"){
+                            star_tag = '<div class="star-position"><img src="/images/ico-star-second.png" className="star-box"></div>'
+                        }else {
+                            star_tag = '<div class="star-position"><img src="/images/ico-star-third.png" className="star-box"></div>'
+                        }
+                        $("#payload").append("<li style=\"width: 47%\">\n" +
+                            "                  <a href='/shop?id='"+value.shopId + "&page=0" + ">\n" +
+                            "                      <div class=\"card-item\">\n" +
+                            "                          <div class=\"img\"></div>\n" +
+                            "                          <div class=\"card-data\">\n" +
+                            "                              <div class=\"name\">\n" +
+                            "                                  <div>" + value.shopName + "</div>\n" +
+                            "                                  <div class=\"categories\">\n" +
+                            "                                      <span>" + value.shopAlias + "|" + value.shopCharge + "</span>\n" +
+                            "                                  </div>\n" +
+                            "                              </div>\n" +
+                            "                              <ul class=\"info\">\n" +
+                            "                                  <li class=\"address\">" +  value.address + "</li>\n" +
+                            "                                  <li class=\"phone\">" + value.phone + "</li>\n" +
+                            "                                  <li class=\"description\">" + jQuery.trim(value.history).substring(0, 40).split(" ").slice(0, -1).join(" ") + "..." + "</li>\n" +
+                            "                              </ul>\n" +
+                            star_tag +
+                            "                          </div>\n" +
+                            "                      </div>\n" +
+                            "                  </a>\n" +
+                            "              </li>");
+                    });
+                }
+            })
+
+
+        });
+    }
+</script>
+<style>
+    .list-section .right-area dl dt .info .name::before {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 1px;
+        width: 3px;
+        height: 12px;
+        background: #ff5c17;
+    }
+    .list-section .right-area dl dt .info .name {
+        float: left;
+        padding-left: 8px;
+    }
+
+    .list-section .right-area dl dt .info span {
+        position: relative;
+        display: inline-block;
+        /*font-size: 14px;*/
+        color: #000;
+    }
+    .list-section .right-area dl dd .info .address {
+        float: right;
+        padding-left: 18px;
+        background: url("/images/ico-sm-map.png") 0 -1px no-repeat;
+    }
+    #filter_theme li {
+        float:left;
+        width: 127px;
+    }
+    #filter_theme li a:hover{
+        color: #ff571a;
+    }
+    /* Checkbox element, when checked */
+    #filter_theme input:checked + label {
+        color: #ff571a;
+    }
+    #filter_theme li a input{
+        width: 14px;
+        height: 14px;
+        padding: 4px 3px 5px;
+        border: solid 0.5px #d3d3d3;
+        background-color: #ffffff;
+        position: relative;
+        top: -4px;
+        margin: 4px 15px 9px 0px;
+        float: right;
+    }
+    .custom-paginationjs{
+        display:flex;
+        display:-webkit-flex;
+        justify-content:center;
+        align-items:center
+    }
+    .custom-paginationjs a{
+        width:20px;
+        height:20px;
+        margin:0 4px;
+        line-height:18px;
+        opacity:.5;
+        font-size:14px;
+        font-weight:300;
+        text-align:center;
+        color:#707070
+    }
+    .paginationjs .paginationjs-pages li.active>a {
+        height: 30px;
+        line-height: 30px;
+        color: black;
+        background: white !important;
+        opacity: 1 !important;
+    }
+    .custom-paginationjs li {
+        border: 0px solid white !important;
+    }
+    .custom-paginationjs .custom-paginationjs-ellipsis{
+        display: none !important;
+    }
+    .custom-paginationjs a.active{
+        opacity:1;
+        color:#000
+    }
+    .custom-paginationjs a.next,.custom-paginationjs a.prev{
+        width:24px;
+        height:24px;
+        opacity:1
+    }
+    .custom-paginationjs a.prev{
+        background:url('/images/ico-page-prev.png') 0 0 no-repeat;
+        /*opacity: 0;*/
+    }
+    .paginationjs .paginationjs-pages li:last-child {
+        background:url('/images/ico-page-next.png') 0 0 no-repeat;
+        /*opacity: 0;*/
+    }
+</style>
