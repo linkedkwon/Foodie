@@ -88,13 +88,15 @@ public class ReviewService {
 
         String jpql;
         jpql = "select new kr.foodie.domain.account.ReviewDTO("
-                +"r.shopId, s.shopName,r.userId,  u.name,  r.reviewId, r.starRating, r.content, r.bestComment) "
+                +"r.shopId, s.shopName,r.userId,  u.name,  r.reviewId, r.starRating, r.content, r.bestComment, "
+                +"function('date_format', r.createdTime, '%Y년 %m월 %d일 %H시%i분')) "
                 +"from Review r left join User u "
                 +"on r.userId = u.id "
                 +"left join Shop s "
                 +"on s.shopId = r.shopId";
 
         TypedQuery<ReviewDTO> query = em.createQuery(jpql, ReviewDTO.class);
+
         return query.getResultList();
     }
 

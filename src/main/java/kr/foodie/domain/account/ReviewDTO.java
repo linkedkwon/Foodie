@@ -17,6 +17,7 @@ public class ReviewDTO {
     private String content;
     private String url;
     private String bestComment;
+    private String createdTime;
 
     public ReviewDTO(int shopId, String shopName, int reviewId, String content,
                      String starRating, String bestComment) {
@@ -40,7 +41,7 @@ public class ReviewDTO {
     }
 
     public ReviewDTO(int shopId, String shopName, int userId, String userName, int reviewId,
-                     String starRating, String content, String bestComment){
+                     String starRating, String content, String bestComment, String createdTime){
         this.shopId = shopId;
         this.shopName = shopName;
         this.userId = userId;
@@ -49,5 +50,6 @@ public class ReviewDTO {
         this.content = content;
         this.starRating = starRating;
         this.bestComment = bestComment;
+        this.createdTime = createdTime;
     }
 }
