@@ -10,8 +10,8 @@
             <li class="search">
                 <a href="#"><span>검색</span></a>
                 <div class="search-form">
-                    <form method="post" action="#">
-                        <input type="text" placeholder="맛집 키워드를 검색해 보세요."/>
+                    <form method="get" action="#">
+                        <input type="text" id="keyword" placeholder="맛집 키워드를 검색해 보세요."/>
                     </form>
                 </div>
             </li>
@@ -202,6 +202,15 @@
         }
 
         $(document).ready(function () {
+
+            $("#keyword").keypress(function (e) {
+                if (e.which == 13){
+                    var keyword = $("#keyword").val();
+                    console.log("click" + keyword)
+                    window.location.href="/filter/Allshop?filter=" + keyword + "&shopType=red";
+                    return false;
+                }
+            });
 
             $("#mainCategory").click(function () {
                 $("li[id*=region]").removeClass("active")

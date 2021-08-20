@@ -118,6 +118,104 @@ public class ShopController {
 //        return list.stream().filter(o -> o.getThemeList().contains(name)).findFirst();
 //    }
 
+    @GetMapping(value ="/filter/Allshop")
+    public String filterAllShopInfos(@RequestParam(value = "shopType") String shopType, @RequestParam(value = "filter") String filterItems, Model model) {
+        Map<String, List> results = new HashMap<>();
+        ModelAndView mav = new ModelAndView();
+        String shopTypeId = shopType.equals("red") ? "0" : "1";
+
+        List<Shop> filterList;
+        List<Shop> resultFilterList = new ArrayList<>();
+        String[] items = filterItems.split(" ");
+        model.addAttribute("keyword", filterItems);
+        model.addAttribute("themeList", themeService.getThemeTags(Integer.valueOf(shopTypeId)));
+        filterList = shopService.getFilterShopListWithShopAddress(shopTypeId, items[0]);
+
+        if(filterList.size() < 1){
+            filterList = shopService.getFilterShopListWithShopName(shopTypeId, items[0]);
+            if(filterList.size() > 1) {
+                if (items.length > 1) {
+                    for (int i = 1; i < items.length; i++) {
+                        for (int j = 0; j < filterList.size(); j++) {
+                            if (filterList.get(j).getAddress().contains(items[i])) {
+                                resultFilterList.add(filterList.get(j));
+                            }
+                            if (filterList.get(j).getHistory().contains(items[i])) {
+                                resultFilterList.add(filterList.get(j));
+                            }
+                        }
+                    }
+                    model.addAttribute("payload", resultFilterList);
+                }else if(items.length == 1){
+                    // 이전 조건에서 한개의 결과만 받은경우 다른 필드에 해당 키워드들이 존재하는지 확인
+                    resultFilterList.add(filterList.get(0));
+                    if (filterList.get(0).getAddress().contains(items[0])) {
+                        resultFilterList.add(filterList.get(0));
+                    }
+                    if (filterList.get(0).getHistory().contains(items[0])) {
+                        resultFilterList.add(filterList.get(0));
+                    }
+                }
+            }else{
+                model.addAttribute("payload", filterList);
+            }
+        }
+        if(filterList.size() < 1){
+            filterList = shopService.getFilterShopListWithShopContent(shopTypeId, items[0]);
+            if(filterList.size() > 1) {
+                if (items.length > 1) {
+                    for (int i = 1; i < items.length; i++) {
+                        for (int j = 0; j < filterList.size(); j++) {
+                            if (filterList.get(j).getAddress().contains(items[i])) {
+                                resultFilterList.add(filterList.get(j));
+                            }
+                            if (filterList.get(j).getShopName().contains(items[i])) {
+                                resultFilterList.add(filterList.get(j));
+                            }
+                        }
+                    }
+                    model.addAttribute("payload", resultFilterList);
+                }else if(items.length == 1){
+                    resultFilterList.add(filterList.get(0));
+                    if (filterList.get(0).getAddress().contains(items[0])) {
+                        resultFilterList.add(filterList.get(0));
+                    }
+                    if (filterList.get(0).getShopName().contains(items[0])) {
+                        resultFilterList.add(filterList.get(0));
+                    }
+                }
+            }else{
+                model.addAttribute("payload", filterList);
+            }
+        }
+        if(filterList.size() > 1){
+            if (items.length > 1) {
+                for (int i = 1; i < items.length; i++) {
+                    for (int j = 0; j < filterList.size(); j++) {
+                        if (filterList.get(j).getHistory().contains(items[i])) {
+                            resultFilterList.add(filterList.get(j));
+                        }
+                        if (filterList.get(j).getShopName().contains(items[i])) {
+                            resultFilterList.add(filterList.get(j));
+                        }
+                    }
+                }
+                model.addAttribute("payload", resultFilterList);
+            }else if(items.length == 1){
+                resultFilterList.add(filterList.get(0));
+                if (filterList.get(0).getHistory().contains(items[0])) {
+                    resultFilterList.add(filterList.get(0));
+                }
+                if (filterList.get(0).getShopName().contains(items[0])) {
+                    resultFilterList.add(filterList.get(0));
+                }
+            }
+        }else{
+            model.addAttribute("payload", filterList);
+        }
+        return shopType.equals("red") ? "search-submain-red" : "search-submain-green";
+    }
+
     @ResponseBody
     @GetMapping(value ="/filter/shop")
     public Map<String, List> filterShopInfos(@RequestParam(value = "regionId") Integer regionId, @RequestParam(value = "regionType") String regionType, @RequestParam(value = "filter") String filterItems, Model model) {

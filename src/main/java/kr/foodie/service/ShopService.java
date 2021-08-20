@@ -52,6 +52,19 @@ public class ShopService {
         return shopRepository.findByShopTypeAndRegionAndThemeList(shopTypeId, regionId, filterItems);
     }
 
+    //검색 (with 가게이름)
+    public List<Shop> getFilterShopListWithShopName(String shopTypeId, String filterItems) {
+        return shopRepository.findByShopTypeAndShopName(shopTypeId, filterItems);
+    }
+    //검색 (with 주소)
+    public List<Shop> getFilterShopListWithShopAddress(String shopTypeId, String filterItems) {
+        return shopRepository.findByShopTypeAndAddress(shopTypeId, filterItems);
+    }
+    //검색 (with 내용)
+    public List<Shop> getFilterShopListWithShopContent(String shopTypeId, String filterItems) {
+        return shopRepository.findByShopTypeAndHistory(shopTypeId, filterItems);
+    }
+
     public List<Shop> getShopInfoByType(Integer type) {
         return shopRepository.findShopInfoByType(type);
     }
