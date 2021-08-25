@@ -405,11 +405,11 @@
                 { "data": "content" },
                 { "data": "starRating"},
                 { "data": "createdTime"},
-                { "data": "bestComment", 'render': function (data) {
+                { "data": "bestComment", 'render': function (data, type, row) {
                     if(data == 1)
-                        return '<button onclick="saveBestReview(data)" style="background-color:#9872ff; color: white;">베스트댓글(취소)</button>';
-                    return '<button onclick="saveBestReview(data)">선정하기</button>';} },
-                { 'data': "reviewId", 'render': function (data) { return '<button onclick="deleteReview(data)">삭제</button>'; } },
+                        return '<button onclick="saveBestReview(' + row.reviewId + ')" style="background-color:#9872ff; color: white;">베스트댓글(취소)</button>';
+                    return '<button onclick="saveBestReview(' + row.reviewId + ')">선정하기</button>';} },
+                { 'data': "reviewId", 'render': function (data) { return '<button value="'+data+'" onclick="deleteReviewAdmin('+data+')">삭제</button>'; } },
             ],
             "columnDefs": [
                 { "width": "50px", "targets": 0, "className": "data_table" },
@@ -622,6 +622,48 @@
 
     $('.selectpicker').selectpicker();
 
+    /**
+    function saveBestReview(e){
+
+        var tr = $(e).parent().parent();
+        var td = tr.children();
+        console.log('데이터2', td.eq(6).data);
+        console.log('데이터2', td.eq(6).val());
+        console.log('데이터2', td.eq(6).value);
+    }
+*/
+    function saveBestReview(reviewId){
+        $.ajax({
+            url: '/user/review/item/switch/best/'+reviewId,
+            type: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                if(data == 1){
+                    location.reload();
+                }
+            },
+            error: function (status, error) {
+                console.log(status, error);
+            }
+        });
+    }
+
+    function deleteReviewAdmin(reviewId){
+        $.ajax({
+            url: '/user/review/item/'+reviewId,
+            type: 'DELETE',
+            dataType: 'json',
+            success: function (data) {
+                if(data == 1){
+                    alert('정상적으로 삭제되었습니다.');
+                    location.reload();
+                }
+            },
+            error: function (status, error) {
+                console.log(status, error);
+            }
+        });
+    }
 </script>
 
 </html>

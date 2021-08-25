@@ -52,8 +52,16 @@ public class ReviewController {
     }
 
     @ResponseBody
+    @PostMapping("/item/switch/best/{idx}")
+    public String switchIsBest(@PathVariable int idx){
+        return reviewService.switchIsBest(idx);
+    }
+
+    @ResponseBody
     @DeleteMapping("/item/{idx}")
-    public String deleteReview(@PathVariable int idx){ return reviewService.deleteItemByReviewId(idx); }
+    public String deleteReview(@PathVariable int idx){
+        return reviewService.deleteItemByReviewId(idx);
+    }
 
     @ResponseBody
     @DeleteMapping("/item")

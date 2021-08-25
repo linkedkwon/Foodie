@@ -4,9 +4,11 @@ import kr.foodie.domain.account.Review;
 import kr.foodie.domain.account.ReviewDTO;
 import kr.foodie.repo.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
@@ -109,6 +111,18 @@ public class ReviewService {
     @Transactional
     public String deleteAllItem(int userId){
         reviewRepository.deleteAllByUserId(userId);
+        return "1";
+    }
+
+    public String switchIsBest(int reviewId){
+        Review entity = reviewRepository.findById(reviewId)
+                .orElseThrow(()->{ return new EntityNotFoundException("review Id not found");
+                });
+
+        String isBest = entity.getBestComment().equals("1")?"0":"1";
+        entity.setBestComment(isBest);
+        reviewRepository.save(entity);
+
         return "1";
     }
 
