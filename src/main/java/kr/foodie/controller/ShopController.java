@@ -25,6 +25,7 @@ public class ShopController {
     private static final int reviewInterval = 6;
 
     private final ShopService shopService;
+    private final FoodCategoryService foodCategoryService;
     private final TagService tagService;
     private final RegionService regionService;
     private final ReviewService reviewService;
@@ -92,6 +93,10 @@ public class ShopController {
         int size = reviewService.getItemSizeByShopId(shopId);
         String url = "/shop?id=" + shopId + "&page=";
 
+        String bCode = Optional.ofNullable(commentList.get(0).getBigCategory()).orElseGet(()->{return "0";});
+        String mCode = Optional.ofNullable(commentList.get(0).getMiddleCategory()).orElseGet(()->{return "0";});
+
+        mav.addObject("category", foodCategoryService.getShopCategory(bCode, mCode, commentList.get(0).getAddress()));
         mav.addObject("reviews", reviewService.getItemsByShopId(shopId, idx));
         mav.addObject("paginations", paginationService.getPagination(size, idx, reviewInterval, url));
         mav.addObject("btnUrls", paginationService.getPaginationBtn(size, idx, reviewInterval, url));

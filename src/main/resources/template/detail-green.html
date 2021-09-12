@@ -36,7 +36,10 @@
               <div class="left-area">
                 <h2 th:text="${payload[0].shopName}"></h2>
                 <div class="categories">
-                  <span th:text="${payload[0].tag}"></span>
+                  <span th:text="${category}"></span>
+                </div>
+                <div class="categories" style="margin-top: 10px;">
+                  <a th:href="'http://epicure.co.kr/home/'+${payload[0].shopAlias}" th:text="'http://epicure.co.kr/home/'+${payload[0].shopAlias}" style="color:#838383;"></a>
                 </div>
               </div>
 
@@ -111,11 +114,11 @@
                   <dd th:text="${userRole}"></dd>
                 </dl>
                 <dl>
-                  <dt>포장/배달</dt>
-                  <dd th:text="${payload[0].isDelivery}"></dd>
+                  <dt>홈페이지</dt>
                 </dl>
                 <dl>
-                  <dt>홈페이지</dt>
+                  <dt>포장 | 배달</dt>
+                  <dd th:text="${payload[0].isDelivery}"></dd>
                   <dd class="btn-dd">
                     <div class="util-btn-area">
                       <a href="javascript:void(0)" class="btn-sm btn-heart" onclick="addFavoriteShop()">찜하기</a>
