@@ -126,4 +126,23 @@ public class ReviewService {
         return "1";
     }
 
+    public String getShopTasteRatingAVG(Integer shopId){
+
+        String jpql = "select new kr.foodie.domain.account.ReviewDTO("
+                +"r.starRating) "
+                +"from Review r "
+                +"where r.shopId =" + shopId;
+
+        TypedQuery<ReviewDTO> query = em.createQuery(jpql, ReviewDTO.class);
+        List<ReviewDTO> reviewDTO = Optional.ofNullable(query.getResultList())
+                .orElseThrow(() -> {return new EntityNotFoundException("has not have review");});
+        if(reviewDTO.size() == 0)
+            return "0,0";
+
+        int sum = 0;
+        for(ReviewDTO obj:reviewDTO)
+            sum += Integer.parseInt(obj.getStarRating());
+
+        return Integer.toString(sum/reviewDTO.size())+","+Integer.toString(reviewDTO.size());
+    }
 }

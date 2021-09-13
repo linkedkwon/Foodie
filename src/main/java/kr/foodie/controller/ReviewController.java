@@ -3,6 +3,7 @@ package kr.foodie.controller;
 import kr.foodie.config.security.auth.AuthUserDetails;
 import kr.foodie.service.PaginationService;
 import kr.foodie.service.ReviewService;
+import kr.foodie.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ public class ReviewController {
     private static final int interval = 6;
 
     private final ReviewService reviewService;
+    private final ShopService shopService;
     private final PaginationService paginationService;
 
     @GetMapping({"","/{path}"})
@@ -47,7 +49,6 @@ public class ReviewController {
     @PostMapping("/item")
     public String addReview(String shopId, String starRating, String content,
                             @AuthenticationPrincipal AuthUserDetails userDetails){
-
         return reviewService.addItem(userDetails.getUser().getId(), Integer.parseInt(shopId), starRating, content);
     }
 

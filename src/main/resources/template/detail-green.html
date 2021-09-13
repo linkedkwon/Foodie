@@ -45,8 +45,11 @@
 
               <div class="right-area">
                 <ul class="scores" th:style="${not #strings.isEmpty(payload[0].foodieLogRating)}? '':'border-right:solid 0px #e4e4e4;'">
-                  <li th:text="${not #strings.isEmpty(payload[0].foodieLogRating)} ? '푸디로그 평점('+${payload[0].foodieLogRating}+')' : '푸디로그 평점(없음)'"></li>
-                  <li th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '오감 평점('+${payload[0].tasteRating}+'점)' : '오감 평점(없음)'"></li>
+                  <li th:text="${not #strings.isEmpty(payload[0].foodieLogRating)} ? '푸디 평점('+${payload[0].foodieLogRating}+')' : '푸디 평점(없음)'"></li>
+                  <li>
+                    <b th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '오감 평점('+${payload[0].tasteRating}+'점)' : '오감 평점(없음)'"></b>
+                    <b th:text="'('+${tasteRatingCnt}+'명)'" style="font-size: 12px;"></b>
+                  </li>
                 </ul>
 
                 <th:block th:switch="${payload[0].foodieLogRating}">
@@ -63,6 +66,11 @@
                   <div class="star" th:case="AAA">
                     <picture>
                       <img src="/images/ico-detail-star-third.png">
+                    </picture>
+                  </div>
+                  <div class="star" th:case="없음">
+                    <picture>
+                      <img src="/images/noRating.png">
                     </picture>
                   </div>
                 </th:block>

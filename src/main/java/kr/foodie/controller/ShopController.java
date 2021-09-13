@@ -93,9 +93,20 @@ public class ShopController {
         int size = reviewService.getItemSizeByShopId(shopId);
         String url = "/shop?id=" + shopId + "&page=";
 
+        //category
         String bCode = Optional.ofNullable(commentList.get(0).getBigCategory()).orElseGet(()->{return "0";});
         String mCode = Optional.ofNullable(commentList.get(0).getMiddleCategory()).orElseGet(()->{return "0";});
 
+        //tasteRating
+        String tasteRatingInfo = reviewService.getShopTasteRatingAVG(shopId);
+        String[] str = tasteRatingInfo.split(",");
+        commentList.get(0).setTasteRating(str[0]);
+
+        //logRating
+        commentList.get(0).setFoodieLogRating(Optional.ofNullable(commentList.get(0).getFoodieLogRating())
+                .orElseGet(()->{return "없음";}));
+
+        mav.addObject("tasteRatingCnt", str[1]);
         mav.addObject("category", foodCategoryService.getShopCategory(bCode, mCode, commentList.get(0).getAddress()));
         mav.addObject("reviews", reviewService.getItemsByShopId(shopId, idx));
         mav.addObject("paginations", paginationService.getPagination(size, idx, reviewInterval, url));
