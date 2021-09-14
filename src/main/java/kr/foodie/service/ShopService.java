@@ -38,9 +38,9 @@ public class ShopService {
 //    사이드에 그린리스트<-> 레드리스트 우선순위 지정필요
     public List<Shop> getShopInfosWithSideOrder(Integer regionId, String shopType) {
         if(shopType.equals("1")){
-            return shopRepository.findTop5ByRegionIdAndShopType(regionId, "0");
+            return shopRepository.findTop4ByRegionIdAndShopType(regionId, "0");
         }else{
-            return shopRepository.findTop5ByRegionIdAndShopType(regionId, "1");
+            return shopRepository.findTop4ByRegionIdAndShopType(regionId, "1");
         }
     }
 

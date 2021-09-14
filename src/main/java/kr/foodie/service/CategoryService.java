@@ -18,8 +18,9 @@ public class CategoryService {
         return initDistrictCnt(categoryRepository.findByRegionTypeAndProvinceNameContaining(regionType, regionName));
     }
 
-    public List<Category> getCategorySecondType(String regionType, String districtName) {
-        return initDistrictCnt(categoryRepository.findByRegionTypeAndDistrictName(regionType, districtName));
+    public List<Category> getCategorySecondType(String regionType, String districtName, Integer defaultCount) {
+        return categoryRepository.findByRegionTypeAndDistrictNameAndDistrictCntGreaterThan(regionType, districtName, defaultCount);
+//        return initDistrictCnt(categoryRepository.findByRegionTypeAndDistrictNameAndAndDistrictCntIsNotdefaultCount(regionType, districtName, defaultCount));
     }
 
     private List<Category> initDistrictCnt(List<Category> categories){

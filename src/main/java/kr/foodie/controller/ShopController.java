@@ -21,7 +21,7 @@ import java.util.*;
 @Controller
 public class ShopController {
 
-    private static final int shopInterval = 14;
+    private static final int shopInterval = 16;
     private static final int reviewInterval = 6;
 
     private final ShopService shopService;

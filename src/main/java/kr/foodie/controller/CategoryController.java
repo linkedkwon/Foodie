@@ -21,7 +21,7 @@ public class CategoryController {
 
         String regionName = request.getParameter("name");
 
-        return regionType.equals("2") ? categoryService.getCategorySecondType(regionType, regionName)
+        return regionType.equals("2") ? categoryService.getCategorySecondType(regionType, regionName, 0)
                 : categoryService.getCategory(regionType, regionName);
     }
 }
