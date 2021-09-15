@@ -6,8 +6,10 @@ import kr.foodie.domain.shop.HashTag;
 
 import kr.foodie.domain.shop.Region;
 import kr.foodie.domain.shop.Shop;
+import kr.foodie.repo.ShopRepository;
 import kr.foodie.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -105,6 +108,9 @@ public class ShopController {
         //logRating
         commentList.get(0).setFoodieLogRating(Optional.ofNullable(commentList.get(0).getFoodieLogRating())
                 .orElseGet(()->{return "없음";}));
+
+        //menu imgaes
+        commentList.get(0).setMenuImages(commentList.get(0).getMenuImages().replace("[", "").replace("]", "").replaceAll("\"",""));
 
         mav.addObject("tasteRatingCnt", str[1]);
         mav.addObject("category", foodCategoryService.getShopCategory(bCode, mCode, commentList.get(0).getAddress()));

@@ -87,7 +87,15 @@
               <div class="right-area">
                 <dl>
                   <dt>주소</dt>
-                  <dd th:text="${payload[0].address}"></dd>
+                  <dd>
+                    <p id="normal-address" th:text="${payload[0].address}"></p>
+                    <div style="margin-top: 2px;">
+                      <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 1px 5px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
+                        도로명
+                      </div>
+                      <b id="road-address" th:text="${payload[0].roadAddress}"></b>
+                    </div>
+                  </dd>
                 </dl>
                 <dl class="line">
                   <dt>전화번호</dt>
@@ -171,14 +179,16 @@
                 </div>
                 <div th:unless="${userRole} == 'GENERAL'" class="image-thumbnails">
 
-                  <div class="detail">
-                    <!-- 이미지 추가 -->
-                  </div>
-                  <ul>
-                    <li th:each="item : ${payload[0].menuImages.split(',')}">
-                      <img th:src='${item.replace("[", "").replace("]", "")}' style="width: 100%;height: 100%;">
-                    </li>
-                  </ul>
+                  <th:block th:if="${not #strings.isEmpty(payload[0].menuImages.split(',')[0])}">
+                    <div id="menu-img-main" class="detail" th:style="'background-image:url('+${payload[0].menuImages.split(',')[0]}+'); background-size:contain;'">
+                    </div>
+
+                    <ul>
+                      <li th:each="item : ${payload[0].menuImages.split(',')}">
+                        <img th:src='${item}' style="width: 100%;height: 100%;" onclick="changeMenuImage(this)">
+                      </li>
+                    </ul>
+                  </th:block>
                 </div>
 
                 <ul class="info">
@@ -379,6 +389,10 @@
     // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
     var zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+    function changeMenuImage(e){
+        document.getElementById('menu-img-main').style.backgroundImage="url('"+e.src+"')";
+    }
   </script>
 </div>
 </body>

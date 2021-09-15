@@ -67,6 +67,9 @@ public class Shop {
     @Column(name = "ADDRESS")
     private String address;
 
+    @Column(name = "ROAD_ADDRESS")
+    private String roadAddress;
+
     @Column(name = "PHONE")
     private String phone;
 
