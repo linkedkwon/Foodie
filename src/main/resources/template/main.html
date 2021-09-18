@@ -110,7 +110,6 @@
           </li>
         </ul>
         <div id="content2">
-
         </div>
 
       </div>
@@ -165,7 +164,6 @@
                       <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">
                       -->
                     </ul>
-
                     <th:block th:if="${not #strings.isEmpty(shop.foodieLogRating)}">
                       <th:block th:switch="${shop.foodieLogRating}">
                         <div th:case="A" class="star-position"><img src="../images/ico-star-first.png" class="star-box"></div>
@@ -213,7 +211,6 @@
                       <li class="description" th:text="${#strings.abbreviate(shop.history,40)}">
                       -->
                     </ul>
-
                     <th:block th:if="${not #strings.isEmpty(shop.foodieLogRating)}">
                       <th:block th:switch="${shop.foodieLogRating}">
                         <div th:case="A" class="star-position"><img src="../images/ico-star-first.png" class="star-box"></div>

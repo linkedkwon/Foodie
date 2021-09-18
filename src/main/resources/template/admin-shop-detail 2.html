@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">>
+<head>
+<!--    @@include('./commons/head_base.html')-->
+    <link rel="stylesheet" type="text/css" href="/css/manage-restaurants.css" />
+</head>
+<body>
+<div class="wrapper">
+    <!-- Header -->
+<!--    @@include('./commons/header.html')-->
+<!--    <div th:replace="./commons/header.html"/>-->
+    <!-- Aside -->
+<!--    @@include('./commons/aside.html')-->
+
+    <!-- Contents -->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>맛집관리</h1>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">기본정보</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="restaurants-open-hours">그린/레드</label>
+                                <div class="flex">
+                                    <div class="custom-control custom-radio">
+                                        <input class="custom-control-input" id="page-type-green" type="radio" name="page-type" checked>
+                                        <label class="custom-control-label" for="page-type-green">그린</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input class="custom-control-input" id="page-type-red" type="radio" name="page-type">
+                                        <label class="custom-control-label" for="page-type-red">레드</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="restaurants-name">맛집명</label>
+                                        <input type="text" class="form-control" id="restaurants-name" placeholder="맛집명" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="restaurants-phone">전화번호</label>
+                                        <input type="tel" class="form-control" id="restaurants-phone" placeholder="전화번호">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="restaurants-open-hours">영업시간</label>
+                                        <input type="text" class="form-control" id="restaurants-open-hours" placeholder="영업시간">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="restaurants-closed">휴무일</label>
+                                        <input type="text" class="form-control" id="restaurants-closed" placeholder="휴무일">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="restaurants-open-hours">예약여부</label>
+                                        <div class="flex">
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input" id="reservation-y" type="radio" name="reservation">
+                                                <label class="custom-control-label" for="reservation-y">가능</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input" id="reservation-n" type="radio" name="reservation" checked>
+                                                <label class="custom-control-label" for="reservation-n">불가능</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="restaurants-closed">주차여부</label>
+                                        <div class="flex">
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input" id="parking-y" type="radio" name="parking">
+                                                <label class="custom-control-label" for="parking-y">가능</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input" id="parking-n" type="radio" name="parking" checked>
+                                                <label class="custom-control-label" for="parking-n">불가능</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="recommend-menu">추천메뉴</label>
+                                        <input type="text" class="form-control" id="recommend-menu" placeholder="추천메뉴">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="budget">예산</label>
+                                        <input type="text" class="form-control" id="budget" placeholder="예산">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="delivery">포장/배달</label>
+                                        <input type="text" class="form-control" id="delivery" placeholder="포장/배달">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="website">홈페이지</label>
+                                        <input type="text" class="form-control" id="website" placeholder="홈페이지">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="review-link-naver">네이버블로그 리뷰 링크</label>
+                                        <input type="text" class="form-control" id="review-link-naver" placeholder="https://blog.naver.com/">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="review-link-instagram">인스타그램 리뷰 링크</label>
+                                        <input type="text" class="form-control" id="review-link-instagram" placeholder="https://www.instagram.com/">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="restaurants-location-detial">찾아가는길</label>
+                                <input type="text" class="form-control" id="restaurants-location-detial" placeholder="찾아가는길">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="select-tags">태그등록</label>
+                                        <select class="custom-select" id="select-tags">
+                                            <option value="" disabled selected>태크등록</option>
+                                            <option value="치킨">치킨</option>
+                                            <option value="음식점">음식점</option>
+                                            <option value="강서구맛집">강서구맛집</option>
+                                            <option value="바베큐치킨">바베큐치킨</option>
+                                            <option value="음식점">음식점</option>
+                                        </select>
+                                        <div class="flex tag-list"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 기본정보 Card END -->
+
+            <div class="container-fluid">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">히스토리</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="summernote"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 히스토리 Card END -->
+
+            <div class="container-fluid">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">메뉴관리</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="restaurants-menu">메뉴</label>
+                                        <input type="text" class="form-control" id="restaurants-menu" placeholder="메뉴">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="restaurants-vat">부가세</label>
+                                        <input type="text" class="form-control" id="restaurants-vat" placeholder="부가세">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 메뉴관리 Card END -->
+
+            <div class="container-fluid">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">댓글관리</h3>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-comments">
+                                <thead>
+                                <tr>
+                                    <th scope="col">내용</th>
+                                    <th scope="col" width="100px">작성자</th>
+                                    <th scope="col" width="60px">평점</th>
+                                    <th scope="col" width="150px">날짜</th>
+                                    <th scope="col" width="100px"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>가성비 엉망. 곰탕집 김치와 깍두기가 맛이 전혀없고 수육은 왜 6만원인지 알수없는곳</td>
+                                    <td>홍길동</td>
+                                    <td>5</td>
+                                    <td>2018-04-01 12:14:50</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">삭제</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>가성비 엉망. 곰탕집 김치와 깍두기가 맛이 전혀없고 수육은 왜 6만원인지 알수없는곳</td>
+                                    <td>홍길동</td>
+                                    <td>4</td>
+                                    <td>2018-04-01 12:14:50</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">삭제</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>가성비 엉망. 곰탕집 김치와 깍두기가 맛이 전혀없고 수육은 왜 6만원인지 알수없는곳</td>
+                                    <td>the 홍길동</td>
+                                    <td>3</td>
+                                    <td>2018-04-01 12:14:50</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">삭제</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 댓글관리 Card END -->
+
+        </div>
+    </div>
+    <!-- Contents wrapper END -->
+
+    <!-- 맛집 주소검색 Modal팝업 -->
+    <div class="modal fade" id="address-modal" tabindex="-1" role="dialog" aria-labelledby="address-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="address-modal-bael">맛집 주소검색</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="daum-map-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    @@include('./commons/footer.html')
+    @@include('./commons/bottom_base.html')
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="/js/manage-restaurants.js"></script>
+</div>
+</body>
+</html>
