@@ -17,7 +17,7 @@
 }
 
 .main-section {
-    width: 1100px;
+    width: 1184px;
     padding-bottom: 0;
     margin-bottom: 72px;
     border-bottom-width: 0
@@ -123,7 +123,7 @@
 }
 
 .main-section .card-list-wrapper {
-    width: 1100px;
+    width: 1200px;
 }
 
 .main-section .card-list-wrapper .card-item {
@@ -228,16 +228,17 @@
 }
 
 .main-section .card-list-wrapper>li {
-    width: 270px;
-    margin: 0px 5px 27px 0px
+    width: 284px;
+    height: 370px;
+    margin: 0px 15px 27px 0px
 }
 
 .main-section .card-list-wrapper>li .card-item {
-    width: 270px
+    width: 284px
 }
 
 .list-section {
-    width: 1230px;
+    width: 1180px;
     margin: 0 auto
 }
 
@@ -249,7 +250,7 @@
 }
 
 .list-section .left-area {
-    width: 915px;
+    width: 850px;
     position: relative;
     left: 0;
     float: left
@@ -267,7 +268,7 @@
     height: 135px;
     position: relative;
     float: left;
-    margin: 0 15px 27px;
+    margin: 0px 15px 15px 0px;
     border: solid 1px #dcdddd;
     background-color: #fff
 }
@@ -300,7 +301,7 @@
 .list-section .right-area {
     width: 313px;
     min-height: 300px;
-    float: right;
+    float: left;
     padding: 21px 24px;
     border: solid 1px #d3d3d3;
     background-color: #fff;
@@ -367,12 +368,13 @@
 
 .list-section .right-area dl dd .img {
     width: 264px;
-    height: 176px;
+    height: 198px;
     background: #ddd
 }
 
 .ad-banner1 {
-    margin-bottom: 80px
+    margin-bottom: 80px;
+    width: 1100px;
 }
 
 .ad-banner2 {

@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     List<Category> findByRegionTypeAndProvinceNameContaining(String regionType, String provinceName);
-    List<Category> findByRegionTypeAndDistrictName(String regionType, String districtName);
+    List<Category> findByRegionTypeAndProvinceNameContainingAndDistrictNameContainingAndDistrictCntGreaterThan(String regionType, String bigDistrictName, String middleDistrictName, Integer defaultCount);
 }

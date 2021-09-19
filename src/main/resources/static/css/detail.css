@@ -11,7 +11,7 @@
 }
 
 #contents {
-    width: 1258px;
+    width: 1170px;
     position: relative;
     margin: 0 auto;
     background: #ea6233;
@@ -39,12 +39,14 @@
 
 #contents::before {
     top: 0;
-    background: url(/images/bg-dotted-top.png) 0 0 no-repeat
+    background: url(/images/bg-dotted-top.png) 0 0 no-repeat;
+    background-size: 1170px;
 }
 
 #contents::after {
     bottom: 0;
-    background: url(/images/bg-dotted-bottom.png) left 0 bottom no-repeat
+    background: url(/images/bg-dotted-bottom.png) left 0 bottom no-repeat;
+    background-size: 1170px;
 }
 
 #contents>.background-wrapper {
@@ -63,7 +65,8 @@
     height: 100%;
     position: absolute;
     left: 0;
-    background: url(/images/bg-dotted-middle.png) 0 0 repeat-y
+    background: url(/images/bg-dotted-middle.png) 0 0 repeat-y;
+    background-size: 1170px;
 }
 
 #contents>.background-wrapper h1 {
@@ -107,7 +110,7 @@
 #contents>.background-wrapper>.background-wrapper::before {
     content: "";
     display: block;
-    width: 1258px;
+    width: 1170px;
     height: 50px;
     position: absolute;
     left: -33px
@@ -115,12 +118,14 @@
 
 #contents>.background-wrapper>.background-wrapper::before {
     top: 0;
-    background: url(/images/bg-paper-top.png) center 0 no-repeat
+    background: url(/images/bg-paper-top.png) center 0 no-repeat;
+    background-size: 1100px;
 }
 
 #contents>.background-wrapper>.background-wrapper::after {
     bottom: 0;
     background: url(/images/bg-paper-bottom.png) center bottom no-repeat
+    background-size: 1170px;
 }
 
 #contents>.background-wrapper>.background-wrapper>.background-wrapper {
@@ -130,12 +135,13 @@
 #contents>.background-wrapper>.background-wrapper>.background-wrapper::before {
     content: "";
     display: block;
-    width: 1258px;
+    width: 1170px;
     height: 100%;
     position: absolute;
-    top: 0;
+    top: -5px;
     left: -33px;
-    background: url(/images/bg-paper-middle.png) center 0 repeat-y
+    background: url(/images/bg-paper-middle.png) center 0 repeat-y;
+    background-size: 1100px !important;
 }
 
 #contents .contents {
@@ -257,8 +263,8 @@
 }
 
 #contents .contents .about-restaurant .left-area {
-    width: 530px;
-    height: 400px;
+    width: 428px;
+    height: 331px;
     float: left;
     background: #eee
 }
@@ -308,6 +314,7 @@
 #contents .contents .about-restaurant .right-area .util-btn-area {
     display: flex;
     -webkit-display: flex;
+    position: absolute;
     right: 0;
     bottom: 0
 }

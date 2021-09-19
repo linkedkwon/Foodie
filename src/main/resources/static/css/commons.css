@@ -136,7 +136,7 @@
     width: 19px;
     height: 19px;
     border-radius: 19px;
-    background: #fff url('/images/ico-sm-arrow-dark.png') 7px 5px no-repeat;
+    background: #fff url(/images/ico-sm-arrow-dark.png) 7px 5px no-repeat;
     z-index: 1
 }
 
@@ -419,7 +419,7 @@
 }
 
 .card-item .info li.address {
-    background-image: url('/images/ico-sm-map.png');
+    background-image: url(/images/ico-sm-map.png);
     background-position: 0 2px;
     display: block;
     overflow: hidden;
@@ -429,12 +429,12 @@
 }
 
 .card-item .info li.phone {
-    background-image: url('/images/ico-sm-phone.png');
+    background-image: url(/images/ico-sm-phone.png);
     background-position: 3px 5px
 }
 
 .card-item .info li.description {
-    background-image: url('/images/ico-sm-docs.png');
+    background-image: url(/images/ico-sm-docs.png);
     background-position: 3px 4px
 }
 
@@ -448,7 +448,7 @@
     width: 100%;
     margin-top: 100px;
     height: 367px;
-    background: url('/images/img_illustration.png') 0 0 no-repeat
+    background: url(/images/img_illustration.png) 0 0 no-repeat
 }
 
 .nav-tabs2 {
@@ -570,7 +570,7 @@
     position: absolute;
     top: -8px;
     right: -8px;
-    background: url('/images/ico-close-banner.png') 0 0 no-repeat
+    background: url(/images/ico-close-banner.png) 0 0 no-repeat
 }
 
 .policy-wrapper {
@@ -725,6 +725,7 @@
 .hide-text-1 {
     display: block;
     overflow: hidden;
+    height: 20px;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 160px;
@@ -733,4 +734,47 @@
 .hide-text-2 {
     display: block;
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 280px;
+}
+
+.best-div {
+    height: 19px;
+    line-height: 19px;
+    margin-bottom: 5px;
+    background: #9872ff;
+    color: white;
+    font-size: 12px;
+    text-align: center;
+    width: 45px;
+    border-radius: 3px;
+}
+
+.li-div-best {
+    flex-direction: column;
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: -15px;
+}
+
+.best-div-mypage {
+    width: 48px;
+    height: 20px;
+    margin: 14.5px 9px 14.5px 50px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: solid 0px #d3d3d3;
+    background: #9872ff;
+    color: #9d9d9d;
+    font-size: 12px;
+    font-weight: normal;
+    font-family: NotoSansKR;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.7;
+    letter-spacing: normal;
+    text-align: center;
+    cursor: default;
+    color: white;
 }

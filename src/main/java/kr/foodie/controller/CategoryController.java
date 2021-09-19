@@ -18,10 +18,13 @@ public class CategoryController {
 
     @GetMapping(value ="/region/{regionType}")
     public List<Category> getCategory(@PathVariable String regionType, HttpServletRequest request){
-
-        String regionName = request.getParameter("name");
-
-        return regionType.equals("2") ? categoryService.getCategorySecondType(regionType, regionName)
-                : categoryService.getCategory(regionType, regionName);
+        if(regionType.equals("2")){
+            String bigRegionName = request.getParameter("b_name");
+            String middleRegionName = request.getParameter("m_name");
+            return categoryService.getCategorySecondType(regionType, bigRegionName, middleRegionName, 0);
+        }else{
+            String regionName = request.getParameter("name");
+            return categoryService.getCategory(regionType, regionName);
+        }
     }
 }

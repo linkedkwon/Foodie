@@ -24,7 +24,7 @@ import java.util.*;
 @Controller
 public class ShopController {
 
-    private static final int shopInterval = 14;
+    private static final int shopInterval = 16;
     private static final int reviewInterval = 6;
 
     private final ShopService shopService;
@@ -69,12 +69,10 @@ public class ShopController {
         int size = shopService.getItemSizeByRegionTypeAndShopType(regionId, shopTypeId);
 
         model.addAttribute("payload", shopService.getSubwayShopInfos(regionId, shopTypeId, idx, shopInterval));
-
-
         model.addAttribute("regionInfo", regionService.getRegionInfo(Integer.valueOf(regionId)));
         model.addAttribute("priority", shopService.getSubwayPremiumShopInfos(regionId, shopTypeId));
         model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(regionId, shopTypeId));
-
+        model.addAttribute("themeList", themeService.getThemeTags(Integer.valueOf(shopTypeId)));
         model.addAttribute("paginations", paginationService.getPagination(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
         model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
 

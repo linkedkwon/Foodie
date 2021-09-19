@@ -22,7 +22,7 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
 
     List<Shop> findByRegionIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(Integer regionId, String shopType);
 
-    List<Shop> findTop5ByRegionIdAndShopType(Integer regionId, String shopType);
+    List<Shop> findTop4ByRegionIdAndShopType(Integer regionId, String shopType);
     List<Shop> findByShopId(Integer shopId);
 
     @Query(value="select * from shop where shop_type=?1 and region_id=?2 and theme_list like %?3%", nativeQuery = true)
@@ -43,7 +43,9 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
 
     Optional<Integer> countByRegionIdAndShopType(Integer regionId, String shopType);
 
-    @Query(value="select * from shop where shop_id in (select shop_id from main_board where type = ?1)", nativeQuery = true)
+
+//    @Query(value="select * from shop where shop_id in (select shop_id from main_board where type = ?1)", nativeQuery = true)
+    @Query(value="select s.*, r.* , f.* from shop s left join region r on s.region_id = r.region_id left join food_category f on s.big_category = f.bcode where shop_id in (select shop_id from main_board where type = ?1) and f.level=1", nativeQuery = true)
     List<Shop> findShopInfoByType(Integer type);
 
     @Query(value="select * from shop where address like %?1% and shop_id not in (select shop_id from main_board where type=?2)", nativeQuery = true)
