@@ -56,7 +56,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/user/favorite/item/**")
                 .excludePathPatterns("/user/review/item/**")
                 .excludePathPatterns("/auth/login");
-
     }
 
     //Async task to be adding with search, gps

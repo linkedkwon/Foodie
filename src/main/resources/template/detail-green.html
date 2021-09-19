@@ -36,29 +36,77 @@
               <div class="left-area">
                 <h2 th:text="${payload[0].shopName}"></h2>
                 <div class="categories">
-                  <span th:text="${payload[0].tag}"></span>
+                  <span th:text="${category}"></span>
+                </div>
+                <div class="categories" style="margin-top: 10px;">
+                  <a th:href="'http://epicure.co.kr/home/'+${payload[0].shopAlias}" th:text="'http://epicure.co.kr/home/'+${payload[0].shopAlias}" style="color:#838383;"></a>
                 </div>
               </div>
 
               <div class="right-area">
-                <ul class="scores">
-                  <li th:text="'푸디로그 평점('+${payload[0].foodieLogRating}+')'"/>
-                  <li th:text="'오감 평점('+${payload[0].tasteRating}+'점)'"/>
+                <ul class="scores" th:style="${not #strings.isEmpty(payload[0].foodieLogRating)}? '':'border-right:solid 0px #e4e4e4;'">
+                  <li th:text="${not #strings.isEmpty(payload[0].foodieLogRating)} ? '푸디 평점('+${payload[0].foodieLogRating}+')' : '푸디 평점(없음)'"></li>
+                  <li>
+                    <b th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '오감 평점('+${payload[0].tasteRating}+'점)' : '오감 평점(없음)'"></b>
+                    <b th:text="'('+${tasteRatingCnt}+'명)'" style="font-size: 12px;"></b>
+                  </li>
                 </ul>
-                <div class="star">
-                  <picture>
-                    <!--
-                    <source srcset="/images/ico-detail-star@2x.png 2x">
-                    <img src="/images/ico-detail-star.png" alt="">
-                    -->
-                    <source srcset="/images/ico-detail-star@2x.png 2x">
-                    <th:block th:switch="${payload[0].foodieLogRating}">
-                      <img th:case="A" src="/images/ico-star-first.png" alt=""/>
-                      <img th:case="AA" src="/images/ico-star-second.png" alt=""/>
-                      <img th:case="AAA" src="/images/ico-star-third.png" alt=""/>
-                    </th:block>
-                  </picture>
-                </div>
+
+                <th:block th:switch="${payload[0].foodieLogRating}">
+                  <div class="star" th:case="A">
+                    <picture>
+                      <img src="/images/ico-detail-star-first.png" style="height: 30px;">
+                    </picture>
+                  </div>
+                  <div class="star" th:case="AA">
+                    <picture>
+                      <img src="/images/ico-detail-star-second.png" style="height: 30px;">
+                    </picture>
+                  </div>
+                  <div class="star" th:case="AAA">
+                    <picture>
+                      <img src="/images/ico-detail-star-third.png" style="height: 30px;">
+                    </picture>
+                  </div>
+                  <div class="star" th:case="없음">
+                    <picture>
+                      <img src="/images/noRating.png" style="height: 30px;">
+                    </picture>
+                  </div>
+                </th:block>
+
+                <th:block th:switch="${payload[0].tasteRating}">
+                  <div th:case="5">
+                    <picture>
+                      <img src="/images/ico-point-5-active.png" style="margin-top: 5px; margin-bottom: 5px; height: 28px;">
+                    </picture>
+                  </div>
+                  <div th:case="4">
+                    <picture>
+                      <img src="/images/ico-point-4-active.png" style="margin-top: 5px; margin-bottom: 5px; height: 28px;">
+                    </picture>
+                  </div>
+                  <div th:case="3">
+                    <picture>
+                      <img src="/images/ico-point-3-active.png" style="margin-top: 5px; margin-bottom: 5px; height: 28px;">
+                    </picture>
+                  </div>
+                  <div th:case="2">
+                    <picture>
+                      <img src="/images/ico-point-2-active.png" style="margin-top: 5px; margin-bottom: 5px; height: 28px;">
+                    </picture>
+                  </div>
+                  <div th:case="1">
+                    <picture>
+                      <img src="/images/ico-point-1-active.png" style="margin-top: 5px; margin-bottom: 5px; height: 28px;">
+                    </picture>
+                  </div>
+                  <div th:case="0">
+                    <picture>
+                      <img src="/images/noRating.png" style="margin-top: 5px; margin-bottom: 5px; height: 28px;">
+                    </picture>
+                  </div>
+                </th:block>
                 <a href="#" class="btn-print">인쇄하기</a>
               </div>
             </div>
@@ -69,54 +117,106 @@
               <img class="left-area" th:src="${payload[0].shopImage}">
 
               <div class="right-area">
-                <dl>
-                  <dt>주소</dt>
-                  <dd th:text="${payload[0].address}"></dd>
-                </dl>
-                <dl class="line">
-                  <dt>전화번호</dt>
-                  <dd th:text="${payload[0].phone}"></dd>
-                </dl>
-                <dl class="line">
-                  <dt>찾아가는 길</dt>
-                  <dd th:text="${payload[0].detailAddress}"></dd>
-                </dl>
-                <dl>
-                  <dt>영업시간</dt>
-                  <dd th:text="${payload[0].operationTime}"></dd>
-                </dl>
-                <dl class="line">
-                  <dt>휴무일</dt>
-                  <dd th:text="${payload[0].holiday}"></dd>
-                </dl>
-                <dl>
-                  <dt>추천메뉴</dt>
-                  <dd th:text="${payload[0].recommandMenu}">닭구이</dd>
-                </dl>
-                <dl>
-                  <dt>예약</dt>
-                  <dd th:text="${payload[0].isReservation}"></dd>
-                </dl>
-                <dl>
-                  <dt>주차장</dt>
-                  <dd th:text="${payload[0].isParking}"></dd>
-                </dl>
-                <dl class="line">
-                  <dt>예산</dt>
-                  <dd th:text="${userRole}"></dd>
-                </dl>
-                <dl>
-                  <dt>포장/배달</dt>
+
+                <!-- 1. 주소-->
+                <th:block th:if="${not #strings.isEmpty(payload[0].address)}">
+                  <dl>
+                    <dt>주소</dt>
+                    <dd>
+                      <p id="normal-address" th:text="${payload[0].address}"></p>
+                      <div style="margin-top: 2px;">
+                        <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 1px 5px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
+                          도로명
+                        </div>
+                        <b id="road-address" th:text="${payload[0].roadAddress}"></b>
+                      </div>
+                    </dd>
+                  </dl>
+                </th:block>
+                <!-- 2. 전화번호-->
+                <th:block th:if="${not #strings.isEmpty(payload[0].phone)}">
+                  <dl class="line">
+                    <dt>전화번호</dt>
+                    <dd th:text="${payload[0].phone}"></dd>
+                  </dl>
+                </th:block>
+
+                <!-- 3. 찾아가는 길-->
+                <th:block th:if="${not #strings.isEmpty(payload[0].detailAddress)}">
+                  <dl class="line">
+                    <dt>찾아가는 길</dt>
+                    <dd th:text="${payload[0].detailAddress}"></dd>
+                  </dl>
+                </th:block>
+
+                <!-- 4. 영업시간-->
+                <th:block th:if="${not #strings.isEmpty(payload[0].operationTime)}">
+                  <dl>
+                    <dt>영업시간</dt>
+                    <dd th:text="${payload[0].operationTime}"></dd>
+                  </dl>
+                </th:block>
+
+                <!-- 5. 휴무일-->
+                <th:block th:if="${not #strings.isEmpty(payload[0].holiday)}">
+                  <dl class="line">
+                    <dt>휴무일</dt>
+                    <dd th:text="${payload[0].holiday}"></dd>
+                  </dl>
+                </th:block>
+
+                <!-- 6. 추천메뉴-->
+                <th:block th:if="${not #strings.isEmpty(payload[0].recommandMenu)}">
+                  <dl>
+                    <dt>추천메뉴</dt>
+                    <dd th:text="${payload[0].recommandMenu}">닭구이</dd>
+                  </dl>
+                </th:block>
+
+                <!-- 7. 예약-->
+                <th:block th:if="${not #strings.isEmpty(payload[0].isReservation)}">
+                  <dl>
+                    <dt>예약</dt>
+                    <dd th:text="${payload[0].isReservation}"></dd>
+                  </dl>
+                </th:block>
+
+                <!-- 8. 주차장-->
+                <th:block th:if="${not #strings.isEmpty(payload[0].isParking)}">
+                  <dl>
+                    <dt>주차장</dt>
+                    <dd th:text="${payload[0].isParking}"></dd>
+                  </dl>
+                </th:block>
+
+                <!-- 9. 예산-->
+                <th:block th:if="${not #strings.isEmpty(payload[0].budget)}">
+                  <dl class="line">
+                    <dt>예산</dt>
+                    <dd th:text="${payload[0].budget}"></dd>
+                  </dl>
+                </th:block>
+
+                <!--10. 홈페이지-->
+                <th:block th:if="${not #strings.isEmpty(payload[0].homepage)}">
+                  <dl>
+                    <dt>홈페이지</dt>
+                    <dd th:text="${payload[0].homepage}"></dd>
+                  </dl>
+                </th:block>
+
+                <!--11. 포장 및 배달 -->
+                <th:block th:if="${not #strings.isEmpty(payload[0].isDelivery)}">
+                  <dt>포장 | 배달</dt>
                   <dd th:text="${payload[0].isDelivery}"></dd>
-                </dl>
-                <dl>
-                  <dt>홈페이지</dt>
-                  <dd class="btn-dd">
-                    <div class="util-btn-area">
-                      <a href="javascript:void(0)" class="btn-sm btn-heart" onclick="addFavoriteShop()">찜하기</a>
-                      <a href="javascript:void(0)" class="btn-sm btn-siren" onclick="inquiryBtn()">오류신고</a>
-                    </div>
-                  </dd>
+                </th:block>
+
+                <dd class="btn-dd">
+                  <div class="util-btn-area" style="float: right; margin-top: 15px;">
+                    <a href="javascript:void(0)" class="btn-sm btn-heart" onclick="addFavoriteShop()">찜하기</a>
+                    <a href="javascript:void(0)" class="btn-sm btn-siren" onclick="inquiryBtn()">오류신고</a>
+                  </div>
+                </dd>
                 </dl>
               </div>
             </div>
@@ -134,7 +234,6 @@
                 <h3>HISTORY</h3>
               </div>
               <div class="section-body" >
-
                 <p th:if="${userRole} == 'GENERAL'">결제 후 정보 제공이 가능합니다.</p><br/>
                 <p th:unless="${userRole} == 'GENERAL'"  th:utext="${payload[0].history}"></p>
               </div>
@@ -155,14 +254,16 @@
                 </div>
                 <div th:unless="${userRole} == 'GENERAL'" class="image-thumbnails">
 
-                  <div class="detail">
-                    <!-- 이미지 추가 -->
-                  </div>
-                  <ul>
-                    <li th:each="item : ${payload[0].menuImages.split(',')}">
-                      <img th:src='${item.replace("[", "").replace("]", "")}' style="width: 100%;height: 100%;">
-                    </li>
-                  </ul>
+                  <th:block th:if="${not #strings.isEmpty(payload[0].menuImages.split(',')[0])}">
+                    <div id="menu-img-main" class="detail" th:style="'background-image:url('+${payload[0].menuImages.split(',')[0]}+'); background-size:contain;'">
+                    </div>
+
+                    <ul>
+                      <li th:each="item : ${payload[0].menuImages.split(',')}">
+                        <img th:src='${item}' style="width: 100%;height: 100%;" onclick="changeMenuImage(this)">
+                      </li>
+                    </ul>
+                  </th:block>
                 </div>
 
                 <ul class="info">
@@ -225,14 +326,14 @@
                 </div>
 
                 <ul class="comment-list">
-                  <li th:each="item : ${reviews}" th:style="${item.bestComment == '1'?'background-color: #f2f6ff;':''}">
+                  <li th:each="item : ${reviews}" th:style="${item.bestComment == '1'?'background-color: #f2f6ff; padding-top:30px;':''}">
                     <th:block th:switch="${item.bestComment}">
-                      <div class="li-div-best" th:case="1">
+                      <div class="li-div-best" th:case="1" style="margin-bottom: 25px; margin-top: -25px;">
                         <div class="best-div">BEST</div>
                         <span class="user-id" th:text="${item.userName}"></span>
                       </div>
-                      <div th:case="0">
-                        <span class="user-id" th:text="${item.userName}"></span>
+                      <div th:case="0" style="height: fit-content">
+                        <span class="user-id" th:text="${item.userName}" style="height: fit-content"></span>
                       </div>
                     </th:block>
 
@@ -243,7 +344,7 @@
                       <span th:case="2" class="point point2"></span>
                       <span th:case="1" class="point point1"></span>
                     </th:block>
-                    <div class="comment" th:text="${item.content}"></div>
+                    <div class="comment" th:text="${item.content}" style="height: fit-content; margin-bottom: 20px;"></div>
 
                     <th:block th:switch="${item.bestComment}">
                       <a th:case="0" href="javascript:void(0)" class="delete-btn-detail"
@@ -363,6 +464,10 @@
     // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
     var zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+    function changeMenuImage(e){
+        document.getElementById('menu-img-main').style.backgroundImage="url('"+e.src+"')";
+    }
   </script>
 </div>
 </body>

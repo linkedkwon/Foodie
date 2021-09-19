@@ -19,6 +19,10 @@ public class ReviewDTO {
     private String bestComment;
     private String createdTime;
 
+    public ReviewDTO(String starRating){
+        this.starRating = starRating;
+    }
+
     public ReviewDTO(int shopId, String shopName, int reviewId, String content,
                      String starRating, String bestComment) {
         this.shopId = shopId;
