@@ -38,39 +38,42 @@
                 <div class="categories">
                   <span th:text="${category}"></span>
                 </div>
-                <div class="categories" style="margin-top: 10px;">
-                  <a th:href="'http://epicure.co.kr/home/'+${payload[0].shopAlias}" th:text="'http://epicure.co.kr/home/'+${payload[0].shopAlias}" style="color:#838383;"></a>
-                </div>
+<!--                빼기로함-->
+<!--                <div class="categories" style="margin-top: 10px;">-->
+<!--                  <a th:href="'http://epicure.co.kr/home/'+${payload[0].shopAlias}" th:text="'http://epicure.co.kr/home/'+${payload[0].shopAlias}" style="color:#838383;"></a>-->
+<!--                </div>-->
               </div>
 
               <div class="right-area">
                 <ul class="scores" th:style="${not #strings.isEmpty(payload[0].foodieLogRating)}? '':'border-right:solid 0px #e4e4e4;'">
-                  <li th:text="${not #strings.isEmpty(payload[0].foodieLogRating)} ? '푸디 평점('+${payload[0].foodieLogRating}+')' : '푸디 평점(없음)'"></li>
+                  <li th:text="${not #strings.isEmpty(payload[0].foodieLogRating)} ? '전문가 평점' : '전문가 평점'"></li>
                   <li>
-                    <b th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '오감 평점('+${payload[0].tasteRating}+'점)' : '오감 평점(없음)'"></b>
-                    <b th:text="'('+${tasteRatingCnt}+'명)'" style="font-size: 12px;"></b>
+                    <b style="padding-left:17px;" th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '오감 평점('+${payload[0].tasteRating}+'점)' : '오감 평점'"></b>
+<!--                    <b th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '오감 평점('+${payload[0].tasteRating}+'점)' : '오감 평점(없음)'"></b>-->
+
+                    <!--                    <b th:text="'('+${tasteRatingCnt}+'명)'" style="font-size: 12px;"></b>-->
                   </li>
                 </ul>
 
                 <th:block th:switch="${payload[0].foodieLogRating}">
                   <div class="star" th:case="A">
                     <picture>
-                      <img src="/images/ico-detail-star-first.png" style="height: 30px;">
+                      <img src="/images/ico-detail-star-first.png" style="height: 40px;">
                     </picture>
                   </div>
                   <div class="star" th:case="AA">
                     <picture>
-                      <img src="/images/ico-detail-star-second.png" style="height: 30px;">
+                      <img src="/images/ico-detail-star-second.png" style="height: 40px;">
                     </picture>
                   </div>
                   <div class="star" th:case="AAA">
                     <picture>
-                      <img src="/images/ico-detail-star-third.png" style="height: 30px;">
+                      <img src="/images/ico-detail-star-third.png" style="height: 40px;">
                     </picture>
                   </div>
                   <div class="star" th:case="없음">
                     <picture>
-                      <img src="/images/noRating.png" style="height: 30px;">
+                      <img src="/images/noRating.png" style="height: 40px;">
                     </picture>
                   </div>
                 </th:block>
@@ -78,32 +81,32 @@
                 <th:block th:switch="${payload[0].tasteRating}">
                   <div th:case="5">
                     <picture>
-                      <img src="/images/ico-point-5-active.png" style="margin-top: 5px; margin-bottom: 5px; height: 28px;">
+                      <img src="/images/ico-point-5-active.png" style="margin-top: 5px; padding-left: 25px; margin-bottom: 5px; height: 25px;">
                     </picture>
                   </div>
                   <div th:case="4">
                     <picture>
-                      <img src="/images/ico-point-4-active.png" style="margin-top: 5px; margin-bottom: 5px; height: 28px;">
+                      <img src="/images/ico-point-4-active.png" style="margin-top: 5px; padding-left: 25px;margin-bottom: 5px; height: 25px;">
                     </picture>
                   </div>
                   <div th:case="3">
                     <picture>
-                      <img src="/images/ico-point-3-active.png" style="margin-top: 5px; margin-bottom: 5px; height: 28px;">
+                      <img src="/images/ico-point-3-active.png" style="margin-top: 5px; padding-left: 25px;margin-bottom: 5px; height: 25px;">
                     </picture>
                   </div>
                   <div th:case="2">
                     <picture>
-                      <img src="/images/ico-point-2-active.png" style="margin-top: 5px; margin-bottom: 5px; height: 28px;">
+                      <img src="/images/ico-point-2-active.png" style="margin-top: 5px; padding-left: 25px;margin-bottom: 5px; height: 25px;">
                     </picture>
                   </div>
                   <div th:case="1">
                     <picture>
-                      <img src="/images/ico-point-1-active.png" style="margin-top: 5px; margin-bottom: 5px; height: 28px;">
+                      <img src="/images/ico-point-1-active.png" style="margin-top: 5px; padding-left: 25px;margin-bottom: 5px; height: 25px;">
                     </picture>
                   </div>
                   <div th:case="0">
                     <picture>
-                      <img src="/images/noRating.png" style="margin-top: 5px; margin-bottom: 5px; height: 28px;">
+                      <img src="/images/noRating.png" style="margin-top: 5px;padding-left: 25px; margin-bottom: 5px; height: 25px;">
                     </picture>
                   </div>
                 </th:block>
@@ -212,7 +215,7 @@
                 </th:block>
 
                 <dd class="btn-dd">
-                  <div class="util-btn-area" style="float: right; margin-top: 15px;">
+                  <div class="util-btn-area" style="float: right;">
                     <a href="javascript:void(0)" class="btn-sm btn-heart" onclick="addFavoriteShop()">찜하기</a>
                     <a href="javascript:void(0)" class="btn-sm btn-siren" onclick="inquiryBtn()">오류신고</a>
                   </div>
@@ -234,7 +237,7 @@
                 <h3>HISTORY</h3>
               </div>
               <div class="section-body" >
-                <p th:if="${userRole} == 'GENERAL'">결제 후 정보 제공이 가능합니다.</p><br/>
+                <p th:if="${userRole} == 'GENERAL'">Foodie Premium 으로 광고없이 세부 정보를 이용하세요. <a href="/user/pay"> [지금 가입하기] </a> </p><br/>
                 <p th:unless="${userRole} == 'GENERAL'"  th:utext="${payload[0].history}"></p>
               </div>
             </div>
@@ -250,7 +253,7 @@
 
               <div class="section-body">
                 <div th:if="${userRole} == 'GENERAL'" style="padding-bottom: 20px;">
-                  <p>결제 후 정보 제공이 가능합니다.</p>
+                  <p>Foodie Premium 으로 광고없이 메뉴사진을 이용하세요. <a href="/user/pay"> [지금 가입하기] </a> </p>
                 </div>
                 <div th:unless="${userRole} == 'GENERAL'" class="image-thumbnails">
 
@@ -384,6 +387,11 @@
 
     </div>
   </div>
+  <style>
+    .right-area picture{
+      padding-left: 10px;
+    }
+  </style>
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
   <script type="text/javascript" th:src="@{/js/commons.js}"></script>

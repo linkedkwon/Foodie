@@ -174,7 +174,7 @@
 
             document.getElementById(className).innerHTML = ""
 
-            if(type == 1) {
+            if(type == 1 || type==3) {
                 $(".top-menu > li").removeClass('active');
                 event.target.parentElement.classList.add('active')
                 $.ajax({
@@ -409,7 +409,7 @@
                 $("#busan").hide()
                 $("#gju").hide()
                 initMenuForRegionContent2();
-                $("#regionContent2 .top-menu li:eq(3)").addClass("active");
+                $("#regionContent2 .top-menu li:eq(5)").addClass("active");
                 return false;
             });
             $("#daeguMain").click(function () {
@@ -421,7 +421,7 @@
                 $("#busan").hide()
                 $("#gju").hide()
                 initMenuForRegionContent2();
-                $("#regionContent2 .top-menu li:eq(4)").addClass("active");
+                $("#regionContent2 .top-menu li:eq(3)").addClass("active");
                 return false;
             });
             $("#gjuMain").click(function () {
@@ -433,7 +433,7 @@
                 $("#busan").hide()
                 $("#gju").show()
                 initMenuForRegionContent2();
-                $("#regionContent2 .top-menu li:eq(5)").addClass("active");
+                $("#regionContent2 .top-menu li:eq(4)").addClass("active");
                 return false;
             });
             $("#region3").click(function () {

@@ -65,7 +65,7 @@
     height: 100%;
     position: absolute;
     left: 0;
-    background: url(/images/bg-dotted-middle.png) 0 0 repeat-y;
+    background: url('/images/bg-dotted-middle.png') 0 0 repeat-y;
     background-size: 1170px;
 }
 
@@ -123,9 +123,9 @@
 }
 
 #contents>.background-wrapper>.background-wrapper::after {
-    bottom: 0;
-    background: url(/images/bg-paper-bottom.png) center bottom no-repeat
-    background-size: 1170px;
+    bottom: 10px;
+    background: url(/images/bg-paper-bottom.png) center bottom no-repeat;
+    background-size: 1100px;
 }
 
 #contents>.background-wrapper>.background-wrapper>.background-wrapper {
@@ -208,10 +208,9 @@
 }
 
 #contents .contents .header-restaurant .right-area .scores {
-    width: 175px;
+    width: 150px;
     height: 71px;
     float: left;
-    margin-right: 25px;
     padding-top: 10px;
     border-right: solid 1px #e4e4e4;
     box-sizing: border-box
@@ -221,13 +220,15 @@
     margin-bottom: 10px;
     font-size: 18px;
     font-weight: 400;
-    text-align: left;
+    text-align: right;
+    padding-right: 10px;
     color: #838383
 }
 
 #contents .contents .header-restaurant .right-area .star {
     float: right;
-    padding-top: 10px
+    margin-top: -9px;
+    /*padding-top: 10px*/
 }
 
 #contents .contents .header-restaurant .right-area .btn-print {
@@ -316,7 +317,7 @@
     -webkit-display: flex;
     position: absolute;
     right: 0;
-    bottom: 0
+    /*bottom: 0*/
 }
 
 #contents .contents .about-restaurant .right-area .util-btn-area a {
@@ -609,7 +610,8 @@
 
 #contents .contents .detail-section.critique-section .section-body .commnet-form {
     display: flex;
-    -webkit-display: flex
+    -webkit-display: flex;
+    padding-bottom: 10px;
 }
 
 #contents .contents .detail-section.critique-section .section-body .commnet-form .btn-primary {
@@ -776,7 +778,7 @@
 }
 
 .point4-click {
-    background-image: url(/images/ico-point-4-active.png);
+    background-image: url('/images/ico-point-4-active.png');
 }
 
 .point3-click {
