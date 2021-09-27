@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/region")
+@RequestMapping("/app/region")
 public class RegionController {
   private final RegionRepository regionRepository;
 

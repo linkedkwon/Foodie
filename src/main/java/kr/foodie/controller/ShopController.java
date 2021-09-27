@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/shop")
+@RequestMapping("/app/shop")
 public class ShopController {
   private final ShopRepository shopRepository;
 
@@ -31,14 +31,29 @@ public class ShopController {
   public List<ShopEntity> findByRegionId(@PathVariable int id) {
     return shopRepository.findByRegionId(id);
   }
+  @GetMapping("/regionId/{id}/{type}")
+  public List<ShopEntity> findByRegionIdAndShopType(@PathVariable int id, @PathVariable String type) {
+    String shopType = type.equals("red") ? "0" : "1";
+    return shopRepository.findByRegionIdAndShopType(id, shopType);
+  }
 
   @GetMapping("/subwayId/{id}")
   public List<ShopEntity> findBySubwayTypeId(@PathVariable int id) {
     return shopRepository.findBySubwayTypeId(id);
   }
+  @GetMapping("/regionId/{id}/{type}")
+  public List<ShopEntity> findBySubwayTypeIdAndShopType(@PathVariable int id, @PathVariable String type) {
+    String shopType = type.equals("red") ? "0" : "1";
+    return shopRepository.findByRegionIdAndShopType(id, shopType);
+  }
 
   @GetMapping("/villageId/{id}")
   public List<ShopEntity> findByVillageTypeId(@PathVariable int id) {
     return shopRepository.findByVillageTypeId(id);
+  }
+  @GetMapping("/regionId/{id}/{type}")
+  public List<ShopEntity> findByVillageTypeIdAndShopType(@PathVariable int id, @PathVariable String type) {
+    String shopType = type.equals("red") ? "0" : "1";
+    return shopRepository.findByRegionIdAndShopType(id, shopType);
   }
 }

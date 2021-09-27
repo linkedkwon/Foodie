@@ -12,17 +12,17 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/review")
+@RequestMapping("/app/review")
 public class ReviewController {
   private final ReviewRepository reviewRepository;
 
   @GetMapping("/userId/{id}")
   public List<ReviewEntity> findByUserId(@PathVariable int id) {
-    return reviewRepository.findByUserId(id);
+    return reviewRepository.findByUserIdOrderByCreatedAtDesc(id);
   }
 
   @GetMapping("/shopId/{id}")
   public List<ReviewEntity> findByShopId(@PathVariable int id) {
-    return reviewRepository.findByShopId(id);
+    return reviewRepository.findByShopIdOrderByCreatedAtDesc(id);
   }
 }

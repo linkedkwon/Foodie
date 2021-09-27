@@ -28,6 +28,8 @@ public class ShopEntity {
   @Column
   private String smallCategory;
   @Column
+  private String shopType;
+  @Column
   private Character shopPaid;
   @Column
   private Date premiumRegisterDate;

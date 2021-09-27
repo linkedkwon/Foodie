@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/favoriteShop")
+@RequestMapping("/app/favoriteShop")
 public class FavoriteShopController {
   private final FavoriteShopRepository favoriteShopRepository;
 
