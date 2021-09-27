@@ -40,3 +40,7 @@ out/
 *.zip
 *.tar.gz
 *.rar
+
+
+# properties (host & db & pw)
+*application.properties
