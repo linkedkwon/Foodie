@@ -2,24 +2,26 @@ package kr.foodie.service;
 
 import kr.foodie.domain.shop.Shop;
 import kr.foodie.repo.ShopRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ShopService {
 
+    private final FoodCategoryService foodCategoryService;
     private final ShopRepository shopRepository;
 
-    public ShopService(ShopRepository shopRepository) {
-        this.shopRepository = shopRepository;
-    }
-
     public List<Shop> getShopInfos(Integer regionId, String shopType, int idx, int interval) {
-        return shopRepository.findByRegionIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(regionId, shopType,
+        List<Shop> shops = shopRepository.findByRegionIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(regionId, shopType,
                 PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
+
+        return addAliasOnShops(shops);
     }
     public List<Shop>  getSubwayShopInfos(Integer regionId, String shopType, int idx, int interval) {
         return shopRepository.findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(regionId, shopType,
@@ -31,16 +33,19 @@ public class ShopService {
     }
 
     public List<Shop> getShopPremiumInfos(Integer regionId, String shopType) {
-        return shopRepository.findByRegionIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(regionId, shopType);
+        List<Shop> shops = shopRepository.findByRegionIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(regionId, shopType);
+        return addAliasOnShops(shops);
     }
 
 
 //    사이드에 그린리스트<-> 레드리스트 우선순위 지정필요
     public List<Shop> getShopInfosWithSideOrder(Integer regionId, String shopType) {
         if(shopType.equals("1")){
-            return shopRepository.findTop4ByRegionIdAndShopType(regionId, "0");
+            List<Shop> shops = shopRepository.findTop4ByRegionIdAndShopType(regionId, "0");
+            return addAliasOnShops(shops);
         }else{
-            return shopRepository.findTop4ByRegionIdAndShopType(regionId, "1");
+            List<Shop> shops = shopRepository.findTop4ByRegionIdAndShopType(regionId, "1");
+            return addAliasOnShops(shops);
         }
     }
 
@@ -66,7 +71,8 @@ public class ShopService {
     }
 
     public List<Shop> getShopInfoByType(Integer type) {
-        return shopRepository.findShopInfoByType(type);
+        List<Shop> shops = shopRepository.findShopInfoByType(type);
+        return addAliasOnShops(shops);
     }
 
     public List<Shop> getShopInfoByAddressName(String address, Integer type) {
@@ -122,5 +128,13 @@ public class ShopService {
     public List<Shop> getAdminShopInfosWithBcodeAndMcodeAndScodeWithRegionId(Integer bCode, Integer mCode, Integer sCode, String shopType, Integer regionId) {
         return shopRepository.findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopTypeAndRegionId(bCode, mCode, sCode, shopType, regionId);
     }
-    
+
+    protected List<Shop> addAliasOnShops(List<Shop> shops){
+        for (Shop shop : shops) {
+            String bCode = Optional.ofNullable(shop.getBigCategory()).orElseGet(() -> { return "0"; });
+            String mCode = Optional.ofNullable(shop.getMiddleCategory()).orElseGet(() -> { return "0"; });
+            shop.setShopAlias(foodCategoryService.getShopCategory(bCode, mCode, shop.getAddress()));
+        }
+        return shops;
+    }
 }

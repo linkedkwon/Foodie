@@ -77,7 +77,7 @@
                                         <div class="name">
                                             <div class="hide-text-1" th:text="${shop.shopCharge}"></div>
                                                 <div class="categories">
-                                                    <span class="hide-text-1" style="line-height: 20px;color: #a71b00;">한식 | 모던한식</span>
+                                                    <span class="hide-text-1" th:text="${shop.shopAlias}" style="line-height: 20px;color: #a71b00;">한식 | 모던한식</span>
                                                 </div>
                                             </div>
                                             <ul class="info">
@@ -138,12 +138,11 @@
                     <dl th:object="${shop}" th:each="shop : ${sidePriority}">
                         <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
                             <dt style="    padding-bottom: 27px;">
-                                <div class="info">
-                                    <span class="name" th:text="${shop.shopCharge}"></span>
+                                <div class="info" style="float: left">
+                                    <span class="name" th:text="${shop.shopCharge}" style="width:120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
                                 </div>
-                                <div style="float: right;color: #c73425;font-size: 15px; line-height: 17px">
-                                    <span class="name" th:text="${shop.shopAlias}"></span> |
-                                    <span class="name" th:text="${shop.shopCharge}"></span>
+                                <div style="float: right;color: #c73425;font-size: 12px; line-height: 17px; width:130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: right;">
+                                    <span class="name" th:text="${shop.shopAlias}"></span>
                                 </div>
                             </dt>
                             <dd>
@@ -341,7 +340,7 @@
                             "                              <div class=\"name\">\n" +
                             "                                  <div>" + value.shopCharge + "</div>\n" +
                             "                                  <div class=\"categories\">\n" +
-                            "                                      <span>" + value.shopAlias + "|" + value.shopCharge + "</span>\n" +
+                            "                                      <span>" + value.shopAlias + "</span>\n" +
                             "                                  </div>\n" +
                             "                              </div>\n" +
                             "                              <ul class=\"info\">\n" +

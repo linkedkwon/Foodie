@@ -154,7 +154,7 @@
                     <div class="name">
                       <div class="hide-text-1" th:text="${shop.shopName}"></div>
                       <div class="categories">
-                        <span class="hide-text-1" th:text="${not #strings.isEmpty(shop.shopAlias)} ? ${shop.shopAlias}:''" style="height: 12px; margin-top: 5px;">한식</span>
+                        <span class="hide-text-1" th:text="${shop.shopAlias}" style="height:12px; margin-top: 5px;"></span>
                       </div>
                     </div>
                     <ul class="info">
@@ -300,7 +300,7 @@
                     +     "<div class=\"name\">"
                     +       "<div class=\"hide-text-1\">" + element.shopName + "</div>"
                     +       "<div class=\"categories\">"
-                    +           "<span class=\"hide-text-1\" style=\"height: 12px; margin-top: 5px;\">" + element.shopAlias  + " | " + element.address.split(" ")[0] + element.address.split(" ")[1] +  "</span>"
+                    +           "<span class=\"hide-text-1\" style=\"height: 12px; margin-top: 5px;\">" + element.shopAlias + "</span>"
                     +       "</div>"
                     +     "</div>"
                     +     "<ul class=\"info\">"
@@ -333,7 +333,7 @@
                   +     "<div class=\"name\">"
                   +       "<div class=\"hide-text-1\">" + element.shopName + "</div>"
                   +       "<div class=\"categories\">"
-                  +           "<span class=\"hide-text-1\" style=\"height: 12px; margin-top: 5px;\">"+ element.shopAlias  + " | " + element.address.split(" ")[0] + element.address.split(" ")[1] +  "</span>"
+                  +           "<span class=\"hide-text-1\" style=\"height: 12px; margin-top: 5px;\">"+ element.shopAlias + "</span>"
                   +       "</div>"
                   +     "</div>"
                   +     "<ul class=\"info\">"
@@ -380,7 +380,7 @@
                     +     "<div class=\"name\">"
                     +       "<div class=\"hide-text-1\">" + element.shopName + "</div>"
                     +       "<div class=\"categories\">"
-                    +           "<span class=\"hide-text-1\" style=\"height: 12px; margin-top: 5px;\">"+ element.shopAlias  + " | " + element.address.split(" ")[0] + element.address.split(" ")[1] +  "</span>"
+                    +           "<span class=\"hide-text-1\" style=\"height: 12px; margin-top: 5px;\">"+ element.shopAlias + "</span>"
                     +       "</div>"
                     +     "</div>"
                     +     "<ul class=\"info\">"
@@ -413,7 +413,7 @@
                   +     "<div class=\"name\">"
                   +       "<div class=\"hide-text-1\">" + element.shopName + "</div>"
                   +       "<div class=\"categories\">"
-                  +           "<span class=\"hide-text-1\" style=\"height: 12px; margin-top: 5px;\">" + element.shopAlias  + " | " + element.address.split(" ")[0] + element.address.split(" ")[1] +  "</span>"
+                  +           "<span class=\"hide-text-1\" style=\"height: 12px; margin-top: 5px;\">" + element.shopAlias +  "</span>"
                   +       "</div>"
                   +     "</div>"
                   +     "<ul class=\"info\">"
