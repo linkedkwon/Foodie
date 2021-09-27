@@ -46,10 +46,10 @@
     position: absolute;
     top: 138px;
     left: 50%;
-    width: 1100px;
+    width: 1184px;
     height: 315px;
     padding: 3px;
-    margin-left: -550px;
+    margin-left: -586px;
     box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, .08);
     border: solid 1px #d3d3d3;
     background-color: #fff;
@@ -145,7 +145,7 @@
 }
 
 .global-nav .gnb-contents {
-    width: 900px;
+    width: 973px;
     padding: 8px 22px 0 0;
     float: right
 }
