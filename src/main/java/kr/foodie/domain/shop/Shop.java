@@ -1,6 +1,9 @@
 package kr.foodie.domain.shop;
 
 import lombok.Data;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.standard.ClassicTokenizerFactory;
+import org.hibernate.search.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -10,6 +13,14 @@ import java.util.Date;
 @Entity
 @Table(name = "SHOP")
 @Data
+@Indexed
+@AnalyzerDef(
+        name = "shopAnalyzer",
+        tokenizer = @TokenizerDef(factory = ClassicTokenizerFactory.class),
+        filters = {
+                @TokenFilterDef(factory = LowerCaseFilterFactory.class)
+        }
+)
 public class Shop {
 
     @Id
@@ -41,12 +52,18 @@ public class Shop {
     private String shopPaid;
 
     @Column(name = "SHOP_ALIAS")
+    @Field
+    @Analyzer(definition = "shopAnalyzer")
     private String shopAlias;
 
     @Column(name = "SHOP_CHARGE")
+    @Field
+    @Analyzer(definition = "shopAnalyzer")
     private String shopCharge;
 
     @Column(name = "SHOP_NAME")
+    @Field
+    @Analyzer(definition = "shopAnalyzer")
     private String shopName;
 
     @Column(name = "TAG")
@@ -62,9 +79,13 @@ public class Shop {
     private String smallCategory;
 
     @Column(name = "ADDRESS")
+    @Field
+    @Analyzer(definition = "shopAnalyzer")
     private String address;
 
     @Column(name = "ROAD_ADDRESS")
+    @Field
+    @Analyzer(definition = "shopAnalyzer")
     private String roadAddress;
 
     @Column(name = "PHONE")
@@ -80,6 +101,8 @@ public class Shop {
     private String holiday;
 
     @Column(name = "RECOMMAND_MENU")
+    @Field
+    @Analyzer(definition = "shopAnalyzer")
     private String recommandMenu;
 
     @Column(name = "IS_RESERVATION")
@@ -110,6 +133,8 @@ public class Shop {
     private String menuImages;
 
     @Column(name = "MENU")
+    @Field
+    @Analyzer(definition = "shopAnalyzer")
     private String menu;
 
     @Column(name = "SHOP_IMAGE")

@@ -26,6 +26,7 @@ dependencies {
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.hibernate:hibernate-search-orm:5.11.9.Final'
 
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.6'
