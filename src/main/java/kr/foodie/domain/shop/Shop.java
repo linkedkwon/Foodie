@@ -92,6 +92,8 @@ public class Shop {
     private String phone;
 
     @Column(name = "DETAIL_ADDRESS")
+    @Field
+    @Analyzer(definition = "shopAnalyzer")
     private String detailAddress;
 
     @Column(name = "OPERATION_TIME")

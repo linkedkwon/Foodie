@@ -158,7 +158,7 @@ public class ShopService {
         return shops;
     }
 
-    public void searchKeyword(String keyword){
+    public List<Shop> searchKeyword(String keyword, String shopType){
 
         FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
         QueryBuilder qBuilder = fullTextEntityManager.getSearchFactory()
@@ -169,12 +169,16 @@ public class ShopService {
         Query luceneQuery = qBuilder
                 .keyword()
                 .wildcard()
-                .onFields("shopName","menu","shopAlias","shopCharge","address","roadAddress","recommandMenu")
+                .onFields("shopName","menu","shopAlias", "shopCharge", "address", "roadAddress", "recommandMenu","detailAddress")
                 .matching("*"+keyword+"*")
                 .createQuery();
 
         FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Shop.class);
 
-        List<Shop> shops = fullTextQuery.getResultList();
+        List<Shop> list = fullTextQuery.getResultList();
+
+        return list.stream()
+                .filter(e -> e.getShopType().equals(shopType))
+                .collect(Collectors.toList());
     }
 }
