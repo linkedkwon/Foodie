@@ -134,15 +134,28 @@ public class ShopController {
         return null;
     }
 
-    @GetMapping(value ="/filter/Allshop")
-    public String filterAllShopInfos(@RequestParam(value = "shopType") String shopType, @RequestParam(value = "filter") String filterItems, Model model) {
 
+    @GetMapping(value ="/filter/Allshop")
+    public String filterAllShopInfos(@RequestParam(value = "shopType") String shopType,
+                                     @RequestParam(value = "filter") String filterItems,
+                                     @RequestParam(value = "pagingIdx", required = false) String pagingIdx, Model model) {
+
+        int idx = Integer.parseInt(Optional.ofNullable(pagingIdx)
+                                            .orElseGet(()->{return "0";}));
         String shopTypeId = shopType.equals("red") ? "0" : "1";
-        model.addAttribute("payload", shopService.searchKeyword(filterItems, shopTypeId));
+
+        Map<String, Object> bundle = shopService.getSearchListByKeyword(filterItems, shopTypeId, shopInterval, idx);
+        int size = (int) bundle.get("size");
+        String url = "/filter/Allshop?filter=" + filterItems + "&shopType=" + shopType + "&pagingIdx=";
+
+        model.addAttribute("payload", (List<Shop>)bundle.get("payload"));
         model.addAttribute("keyword", filterItems);
+        model.addAttribute("paginations", paginationService.getPagination(size, idx, shopInterval, url));
+        model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, url));
 
         return shopType.equals("red") ? "search-submain-red" : "search-submain-green";
     }
+
 
     @ResponseBody
     @GetMapping(value ="/filter/shop")

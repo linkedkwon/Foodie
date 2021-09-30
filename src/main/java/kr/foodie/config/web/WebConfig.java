@@ -45,6 +45,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/user/**")
                 .addPathPatterns("/shop/**")
                 .addPathPatterns("/help/*")
+                .addPathPatterns("/filter/**")
                 .addPathPatterns("/auth/**")
                 .addPathPatterns("/help/pw")
                 .addPathPatterns("/help/pw/**")

@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -158,7 +160,7 @@ public class ShopService {
         return shops;
     }
 
-    public List<Shop> searchKeyword(String keyword, String shopType){
+    public Map<String, Object> getSearchListByKeyword(String keyword, String shopType, int shopInterval, int idx){
 
         FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
         QueryBuilder qBuilder = fullTextEntityManager.getSearchFactory()
@@ -175,10 +177,19 @@ public class ShopService {
 
         FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Shop.class);
 
-        List<Shop> list = fullTextQuery.getResultList();
+        List<Shop> result = fullTextQuery.getResultList();
 
-        return list.stream()
-                .filter(e -> e.getShopType().equals(shopType))
-                .collect(Collectors.toList());
+        List<Shop> list = result.stream()
+                    .filter(e -> e.getShopType().equals(shopType))
+                    .collect(Collectors.toList());
+
+        //list has only 1nd index(key:size, value:list)
+        Map<String, Object> listBundle = new HashMap<>();
+        listBundle.put("size",list.size());
+
+        int left = idx * shopInterval, right = list.size() > idx * shopInterval + shopInterval ? idx * shopInterval + shopInterval :  list.size();
+        listBundle.put("payload",list.subList(left, right));
+
+        return listBundle;
     }
 }
