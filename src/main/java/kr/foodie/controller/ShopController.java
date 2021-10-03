@@ -41,7 +41,7 @@ public class ShopController {
   public List<ShopEntity> findBySubwayTypeId(@PathVariable int id) {
     return shopRepository.findBySubwayTypeId(id);
   }
-  @GetMapping("/regionId/{id}/{type}")
+  @GetMapping("/subwayId/{id}/{type}")
   public List<ShopEntity> findBySubwayTypeIdAndShopType(@PathVariable int id, @PathVariable String type) {
     String shopType = type.equals("red") ? "0" : "1";
     return shopRepository.findByRegionIdAndShopType(id, shopType);
@@ -51,7 +51,7 @@ public class ShopController {
   public List<ShopEntity> findByVillageTypeId(@PathVariable int id) {
     return shopRepository.findByVillageTypeId(id);
   }
-  @GetMapping("/regionId/{id}/{type}")
+  @GetMapping("/villageId/{id}/{type}")
   public List<ShopEntity> findByVillageTypeIdAndShopType(@PathVariable int id, @PathVariable String type) {
     String shopType = type.equals("red") ? "0" : "1";
     return shopRepository.findByRegionIdAndShopType(id, shopType);
