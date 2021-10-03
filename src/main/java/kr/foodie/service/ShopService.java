@@ -30,15 +30,6 @@ public class ShopService {
     private final FoodCategoryService foodCategoryService;
     private final ShopRepository shopRepository;
 
-    public void initializeHibernateSearch() {
-        try {
-            FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
-            fullTextEntityManager.createIndexer().startAndWait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     public List<Shop> getShopInfos(Integer regionId, String shopType, int idx, int interval) {
         List<Shop> shops = shopRepository.findByRegionIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(regionId, shopType,
                 PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
