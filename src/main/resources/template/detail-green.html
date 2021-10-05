@@ -48,7 +48,8 @@
                 <ul class="scores" th:style="${not #strings.isEmpty(payload[0].foodieLogRating)}? '':'border-right:solid 0px #e4e4e4;'">
                   <li th:text="${not #strings.isEmpty(payload[0].foodieLogRating)} ? '전문가 평점' : '전문가 평점'"></li>
                   <li>
-                    <b style="padding-left:17px;" th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '오감 평점('+${payload[0].tasteRating}+'점)' : '오감 평점'"></b>
+<!--                    <b style="padding-left:17px;" th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '방문자 평점('+${payload[0].tasteRating}+'점)' : '오감 평점'"></b>-->
+                    <b style="padding-left:17px;">방문자 평점</b>
 <!--                    <b th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '오감 평점('+${payload[0].tasteRating}+'점)' : '오감 평점(없음)'"></b>-->
 
                     <!--                    <b th:text="'('+${tasteRatingCnt}+'명)'" style="font-size: 12px;"></b>-->
@@ -80,34 +81,66 @@
 
                 <th:block th:switch="${payload[0].tasteRating}">
                   <div th:case="5">
-                    <picture>
-                      <img src="/images/ico-point-5-active.png" style="margin-top: 5px; padding-left: 25px; margin-bottom: 5px; height: 25px;">
+                    <picture style="float: left">
+                      <img src="/images/ico-point-5-active.png" style="margin-top: 5px; padding-left: 10px; margin-bottom: 5px; height: 25px;">
                     </picture>
+                    <div th:if="${(not #strings.isEmpty(payload[0].tasteRating)) && (!payload[0].tasteRating.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="'('+${payload[0].tasteRating}+'점)'"></div>
+                    </div>
+                    <div th:unless="${not #strings.isEmpty(payload[0].tasteRating)}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;">( - )</div>
+                    </div>
                   </div>
                   <div th:case="4">
-                    <picture>
-                      <img src="/images/ico-point-4-active.png" style="margin-top: 5px; padding-left: 25px;margin-bottom: 5px; height: 25px;">
+                    <picture style="float: left">
+                      <img src="/images/ico-point-4-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
                     </picture>
+                    <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '('+${payload[0].tasteRating}+'점)' : ''"></div>
                   </div>
                   <div th:case="3">
-                    <picture>
-                      <img src="/images/ico-point-3-active.png" style="margin-top: 5px; padding-left: 25px;margin-bottom: 5px; height: 25px;">
+                    <picture style="float: left">
+                      <img src="/images/ico-point-3-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
                     </picture>
+                    <div th:if="${(not #strings.isEmpty(payload[0].tasteRating)) && (!payload[0].tasteRating.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="'('+${payload[0].tasteRating}+'점)'"></div>
+                    </div>
+                    <div th:unless="${not #strings.isEmpty(payload[0].tasteRating)}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;">( - )</div>
+                    </div>
                   </div>
                   <div th:case="2">
-                    <picture>
-                      <img src="/images/ico-point-2-active.png" style="margin-top: 5px; padding-left: 25px;margin-bottom: 5px; height: 25px;">
+                    <picture style="float: left">
+                      <img src="/images/ico-point-2-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
                     </picture>
+                    <div th:if="${(not #strings.isEmpty(payload[0].tasteRating)) && (!payload[0].tasteRating.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="'('+${payload[0].tasteRating}+'점)'"></div>
+                    </div>
+                    <div th:unless="${not #strings.isEmpty(payload[0].tasteRating)}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;">( - )</div>
+                    </div>
                   </div>
                   <div th:case="1">
-                    <picture>
-                      <img src="/images/ico-point-1-active.png" style="margin-top: 5px; padding-left: 25px;margin-bottom: 5px; height: 25px;">
+                    <picture style="float: left">
+                      <img src="/images/ico-point-1-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
                     </picture>
+                    <div th:if="${(not #strings.isEmpty(payload[0].tasteRating)) && (!payload[0].tasteRating.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="'('+${payload[0].tasteRating}+'점)'"></div>
+                    </div>
+                    <div th:unless="${not #strings.isEmpty(payload[0].tasteRating)}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;">( - )</div>
+                    </div>
                   </div>
                   <div th:case="0">
-                    <picture>
-                      <img src="/images/noRating.png" style="margin-top: 5px;padding-left: 25px; margin-bottom: 5px; height: 25px;">
+                    <picture style="float: left">
+                      <img src="/images/noRating.png" style="margin-top: 5px;padding-left: 10px; margin-bottom: 5px; height: 25px;">
                     </picture>
+                    <div th:if="${(not #strings.isEmpty(payload[0].tasteRating)) && (!payload[0].tasteRating.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="'('+${payload[0].tasteRating}+'점)'"></div>
+                    </div>
+                    <div th:unless="${not #strings.isEmpty(payload[0].tasteRating)}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;">( - )</div>
+                    </div>
+<!--                    <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '('+${payload[0].tasteRating}+'점)' : ''"></div>-->
                   </div>
                 </th:block>
                 <a href="#" class="btn-print">인쇄하기</a>
@@ -128,7 +161,7 @@
                     <dd>
                       <p id="normal-address" th:text="${payload[0].address}"></p>
                       <div style="margin-top: 2px;">
-                        <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 1px 5px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
+                        <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 1px 7px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
                           도로명
                         </div>
                         <b id="road-address" th:text="${payload[0].roadAddress}"></b>
@@ -335,7 +368,7 @@
                         <div class="best-div">BEST</div>
                         <span class="user-id" th:text="${item.userName}"></span>
                       </div>
-                      <div th:case="0" style="height: fit-content">
+                      <div th:case="0" style="height: fit-content;width: 70px;    text-overflow: ellipsis">
                         <span class="user-id" th:text="${item.userName}" style="height: fit-content"></span>
                       </div>
                     </th:block>

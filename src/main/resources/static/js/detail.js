@@ -104,7 +104,7 @@ function checkBeforeAddReview(){
     var commentFlag = true;
 
     if(starRating == 0) {
-        alert("오감 평점을 선택해주세요.");
+        alert("평점을 선택해주세요.");
         starFlag = false;
     }else {
         if (comment.length < 2 || comment.length > 300) {

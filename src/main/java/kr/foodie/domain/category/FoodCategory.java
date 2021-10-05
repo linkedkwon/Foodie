@@ -33,4 +33,8 @@ public class FoodCategory {
 
     @Column(name = "CATEGORY_NAME")
     private String categoryName;
+
+    @Column(name = "TYPE")
+    private Integer type;
+
 }

@@ -76,19 +76,21 @@
             <li th:object="${shop}" th:each="shop : ${priority}">
               <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
                 <div class="card-item">
-                  <div class="img" style="width: 99%"></div>
+                  <img class="img" th:src="${shop.shopImage}">
+
                   <div class="card-data">
                     <div class="name">
-                      <div class="hide-text-1" th:text="${shop.shopName}"></div>
+                      <div class="hide-text-1" th:text="${shop.shopCharge}"></div>
                       <div class="categories">
-                        <span class="hide-text-1" th:text="${shop.shopAlias}"></span>
+                        <span class="hide-text-1" th:text="${shop.shopAlias}" style="line-height: 20px;color: #a71b00;"></span>
                       </div>
                     </div>
                     <ul class="info">
                       <li class="address" th:text="${shop.address}" style="width: 200px;"></li>
                       <li class="phone" th:text="${shop.phone}" style="width: 200px;"></li>
-                      <li class="description" th:text="${#strings.abbreviate(shop.history,30)}"></li>
+                      <li class="description" th:utext="${shop.history}" style="overflow: hidden;height: 20px;white-space: nowrap;text-overflow: ellipsis;"></li>
                     </ul>
+
                     <th:block th:switch="${shop.foodieLogRating}">
                       <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
                       <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>
@@ -118,14 +120,14 @@
                     <div class="name">
                       <div class="hide-text-2" th:text="${shop.shopName}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></div>
                       <div class="categories">
-                        <span class="hide-text-2" th:text="${shop.shopAlias}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">한식</span>
+                        <span class="hide-text-2" th:text="${shop.shopAlias}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
                       </div>
                     </div>
                     <ul class="info">
                       <li class="address" th:text="${shop.address}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></li>
                       <li class="phone" th:text="${shop.phone}" style="width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></li>
 <!--                      <li class="description" th:utext="${#strings.abbreviate(shop.history,30)}"></li>-->
-                      <li class="description" th:utext="${shop.history}" style="width: 340px;overflow: hidden;height: 20px;"></li>
+                      <li class="description" th:utext="${shop.history}" style="width: 340px;overflow: hidden;height: 20px;white-space: nowrap;text-overflow: ellipsis;"></li>
                     </ul>
                     <th:block th:switch="${shop.foodieLogRating}">
                       <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>
@@ -154,6 +156,7 @@
                 <div class="info">
                   <span style="float:left" class="address" th:text="${shop.address}"></span>
                 </div>
+                <img class="img" th:src="${shop.shopImage}">
                 <!--                  <th:block th:switch="${shop.foodieLogRating}">-->
                 <!--                      <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>-->
                 <!--                      <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>-->
@@ -176,7 +179,7 @@
            th:text="${item.idx}" th:class="${item.classValue}"></a>
         <th:block th:if="${btnUrls.get('next') != 'javascript:void(0)'}">
           <a th:href="${btnUrls.get('next')}" class="next"></a>
-        </th:block>\
+        </th:block>
         <th:block th:if="${btnUrls.get('next') == 'javascript:void(0)'}">
           <div style="width: 20px"></div>
         </th:block>
@@ -201,6 +204,17 @@
       $(document).ready(function() {
         $('#filter_theme').on('click', '#filter_anchor', function(){
           filter_items();
+
+          $('.description').each(function () {
+            var length = 40;
+
+            $(this).each(function(){
+              if($(this).text().length >= length){
+                $(this).text($(this).text().substr(0, length) + '...')
+              }
+            })
+          })
+
         });
       });
 

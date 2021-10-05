@@ -17,10 +17,14 @@ import java.util.Optional;
 public interface ShopRepository extends JpaRepository<Shop, Long> {
 
     Page<Shop> findByRegionIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer regionId, String shopType, Pageable pageable);
+    Page<Shop> findByRegionIdInAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(List<Integer> regionId , String shopType, Pageable pageable);
     Page<Shop> findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer regionId, String shopType, Pageable pageable);
+    Page<Shop> findBySubwayTypeIdInAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(List<Integer> regionId, String shopType, Pageable pageable);
     List<Shop> findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(Integer regionId, String shopType);
+    List<Shop> findBySubwayTypeIdInAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(List<Integer> regionId, String shopType);
 
     List<Shop> findByRegionIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(Integer regionId, String shopType);
+    List<Shop> findByRegionIdInAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(List<Integer> regionId, String shopType);
 
     List<Shop> findTop4ByRegionIdAndShopType(Integer regionId, String shopType);
     List<Shop> findByShopId(Integer shopId);
@@ -51,7 +55,7 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
     @Query(value="select * from shop where address like %?1% and shop_id not in (select shop_id from main_board where type=?2)", nativeQuery = true)
     List<Shop> getShopInfoByAddressName(String address, Integer type);
 
-    @Query(value="SELECT * ,(6371*acos(cos(radians(?1))*cos(radians(slLat))*cos(radians(slLng)-radians(?2))+sin(radians(?1))*sin(radians(slLat)))) AS distance from shop where shop_type = ?3 having distance <= 2 order by distance", nativeQuery = true)
+    @Query(value="SELECT * ,(6371*acos(cos(radians(?1))*cos(radians(slLat))*cos(radians(slLng)-radians(?2))+sin(radians(?1))*sin(radians(slLat)))) AS distance from shop where shop_type = ?3 having distance <= 20 order by distance", nativeQuery = true)
     List<Shop> findByAddressContaining(String lat, String lng, String shopType);
 
     //admin

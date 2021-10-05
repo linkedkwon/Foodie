@@ -250,25 +250,25 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">레드리스트</h1>
+<!--                    <h1 class="h3 mb-2 text-gray-800">레드리스트</h1>-->
 <!--                    <p th:text="${regionInfos}"></p>-->
-                    <p class="mb-4">레드리스트 관리자 페이지 입니다. <a target="_blank" href="#">레드리스트 이동</a>.</p>
+<!--                    <p class="mb-4">레드리스트 관리자 페이지 입니다. <a target="_blank" href="#">레드리스트 이동</a>.</p>-->
 
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
+                    <div class="card shadow mb-4" style="width: 700px;margin:auto;">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">맛집목록</h6>
+                            <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">레드리스트 맛집목록</h6>
                             <a th:href="@{/admin/registerRedShop}">
                                 <button class="btn btn-info btn-sm" style="float: right">맛집 추가하기</button>
                             </a>
                         </div>
                         <div>
-                        <div style="width: 100%;">
-                            <div>
+                        <div style="width: 90%;margin:auto;margin-top: 20px;    font-size: 9pt;    border: 1px solid lightgray">
+                            <div style="    border-bottom: 1px solid lightgray;">
                                 <div style="display: inline-flex;">
-                                    <div  style="    padding-left: 20px;margin-top: 20px;width: 120px;"> 음식 카테고리</div>
-                                    <p style="    padding-left: 20px;margin-top: 20px;">
-                                        <select id="table-filter1" style="    height: 31px;">
+                                    <div  style="    height: 31px; text-align:center; width: 120px; padding-top: 6px;background: rgb(247, 247, 247);   border: 1px solid lightgray"> 음식 카테고리</div>
+                                    <p style="    padding-left: 20px;  padding-top: 5px;  margin-bottom: 0;">
+                                        <select id="table-filter1" style="    height: 20px;">
                                             <option value="">대분류</option>
                                             <option
                                                     th:each="val : ${categoryInfos}"
@@ -276,24 +276,24 @@
                                                     th:utext="${val.categoryName}"
                                             ></option>
                                         </select>
-                                        <select id="table-filter2" style="    height: 31px;">
+                                        <select id="table-filter2" style="    height: 20px;">
                                             <option value="">중분류</option>
     <!--                                        <option>London</option>-->
     <!--                                        <option>San</option>-->
     <!--                                        <option>Engineer</option>-->
     <!--                                        <option>Developer</option>-->
                                         </select>
-                                        <select id="table-filter3" style="    height: 31px;">
+                                        <select id="table-filter3" style="    height: 20px;">
                                             <option value="">소분류</option>
                                         </select>
                                     </p>
                                 </div>
                             </div>
                             <div style="display: inline-flex;">
-                                <div  style="    padding-left: 20px;width: 120px;"> 지역 </div>
-                                <p style="    padding-left: 20px;">
+                                <div  style="height: 31px; text-align:center; width: 120px;  padding-top: 6px; background: rgb(247, 247, 247); border: 1px solid lightgray"> 지역 </div>
+                                <p style="    padding-left: 20px;  padding-top: 5px;  margin-bottom: 0;">
     <!--                            <p th:text="${regionInfos}"></p>-->
-                                    <select id="table-filter4" style="    height: 31px;">
+                                    <select id="table-filter4" style="    height: 20px;">
                                         <option value="">시</option>
                                         <option
                                                 th:each="val : ${regionInfos}"
@@ -301,25 +301,24 @@
                                                 th:utext="${val}"
                                         ></option>
                                     </select>
-                                    <select id="table-filter5" style="    height: 31px;">
+                                    <select id="table-filter5" style="    height: 20px;">
                                         <option value="">군</option>
                                     </select>
                                 </p>
                             </div>
-                            <div>
-                                <button class="btn btn-info btn-sm" value="조회" style="width: 350px;margin-left: 14px;" onclick="filterFoodCategory()">조회</button>
+                            <div style="border-top: 1px solid lightgray; height: 31px;">
+                                <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px;" onclick="filterFoodCategory()">조회</button>
                             </div>
                         </div>
 
-                        <div class="card-body">
-                            <div class="table-responsive" style="width:100%;">
+                        <div class="card-body" style="width:100%; padding-right: 0px;margin: auto;">
+                            <div class="table-responsive" style="font-size: 9pt;margin: auto;    padding-right: 20px;">
                                 <table class="table table-bordered display" id="example" cellspacing="0">
                                     <thead>
                                     <tr>
                                         <th style="text-align: center" >사진</th>
                                         <th>가게이름</th>
-                                        <th>전문가평가</th>
-                                        <th>상세정보입력 여부</th>
+                                        <th>줄광고 </th>
                                         <th>수정일</th>
                                         <th>등록일</th>
                                     </tr>
@@ -413,10 +412,20 @@
         table-layout: fixed;
         word-wrap:break-word;
     }
-    .data_table {
+    .table td, .table th{
+        padding: 7px !important;
         text-align: center;
-        vertical-align: middle !important;
     }
+
+    .table td{
+        text-align: center;
+    }
+
+
+    /*.data_table {*/
+    /*    text-align: center;*/
+    /*    vertical-align: middle !important;*/
+    /*}*/
 </style>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -448,6 +457,7 @@
 
         $('#example').DataTable( {
             "ajax": "/admin/category/red/all",
+            ordering: false,
             "columns": [
                 // <div>
                 //     <a th:href="@{'/admin/shop/red/'+${shop.shopId}}" th:text="${shop.shopName}"></a>
@@ -457,19 +467,17 @@
                 // </div>
 
                 { 'data': "shopImage", 'render': function (data) { return '<img src="' + data + '" class="thumbnail" style="width: 80px;height:60px;" />'; } },
-                { "data": "shopName" , 'render': function  ( data, type, row ) { return '<div><a href="/admin/shop/red/'+ row.shopId +'">'+ data + '</a></div><div><span> 주소 -'+ row.address +'</span></div>'; } },
-                { "data": "foodieLogRating" },
-                { "data": "isReservation" },
+                { "data": "shopName" , 'render': function  ( data, type, row ) { return '<div><a href="/admin/shop/red/'+ row.shopId +'">'+ data + '</a> ( 푸디평점 - ' + row.foodieLogRating + ') </div><div><span> 주소 -'+ row.address +'</span></div>'; } },
+                { "data": "shopPaid" },
                 { "data": "updatedAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
-                { "data": "createdAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
+                { "data": "updatedAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
             ],
             "columnDefs": [
-                { "width": "50px", "targets": 0, "className": "data_table" },
-                { "width": "200px", "targets": 1, "className": "data_table"  },
-                { "width": "60px", "targets": 2, "className": "data_table"  },
-                { "width": "60px", "targets": 3, "className": "data_table"  },
-                { "width": "160px", "targets": 4, "className": "data_table"  },
-                { "width": "160px", "targets": 5, "className": "data_table"  },
+                { "width": "15%","targets": 0},
+                { "width": "45%", "targets": 1},
+                { "width": "10%", "targets": 2},
+                { "width": "15%", "targets": 3},
+                { "width": "15%", "targets": 4},
             ],
             initComplete: function () {
                 this.api().columns().every( function () {
