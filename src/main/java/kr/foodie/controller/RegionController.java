@@ -21,7 +21,7 @@ public class RegionController {
     return regionRepository.findByRegionType(3);
   }
 
-  //TODO: 수도권/비수도권/수인분당선 등 예외처리 할거많다
+  // epicure api 사용
   @GetMapping("/subway/{line}")
   public List<RegionEntity> showSubwayLineList(@PathVariable int line) {
     String subwayLine = Integer.toString(line) + "호선";

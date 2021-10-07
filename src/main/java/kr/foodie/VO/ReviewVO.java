@@ -5,8 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class InquiryVO {
+public class ReviewVO {
   private String content;
-  private String title;
-  private String userName;
+  private String starRating;
+  private String bestComment;
+  private int userId;
 }

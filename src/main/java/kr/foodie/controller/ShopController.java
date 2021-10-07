@@ -6,6 +6,7 @@ import java.util.Optional;
 import kr.foodie.entity.ShopEntity;
 import kr.foodie.repository.ShopRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,5 +56,12 @@ public class ShopController {
   public List<ShopEntity> findByVillageTypeIdAndShopType(@PathVariable int id, @PathVariable String type) {
     String shopType = type.equals("red") ? "0" : "1";
     return shopRepository.findByRegionIdAndShopType(id, shopType);
+  }
+
+  // todo: 쿼리는 제대로 작성했으나 db에 값이 null인 상태
+  // shopType == 0 : red, 1 : green
+  @GetMapping("/position/{lat}/{lng}/{shopType}")
+  public List<ShopEntity> findWithPosition(@PathVariable String lat, @PathVariable String lng, @PathVariable String shopType) {
+    return shopRepository.findWithPosition(lat, lng, shopType);
   }
 }

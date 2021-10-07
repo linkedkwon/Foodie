@@ -6,9 +6,9 @@ import kr.foodie.repository.InquiryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,15 +16,20 @@ import java.util.List;
 public class InquiryController {
   private final InquiryRepository inquiryRepository;
 
+  @GetMapping("/{id}")
+  public Optional<InquiryEntity> findById(@PathVariable int id) {
+    return inquiryRepository.findById(id);
+  }
+
   @GetMapping("/user/{id}")
   public List<InquiryEntity> findByUserId(@PathVariable int id) {
     return inquiryRepository.findByUserId(id);
   }
 
-  @PostMapping("/create")
-  public String createInquiry(@RequestBody InquiryVO inquiryVO) {
+  @PostMapping("/user/{id}")
+  public String createInquiry(@PathVariable int id, @RequestBody InquiryVO inquiryVO) {
     inquiryRepository.save(InquiryEntity.builder()
-            .userId(inquiryVO.getUserId())
+            .userId(id)
             .userName(inquiryVO.getUserName())
             .title(inquiryVO.getTitle())
             .content(inquiryVO.getContent())
