@@ -149,7 +149,7 @@
             <li th:object="${shop}" th:each="shop : ${redCommentList}" style="margin: 26px 16px 0px 0px;">
               <a th:href="'shop?id='+${shop.shopId}+'&page=0'">
                 <div class="card-item" style="width: 284px">
-                  <div class="img" th:style="'background-image:url('+${shop.shopImage}+'); background-size:cover;'"></div>
+                  <div class="img" th:style="'background-image:url('+${shop.shopImage}+'); background-size:cover;'" onerror="this.src='/images/default.png'"></div>
                   <div class="card-data">
                     <div class="name">
                       <div class="hide-text-1" th:text="${shop.shopName}"></div>
@@ -196,7 +196,7 @@
             <li th:object="${shop}" th:each="shop : ${greenCommentList}" style="margin:26px 16px 0px 0px;">
               <a th:href="'shop?id='+${shop.shopId}+'&page=0'">
                 <div class="card-item" style="width: 284px">
-                  <div class="img" th:style="'background-image:url('+${shop.shopImage}+'); background-size:cover;'"></div>
+                  <div class="img" th:style="'background-image:url('+${shop.shopImage}+'); background-size:cover;'" onerror="this.src='/images/default.png'"></div>
                   <div class="card-data">
                     <div class="name">
                       <div class="hide-text-1" th:text="${shop.shopName}"></div>

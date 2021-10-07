@@ -76,8 +76,7 @@
             <li th:object="${shop}" th:each="shop : ${priority}">
               <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
                 <div class="card-item">
-                  <img class="img" th:src="${shop.shopImage}">
-
+                  <img class="img" th:src="${shop.shopImage}" onerror="this.src='/images/default.png'">
                   <div class="card-data">
                     <div class="name">
                       <div class="hide-text-1" th:text="${shop.shopCharge}"></div>
@@ -156,7 +155,7 @@
                 <div class="info">
                   <span style="float:left" class="address" th:text="${shop.address}"></span>
                 </div>
-                <img class="img" th:src="${shop.shopImage}">
+                <img class="img" th:src="${shop.shopImage}" onerror="this.src='/images/default.png'">
                 <!--                  <th:block th:switch="${shop.foodieLogRating}">-->
                 <!--                      <div th:case="A" class="star-position"><img src="/images/ico-star-first.png" class="star-box"></div>-->
                 <!--                      <div th:case="AA" class="star-position"><img src="/images/ico-star-second.png" class="star-box"></div>-->

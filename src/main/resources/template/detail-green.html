@@ -150,7 +150,7 @@
 
             <!-- about-restaurant START -->
             <div class="about-restaurant">
-              <img class="left-area" th:src="${payload[0].shopImage}">
+              <img class="left-area" th:src="${payload[0].shopImage}" onerror="this.src='/images/default.png'">
 
               <div class="right-area">
 
