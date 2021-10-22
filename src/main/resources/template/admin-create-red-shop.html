@@ -255,7 +255,13 @@
 
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
-                        <div class="content">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">레드리스트 맛집추가</h6>
+                            <a th:href="@{/admin/registerRedShop}">
+                                <button class="btn btn-info btn-sm" style="float: right">맛집 추가하기</button>
+                            </a>
+                        </div>
+                        <div class="content" style="    padding-top: 16px;">
                             <div class="container-fluid">
                                 <div class="col-md-12">
                                     <div class="card">
@@ -357,29 +363,19 @@
                                                     <div class="form-group">
                                                         <label for="select-tags" style="width: 400px;">음식카테고리</label>
                                                         <div style="display: flex">
-                                                            <select class="custom-select" id="select-tags1">
-                                                                <option value="" disabled selected>1차</option>
-                                                                <option value="치킨">치킨</option>
-                                                                <option value="음식점">음식점</option>
-                                                                <option value="강서구맛집">강서구맛집</option>
-                                                                <option value="바베큐치킨">바베큐치킨</option>
-                                                                <option value="음식점">음식점</option>
+                                                            <select id="table-filter1" class="custom-select">
+                                                                <option value="">대분류</option>
+                                                                <option
+                                                                        th:each="val : ${categoryInfos}"
+                                                                        th:value="${val.bCode}"
+                                                                        th:utext="${val.categoryName}"
+                                                                ></option>
                                                             </select>
-                                                            <select class="custom-select" id="select-tags1">
-                                                                <option value="" disabled selected>2차</option>
-                                                                <option value="치킨">치킨</option>
-                                                                <option value="음식점">음식점</option>
-                                                                <option value="강서구맛집">강서구맛집</option>
-                                                                <option value="바베큐치킨">바베큐치킨</option>
-                                                                <option value="음식점">음식점</option>
+                                                            <select id="table-filter2" class="custom-select">
+                                                                <option value="">중분류</option>
                                                             </select>
-                                                            <select class="custom-select" id="select-tags1">
-                                                                <option value="" disabled selected>3차</option>
-                                                                <option value="치킨">치킨</option>
-                                                                <option value="음식점">음식점</option>
-                                                                <option value="강서구맛집">강서구맛집</option>
-                                                                <option value="바베큐치킨">바베큐치킨</option>
-                                                                <option value="음식점">음식점</option>
+                                                            <select id="table-filter3" class="custom-select">
+                                                                <option value="">소분류</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -478,17 +474,22 @@
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
                                                                 <input class="custom-control-input" id="background_type_1" type="radio" name="background_type" >
-                                                                <label class="custom-control-label" for="background_type_1">1번타입(레드)</label>
+                                                                <label class="custom-control-label" for="background_type_1">레드</label>
                                                                 <img src="/images/background_red.png" class="thumbnail" height='30px' />
                                                             </div>
                                                             <div class="custom-control custom-radio">
                                                                 <input class="custom-control-input" id="background_type_2" type="radio" name="background_type" >
-                                                                <label class="custom-control-label" for="background_type_2">2번타입(그린)</label>
+                                                                <label class="custom-control-label" for="background_type_2">그린</label>
                                                                 <img src="/images/background_green.png" class="thumbnail" height='30px' />
                                                             </div>
                                                             <div class="custom-control custom-radio">
                                                                 <input class="custom-control-input" id="background_type_3" type="radio" name="background_type">
-                                                                <label class="custom-control-label" for="background_type_3">3번타입(머스타드)</label>
+                                                                <label class="custom-control-label" for="background_type_3">머스타드</label>
+                                                                <img src="/images/background_mustard.png" class="thumbnail" height='30px' />
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input class="custom-control-input" id="background_type_4" type="radio" name="background_type">
+                                                                <label class="custom-control-label" for="background_type_4">4번</label>
                                                                 <img src="/images/background_mustard.png" class="thumbnail" height='30px' />
                                                             </div>
                                                         </div>
@@ -500,7 +501,7 @@
                                                 <div class="col-md-6">
 
                                                     <div class="form-group">
-                                                        <label for="select-tags" style="width: 400px;">주변지하철</label>
+                                                        <label for="select-tags" style="width: 400px;">지역별 설정</label>
                                                         <div style="display: flex">
                                                             <select class="custom-select" id="select-tags1">
                                                                 <option value="" disabled selected>지역</option>
@@ -531,6 +532,30 @@
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
+                                                        <label for="select-tags" style="width: 400px;">역세권 설정</label>
+                                                        <div style="display: flex">
+                                                            <select class="custom-select" id="table-filter7">
+                                                                <option value="" disabled selected>지역</option>
+                                                                <option value="수도권">수도권</option>
+                                                                <option value="인천">인천</option>
+                                                                <option value="부산">부산</option>
+                                                                <option value="대구">대구</option>
+                                                                <option value="광주">광주</option>
+                                                                <option value="대전">대전</option>
+                                                            </select>
+                                                            <select class="custom-select" id="table-filter8">
+                                                            </select>
+                                                            <select class="custom-select" id="table-filter79">
+                                                                <option value="" disabled selected>역명</option>
+                                                                <option value="치킨">강남역</option>
+                                                                <option value="음식점">삼성역</option>
+                                                                <option value="강서구맛집">봉은사역</option>
+                                                                <option value="바베큐치킨">홍대역</option>
+                                                                <option value="음식점">분당역</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <!--<div class="form-group">
                                                         <label for="select-tags">해시태그등록</label>
                                                         <select class="custom-select" id="select-tags">
                                                             <option value="" disabled selected>해당 목록에서 태그를 선택해주세요</option>
@@ -541,26 +566,24 @@
                                                             <option value="음식점">음식점</option>
                                                         </select>
                                                         <div class="flex tag-list"></div>
-                                                    </div>
+                                                    </div>-->
                                                 </div>
 
                                             </div>
 
 
                                             <div class="form-group" style="display: flex; padding-top: 20px;">
-                                                <div class="col-md-6">
+                                                <div class="" style="width: 50%;">
                                                     <label for="restaurants-address-detial">주소 (도로명)</label>
                                                     <div style="display: flex;">
                                                         <input type="text" class="form-control" id="restaurants-address-detial" placeholder="주소" >
-                                                        <input type="text" class="form-control" id="restaurants-address-detial-detail" value="3가 1-9">
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-6">
+                                                <div class="" style="width: 50%;">
                                                     <label for="restaurants-address-detial">주소 (지번)</label>
                                                     <div style="display: flex;">
                                                         <input type="text" class="form-control" id="restaurants-address-detial-jibun" placeholder="주소" value="서울특별시 용산구 용산동" >
-                                                        <input type="text" class="form-control" id="restaurants-address-detial-jibun-detail" value="3가 1-9">
                                                     </div>
                                                 </div>
                                             </div>
@@ -572,41 +595,43 @@
                                             </div>
 
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <label for="restaurants-location-detial">가게 이미지 추가</label>
-                                                    <div style="width: 100px;height: 150px;text-align: center">
-                                                        <img style="width: 100%;height: 100px;" src="/images/no_image.jpeg">
-                                                        <button>추가</button>
-                                                    </div>
-<!--                                                    <input type="text" class="form-control" id="restaurants-location-detial" placeholder="찾아가는길">-->
-                                                </div>
-                                            </div>
-                                            <div class="row">
                                                 <div class="col-md-6">
 
                                                     <div class="form-group">
-                                                        <label for="select-tags" style="width: 100%;">맛집촌선택</label>
+                                                        <!--<label for="select-tags" style="width: 100%;">맛집촌선택</label>
                                                         <div class="custom-control custom-radio" style="float: left;" th:object="${regionInfosItem}" th:each="regionInfosItem : ${regionInfosWithType3}">
-                                                            <!--                                                                <p th:text="${#lists.contains(#strings.listSplit(payload[0].themeList,','), theme.themeId)}"></p>-->
-                                                            <!--/*@thymesVar id="Arrays" type=""*/-->
-                                                            <!--                                                                <p th:text="${#strings.arraySplit(payload[0].themeList, ',')}"></p>-->
-                                                            <!--                                                                <p th:text="${payload[0].themeList.split(',')[0]}"></p>-->
                                                             <input class="custom-control-input" th:id="${regionInfosItem.regionId}" type="checkbox" name="type">
                                                             <label class="custom-control-label" style="padding-right: 15px;" th:for="${regionInfosItem.regionId}" th:text="${regionInfosItem.districtName}"> 가능</label>
+                                                        </div>-->
+
+                                                        <!--                                                        <div class="form-group">-->
+                                                        <label for="restaurants-closed">맛집촌선택</label>
+                                                        <!--                                                        <p th:text="${payload[0].themeList}"></p>-->
+                                                        <div class="flex" style="display: block;">
+                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;" th:object="${regionInfosItem}" th:each="regionInfosItem : ${regionInfosWithType3}">
+                                                                <!--                                                                <p th:text="${#lists.contains(#strings.listSplit(payload[0].themeList,','), theme.themeId)}"></p>-->
+                                                                <!--/*@thymesVar id="Arrays" type=""*/-->
+                                                                <!--                                                                <p th:text="${#strings.arraySplit(payload[0].themeList, ',')}"></p>-->
+                                                                <!--                                                                <p th:text="${payload[0].themeList.split(',')[0]}"></p>-->
+                                                                <input class="custom-control-input" th:id="${regionInfosItem.themeId}" type="checkbox" name="theme">
+                                                                <label class="custom-control-label" th:for="${regionInfosItem.themeId}" th:text="${regionInfosItem.name}"> 가능</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
                                                     <div class="form-group">
                                                         <!--                                                        <div class="form-group">-->
                                                         <label for="restaurants-closed">테마별</label>
-<!--                                                        <p th:text="${payload[0].themeList}"></p>-->
+                                                        <!--                                                        <p th:text="${payload[0].themeList}"></p>-->
                                                         <div class="flex" style="display: block;">
-                                                            <div class="custom-control custom-radio" style="float: left;" th:object="${theme}" th:each="theme : ${redThemeListInfos}">
-<!--                                                                <p th:text="${#lists.contains(#strings.listSplit(payload[0].themeList,','), theme.themeId)}"></p>-->
+                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;" th:object="${theme}" th:each="theme : ${redThemeListInfos}">
+                                                                <!--                                                                <p th:text="${#lists.contains(#strings.listSplit(payload[0].themeList,','), theme.themeId)}"></p>-->
                                                                 <!--/*@thymesVar id="Arrays" type=""*/-->
-<!--                                                                <p th:text="${#strings.arraySplit(payload[0].themeList, ',')}"></p>-->
-<!--                                                                <p th:text="${payload[0].themeList.split(',')[0]}"></p>-->
+                                                                <!--                                                                <p th:text="${#strings.arraySplit(payload[0].themeList, ',')}"></p>-->
+                                                                <!--                                                                <p th:text="${payload[0].themeList.split(',')[0]}"></p>-->
                                                                 <input class="custom-control-input" th:id="${theme.themeId}" type="checkbox" name="theme">
                                                                 <label class="custom-control-label" th:for="${theme.themeId}" th:text="${theme.name}"> 가능</label>
                                                             </div>
@@ -614,6 +639,18 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="form-group" style="    padding-top: 40px;">
+                                                    <label for="restaurants-location-detial">가게 이미지 추가</label>
+                                                    <div style="width: 100px;height: 150px;text-align: center">
+                                                        <img style="width: 100%;height: 100px;" src="/images/no_image.jpeg">
+                                                        <button>추가</button>
+                                                    </div>
+                                                    <!--                                                    <input type="text" class="form-control" id="restaurants-location-detial" placeholder="찾아가는길">-->
+                                                </div>
+                                            </div>
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -643,44 +680,12 @@
                                         <div class="card-body">
                                             <div class="summernote" ></div>
                                         </div>
-<!--                                        <div class="card-body">-->
-                                            <!--<div class="row">
-                                                <label for="restaurants-location-detial">메뉴목록</label>
-                                                <ul id="list">
-                                                    <li> 아이스크림 1800원 </li>
-                                                    <li> 아이스크림 2000원 </li>
-                                                    <li> 아이스크림 1800원 </li>
-                                                    <li> 아이스크림 2000원 </li>
-                                                    <li> 아이스크림 1800원 </li>
-                                                    <li> 아이스크림 2000원 </li>
-                                                </ul>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="restaurants-menu">메뉴</label>
-                                                        <input type="text" class="form-control" id="restaurants-menu" placeholder="메뉴">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="restaurants-vat">부가세</label>
-                                                        <input type="text" class="form-control" id="restaurants-vat" placeholder="부가세">
-                                                    </div>
-                                                </div>clickButton
-                                            </div>-->
-
-<!--                                        </div>-->
                                     </div>
                                 </div>
                             </div>
                             <!-- 메뉴관리 Card END -->
 
-
                         </div>
-<!--                    </div>-->
-
-
                 </div>
                 <!-- /.container-fluid -->
 
@@ -777,6 +782,9 @@
         display:none;
         color:#fff;
     }
+    .form-control{
+        font-size: 9px !important;
+    }
 </style>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -815,6 +823,56 @@
             list.appendChild(temp);
         }
 
+        $('#table-filter7').change( function(){
+            get_subway_mcode( this); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        function get_subway_mcode(o){
+            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+            $.ajax({
+                url: "/category/region/" + 2 + "?name=" + encodeURI(val),
+                contentType: "application/json",
+                dataType: "json",
+                type:"GET",
+            }).done(function (fragment) {
+
+                if(data.length > 0) {
+                    $("#table-filter8").find("option").remove().end();
+                    $("#table-filter8").append("<option>중분류</option>");
+                    $.each(data, function(key, value) {
+                        $("#table-filter8").append("<option value='" + value.regionId + "'>" + value.subwayName + "</option>");
+                    });
+                    console.log(data[0])
+                } else {
+                    $("#table-filter8").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                    $("#table-filter8").find("option").remove().end();
+                    $("#table-filter8").append("<option value='0'>NO DATA</option>");
+                    return;
+                }
+
+
+                // var ul = document.createElement('ul');
+                // ul.setAttribute('class','item-list-wrapper');
+                // document.getElementById(className).appendChild(ul);
+                // fragment.forEach(renderProductList);
+                // // class="active"
+                // function renderProductList(element, index, arr) {
+                //     var li = document.createElement('li');
+                //
+                //     ul.appendChild(li);
+                //
+                //     if(type=='2'){
+                //         if(element.subwayName != null){
+                //             li.innerHTML=li.innerHTML +"<a href='/shop/region/subway/" + element.regionId +"/red'>" +element.subwayName + "("+element.districtCnt + ")" + "</a>";
+                //         }
+                //     }else{
+                //         li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.districtName + "("+element.districtCnt+")" + "</a>";
+                //     }
+                // }
+            });
+
+        }
+
         $('#table-filter1').change( function(){
             get_mcode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
         });
@@ -822,27 +880,38 @@
         function get_mcode(o){
             var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
             console.log(val)
-            $.ajax({
-                type:"get",
-                url:"/admin/mfood/" + val,
-                datatype: "json",
-                success: function(data) {
-                    if(data.length > 0) {
-                        $("#table-filter2").find("option").remove().end();
-                        $.each(data, function(key, value) {
-                            $("#table-filter2").append("<option value='" + value.mcode + "'>" + value.categoryName + "</option>");
-                        });
-                    } else {
-                        $("#table-filter2").find("option").remove().end().append("<option>NO DATA</option>");
-                        return;
-                    }
-                },
+            if(val != ''){
+                $.ajax({
+                    type:"get",
+                    url:"/admin/category/mfood/" + val,
+                    datatype: "json",
+                    success: function(data) {
+                        if(data.length > 0) {
+                            $("#table-filter2").find("option").remove().end();
+                            $("#table-filter2").append("<option>중분류</option>");
+                            $.each(data, function(key, value) {
+                                $("#table-filter2").append("<option value='" + value.mcode + "'>" + value.categoryName + "</option>");
+                            });
+                            console.log(data[0])
+                        } else {
+                            $("#table-filter2").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                            $("#table-filter3").find("option").remove().end();
+                            $("#table-filter3").append("<option value='0'>NO DATA</option>");
+                            return;
+                        }
+                    },
 
-                error: function(x, o, e) {
-                    var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                    alert(msg);
-                }
-            });
+                    error: function(x, o, e) {
+                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                        alert(msg);
+                    }
+                });
+            }else {
+                $("#table-filter2").find("option").remove().end();
+                $("#table-filter2").append("<option value='0'>중분류</option>");
+                $("#table-filter3").find("option").remove().end();
+                $("#table-filter3").append("<option value='0'>소분류</option>");
+            }
         }
 
         $('#table-filter2').change( function(){
@@ -852,27 +921,33 @@
         function get_scode(o){
             var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
             console.log(val)
-            $.ajax({
-                type:"get",
-                url:"/admin/sfood/" + val,
-                datatype: "json",
-                success: function(data) {
-                    if(data.length > 0) {
-                        $("#table-filter3").find("option").remove().end();
-                        $.each(data, function(key, value) {
-                            $("#table-filter3").append("<option value='" + value.scode + "'>" + value.categoryName + "</option>");
-                        });
-                    } else {
-                        $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");
-                        return;
-                    }
-                },
+            if(val != '') {
+                $.ajax({
+                    type: "get",
+                    url: "/admin/category/sfood/" + val,
+                    datatype: "json",
+                    success: function (data) {
+                        if (data.length > 0) {
+                            $("#table-filter3").find("option").remove().end();
+                            $("#table-filter3").append("<option>소분류</option>");
+                            $.each(data, function (key, value) {
+                                $("#table-filter3").append("<option value='" + value.scode + "'>" + value.categoryName + "</option>");
+                            });
+                        } else {
+                            $("#table-filter3").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                            return;
+                        }
+                    },
 
-                error: function(x, o, e) {
-                    var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                    alert(msg);
-                }
-            });
+                    error: function (x, o, e) {
+                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                        alert(msg);
+                    }
+                });
+            }else{
+                $("#table-filter3").find("option").remove().end();
+                $("#table-filter3").append("<option value='0'>소분류 </option>");
+            }
         }
     } );
 

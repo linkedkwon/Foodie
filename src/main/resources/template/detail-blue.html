@@ -16,7 +16,7 @@
 </head>
 <body>
 <div id="app">
-  <div id="contents" class="detail-green">
+  <div id="contents" class="detail-blue">
     <div class="background-wrapper">
       <a href="javascript:history.back();" class="go-back">뒤로가기</a>
       <h1>
@@ -85,27 +85,27 @@
                       <img src="/images/ico-point-5-active.png" style="margin-top: 5px; padding-left: 10px; margin-bottom: 5px; height: 25px;">
                     </picture>
                     <div th:if="${(not #strings.isEmpty(payload[0].tasteRating)) && (!payload[0].tasteRating.toString().equals('0'))}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${payload[0].tasteRating}+'점'"></div>
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="'('+${payload[0].tasteRating}+'점)'"></div>
                     </div>
                     <div th:unless="${not #strings.isEmpty(payload[0].tasteRating)}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;"> - </div>
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;">( - )</div>
                     </div>
                   </div>
                   <div th:case="4">
                     <picture style="float: left">
                       <img src="/images/ico-point-4-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
                     </picture>
-                    <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '('+${payload[0].tasteRating}+'점)' : ''"></div>
+                    <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '('+${payload[0].tasteRating}+'점)' : ''"></div>
                   </div>
                   <div th:case="3">
                     <picture style="float: left">
                       <img src="/images/ico-point-3-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
                     </picture>
                     <div th:if="${(not #strings.isEmpty(payload[0].tasteRating)) && (!payload[0].tasteRating.toString().equals('0'))}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${payload[0].tasteRating}+'점'"></div>
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="'('+${payload[0].tasteRating}+'점)'"></div>
                     </div>
                     <div th:unless="${not #strings.isEmpty(payload[0].tasteRating)}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;"> - </div>
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;">( - )</div>
                     </div>
                   </div>
                   <div th:case="2">
@@ -113,10 +113,10 @@
                       <img src="/images/ico-point-2-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
                     </picture>
                     <div th:if="${(not #strings.isEmpty(payload[0].tasteRating)) && (!payload[0].tasteRating.toString().equals('0'))}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${payload[0].tasteRating}+'점'"></div>
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="'('+${payload[0].tasteRating}+'점)'"></div>
                     </div>
                     <div th:unless="${not #strings.isEmpty(payload[0].tasteRating)}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;"> - </div>
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;">( - )</div>
                     </div>
                   </div>
                   <div th:case="1">
@@ -124,10 +124,10 @@
                       <img src="/images/ico-point-1-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
                     </picture>
                     <div th:if="${(not #strings.isEmpty(payload[0].tasteRating)) && (!payload[0].tasteRating.toString().equals('0'))}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${payload[0].tasteRating}+'점'"></div>
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="'('+${payload[0].tasteRating}+'점)'"></div>
                     </div>
                     <div th:unless="${not #strings.isEmpty(payload[0].tasteRating)}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;"> - </div>
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;">( - )</div>
                     </div>
                   </div>
                   <div th:case="0">
@@ -135,10 +135,10 @@
                       <img src="/images/noRating.png" style="margin-top: 5px;padding-left: 10px; margin-bottom: 5px; height: 25px;">
                     </picture>
                     <div th:if="${(not #strings.isEmpty(payload[0].tasteRating)) && (!payload[0].tasteRating.toString().equals('0'))}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="'('+${payload[0].tasteRating}+'점)'"></div>
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="'('+${payload[0].tasteRating}+'점)'"></div>
                     </div>
                     <div th:unless="${not #strings.isEmpty(payload[0].tasteRating)}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;">( - )</div>
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;">( - )</div>
                     </div>
 <!--                    <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '('+${payload[0].tasteRating}+'점)' : ''"></div>-->
                   </div>
@@ -270,7 +270,7 @@
                 <h3>HISTORY</h3>
                 <div th:if="${userRole} == 'GENERAL'"  style="float: right;margin-top: -17px;">
                   <div style="float:left">Foodie Premium으로 광고 없이 세부 정보를 이용하세요.</div>
-                  <button style="margin-top: -7px;width: 150px;margin-left: 10px;height: 30px;border-radius: 26px;box-shadow: 0 3px 6px 0 rgb(0 0 0 / 13%);border: solid 1px #e8e8e8;background-color: #fff;float: left;" onclick="location.href='/user/pay'">프리미엄 이용권 구매</button>
+                  <button style="margin-top: -7px;width: 124px;margin-left: 10px;height: 30px;border-radius: 26px;box-shadow: 0 3px 6px 0 rgb(0 0 0 / 13%);border: solid 1px #e8e8e8;background-color: #fff;float: left;" onclick="location.href='/user/pay'">지금 가입하기 </button>
                 </div>
                 <div th:unless="${userRole} == 'GENERAL'">
 
@@ -292,7 +292,7 @@
                   <h3>MENU</h3>
                   <div th:if="${userRole} == 'GENERAL'"  style="float: right;margin-top: -17px;">
                     <div style="float:left">Foodie Premium으로 광고 없이 세부 정보를 이용하세요.</div>
-                    <button style="margin-top: -7px;width: 150px;margin-left: 10px;height: 30px;border-radius: 26px;box-shadow: 0 3px 6px 0 rgb(0 0 0 / 13%);border: solid 1px #e8e8e8;background-color: #fff;float: left;" onclick="location.href='/user/pay'">프리미엄 이용권 구매</button>
+                    <button style="margin-top: -7px;width: 124px;margin-left: 10px;height: 30px;border-radius: 26px;box-shadow: 0 3px 6px 0 rgb(0 0 0 / 13%);border: solid 1px #e8e8e8;background-color: #fff;float: left;" onclick="location.href='/user/pay'">지금 가입하기 </button>
                   </div>
                   <div th:unless="${userRole} == 'GENERAL'">
 

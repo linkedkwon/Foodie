@@ -20,8 +20,9 @@ public class FoodCategoryService {
         bCode = bCode.contains(",")?bCode.split(",")[0]:bCode;
         mCode = mCode.contains(",")?mCode.split(",")[0]:mCode;
 
-        category += address.split(" ")[0]+ " " + address.split(" ")[1];
-        category += bCode.equalsIgnoreCase("0")? "":" | " + foodCategoryAdminRepository.findByBCodeAndLevel(Integer.parseInt(bCode),1).get(0).getCategoryName();
+//        category += address.split(" ")[0]+ " " + address.split(" ")[1];
+//        category += bCode.equalsIgnoreCase("0")? "":" | " + foodCategoryAdminRepository.findByBCodeAndLevel(Integer.parseInt(bCode),1).get(0).getCategoryName();
+        category += bCode.equalsIgnoreCase("0")? "":"" + foodCategoryAdminRepository.findByBCodeAndLevel(Integer.parseInt(bCode),1).get(0).getCategoryName();
         category += mCode.equalsIgnoreCase("0")? "":" | " + foodCategoryAdminRepository.findByMCodeAndLevel(Integer.parseInt(mCode),2).get(0).getCategoryName();
 
         return category;

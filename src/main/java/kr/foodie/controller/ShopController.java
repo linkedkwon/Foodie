@@ -186,32 +186,11 @@ public class ShopController {
             results.put("payload", filterList);
         }
 
-//        int size = filterList.size();
-
-//        model.addAttribute("paginations", paginationService.getPagination(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
-//        model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
-
-//        List<Shop> commentList;
-
-
-//        mav.addObject("payload", commentList);
         return results;
     }
-//    @GetMapping(value ="/filter/shop")
-//    public ModelAndView filterShopInfos(@RequestParam(value = "regionId") Integer regionId, @RequestParam(value = "regionType") String regionType, @RequestParam(value = "filter") String filterItems) {
-//        ModelAndView mav = new ModelAndView();
-//        List<Shop> commentList;
-//        String shopTypeId = regionType.equals("red") ? "0" : "1";
-//        commentList = shopService.getFilterShopList(shopTypeId, regionId, filterItems);
-//        mav.addObject("payload", commentList);
-//
-//        return regionType.equals("red") ? "submain-red" : "submain-green";
-//    }
 
-
-    @RequestMapping(value ="/location/{lat}/{lng}/{shopType}", method= RequestMethod.GET)
-    public ModelAndView getShopListWithLocation(@PathVariable String lat, @PathVariable String lng, @PathVariable String shopType){
-        ModelAndView mav = new ModelAndView();
+    @GetMapping({"/shop/location/{lat}/{lng}/{shopType}"})
+    public String getShopListWithLocation(@PathVariable String lat, @PathVariable String lng, @PathVariable String shopType, Model model){
         if (shopType.equals("red")) {
             shopType = "0";
         } else {
@@ -226,15 +205,11 @@ public class ShopController {
         regionInfos.add(region);
 
         commentList = shopService.getShopInfoByAddress(lat, lng, shopType);
-        mav.addObject("payload", commentList);
-        mav.addObject("regionInfo", regionInfos);
-        mav.addObject("location", lat + "/" + lng);
-        if (shopType.equals("0")) {
-            mav.setViewName("location-submain-red");
-        }else {
-            mav.setViewName("location-submain-green");
-        }
-        return mav;
+        model.addAttribute("payload", commentList);
+        model.addAttribute("regionInfo", regionInfos);
+        model.addAttribute("location", lat + "/" + lng);
+
+        return shopType.equals("red") ? "location-submain-red" : "location-submain-green";
     }
 
     @ResponseBody

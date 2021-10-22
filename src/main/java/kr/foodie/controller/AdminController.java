@@ -287,10 +287,13 @@ public class AdminController {
         ModelAndView mav = new ModelAndView();
         List<Theme> redthemeListInfos;
         List<Theme> greenthemeListInfos;
+        List<FoodCategory> categoryInfos;
+        categoryInfos = foodCategoryAdminService.getAdminRegionBCategory();
         redthemeListInfos = themeService.getThemeTags(0);
 //        greenthemeListInfos = themeService.getThemeTags(1);
         mav.setViewName("admin-create-red-shop");
         mav.addObject("redThemeListInfos", redthemeListInfos);
+        mav.addObject("categoryInfos", categoryInfos);
 //        mav.addObject("greenThemeListInfos", greenthemeListInfos);
         return mav;
     }

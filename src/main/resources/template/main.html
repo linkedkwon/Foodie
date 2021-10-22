@@ -294,7 +294,7 @@
             li.innerHTML= li.innerHTML
                     + "<a href='/shop?id=" + element.shopId + "&page=0'>"
                     +   "<div class=\"card-item\">"
-                    +     "<div class=\"img\" style=\"background-image:url(" + element.shopImage + "); background-size:cover;\">"
+                    +     "<div class=\"img\" style=\"background-image:url(" + element.shopImage + "); background-size:cover; onerror=\"this.src='/images/default.png'\" \">"
                     +     "</div>"
                     +     "<div class=\"card-data\">"
                     +     "<div class=\"name\">"
