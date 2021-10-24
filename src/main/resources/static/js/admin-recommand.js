@@ -1,40 +1,41 @@
 (function() {
-    var tagList = [];
+    // var tagList = [];
+    //
+    // var renderTagList = function() {
+    //     var i = 0;
+    //     var tagsHtml = '';
+    //
+    //     for(; i < tagList.length; i++) {
+    //         tagsHtml += "<div class=\"tag-item btn-secondary btn\">" + tagList[i] + "<a class=\"delete-tag-item\" onClick=\"deleteTag('" + tagList[i] + "\')\">×</a></div>"
+    //     }
+    //
+    //     $(".tag-list").html(tagsHtml);
+    // };
+    //
+    // var deleteTag = function(value) {
+    //     var index = tagList.indexOf(value);
+    //
+    //     if (index < 0) {
+    //         return;
+    //     }
+    //
+    //     tagList.splice(index, 1);
+    //     renderTagList();
+    // };
 
-    var renderTagList = function() {
-        var i = 0;
-        var tagsHtml = '';
-
-        for(; i < tagList.length; i++) {
-            tagsHtml += "<div class=\"tag-item btn-secondary btn\">" + tagList[i] + "<a class=\"delete-tag-item\" onClick=\"deleteTag('" + tagList[i] + "\')\">×</a></div>"
-        }
-
-        $(".tag-list").html(tagsHtml);
-    };
-
-    var deleteTag = function(value) {
-        var index = tagList.indexOf(value);
-
-        if (index < 0) {
-            return;
-        }
-
-        tagList.splice(index, 1);
-        renderTagList();
-    };
-
-    $("#select-tags").on("change", function(event) {
-        const value = event.currentTarget.value;
-
-        if (tagList.indexOf(value) >= 0) {
-            $('#select-tags option:eq(0)').prop('selected', true);
-            return;
-        }
-
-        tagList.push(value);
-        renderTagList()
-        $('#select-tags option:eq(0)').prop('selected', true);
-    });
+    // $("#table-filter3").on("change", function(event) {
+    //     console.log("table-filter3")
+    //     const value = event.currentTarget.value;
+    //
+    //     if (tagList.indexOf(value) >= 0) {
+    //         $('#table-filter3 option:eq(0)').prop('selected', true);
+    //         return;
+    //     }
+    //
+    //     tagList.push(value);
+    //     renderTagList()
+    //     $('#table-filter3 option:eq(0)').prop('selected', true);
+    // });
 
     // 지도검색
     $("#search_list_detail").on("click", function() {

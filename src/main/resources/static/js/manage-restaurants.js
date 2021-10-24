@@ -48,7 +48,7 @@
         var $this = $(this);
         var $mapContainer = $("#daum-map-container");
         var $input = $("#restaurants-address-detial");
-
+        var $roadInput = $("#restaurants-address-detial-jibun");
         new daum.Postcode({
             oncomplete: function(data) {
                 var jibunAddress = data.jibunAddress;
@@ -58,6 +58,8 @@
                 var dong = data.bname;
 
                 $input.val(roadAddress);
+                $roadInput.val(jibunAddress);
+                // $roadInput.text(jibunAddress);
                 $this.modal("hide");
             },
             width : '100%',
@@ -92,6 +94,7 @@
                 var dong = data.bname;
 
                 $input.val(roadAddress);
+
                 $this.modal("hide");
             },
             width : '100%',

@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import kr.foodie.domain.account.Review;
 //import kr.foodie.domain.account.ReviewAdmin;
 import kr.foodie.domain.account.ReviewDTO;
+import kr.foodie.domain.category.Category;
 import kr.foodie.domain.category.FoodCategory;
 import kr.foodie.domain.category.Theme;
 import kr.foodie.domain.shop.*;
@@ -41,10 +42,11 @@ public class AdminController {
     private final ThemeService themeService;
     private final RegionService regionService;
     private final UserService userService;
+    private final CategoryService categoryService;
 
     public AdminController(ShopService shopService, TagService tagService,
                            RegionAdminService regionAdminService, FoodCategoryAdminService foodCategoryAdminService,
-                           ReviewService reviewService, PaginationService paginationService, ThemeService themeService, RegionService regionService, TagListService tagListService, UserService userService) {
+                           ReviewService reviewService, PaginationService paginationService, ThemeService themeService, RegionService regionService, TagListService tagListService, UserService userService,CategoryService categoryService) {
         this.shopService = shopService;
         this.tagService = tagService;
 //        this.regionService = regionService;
@@ -56,6 +58,7 @@ public class AdminController {
         this.regionService = regionService;
         this.tagListService = tagListService;
         this.userService = userService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/main")
@@ -283,15 +286,18 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/registerRedShop", method = RequestMethod.GET)
-    public ModelAndView getregisterRedShop(){
+    public ModelAndView getregisterRedShop(@ModelAttribute("shop") Shop shop){
         ModelAndView mav = new ModelAndView();
         List<Theme> redthemeListInfos;
         List<Theme> greenthemeListInfos;
         List<FoodCategory> categoryInfos;
+        mav.addObject("shop", new Shop());
+        List<Category> categoryList = categoryService.getCategory("3", "서울");
         categoryInfos = foodCategoryAdminService.getAdminRegionBCategory();
         redthemeListInfos = themeService.getThemeTags(0);
 //        greenthemeListInfos = themeService.getThemeTags(1);
         mav.setViewName("admin-create-red-shop");
+        mav.addObject("categoryList", categoryList);
         mav.addObject("redThemeListInfos", redthemeListInfos);
         mav.addObject("categoryInfos", categoryInfos);
 //        mav.addObject("greenThemeListInfos", greenthemeListInfos);
@@ -553,5 +559,23 @@ public class AdminController {
         members.put("data", commentList);
         return members;
     }
+    @PostMapping(value = "/shop/add")
+    public String addShop(Model model,
+                          @ModelAttribute Shop shop) {
+        try {
+            System.out.println("fff");
+              shopService.addShopInfo(shop);
+//            return "redirect:/contacts/" + String.valueOf(newContact.getId());
+        } catch (Exception ex) {
+            // log exception first,
+            // then show error
+//            String errorMessage = ex.getMessage();
+//            logger.error(errorMessage);
+//            model.addAttribute("errorMessage", errorMessage);
 
+            //model.addAttribute("contact", contact);
+//            model.addAttribute("add", true);
+        }
+        return "admin-create-red-shop";
+    }
 }

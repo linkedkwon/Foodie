@@ -24,6 +24,7 @@ import java.util.Date;
 public class Shop {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "SHOP_ID")
     private Integer shopId;
 

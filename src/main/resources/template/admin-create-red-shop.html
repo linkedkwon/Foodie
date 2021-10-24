@@ -254,46 +254,48 @@
             <div class="container-fluid" style="    width: 700px;">
 
                 <!-- DataTales Example -->
-                <div class="card shadow mb-4">
+                <form action="/admin/shop/add", method="post">
+                    <input type="hidden" value="0" th:field="${shop.shopType}">
+                    <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">레드리스트 맛집추가</h6>
                             <a th:href="@{/admin/registerRedShop}">
-                                <button class="btn btn-info btn-sm" style="float: right">맛집 추가하기</button>
+                                <button class="btn btn-info btn-sm" style="float: right" type="submit">맛집 추가하기</button>
                             </a>
                         </div>
                         <div class="content" style="    padding-top: 16px;">
                             <div class="container-fluid">
                                 <div class="col-md-12">
                                     <div class="card">
-<!--                                        <div class="card-header">-->
-<!--                                            <h3 class="card-title" style="float: left"></h3>-->
-<!--                                            <button class="btn btn-info btn-sm" style="    margin-left: 24px;">가게 이미지</button>-->
-<!--                                        </div>-->
+                                        <!--                                        <div class="card-header">-->
+                                        <!--                                            <h3 class="card-title" style="float: left"></h3>-->
+                                        <!--                                            <button class="btn btn-info btn-sm" style="    margin-left: 24px;">가게 이미지</button>-->
+                                        <!--                                        </div>-->
                                         <div class="card-body">
-<!--                                            <div class="form-group">-->
-<!--                                                <label for="restaurants-open-hours">그린/레드</label>-->
-<!--                                                <div class="flex">-->
-<!--                                                    <div class="custom-control custom-radio">-->
-<!--                                                        <input class="custom-control-input" id="page-type-green" type="radio" name="page-type" checked>-->
-<!--                                                        <label class="custom-control-label" for="page-type-green">그린</label>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="custom-control custom-radio">-->
-<!--                                                        <input class="custom-control-input" id="page-type-red" type="radio" name="page-type">-->
-<!--                                                        <label class="custom-control-label" for="page-type-red">레드</label>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
+                                            <!--                                            <div class="form-group">-->
+                                            <!--                                                <label for="restaurants-open-hours">그린/레드</label>-->
+                                            <!--                                                <div class="flex">-->
+                                            <!--                                                    <div class="custom-control custom-radio">-->
+                                            <!--                                                        <input class="custom-control-input" id="page-type-green" type="radio" name="page-type" checked>-->
+                                            <!--                                                        <label class="custom-control-label" for="page-type-green">그린</label>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                    <div class="custom-control custom-radio">-->
+                                            <!--                                                        <input class="custom-control-input" id="page-type-red" type="radio" name="page-type">-->
+                                            <!--                                                        <label class="custom-control-label" for="page-type-red">레드</label>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                </div>-->
+                                            <!--                                            </div>-->
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="restaurants-name">맛집명</label>
-                                                        <input type="text" class="form-control" id="restaurants-name" placeholder="맛집명" >
+                                                        <input type="text" th:field="${shop.shopName}" class="form-control" id="restaurants-name" placeholder="맛집명" >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="restaurants-phone">전화번호</label>
-                                                        <input type="tel" class="form-control" id="restaurants-phone"  placeholder="전화번호">
+                                                        <input type="tel" class="form-control" th:field="${shop.phone}" id="restaurants-phone"  placeholder="전화번호">
                                                     </div>
                                                 </div>
                                             </div>
@@ -307,7 +309,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="restaurants-manager-phone">담당자 연락처</label>
-                                                        <input type="tel" class="form-control" id="restaurants-manager-phone" placeholder="전화번호">
+                                                        <input type="tel" class="form-control" id="restaurants-manager-phone" th:field="${shop.phone}" placeholder="전화번호">
                                                     </div>
                                                 </div>
                                             </div>
@@ -317,11 +319,11 @@
                                                     <div class="form-group">
                                                         <label for="select-tags" style="width: 400px;">전문가평가</label>
                                                         <div style="display: flex">
-                                                            <select class="custom-select" id="select-tags1">
+                                                            <select class="custom-select" id="select-tags1" th:field="${shop.foodieLogRating}">
                                                                 <option value="" disabled selected>없음</option>
-                                                                <option value="치킨">A</option>
-                                                                <option value="음식점">AA</option>
-                                                                <option value="강서구맛집">AAA</option>
+                                                                <option value="A">A</option>
+                                                                <option value="AA">AA</option>
+                                                                <option value="AAA">AAA</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -346,13 +348,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="restaurants-open-hours">영업시간</label>
-                                                        <input type="text" class="form-control" id="restaurants-open-hours" placeholder="영업시간">
+                                                        <input type="text" class="form-control" id="restaurants-open-hours" th:field="${shop.operationTime}" placeholder="영업시간">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="restaurants-closed">휴무일</label>
-                                                        <input type="text" class="form-control" id="restaurants-closed" placeholder="휴무일">
+                                                        <input type="text" class="form-control" id="restaurants-closed" th:field="${shop.holiday}" placeholder="휴무일">
                                                     </div>
                                                 </div>
                                             </div>
@@ -361,9 +363,9 @@
                                                 <div class="col-md-6">
 
                                                     <div class="form-group">
-                                                        <label for="select-tags" style="width: 400px;">음식카테고리</label>
+                                                        <label for="table-filter3" style="width: 400px;">음식카테고리</label>
                                                         <div style="display: flex">
-                                                            <select id="table-filter1" class="custom-select">
+                                                            <select id="table-filter1" class="custom-select" th:field="${shop.bigCategory}">
                                                                 <option value="">대분류</option>
                                                                 <option
                                                                         th:each="val : ${categoryInfos}"
@@ -371,19 +373,20 @@
                                                                         th:utext="${val.categoryName}"
                                                                 ></option>
                                                             </select>
-                                                            <select id="table-filter2" class="custom-select">
-                                                                <option value="">중분류</option>
+                                                            <select id="table-filter2" class="custom-select"  th:field="${shop.middleCategory}">
+                                                                <option value="" >중분류</option>
                                                             </select>
-                                                            <select id="table-filter3" class="custom-select">
-                                                                <option value="">소분류</option>
+                                                            <select id="table-filter3" class="custom-select"  th:field="${shop.smallCategory}">
+                                                                <option value="" >소분류</option>
                                                             </select>
                                                         </div>
+                                                        <div class="flex tag-list"></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="website">홈페이지</label>
-                                                        <input type="text" class="form-control" id="website" placeholder="홈페이지" >
+                                                        <input type="text" class="form-control" id="website" placeholder="홈페이지" th:field="${shop.homepage}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -392,13 +395,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="recommend-menu">추천메뉴</label>
-                                                        <input type="text" class="form-control" id="recommend-menu" placeholder="추천메뉴" >
+                                                        <input type="text" class="form-control" id="recommend-menu" placeholder="추천메뉴" th:field="${shop.recommandMenu}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="budget">예산</label>
-                                                        <input type="text" class="form-control" id="budget" placeholder="예산">
+                                                        <input type="text" class="form-control" id="budget" placeholder="예산"  th:field="${shop.budget}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -407,13 +410,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="review-link-naver">네이버블로그 SHOP ID</label>
-                                                        <input type="text" class="form-control" id="review-link-naver" placeholder="https://blog.naver.com/">
+                                                        <input type="text" class="form-control" id="review-link-naver" th:field="${shop.blogShopId}" placeholder="https://blog.naver.com/">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="review-link-instagram">인스타그램 키워드</label>
-                                                        <input type="text" class="form-control" id="review-link-instagram" placeholder="https://www.instagram.com/" >
+                                                        <input type="text" class="form-control" id="review-link-instagram" placeholder="https://www.instagram.com/" th:field="${shop.instaKeyword}" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -425,11 +428,11 @@
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
                                                                 <input class="custom-control-input" id="reservation-y" type="radio" name="reservation">
-                                                                <label class="custom-control-label" for="reservation-y">가능</label>
+                                                                <label class="custom-control-label" for="reservation-y" value="Y" th:field="${shop.isReservation}">가능</label>
                                                             </div>
                                                             <div class="custom-control custom-radio">
                                                                 <input class="custom-control-input" id="reservation-n" type="radio" name="reservation" >
-                                                                <label class="custom-control-label" for="reservation-n">불가능</label>
+                                                                <label class="custom-control-label" for="reservation-n" value="N" th:field="${shop.isReservation}">불가능</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -439,11 +442,11 @@
                                                         <label for="restaurants-closed">주차여부</label>
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="parking-y" type="radio" name="parking">
+                                                                <input class="custom-control-input" id="parking-y" value="Y" type="radio" name="parking" th:field="${shop.isParking}">
                                                                 <label class="custom-control-label" for="parking-y">가능</label>
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="parking-n" type="radio" name="parking">
+                                                                <input class="custom-control-input" id="parking-n" value="N" type="radio" name="parking" th:field="${shop.isParking}">
                                                                 <label class="custom-control-label" for="parking-n">불가능</label>
                                                             </div>
                                                         </div>
@@ -458,11 +461,11 @@
                                                         <label for="restaurants-closed">포장/배달</label>
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="delivery-y" type="radio" name="delivery"  >
+                                                                <input class="custom-control-input" id="delivery-y" type="radio" value="Y" name="delivery"  th:field="${shop.isDelivery}">
                                                                 <label class="custom-control-label" for="delivery-y">가능</label>
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="delivery-n" type="radio" name="delivery" >
+                                                                <input class="custom-control-input" id="delivery-n" type="radio" value="N" name="delivery" th:field="${shop.isDelivery}" >
                                                                 <label class="custom-control-label" for="delivery-n">불가능</label>
                                                             </div>
                                                         </div>
@@ -473,22 +476,22 @@
                                                         <label for="restaurants-closed">배경</label>
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_1" type="radio" name="background_type" >
+                                                                <input class="custom-control-input" id="background_type_1" type="radio" value="1" name="background_type" th:field="${shop.background}">
                                                                 <label class="custom-control-label" for="background_type_1">레드</label>
                                                                 <img src="/images/background_red.png" class="thumbnail" height='30px' />
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_2" type="radio" name="background_type" >
+                                                                <input class="custom-control-input" id="background_type_2" type="radio" value="2" name="background_type" th:field="${shop.background}">
                                                                 <label class="custom-control-label" for="background_type_2">그린</label>
                                                                 <img src="/images/background_green.png" class="thumbnail" height='30px' />
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_3" type="radio" name="background_type">
+                                                                <input class="custom-control-input" id="background_type_3" type="radio" value="3" name="background_type" th:field="${shop.background}">
                                                                 <label class="custom-control-label" for="background_type_3">머스타드</label>
                                                                 <img src="/images/background_mustard.png" class="thumbnail" height='30px' />
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_4" type="radio" name="background_type">
+                                                                <input class="custom-control-input" id="background_type_4" type="radio" value="4" name="background_type" th:field="${shop.background}">
                                                                 <label class="custom-control-label" for="background_type_4">4번</label>
                                                                 <img src="/images/background_mustard.png" class="thumbnail" height='30px' />
                                                             </div>
@@ -503,28 +506,27 @@
                                                     <div class="form-group">
                                                         <label for="select-tags" style="width: 400px;">지역별 설정</label>
                                                         <div style="display: flex">
-                                                            <select class="custom-select" id="select-tags1">
-                                                                <option value="" disabled selected>지역</option>
-                                                                <option value="치킨">수도권</option>
-                                                                <option value="음식점">부산</option>
-                                                                <option value="강서구맛집">인천</option>
-                                                                <option value="바베큐치킨">대구</option>
+                                                            <select class="custom-select" id="table-filter4">
+                                                                <option value='' disabled selected>지역</option>
+                                                                <option value='서울'> 서울</option>
+                                                                <option value='경기'>경기</option>
+                                                                <option value='인천'>인천</option>
+                                                                <option value='대전'>대전</option>
+                                                                <option value='광주'>광주</option>
+                                                                <option value='대구'>대구</option>
+                                                                <option value='울산'>울산</option>
+                                                                <option value='부산'>부산</option>
+                                                                <option value='강원'>강원</option>
+                                                                <option value='충청북도'>충청북도</option>
+                                                                <option value='충청남도'>충청남도</option>
+                                                                <option value='전라북도'>전라북도</option>
+                                                                <option value='전라남도'>전라남도</option>
+                                                                <option value='경상북도'>경상북도</option>
+                                                                <option value='경상남도'>경상남도</option>
+                                                                <option value='제주'> 제주</option>
+                                                                <option value='세종'> 세종</option>
                                                             </select>
-                                                            <select class="custom-select" id="select-tags1">
-                                                                <option value="" disabled selected>호선</option>
-                                                                <option value="치킨">1호선</option>
-                                                                <option value="음식점">2호선</option>
-                                                                <option value="강서구맛집">3호선</option>
-                                                                <option value="바베큐치킨">4호선</option>
-                                                                <option value="음식점">5호선</option>
-                                                            </select>
-                                                            <select class="custom-select" id="select-tags1">
-                                                                <option value="" disabled selected>역명</option>
-                                                                <option value="치킨">강남역</option>
-                                                                <option value="음식점">삼성역</option>
-                                                                <option value="강서구맛집">봉은사역</option>
-                                                                <option value="바베큐치킨">홍대역</option>
-                                                                <option value="음식점">분당역</option>
+                                                            <select class="custom-select"  id="table-filter5" th:field="${shop.regionId}">
                                                             </select>
                                                         </div>
                                                     </div>
@@ -545,13 +547,7 @@
                                                             </select>
                                                             <select class="custom-select" id="table-filter8">
                                                             </select>
-                                                            <select class="custom-select" id="table-filter79">
-                                                                <option value="" disabled selected>역명</option>
-                                                                <option value="치킨">강남역</option>
-                                                                <option value="음식점">삼성역</option>
-                                                                <option value="강서구맛집">봉은사역</option>
-                                                                <option value="바베큐치킨">홍대역</option>
-                                                                <option value="음식점">분당역</option>
+                                                            <select class="custom-select" id="table-filter9" th:field="${shop.subwayTypeId}">
                                                             </select>
                                                         </div>
                                                     </div>
@@ -576,14 +572,14 @@
                                                 <div class="" style="width: 50%;">
                                                     <label for="restaurants-address-detial">주소 (도로명)</label>
                                                     <div style="display: flex;">
-                                                        <input type="text" class="form-control" id="restaurants-address-detial" placeholder="주소" >
+                                                        <input type="text" class="form-control" id="restaurants-address-detial" placeholder="주소" th:field="${shop.address}" >
                                                     </div>
                                                 </div>
 
                                                 <div class="" style="width: 50%;">
                                                     <label for="restaurants-address-detial">주소 (지번)</label>
                                                     <div style="display: flex;">
-                                                        <input type="text" class="form-control" id="restaurants-address-detial-jibun" placeholder="주소" value="서울특별시 용산구 용산동" >
+                                                        <input type="text" class="form-control" id="restaurants-address-detial-jibun" placeholder="주소"  th:field="${shop.roadAddress}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -591,11 +587,11 @@
 
                                             <div class="form-group">
                                                 <label for="restaurants-location-detial">찾아가는길(상세주소)</label>
-                                                <input type="text" class="form-control" id="restaurants-location-detial" placeholder="찾아가는길">
+                                                <input type="text" class="form-control" id="restaurants-location-detial" placeholder="찾아가는길" th:field="${shop.detailAddress}">
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
 
                                                     <div class="form-group">
                                                         <!--<label for="select-tags" style="width: 100%;">맛집촌선택</label>
@@ -608,13 +604,13 @@
                                                         <label for="restaurants-closed">맛집촌선택</label>
                                                         <!--                                                        <p th:text="${payload[0].themeList}"></p>-->
                                                         <div class="flex" style="display: block;">
-                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;" th:object="${regionInfosItem}" th:each="regionInfosItem : ${regionInfosWithType3}">
+                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;" th:object="${categoryList}" th:each="infos : ${categoryList}">
                                                                 <!--                                                                <p th:text="${#lists.contains(#strings.listSplit(payload[0].themeList,','), theme.themeId)}"></p>-->
                                                                 <!--/*@thymesVar id="Arrays" type=""*/-->
                                                                 <!--                                                                <p th:text="${#strings.arraySplit(payload[0].themeList, ',')}"></p>-->
                                                                 <!--                                                                <p th:text="${payload[0].themeList.split(',')[0]}"></p>-->
-                                                                <input class="custom-control-input" th:id="${regionInfosItem.themeId}" type="checkbox" name="theme">
-                                                                <label class="custom-control-label" th:for="${regionInfosItem.themeId}" th:text="${regionInfosItem.name}"> 가능</label>
+                                                                <input class="custom-control-input" th:id="${infos.districtName}" th:value="${infos.regionId}"  type="checkbox" name="theme" th:field="${shop.villageTypeId}">
+                                                                <label class="custom-control-label" th:for="${infos.districtName}" th:text="${infos.districtName}"></label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -632,8 +628,8 @@
                                                                 <!--/*@thymesVar id="Arrays" type=""*/-->
                                                                 <!--                                                                <p th:text="${#strings.arraySplit(payload[0].themeList, ',')}"></p>-->
                                                                 <!--                                                                <p th:text="${payload[0].themeList.split(',')[0]}"></p>-->
-                                                                <input class="custom-control-input" th:id="${theme.themeId}" type="checkbox" name="theme">
-                                                                <label class="custom-control-label" th:for="${theme.themeId}" th:text="${theme.name}"> 가능</label>
+                                                                <input class="custom-control-input" th:id="${theme.themeId}" th:value="${theme.themeId}"  th:field="${shop.themeList}"type="checkbox" name="theme">
+                                                                <label class="custom-control-label" th:for="${theme.themeId}" th:text="${theme.name}" > 가능</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -664,7 +660,7 @@
                                             <h3 class="card-title">히스토리</h3>
                                         </div>
                                         <div class="card-body">
-                                            <div id="summernote"></div>
+                                            <textarea id="summernote" th:field="${shop.history}" ></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -678,7 +674,7 @@
                                             <h3 class="card-title">메뉴관리</h3>
                                         </div>
                                         <div class="card-body">
-                                            <div class="summernote" ></div>
+                                            <textarea class="summernote" th:field="${shop.menu}"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -686,7 +682,8 @@
                             <!-- 메뉴관리 Card END -->
 
                         </div>
-                </div>
+                    </div>
+                </form>
                 <!-- /.container-fluid -->
 
             </div>
@@ -788,6 +785,50 @@
 </style>
 <script type="text/javascript">
     $(document).ready(function() {
+        var tagList = [];
+
+        var renderTagList = function() {
+            var i = 0;
+            var tagsHtml = '';
+
+            for(; i < tagList.length; i++) {
+                console.log(tagList)
+                tagsHtml += "<div class=\"tag-item btn-secondary btn\">" + tagList[i].value + "<a class=\"delete-tag-item\" onClick=\"deleteTag('" + tagList[i] + "\')\">×</a></div>"
+            }
+
+            $(".tag-list").html(tagsHtml);
+        };
+
+        var deleteTag = function(value) {
+            var index = tagList.indexOf(value);
+
+            if (index < 0) {
+                return;
+            }
+
+            tagList.splice(index, 1);
+            renderTagList();
+        };
+
+        $("#table-filter3").on("change", function(event) {
+            console.log(event.currentTarget)
+            var dictObject = {}
+            const value = event.currentTarget.value;
+            const name = event.currentTarget.innerText;
+            console.log(name)
+            if (tagList.indexOf(value) >= 0) {
+                $('#table-filter3 option:eq(0)').prop('selected', true);
+                return;
+            }
+            dictObject[value] = name;
+            tagList.push(dictObject);
+            renderTagList()
+            $('#table-filter3 option:eq(0)').prop('selected', true);
+        });
+
+
+
+
 
         $('.summernote').summernote();
 
@@ -822,12 +863,142 @@
             temp.innerHTML = input.value;
             list.appendChild(temp);
         }
-
         $('#table-filter7').change( function(){
-            get_subway_mcode( this); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+            var good_a = ["호선", "1호선", "2호선", "3호선", "4호선", "5호선", "6호선", "7호선", "8호선", "9호선", "수인분당선", "신분당선", "중앙선", "공항선",
+                "경춘선", "경강선", "경의중앙선", "공항철도선", "의정부 경전철", "우이 신설선", "용인에버라인", "서해선", "김포골드라인"];
+            var good_b = ["호선","1호선", "2호선"];
+            var good_c = ["호선","1호선", "2호선", "3호선"];
+            var good_d = ["호선","1호선", "2호선"];
+            var good_e = ["호선","1호선"];
+            var good_f = ["호선","1호선"];
+
+            var target = document.getElementById("table-filter8");
+            var val = $( ':selected', this).val();
+            if(val == "수도권") var d = good_a;
+            else if(val == "인천") var d = good_b;
+            else if(val == "부산") var d = good_c;
+            else if(val == "대구") var d = good_d;
+            else if(val == "광주") var d = good_e;
+            else if(val == "대전") var d = good_f;
+
+
+            target.options.length = 0;
+
+            for (x in d) {
+                var opt = document.createElement("option");
+                opt.value = d[x];
+                opt.innerHTML = d[x];
+                target.appendChild(opt);
+            }
         });
 
-        function get_subway_mcode(o){
+
+        $('#table-filter8').change( function(){
+            get_subway_scode( this); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        function get_subway_scode(o){
+            var val = $( '#table-filter7 option:selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+            var val1 = $('#table-filter8 option:selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+
+            $.ajax({
+                url: "/category/region/" + 2 + "?b_name=" + encodeURI(val) + "&m_name=" + encodeURI(val1),
+                contentType: "application/json",
+                dataType: "json",
+                type:"GET",
+            }).done(function (data) {
+                // console.log(data.data)
+                // console.log(data)
+                if(data.length > 0) {
+                    $("#table-filter9").find("option").remove().end();
+                    $("#table-filter9").append("<option>역</option>");
+                    $.each(data, function(key, value) {
+                        $("#table-filter9").append("<option value='" + value.regionId + "'>" + value.subwayName + "</option>");
+                    });
+                    console.log(data[0])
+                } else {
+                    $("#table-filter9").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                    $("#table-filter9").find("option").remove().end();
+                    $("#table-filter9").append("<option value='0'>NO DATA</option>");
+                    return;
+                }
+
+
+                // var ul = document.createElement('ul');
+                // ul.setAttribute('class','item-list-wrapper');
+                // document.getElementById(className).appendChild(ul);
+                // fragment.forEach(renderProductList);
+                // // class="active"
+                // function renderProductList(element, index, arr) {
+                //     var li = document.createElement('li');
+                //
+                //     ul.appendChild(li);
+                //
+                //     if(type=='2'){
+                //         if(element.subwayName != null){
+                //             li.innerHTML=li.innerHTML +"<a href='/shop/region/subway/" + element.regionId +"/red'>" +element.subwayName + "("+element.districtCnt + ")" + "</a>";
+                //         }
+                //     }else{
+                //         li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.districtName + "("+element.districtCnt+")" + "</a>";
+                //     }
+                // }
+            });
+
+        }
+        $('#table-filter4').change( function(){
+            get_region_mcode( this); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        function get_region_mcode(o){
+            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+            $.ajax({
+                url: "/category/region/" + 1 + "?name=" + encodeURI(val),
+                contentType: "application/json",
+                dataType: "json",
+                type:"GET",
+            }).done(function (data) {
+
+                if(data.length > 0) {
+                    $("#table-filter5").find("option").remove().end();
+                    $("#table-filter5").append("<option>중분류</option>");
+                    $.each(data, function(key, value) {
+                        $("#table-filter5").append("<option value='" + value.regionId + "'>" + value.districtName + "</option>");
+                    });
+                    console.log(data[0])
+                } else {
+                    $("#table-filter5").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                    $("#table-filter5").find("option").remove().end();
+                    $("#table-filter5").append("<option value='0'>NO DATA</option>");
+                    return;
+                }
+
+
+                // var ul = document.createElement('ul');
+                // ul.setAttribute('class','item-list-wrapper');
+                // document.getElementById(className).appendChild(ul);
+                // fragment.forEach(renderProductList);
+                // // class="active"
+                // function renderProductList(element, index, arr) {
+                //     var li = document.createElement('li');
+                //
+                //     ul.appendChild(li);
+                //
+                //     if(type=='2'){
+                //         if(element.subwayName != null){
+                //             li.innerHTML=li.innerHTML +"<a href='/shop/region/subway/" + element.regionId +"/red'>" +element.subwayName + "("+element.districtCnt + ")" + "</a>";
+                //         }
+                //     }else{
+                //         li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.districtName + "("+element.districtCnt+")" + "</a>";
+                //     }
+                // }
+            });
+
+        }
+        $('#table-filter5').change( function(){
+            get_region_scode( this); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        function get_region_scode(o){
             var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
             $.ajax({
                 url: "/category/region/" + 2 + "?name=" + encodeURI(val),
@@ -872,7 +1043,6 @@
             });
 
         }
-
         $('#table-filter1').change( function(){
             get_mcode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
         });

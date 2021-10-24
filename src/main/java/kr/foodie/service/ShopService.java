@@ -229,4 +229,19 @@ public class ShopService {
 
         return listBundle;
     }
+
+    public Shop addShopInfo(Shop shops){
+        /*for (Shop shop : shops) {
+            String bCode = Optional.ofNullable(shop.getBigCategory()).orElseGet(() -> { return "0"; });
+            String mCode = Optional.ofNullable(shop.getMiddleCategory()).orElseGet(() -> { return "0"; });
+            String type = Optional.ofNullable(shop.getShopType()).orElseGet(() -> { return "0"; });
+            if(type.equals("1")){
+                shop.setShopAlias(tripCategoryService.getTripCategory(bCode, mCode, shop.getAddress()));
+            }else{
+                shop.setShopAlias(foodCategoryService.getShopCategory(bCode, mCode, shop.getAddress()));
+            }
+        }*/
+        return shopRepository.save(shops);
+//        return shops;
+    }
 }
