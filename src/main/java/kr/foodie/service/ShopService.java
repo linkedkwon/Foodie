@@ -155,7 +155,7 @@ public class ShopService {
     }
 
     public List<Shop> getTop50AdminShopInfos(String shopType) {
-        return shopRepository.findTop50ByShopType(shopType);
+        return shopRepository.findTop1000ByShopTypeOrderByUpdatedAtDesc(shopType);
     }
 
     public List<Shop> getAdminShopInfosWithBcode(Integer bCode, String shopType) {

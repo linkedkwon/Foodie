@@ -60,7 +60,7 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
 
     //admin
     List<Shop> findByShopType(String shopType);
-    List<Shop> findTop50ByShopType(String shopType);
+    List<Shop> findTop1000ByShopTypeOrderByUpdatedAtDesc(String shopType);
     List<Shop> findByBigCategoryAndShopType(Integer bCode, String shopType);
     List<Shop> findByBigCategoryAndMiddleCategoryAndShopType(Integer bCode, Integer mCode, String shopType);
     List<Shop> findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopType(Integer bCode, Integer mCode, Integer sCode, String shopType);

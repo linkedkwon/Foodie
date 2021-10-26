@@ -427,6 +427,7 @@ public class AdminController {
         hashTags = tagService.getHashTags(shopId);
         regionInfosWithType3 = regionService.getRegionInfoWithType3("3");
 
+        commentList.get(0).setMenuImages(commentList.get(0).getMenuImages().replace("[", "").replace("]", "").replaceAll("\"",""));
 //        List<String> themeList = Arrays.asList(commentList.get(0).split(","));
 
         int idx = path.orElseGet(()->{return 0;});

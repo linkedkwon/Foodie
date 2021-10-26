@@ -439,17 +439,8 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="restaurants-closed">주차여부</label>
-                                                        <div class="flex">
-                                                            <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="parking-y" value="Y" type="radio" name="parking" th:field="${shop.isParking}">
-                                                                <label class="custom-control-label" for="parking-y">가능</label>
-                                                            </div>
-                                                            <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="parking-n" value="N" type="radio" name="parking" th:field="${shop.isParking}">
-                                                                <label class="custom-control-label" for="parking-n">불가능</label>
-                                                            </div>
-                                                        </div>
+                                                        <label for="park">주차여부</label>
+                                                        <input type="text" class="form-control" id="park" placeholder="주차" th:field="${shop.isParking}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -476,25 +467,27 @@
                                                         <label for="restaurants-closed">배경</label>
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_1" type="radio" value="1" name="background_type" th:field="${shop.background}">
-                                                                <label class="custom-control-label" for="background_type_1">레드</label>
+                                                                <input class="custom-control-input" id="background_type_1" type="radio" name="background_type" th:field="${shop.background}" value="1">
+                                                                <label class="custom-control-label" for="background_type_1">1번(레드)</label>
                                                                 <img src="/images/background_red.png" class="thumbnail" height='30px' />
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_2" type="radio" value="2" name="background_type" th:field="${shop.background}">
-                                                                <label class="custom-control-label" for="background_type_2">그린</label>
-                                                                <img src="/images/background_green.png" class="thumbnail" height='30px' />
-                                                            </div>
-                                                            <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_3" type="radio" value="3" name="background_type" th:field="${shop.background}">
-                                                                <label class="custom-control-label" for="background_type_3">머스타드</label>
+                                                                <input class="custom-control-input" id="background_type_3" type="radio" name="background_type" th:field="${shop.background}" value="2" >
+                                                                <label class="custom-control-label" for="background_type_3">2번(머스타드)</label>
                                                                 <img src="/images/background_mustard.png" class="thumbnail" height='30px' />
                                                             </div>
-                                                            <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_4" type="radio" value="4" name="background_type" th:field="${shop.background}">
-                                                                <label class="custom-control-label" for="background_type_4">4번</label>
-                                                                <img src="/images/background_mustard.png" class="thumbnail" height='30px' />
-                                                            </div>
+
+<!--                                                            <div class="custom-control custom-radio">-->
+<!--                                                                <input class="custom-control-input" id="background_type_4" type="radio" name="background_type" th:field="${shop.background}" value="3" >-->
+<!--                                                                <label class="custom-control-label" for="background_type_4">3번(민트)</label>-->
+<!--                                                                <img src="/images/background_mint.png" class="thumbnail" height='30px' />-->
+<!--                                                            </div>-->
+<!--                                                            <div class="custom-control custom-radio">-->
+<!--                                                                <input class="custom-control-input" id="background_type_2" type="radio" name="background_type" th:field="${shop.background}" value="4" >-->
+<!--                                                                <label class="custom-control-label" for="background_type_2">4번(그린)</label>-->
+<!--                                                                <img src="/images/background_green.png" class="thumbnail" height='30px' />-->
+<!--                                                            </div>-->
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -549,6 +542,7 @@
                                                             </select>
                                                             <select class="custom-select" id="table-filter9" th:field="${shop.subwayTypeId}">
                                                             </select>
+                                                            <input class="form-control" id="exit" type="text" name="exit"  th:field="${shop.exitNum}" style="    width: 45px;font-size: 1rem !important;">
                                                         </div>
                                                     </div>
                                                     <!--<div class="form-group">
@@ -638,11 +632,16 @@
                                             <div class="row">
                                                 <div class="form-group" style="    padding-top: 40px;">
                                                     <label for="restaurants-location-detial">가게 이미지 추가</label>
-                                                    <div style="width: 100px;height: 150px;text-align: center">
-                                                        <img style="width: 100%;height: 100px;" src="/images/no_image.jpeg">
-                                                        <button>추가</button>
+                                                    <div>
+                                                        <div class="input_warp">
+                                                            <a href="javascript:" onclick="fileUploadAction();" class="my_buttom">파일업로드</a>
+                                                            <input type="file" style="display: none" id="input_imgs" multiple/>
+                                                        </div>
+                                                        <div class="imgs_wrap">
+<!--                                                            <img id="img" style="width: 150px;height: 120px;"/>-->
+                                                        </div>
                                                     </div>
-                                                    <!--                                                    <input type="text" class="form-control" id="restaurants-location-detial" placeholder="찾아가는길">-->
+<!--                                                    <a href="javascript:" class="my_button" onclick="submitAction();">upload</a>-->
                                                 </div>
                                             </div>
 
@@ -784,7 +783,53 @@
     }
 </style>
 <script type="text/javascript">
+    var sel_files =[];
+    function fileUploadAction(){
+        console.log("upload")
+        $("#input_imgs").trigger('click')
+    }
+
+    function handleImgFileSelect(e){
+        sel_files = [];
+        // $(".imgs_wrap #img").empty();
+
+        var files= e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+        var index = 0;
+        filesArr.forEach(function(f) {
+            if(!f.type.match("image.*")){
+                alert("확장자는 이미지확장자만 가능");
+                return
+            }
+            sel_files.push(f);
+
+            var reader = new FileReader();
+            reader.onload = function(e){
+                var img = new Image();
+                img.src = e.target.result;
+                // if(img.width < 720 || img.height > 100) {
+                //     alert("이미지 가로 720px, 세로 270px로 맞춰서 올려주세요.");
+                // }else{
+                    var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(" + index +")\" id=\"img_id_"+index+"\"> <img style=\"width: 150px;height: 120px;padding-left: 10px;\" src=\"" + e.target.result + "\" data-file='"+f.name + "' class='selProductFile' title='click to remove'></a>";
+                    $(".imgs_wrap").append(html);
+                    index++;
+                // }
+            }
+            reader.readAsDataURL(f);
+        })
+    }
+    function deleteImageAction(index){
+        console.log('index' + index);
+        sel_files.splice(index, 1);
+        var img_id = "#img_id_"+index;
+        $(img_id).remove();
+        console.log(sel_files)
+    }
     $(document).ready(function() {
+
+        $("#input_imgs").on("change", handleImgFileSelect);
+
+
         var tagList = [];
 
         var renderTagList = function() {

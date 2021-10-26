@@ -42,7 +42,7 @@
     <div id="content-wrapper" class="d-flex flex-column">
 
         <!-- Main Content -->
-        <div id="content">
+        <div id="content" style="font-size: 9pt">
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -251,18 +251,18 @@
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
-            <div class="container-fluid">
+            <div class="container-fluid" style="    width: 700px;">
 
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                         <div class="content">
-                            <div class="container-fluid">
-                                <div class="col-md-12">
+                            <div class="">
+                                <div class="">
                                     <div class="card">
                                         <div class="card-header">
                                             <h3 class="card-title" th:text="${payload[0].shopName}" style="float: left"></h3>
                                             <button class="btn btn-info btn-sm" style="    margin-left: 24px;">가게 이미지</button>
-                                            <button class="btn btn-info btn-sm" style="    margin-left: 24px;">저장</button>
+                                            <button class="btn btn-info btn-sm" style="margin-top: 5px;    margin-left: 24px;">저장</button>
                                         </div>
                                         <div class="card-body">
 <!--                                            <div class="form-group">-->
@@ -441,17 +441,8 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="restaurants-closed">주차여부</label>
-                                                        <div class="flex">
-                                                            <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="parking-y" type="radio" name="parking" th:checked="${payload[0].isParking} == 'Y'" >
-                                                                <label class="custom-control-label" for="parking-y">가능</label>
-                                                            </div>
-                                                            <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="parking-n" type="radio" name="parking" th:checked="${payload[0].isParking} == 'N'" >
-                                                                <label class="custom-control-label" for="parking-n">불가능</label>
-                                                            </div>
-                                                        </div>
+                                                        <label for="park">주차여부</label>
+                                                        <input type="text" class="form-control" id="park" placeholder="주차" th:value="${payload[0].isParking}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -479,19 +470,26 @@
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
                                                                 <input class="custom-control-input" id="background_type_1" type="radio" name="background_type" th:checked="${payload[0].background} == '1'" >
-                                                                <label class="custom-control-label" for="background_type_1">1번타입(레드)</label>
+                                                                <label class="custom-control-label" for="background_type_1">1번(레드)</label>
                                                                 <img src="/images/background_red.png" class="thumbnail" height='30px' />
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_2" type="radio" name="background_type" th:checked="${payload[0].isParking} == '2'" >
-                                                                <label class="custom-control-label" for="background_type_2">2번타입(그린)</label>
-                                                                <img src="/images/background_green.png" class="thumbnail" height='30px' />
-                                                            </div>
-                                                            <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_3" type="radio" name="background_type" th:checked="${payload[0].isParking} == '3'" >
-                                                                <label class="custom-control-label" for="background_type_3">3번타입(머스타드)</label>
+                                                                <input class="custom-control-input" id="background_type_3" type="radio" name="background_type" th:checked="${payload[0].background} == '2'" >
+                                                                <label class="custom-control-label" for="background_type_3">2번(머스타드)</label>
                                                                 <img src="/images/background_mustard.png" class="thumbnail" height='30px' />
                                                             </div>
+
+<!--                                                            <div class="custom-control custom-radio">-->
+<!--                                                                <input class="custom-control-input" id="background_type_4" type="radio" name="background_type" th:checked="${payload[0].background} == '3'" >-->
+<!--                                                                <label class="custom-control-label" for="background_type_4">3번(민트)</label>-->
+<!--                                                                <img src="/images/background_mint.png" class="thumbnail" height='30px' />-->
+<!--                                                            </div>-->
+<!--                                                            <div class="custom-control custom-radio">-->
+<!--                                                                <input class="custom-control-input" id="background_type_2" type="radio" name="background_type" th:checked="${payload[0].background} == '4'" >-->
+<!--                                                                <label class="custom-control-label" for="background_type_2">4번(그린)</label>-->
+<!--                                                                <img src="/images/background_green.png" class="thumbnail" height='30px' />-->
+<!--                                                            </div>-->
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -610,62 +608,31 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group" style="    padding-top: 30px;">
                                                         <label for="restaurants-closed">가게 이미지</label>
-                                                        <div style="display: flex">
-                                                            <div class="image-upload" id="image-upload">
-
-                                                                <form method="post" enctype="multipart/form-data">
-                                                                    <div class="button">
-                                                                        <label for="chooseFile">
-                                                                            👉 CLICK HERE! 👈
-                                                                        </label>
-                                                                    </div>
-                                                                    <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-                                                                </form>
-
-                                                                <div class="fileContainer">
-                                                                    <div class="fileInput">
-                                                                        <p>FILE NAME: </p>
-                                                                        <p id="fileName"></p>
-                                                                    </div>
-                                                                    <div class="buttonContainer">
-                                                                        <div class="submitButton" id="submitButton">SUBMIT</div>
-                                                                    </div>
+                                                        <div>
+                                                            <div class="input_warp">
+                                                                <div style="display: inline-block; text-align: center" th:each="item : ${payload[0].menuImages.split(',')}">
+                                                                    <img style="width: 150px;height: 120px;padding-left: 10px;  padding-top: 10px;  float: left;" th:src='${item}'>
+                                                                    <br>
+                                                                    <button onclick="prompt('해당 이미지를 지우시겠습니까?')" style="width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
                                                                 </div>
-                                                                <div class="image-show" id="image-show"></div>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                                            <form method="post" enctype="multipart/form-data">
-                                                                <div class="button">
-                                                                    <label for="chooseFile">
-                                                                        👉 CLICK HERE! 👈
-                                                                    </label>
-                                                                </div>
-                                                                <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-                                                            </form>
-                                                            <form method="post" enctype="multipart/form-data">
-                                                                <div class="button">
-                                                                    <label for="chooseFile">
-                                                                        👉 CLICK HERE! 👈
-                                                                    </label>
-                                                                </div>
-                                                                <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-                                                            </form>
-                                                            <form method="post" enctype="multipart/form-data">
-                                                                <div class="button">
-                                                                    <label for="chooseFile">
-                                                                        👉 CLICK HERE! 👈
-                                                                    </label>
-                                                                </div>
-                                                                <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-                                                            </form>
-                                                            <form method="post" enctype="multipart/form-data">
-                                                                <div class="button">
-                                                                    <label for="chooseFile">
-                                                                        👉 CLICK HERE! 👈
-                                                                    </label>
-                                                                </div>
-                                                                <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-                                                            </form>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group" style="    padding-top: 30px;">
+                                                        <label for="restaurants-closed">가게 이미지 업로드</label>
+                                                        <div>
+                                                            <div class="input_warp">
+                                                                <a href="javascript:" onclick="fileUploadAction();" class="my_buttom">파일업로드</a>
+                                                                <input type="file" style="display: none" id="input_imgs" multiple/>
+                                                            </div>
+                                                            <div class="imgs_wrap">
+
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -683,7 +650,7 @@
                                             <h3 class="card-title">히스토리</h3>
                                         </div>
                                         <div class="card-body">
-                                            <div id="summernote" th:text="${payload[0].history}"></div>
+                                            <div id="summernote" th:utext="${payload[0].history}"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -876,7 +843,53 @@
 
 </style>
 <script type="text/javascript">
+    var sel_files =[];
+    function fileUploadAction(){
+        console.log("upload")
+        $("#input_imgs").trigger('click')
+    }
+
+    function handleImgFileSelect(e){
+        sel_files = [];
+        // $(".imgs_wrap #img").empty();
+
+        var files= e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+        var index = 0;
+        filesArr.forEach(function(f) {
+            if(!f.type.match("image.*")){
+                alert("확장자는 이미지확장자만 가능");
+                return
+            }
+            sel_files.push(f);
+
+            var reader = new FileReader();
+            reader.onload = function(e){
+                var img = new Image();
+                img.src = e.target.result;
+                // if(img.width < 720 || img.height > 100) {
+                //     alert("이미지 가로 720px, 세로 270px로 맞춰서 올려주세요.");
+                // }else{
+                var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(" + index +")\" id=\"img_id_"+index+"\"> <img style=\"width: 150px;height: 120px;padding-left: 10px;\" src=\"" + e.target.result + "\" data-file='"+f.name + "' class='selProductFile' title='click to remove'></a>";
+                $(".imgs_wrap").append(html);
+                index++;
+                // }
+            }
+            reader.readAsDataURL(f);
+        })
+    }
+    function deleteImageAction(index){
+        console.log('index' + index);
+        sel_files.splice(index, 1);
+        var img_id = "#img_id_"+index;
+        $(img_id).remove();
+        console.log(sel_files)
+    }
+
+
     $(document).ready(function() {
+        $("#input_imgs").on("change", handleImgFileSelect);
+
 
         $('.summernote').summernote();
 

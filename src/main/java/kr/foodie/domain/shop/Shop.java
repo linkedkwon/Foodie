@@ -44,7 +44,7 @@ public class Shop {
     private String shopType;
 
     @Column(name = "Background")
-    private Integer background;
+    private String background;
 
     @Column(name = "PremiumRegisterDate")
     private Date premiumRegisterDate;
@@ -154,4 +154,7 @@ public class Shop {
 
     @Column(name = "CREATED_AT")
     private Date createdAt;
+
+    @Column(name = "EXIT_NUM")
+    private Integer exitNum;
 }

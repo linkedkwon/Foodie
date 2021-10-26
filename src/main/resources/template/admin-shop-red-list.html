@@ -458,6 +458,8 @@
         $('#example').DataTable( {
             "ajax": "/admin/category/red/all",
             ordering: false,
+            "pageLength": 30,
+            // "paging":true,
             "columns": [
                 // <div>
                 //     <a th:href="@{'/admin/shop/red/'+${shop.shopId}}" th:text="${shop.shopName}"></a>
