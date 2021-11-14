@@ -45,8 +45,8 @@
 
                 <div class="right-area">
                   <ul class="scores">
-                    <li th:text="'푸디로그 평점('+${payload[0].foodieLogRating}+')'"/>
-                    <li th:text="'방문자 평점('+${payload[0].tasteRating}+'점)'"/>
+                    <li th:text="'푸디로그 평점('+${payload.foodieLogRating}+')'"/>
+                    <li th:text="'방문자 평점('+${payload.tasteRating}+'점)'"/>
                   </ul>
                   <div class="star">
                     <picture>
@@ -55,7 +55,7 @@
                       <img src="/images/ico-detail-star.png" alt="">
                       -->
                       <source srcset="/images/ico-detail-star@2x.png 2x">
-                      <th:block th:switch="${payload[0].foodieLogRating}">
+                      <th:block th:switch="${payload.foodieLogRating}">
                         <img th:case="A" src="/images/ico-star-first.png" alt=""/>
                         <img th:case="AA" src="/images/ico-star-second.png" alt=""/>
                         <img th:case="AAA" src="/images/ico-star-third.png" alt=""/>

@@ -14,6 +14,8 @@ public interface RegionAdminRepository extends JpaRepository<Region, Long> {
     @Query(value="select province_name from region where region_type = 1 group by province_name", nativeQuery = true)
     List<String> findRegionProvinceInfo();
 
+    List<Region> findByRegionId(Integer regionId);
+
     @Query(value="select region_id from region where province_name = (select province_name from region where region_id = ?1) and region_type=1", nativeQuery = true)
     List<Integer> findGreenRegionInfo(Integer regionId);
 

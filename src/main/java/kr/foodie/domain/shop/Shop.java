@@ -1,18 +1,26 @@
 package kr.foodie.domain.shop;
 
-import lombok.Data;
+import lombok.*;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.standard.ClassicTokenizerFactory;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import org.hibernate.search.annotations.*;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
 @Entity
 @Table(name = "SHOP")
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Indexed
 @AnalyzerDef(
         name = "shopAnalyzer",
@@ -24,7 +32,7 @@ import java.util.Date;
 public class Shop {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SHOP_ID")
     private Integer shopId;
 
@@ -92,6 +100,9 @@ public class Shop {
     @Column(name = "PHONE")
     private String phone;
 
+    @Column(name = "SHOP_PHONE")
+    private String shopPhone;
+
     @Column(name = "DETAIL_ADDRESS")
     @Field
     @Analyzer(definition = "shopAnalyzer")
@@ -115,7 +126,7 @@ public class Shop {
     private String isParking;
 
     @Column(name = "FOODIELOG_RATING")
-    private String foodieLogRating="";
+    private String foodieLogRating;
 
     @Column(name = "TASTE_RATING")
     private String tasteRating;
@@ -150,11 +161,44 @@ public class Shop {
     private String instaKeyword;
 
     @Column(name = "UPDATED_AT")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
-    @Column(name = "CREATED_AT")
-    private Date createdAt;
+    @Column(name = "CREATED_AT", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     @Column(name = "EXIT_NUM")
     private Integer exitNum;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public Shop toEntity(ShopDTO shopDto, Integer shopId) {
+        String shopType;
+        if(this.shopType.equals("red")){
+            shopType = "0";
+        }else{
+            shopType = "1";
+        }
+        return Shop.builder()
+                .shopId(shopId)
+                .shopName(shopDto.getShopName())
+                .shopAlias(shopDto.getShopAlias())
+                .address(shopDto.getAddress())
+                .blogShopId(shopDto.getBlogShopId())
+                .shopType(shopType)
+
+                .build()
+                ;
+    }
+
+    public static Shop emptyShop() {
+        return new Shop();
+    }
 }

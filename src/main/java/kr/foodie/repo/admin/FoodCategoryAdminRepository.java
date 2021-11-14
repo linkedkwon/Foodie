@@ -16,6 +16,9 @@ public interface FoodCategoryAdminRepository extends JpaRepository<FoodCategory,
     @Query(value="select * from food_category where level = 1 order by seq", nativeQuery = true)
     List<FoodCategory> findByBcodeOrderBySeq();
 
+    @Query(value="select * from food_category where level = 1 and type = 1 order by seq", nativeQuery = true)
+    List<FoodCategory> findByTripBcodeOrderBySeq();
+
     @Query(value="select * from food_category where bcode=?1 and level = 2", nativeQuery = true)
     List<FoodCategory> findByMcode(Integer code);
 

@@ -1,10 +1,15 @@
 package kr.foodie.service;
 
+import com.google.gson.Gson;
 import kr.foodie.domain.shop.Region;
 import kr.foodie.domain.shop.Shop;
+import kr.foodie.domain.shop.ShopDTO;
 import kr.foodie.repo.ShopRepository;
 import kr.foodie.repo.admin.RegionAdminRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
@@ -13,16 +18,16 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ShopService {
 
@@ -91,6 +96,15 @@ public class ShopService {
         }
     }
 
+    public List<Shop> getDuplicatedInfos(String shopType, String shopName) {
+        if(shopType.equals("1")) {
+            List<Shop> greenListDuplicatedInfos = shopRepository.findDuplicatedShop(shopType, shopName);
+            return greenListDuplicatedInfos;
+        }else{
+            List<Shop> redListDuplicatedInfos = shopRepository.findDuplicatedShop(shopType, shopName);
+            return redListDuplicatedInfos;
+        }
+    }
 
 //    사이드에 그린리스트<-> 레드리스트 우선순위 지정필요
     public List<Shop> getShopInfosWithSideOrder(Integer regionId, String shopType) {
@@ -103,8 +117,8 @@ public class ShopService {
         }
     }
 
-    public List<Shop> getShopDetail(Integer shopId) {
-        return shopRepository.findByShopId(shopId);
+    public Shop getShopDetail(Integer shopId) {
+        return shopRepository.findById(shopId).orElseThrow();
     }
 
     public List<Shop> getFilterShopList(String shopTypeId, Integer regionId, String filterItems) {
@@ -231,17 +245,58 @@ public class ShopService {
     }
 
     public Shop addShopInfo(Shop shops){
-        /*for (Shop shop : shops) {
-            String bCode = Optional.ofNullable(shop.getBigCategory()).orElseGet(() -> { return "0"; });
-            String mCode = Optional.ofNullable(shop.getMiddleCategory()).orElseGet(() -> { return "0"; });
-            String type = Optional.ofNullable(shop.getShopType()).orElseGet(() -> { return "0"; });
-            if(type.equals("1")){
-                shop.setShopAlias(tripCategoryService.getTripCategory(bCode, mCode, shop.getAddress()));
-            }else{
-                shop.setShopAlias(foodCategoryService.getShopCategory(bCode, mCode, shop.getAddress()));
-            }
-        }*/
         return shopRepository.save(shops);
 //        return shops;
+    }
+    @Transactional
+    public String updateShopInfo(ShopDTO shopDto, Integer shopId){
+        Shop shop = shopRepository.findById(shopId).orElseThrow();
+        Shop updated = shop.toEntity(shopDto, shopId);
+        String viewName = null;
+        if(shop.getShopType().equals("red")){
+            viewName = "admin-shop-red-list";
+        }else{
+            viewName = "admin-shop-green-list";
+        }
+        String server = "foodie.speedgabia.com";
+        int port = 21;
+        String user = "foodie";
+        String pw = "a584472yscp@@";
+        FTPClient con = null;
+        Date from = new Date();
+        SimpleDateFormat nowDateHHmmss = new SimpleDateFormat("HHmmss");
+        SimpleDateFormat nowDateymd = new SimpleDateFormat("yyyyMMdd");
+        String nowHHmmss = nowDateHHmmss.format(from);
+        String nowymd = nowDateymd.format(from);
+        ArrayList<String> images = new ArrayList<>();
+        /*if(files.length > 0) {
+            try {
+                con = new FTPClient();
+                con.setControlEncoding("utf-8");
+                con.connect(server);
+                if (con.login(user, pw)) {
+                    con.enterLocalPassiveMode(); // important!
+                    con.setFileType(FTP.BINARY_FILE_TYPE);
+
+                    for (int i = 0; i < files.length; i++) {
+                        if (!(files[i].getOriginalFilename().equals(""))) {
+                            con.storeFile(files[i].getOriginalFilename(), files[i].getInputStream());
+                            images.add("http://foodie.speedgabia.com/" + files[i].getOriginalFilename());
+                        }
+                    }
+
+                    String result = new Gson().toJson(images);
+                    shop.setMenuImages(result);
+                    con.logout();
+                    con.disconnect();
+                }
+            } catch (Exception e) {
+                //                redirectAttributes.addFlashAttribute("message",
+                //                        "Could not upload " + file.getOriginalFilename() + "!");
+            }
+        }*/
+        Shop applied = shopRepository.save(updated);
+        log.info("Successfully updated = {}", applied);
+        return viewName;
     }
 }

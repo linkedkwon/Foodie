@@ -1,28 +1,23 @@
 package kr.foodie.controller;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import kr.foodie.domain.account.Review;
 //import kr.foodie.domain.account.ReviewAdmin;
-import kr.foodie.domain.account.ReviewDTO;
 import kr.foodie.domain.category.Category;
 import kr.foodie.domain.category.FoodCategory;
 import kr.foodie.domain.category.Theme;
 import kr.foodie.domain.shop.*;
-import kr.foodie.domain.user.User;
 import kr.foodie.service.*;
 import kr.foodie.service.admin.FoodCategoryAdminService;
 import kr.foodie.service.admin.RegionAdminService;
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.xml.crypto.Data;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -289,30 +284,34 @@ public class AdminController {
     public ModelAndView getregisterRedShop(@ModelAttribute("shop") Shop shop){
         ModelAndView mav = new ModelAndView();
         List<Theme> redthemeListInfos;
-        List<Theme> greenthemeListInfos;
         List<FoodCategory> categoryInfos;
-        mav.addObject("shop", new Shop());
+        mav.addObject("shop", Shop.emptyShop());
         List<Category> categoryList = categoryService.getCategory("3", "서울");
         categoryInfos = foodCategoryAdminService.getAdminRegionBCategory();
         redthemeListInfos = themeService.getThemeTags(0);
-//        greenthemeListInfos = themeService.getThemeTags(1);
         mav.setViewName("admin-create-red-shop");
         mav.addObject("categoryList", categoryList);
         mav.addObject("redThemeListInfos", redthemeListInfos);
         mav.addObject("categoryInfos", categoryInfos);
-//        mav.addObject("greenThemeListInfos", greenthemeListInfos);
+//        mav.addObject("greenThemeListInfos", greenthemeListInfos);ㅁ
         return mav;
     }
 
     @RequestMapping(value = "/registerGreenShop", method = RequestMethod.GET)
     public ModelAndView getregisterGreenShop(){
         ModelAndView mav = new ModelAndView();
-//        List<Theme> redthemeListInfos;
         List<Theme> greenthemeListInfos;
-//        redthemeListInfos = themeService.getThemeTags(0);
+        List<FoodCategory> categoryInfos;
         greenthemeListInfos = themeService.getThemeTags(1);
+        mav.addObject("shop", Shop.emptyShop());
+        List<Category> categoryList = categoryService.getCategory("3", "서울");
+        categoryInfos = foodCategoryAdminService.getAdminTripRegionBCategory();
+        mav.addObject("categoryInfos", categoryInfos);
+        mav.addObject("greenThemeListInfos", greenthemeListInfos);
         mav.setViewName("admin-create-green-shop");
 //        mav.addObject("redThemeListInfos", redthemeListInfos);
+        mav.addObject("categoryList", categoryList);
+
         mav.addObject("greenThemeListInfos", greenthemeListInfos);
         return mav;
     }
@@ -382,9 +381,15 @@ public class AdminController {
         if(shopType.equals("red")){
             shopType = "0";
             mav.setViewName("admin-shop-red-list");
-        }else{
-            shopType = "1";
+        }else if(shopType.equals("green")) {
+            shopType = "2";
             mav.setViewName("admin-shop-green-list");
+        }else if(shopType.equals("mustard")) {
+            shopType = "3";
+            mav.setViewName("admin-shop-mustard-list");
+        }else{
+            shopType = "4";
+            mav.setViewName("admin-shop-mint-list");
         }
         List<Shop> commentList;
         List<FoodCategory> categoryInfos;
@@ -416,28 +421,52 @@ public class AdminController {
             mav.setViewName("admin-shop-red-detail");
         }else{
             shopType = "1";
+            mav.setViewName("admin-shop-green-detail");
         }
-        List<Shop> commentList;
+        Shop commentList;
         List<HashTag> hashTags;
         List<Theme> themeTags;
         List<Region> regionInfosWithType3;
-
+        List<Region> regionInfosWithId;
+        List<Region> subwayInfosWithId;
         themeTags = themeService.getThemeTags(Integer.parseInt(shopType));
         commentList = shopService.getShopDetail(shopId);
         hashTags = tagService.getHashTags(shopId);
         regionInfosWithType3 = regionService.getRegionInfoWithType3("3");
 
-        commentList.get(0).setMenuImages(commentList.get(0).getMenuImages().replace("[", "").replace("]", "").replaceAll("\"",""));
+        if(commentList.getMenuImages() != null) {
+            commentList.setMenuImages(commentList.getMenuImages().replace("[", "").replace("]", "").replaceAll("\"", ""));
+        }else{
+            commentList.setMenuImages("[]");
+        }
 //        List<String> themeList = Arrays.asList(commentList.get(0).split(","));
 
+        //category
+        String bCode = Optional.ofNullable(commentList.getBigCategory()).orElseGet(()->{return "0";});
+        String mCode = Optional.ofNullable(commentList.getMiddleCategory()).orElseGet(()->{return "0";});
+        String sCode = Optional.ofNullable(commentList.getSmallCategory()).orElseGet(()->{return "0";});
+
+        HashMap<String, String> map = new HashMap<String, String>();
+        map = foodCategoryAdminService.getShopCategoryNameCode(bCode, mCode, sCode);
+        regionInfosWithId = regionAdminService.getRegionRegionInfo(commentList.getRegionId());
+        subwayInfosWithId = regionAdminService.getRegionRegionInfo(commentList.getSubwayTypeId());
         int idx = path.orElseGet(()->{return 0;});
         int size = reviewService.getItemSizeByShopId(shopId);
         String url = "/shop/"+shopId+"/";
-
+        mav.addObject("shop", commentList);
         mav.addObject("reviews", reviewService.getItemsByShopId(shopId, idx));
         mav.addObject("paginations", paginationService.getPagination(size, idx, reviewInterval, url));
+        mav.addObject("adminCategory",map);
         mav.addObject("btnUrls", paginationService.getPaginationBtn(size, idx, reviewInterval, url));
         mav.addObject("payload", commentList);
+        List<Category> categoryList = categoryService.getCategory("3", "서울");
+        mav.addObject("categoryList", categoryList);
+        mav.addObject("regionInfosWithId",regionInfosWithId);
+        mav.addObject("subwayInfosWithId",subwayInfosWithId);
+        List<FoodCategory> categoryInfos;
+
+        categoryInfos = foodCategoryAdminService.getAdminTripRegionBCategory();
+        mav.addObject("categoryInfos", categoryInfos);
         mav.addObject("regionInfosWithType3", regionInfosWithType3);
         mav.addObject("hashTags",hashTags);
         mav.addObject("themeTags", themeTags);
@@ -546,11 +575,30 @@ public class AdminController {
         return payload;
     }
 
+
+
+    @ResponseBody
+    @RequestMapping(value ={"/duplicated/{shopType}/{shopName}"}, method= RequestMethod.GET)
+    public List<Shop> getDuplicatedInfos(Model model, @PathVariable String shopType, @PathVariable String shopName){
+        if(shopType.equals("red")){
+            shopType = "0";
+        }else{
+            shopType = "1";
+        }
+        List<Shop> duplicatedInfos;
+        duplicatedInfos = shopService.getDuplicatedInfos(shopType, shopName.strip());
+//        mav.addObject("duplicatedInfos", duplicatedInfos);
+//        Map<String, List> members = new HashMap<>();
+//        members.put("data", commentList);
+        return duplicatedInfos;
+    }
+
     @ResponseBody
     @RequestMapping(value ={"/category/{shopType}/all"}, method= RequestMethod.GET)
     public Map<String, List> getAllCategory(Model model, @PathVariable String shopType){
         if(shopType.equals("red")){
             shopType = "0";
+
         }else{
             shopType = "1";
         }
@@ -560,23 +608,70 @@ public class AdminController {
         members.put("data", commentList);
         return members;
     }
-    @PostMapping(value = "/shop/add")
+    @PostMapping(value = "/shop/add/{shopType}")
     public String addShop(Model model,
-                          @ModelAttribute Shop shop) {
+                          @ModelAttribute Shop shop, @PathVariable String shopType, MultipartFile[] files) {
+        String viewName = null;
         try {
             System.out.println("fff");
-              shopService.addShopInfo(shop);
-//            return "redirect:/contacts/" + String.valueOf(newContact.getId());
-        } catch (Exception ex) {
-            // log exception first,
-            // then show error
-//            String errorMessage = ex.getMessage();
-//            logger.error(errorMessage);
-//            model.addAttribute("errorMessage", errorMessage);
 
-            //model.addAttribute("contact", contact);
-//            model.addAttribute("add", true);
+            if(shopType.equals("red")){
+                shopType = "0";
+                viewName = "admin-shop-red-list";
+            }else{
+                shopType = "1";
+                viewName = "admin-shop-green-list";
+            }
+            shop.setShopType(shopType);
+            String server = "foodie.speedgabia.com";
+            int port = 21;
+            String user = "foodie";
+            String pw = "a584472yscp@@";
+            FTPClient con = null;
+            Date from = new Date();
+            SimpleDateFormat nowDateHHmmss = new SimpleDateFormat("HHmmss");
+            SimpleDateFormat nowDateymd = new SimpleDateFormat("yyyyMMdd");
+            String nowHHmmss = nowDateHHmmss.format(from);
+            String nowymd = nowDateymd.format(from);
+            ArrayList<String> images = new ArrayList<>();
+            if(files.length > 0) {
+                try {
+                    con = new FTPClient();
+                    con.setControlEncoding("utf-8");
+                    con.connect(server);
+                    if (con.login(user, pw)) {
+                        con.enterLocalPassiveMode(); // important!
+                        con.setFileType(FTP.BINARY_FILE_TYPE);
+
+                        for (int i = 0; i < files.length; i++) {
+                            if (!(files[i].getOriginalFilename().equals(""))) {
+                                con.storeFile(files[i].getOriginalFilename(), files[i].getInputStream());
+                                images.add("http://foodie.speedgabia.com/" + files[i].getOriginalFilename());
+                            }
+                        }
+
+                        String result = new Gson().toJson(images);
+                        shop.setMenuImages(result);
+                        con.logout();
+                        con.disconnect();
+                    }
+                } catch (Exception e) {
+                }
+            }
+            shopService.addShopInfo(shop);
+
+        } catch (Exception ex) {
         }
-        return "admin-create-red-shop";
+
+        return viewName;
+
     }
+
+    @PostMapping(value = "/shop/update/{shopId}")
+    public String updateShop(@ModelAttribute ShopDTO shop, @PathVariable Integer shopId, MultipartFile[] files) {
+        System.out.println("fff");
+        String viewName = shopService.updateShopInfo(shop, shopId);
+        return viewName;
+    }
+
 }

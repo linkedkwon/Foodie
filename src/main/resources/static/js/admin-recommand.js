@@ -38,6 +38,58 @@
     // });
 
     // 지도검색
+    $("#search_duplicated_list_detail").on("click", function() {
+        console.log("click")
+        $('#duplicated_search_list').modal({
+            keyboard: false
+        })
+
+        var val = $( '#restaurants-name-travel').val();
+        // var type = $( '#table-filter1 option:selected').val();
+        console.log('value'+ val)
+        $('#example18').dataTable().fnClearTable();
+
+        $.ajax({
+            type:"get",
+            url:"/admin/duplicated/green/"+val,
+            datatype: "json",
+            success: function(data) {
+                console.log(data)
+                if(data.length > 0) {
+                    var response_data = [];
+                    for (step = 0; step < data.length; step++) {
+                        // Runs 5 times, with values of step 0 through 4.
+                        response_data.push(data[step])
+                    }
+                    console.log(response_data)
+                    // $('#example tbody tr').replaceWith(data);
+                    // $('#payload tr').remove();
+                    // $('#payload').html(data);
+                    $('#example18').dataTable().fnAddData(response_data);
+                    // $.each(data, function(key, value) {
+                    //     $("#example tbody").append("<tr>" +
+                    //         "<td> hihihii </td>" +
+                    //         "<td> hihihii </td>" +
+                    //         "<td> hihihii </td>" +
+                    //         "<td> hihihii </td>" +
+                    //         "<td> hihihii </td>" +
+                    //         "</tr>");
+                    // });
+
+                } else {
+                    return;
+                }
+            },
+
+            error: function(x, o, e) {
+                var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                alert(msg);
+            }
+        });
+    });
+
+
+    // 지도검색
     $("#search_list_detail").on("click", function() {
         console.log("click")
         $('#search_list').modal({

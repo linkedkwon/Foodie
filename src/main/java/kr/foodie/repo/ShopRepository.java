@@ -1,6 +1,7 @@
 package kr.foodie.repo;
 
 import kr.foodie.domain.category.Theme;
+import kr.foodie.domain.shop.Region;
 import kr.foodie.domain.shop.Shop;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,8 +14,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-public interface ShopRepository extends JpaRepository<Shop, Long> {
+public interface ShopRepository extends JpaRepository<Shop, Integer> {
 
     Page<Shop> findByRegionIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer regionId, String shopType, Pageable pageable);
     Page<Shop> findByRegionIdInAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(List<Integer> regionId , String shopType, Pageable pageable);
@@ -27,7 +27,7 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
     List<Shop> findByRegionIdInAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(List<Integer> regionId, String shopType);
 
     List<Shop> findTop4ByRegionIdAndShopType(Integer regionId, String shopType);
-    List<Shop> findByShopId(Integer shopId);
+//    List<Shop> findByShopId(Integer shopId);
 
     @Query(value="select * from shop where shop_type=?1 and region_id=?2 and theme_list like %?3%", nativeQuery = true)
     List<Shop> findByShopTypeAndRegionAndThemeList(String shopTypeId, Integer regionId, String Filter);
@@ -80,4 +80,9 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
     @Modifying
     @Query(value="delete from main_board where shop_id = ?1 and type = ?2", nativeQuery = true)
     void deleteMainRecommand(Integer shopId, Integer type);
+
+
+    @Query(value="select * from shop where shop_type = ?1 and replace(shop_name,' ','') like %?2%", nativeQuery = true)
+    List<Shop> findDuplicatedShop(String shopType, String shopName);
+
 }

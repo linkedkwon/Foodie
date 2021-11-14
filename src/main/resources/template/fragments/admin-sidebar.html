@@ -27,6 +27,29 @@
     </div>
 
     <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRegister"
+           aria-expanded="true" aria-controls="collapseRegister">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>등록환경설정</span>
+        </a>
+        <div id="collapseRegister" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">카테고리설정</h6>
+                <a class="collapse-item" th:href="@{/admin/registerEnv/red}">레드리스트 카테고리</a>
+                <a class="collapse-item" th:href="@{/admin/registerEnv/green}">그린리스트 카테고리</a>
+                <div class="collapse-divider"></div>
+                <h6 class="collapse-header">해시태그 및 테마</h6>
+                <a class="collapse-item" th:href="@{/admin/registerEnvHastag}">해시태그설정</a>
+                <a class="collapse-item" th:href="@{/admin/registerEnvTheme}">테마설정</a>
+                <h6 class="collapse-header">지역설정</h6>
+                <a class="collapse-item" th:href="@{/admin/registerEnvRegion}">지역설정</a>
+                <a class="collapse-item" th:href="@{/admin/registerEnvFoodVillege}">맛집촌설정</a>
+                <a class="collapse-item" th:href="@{/admin/registerEnvSubway}">역세권설정</a>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseShop"
             aria-expanded="true" aria-controls="collapseShop">
             <i class="fas fa-fw fa-folder"></i>
@@ -36,16 +59,16 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">맛집</h6>
                 <a class="collapse-item" th:href="@{/admin/shop/red}">레드리스트</a>
+                <a class="collapse-item" th:href="@{/admin/shop/mustard}">머스타드리스트</a>
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">여행지</h6>
                 <a class="collapse-item" th:href="@{/admin/shop/green}">그린리스트</a>
+                <a class="collapse-item" th:href="@{/admin/shop/mint}">민트리스트</a>
+                <h6 class="collapse-header">예비</h6>
+                <a class="collapse-item">예비리스트1</a>
+                <a class="collapse-item">예비리스트2</a>
             </div>
         </div>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin/comment/all}">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>댓글관리</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePremium"
@@ -69,7 +92,7 @@
     </li>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser"
-            aria-expanded="true" aria-controls="collapseUser">
+           aria-expanded="true" aria-controls="collapseUser">
             <i class="fas fa-fw fa-folder"></i>
             <span>회원관리</span>
         </a>
@@ -83,6 +106,9 @@
             </div>
         </div>
     </li>
+
+
+
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharge"
             aria-expanded="true" aria-controls="collapseCharge">
@@ -100,26 +126,9 @@
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRegister"
-           aria-expanded="true" aria-controls="collapseRegister">
+        <a class="nav-link" th:href="@{/admin/comment/all}">
             <i class="fas fa-fw fa-folder"></i>
-            <span>등록환경설정</span>
-        </a>
-        <div id="collapseRegister" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">카테고리설정</h6>
-                <a class="collapse-item" th:href="@{/admin/registerEnv/red}">레드리스트 카테고리</a>
-                <a class="collapse-item" th:href="@{/admin/registerEnv/green}">그린리스트 카테고리</a>
-                <div class="collapse-divider"></div>
-                <h6 class="collapse-header">해시태그 및 테마</h6>
-                <a class="collapse-item" th:href="@{/admin/registerEnvHastag}">해시태그설정</a>
-                <a class="collapse-item" th:href="@{/admin/registerEnvTheme}">테마설정</a>
-                <h6 class="collapse-header">지역설정</h6>
-                <a class="collapse-item" th:href="@{/admin/registerEnvRegion}">지역설정</a>
-                <a class="collapse-item" th:href="@{/admin/registerEnvFoodVillege}">맛집촌설정</a>
-                <a class="collapse-item" th:href="@{/admin/registerEnvSubway}">역세권설정</a>
-            </div>
-        </div>
+            <span>댓글관리</span></a>
     </li>
     <!-- Nav Item - Pages Collapse Menu -->
     

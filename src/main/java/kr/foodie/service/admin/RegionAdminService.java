@@ -19,6 +19,13 @@ public class RegionAdminService {
     public List<String> getRegionProvinceInfo() {
         return regionRepository.findRegionProvinceInfo();
     }
+    public List<Region> getRegionRegionInfo(Integer regionId) {
+        return regionRepository.findByRegionId(regionId);
+    }
+    public List<Region> getSubwayRegionInfo(Integer regionId) {
+        return regionRepository.findByRegionId(regionId);
+    }
+
     public List<Region> getRegionDistrictInfo(String provinceName) {
         return regionRepository.findRegionDistrictInfo(provinceName);
     }

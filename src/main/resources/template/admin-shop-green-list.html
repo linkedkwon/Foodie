@@ -250,25 +250,25 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">그린리스트</h1>
+<!--                    <h1 class="h3 mb-2 text-gray-800">레드리스트</h1>-->
 <!--                    <p th:text="${regionInfos}"></p>-->
-                    <p class="mb-4">그린리스트 관리자 페이지 입니다. <a target="_blank" href="#">그린리스트 이동</a>.</p>
+<!--                    <p class="mb-4">레드리스트 관리자 페이지 입니다. <a target="_blank" href="#">레드리스트 이동</a>.</p>-->
 
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
+                    <div class="card shadow mb-4" style="width: 700px;margin:auto;">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">맛집목록</h6>
+                            <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">그린리스트 여행지목록</h6>
                             <a th:href="@{/admin/registerGreenShop}">
-                                <button class="btn btn-info btn-sm" style="float: right">맛집 추가하기</button>
+                                <button class="btn btn-info btn-sm" style="float: right">여행지 등록하기</button>
                             </a>
                         </div>
                         <div>
-                        <div style="width: 100%;">
-                            <div>
+                        <div style="width: 90%;margin:auto;margin-top: 20px;    font-size: 9pt;    border: 1px solid lightgray">
+                            <div style="    border-bottom: 1px solid lightgray;">
                                 <div style="display: inline-flex;">
-                                    <div  style="    padding-left: 20px;margin-top: 20px;width: 120px;"> 음식 카테고리</div>
-                                    <p style="    padding-left: 20px;margin-top: 20px;">
-                                        <select id="table-filter1" style="    height: 31px;">
+                                    <div  style="    height: 31px; text-align:center; width: 120px; padding-top: 6px;background: rgb(247, 247, 247);   border: 1px solid lightgray"> 여행지 카테고리</div>
+                                    <p style="    padding-left: 20px;  padding-top: 5px;  margin-bottom: 0;">
+                                        <select id="table-filter1" style="    height: 20px;">
                                             <option value="">대분류</option>
                                             <option
                                                     th:each="val : ${categoryInfos}"
@@ -276,25 +276,24 @@
                                                     th:utext="${val.categoryName}"
                                             ></option>
                                         </select>
-                                        <select id="table-filter2" style="    height: 31px;">
+                                        <select id="table-filter2" style="    height: 20px;">
                                             <option value="">중분류</option>
     <!--                                        <option>London</option>-->
     <!--                                        <option>San</option>-->
     <!--                                        <option>Engineer</option>-->
     <!--                                        <option>Developer</option>-->
                                         </select>
-                                        <select id="table-filter3" style="    height: 31px;">
+                                        <select id="table-filter3" style="    height: 20px;">
                                             <option value="">소분류</option>
                                         </select>
-                                        <button class="btn btn-info btn-sm" value="조회">조회</button>
                                     </p>
                                 </div>
                             </div>
                             <div style="display: inline-flex;">
-                                <div  style="    padding-left: 20px;width: 120px;"> 지역 </div>
-                                <p style="    padding-left: 20px;">
+                                <div  style="height: 31px; text-align:center; width: 120px;  padding-top: 6px; background: rgb(247, 247, 247); border: 1px solid lightgray"> 지역 </div>
+                                <p style="    padding-left: 20px;  padding-top: 5px;  margin-bottom: 0;">
     <!--                            <p th:text="${regionInfos}"></p>-->
-                                    <select id="table-filter4" style="    height: 31px;">
+                                    <select id="table-filter4" style="    height: 20px;">
                                         <option value="">시</option>
                                         <option
                                                 th:each="val : ${regionInfos}"
@@ -302,67 +301,28 @@
                                                 th:utext="${val}"
                                         ></option>
                                     </select>
-                                    <select id="table-filter5" style="    height: 31px;">
+                                    <select id="table-filter5" style="    height: 20px;">
                                         <option value="">군</option>
                                     </select>
-                                    <button class="btn btn-info btn-sm" value="조회">조회</button>
                                 </p>
+                            </div>
+                            <div style="border-top: 1px solid lightgray; height: 31px;">
+                                <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px;" onclick="filterFoodCategory()">조회</button>
                             </div>
                         </div>
 
-                        <div class="card-body">
-                            <div class="table-responsive" style="width:64%;">
+                        <div class="card-body" style="width:100%; padding-right: 0px;margin: auto;">
+                            <div class="table-responsive" style="font-size: 9pt;margin: auto;    padding-right: 20px;">
                                 <table class="table table-bordered display" id="example" cellspacing="0">
                                     <thead>
                                     <tr>
-<!--                                        <th>대분류</th>-->
-<!--                                        <th>중분류</th>-->
-<!--                                        <th>소분류</th>-->
-                                        <th>사진</th>
-                                        <th>가게이름</th>
-                                        <th>전문가평가</th>
-                                        <th>상세정보입력 여부</th>
+                                        <th style="text-align: center" >사진</th>
+                                        <th>여행지 이름</th>
+                                        <th>줄광고 </th>
                                         <th>수정일</th>
                                         <th>등록일</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr th:object="${shop}" th:each="shop : ${payload}">
-<!--                                        <td th:text="${shop.bigCategory}"></td>-->
-<!--                                        <td th:text="${shop.middleCategory}"></td>-->
-<!--                                        <td th:text="${shop.smallCategory}"></td>-->
-                                        <td>
-                                            <img th:src="${shop.shopImage}" class="thumbnail" style="width: 80px;height:60px;" onerror="this.src='/images/default.png'"/>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <a th:href="@{'/admin/shop/red/'+${shop.shopId}}" th:text="${shop.shopName}"></a>
-                                            </div>
-                                            <div>
-                                                <span th:text="${'주소- ' + shop.address}"></span>
-                                            </div>
-                                        </td>
-                                        <td th:text="${shop.foodieLogRating}"></td>
-                                        <td>
-                                            입력완료
-                                        </td>
-                                        <td th:text="${shop.createdAt}"></td>
-                                        <td th:text="${shop.createdAt}"></td>
-                                    </tr>
-                                    </tbody>
-                                    <tfoot>
-                                    <tr>
-<!--                                        <th>대분류</th>-->
-<!--                                        <th>중분류</th>-->
-<!--                                        <th>소분류</th>-->
-                                        <th>사진</th>
-                                        <th>가게이름</th>
-                                        <th>전문가평가</th>
-                                        <th>상세정보입력 여부</th>
-                                        <th>수정일</th>
-                                        <th>등록일</th>
-                                    </tr>
-                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -434,6 +394,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
 </body>
 
 <style>
@@ -446,6 +407,25 @@
         display:none;
         color:#fff;
     }
+
+    table{
+        table-layout: fixed;
+        word-wrap:break-word;
+    }
+    .table td, .table th{
+        padding: 7px !important;
+        text-align: center;
+    }
+
+    .table td{
+        text-align: center;
+    }
+
+
+    /*.data_table {*/
+    /*    text-align: center;*/
+    /*    vertical-align: middle !important;*/
+    /*}*/
 </style>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -476,6 +456,31 @@
 
 
         $('#example').DataTable( {
+            "ajax": "/admin/category/green/all",
+            ordering: false,
+            "pageLength": 30,
+            // "paging":true,
+            "columns": [
+                // <div>
+                //     <a th:href="@{'/admin/shop/red/'+${shop.shopId}}" th:text="${shop.shopName}"></a>
+                // </div>
+                // <div>
+                //     <span th:text="${'주소- ' + shop.address}"></span>
+                // </div>
+
+                { 'data': "shopImage", 'render': function (data) { return '<img src="' + data + '" class="thumbnail" style="width: 80px;height:60px;" />'; } },
+                { "data": "shopName" , 'render': function  ( data, type, row ) { return '<div><a href="/admin/shop/green/'+ row.shopId +'">'+ data + '</a> ( 푸디평점 - ' + row.foodieLogRating + ') </div><div><span> 주소 -'+ row.address +'</span></div>'; } },
+                { "data": "shopPaid" },
+                { "data": "updatedAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
+                { "data": "createdAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
+            ],
+            "columnDefs": [
+                { "width": "15%","targets": 0},
+                { "width": "45%", "targets": 1},
+                { "width": "10%", "targets": 2},
+                { "width": "15%", "targets": 3},
+                { "width": "15%", "targets": 4},
+            ],
             initComplete: function () {
                 this.api().columns().every( function () {
                     var column = this;
@@ -502,31 +507,42 @@
             get_mcode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
         });
 
+
         function get_mcode(o){
             var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
             console.log(val)
-            $.ajax({
-                type:"get",
-                url:"/admin/category/mfood/" + val,
-                datatype: "json",
-                success: function(data) {
-                if(data.length > 0) {
-                    $("#table-filter2").find("option").remove().end();
-                    $.each(data, function(key, value) {
-                        $("#table-filter2").append("<option value='" + value.mcode + "'>" + value.categoryName + "</option>");
-                    });
-                    console.log(data[0])
-                } else {
-                    $("#table-filter2").find("option").remove().end().append("<option>NO DATA</option>");
-                    return;
-                }
-            },
+            if(val != ''){
+                $.ajax({
+                    type:"get",
+                    url:"/admin/category/mfood/" + val,
+                    datatype: "json",
+                    success: function(data) {
+                    if(data.length > 0) {
+                        $("#table-filter2").find("option").remove().end();
+                        $("#table-filter2").append("<option>중분류</option>");
+                        $.each(data, function(key, value) {
+                            $("#table-filter2").append("<option value='" + value.mcode + "'>" + value.categoryName + "</option>");
+                        });
+                        console.log(data[0])
+                    } else {
+                        $("#table-filter2").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                        $("#table-filter3").find("option").remove().end();
+                        $("#table-filter3").append("<option value='0'>NO DATA</option>");
+                        return;
+                    }
+                },
 
-            error: function(x, o, e) {
-                var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                alert(msg);
+                error: function(x, o, e) {
+                    var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                    alert(msg);
+                }
+                });
+            }else {
+                $("#table-filter2").find("option").remove().end();
+                $("#table-filter2").append("<option value='0'>중분류</option>");
+                $("#table-filter3").find("option").remove().end();
+                $("#table-filter3").append("<option value='0'>소분류</option>");
             }
-            });
         }
 
         $('#table-filter2').change( function(){
@@ -536,29 +552,135 @@
         function get_scode(o){
             var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
             console.log(val)
-            $.ajax({
-                type:"get",
-                url:"/admin/category/sfood/" + val,
-                datatype: "json",
-                success: function(data) {
-                    if(data.length > 0) {
-                        $("#table-filter3").find("option").remove().end();
-                        $.each(data, function(key, value) {
-                            $("#table-filter3").append("<option value='" + value.scode + "'>" + value.categoryName + "</option>");
-                        });
-                    } else {
-                        $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");
-                        return;
-                    }
-                },
+            if(val != '') {
+                $.ajax({
+                    type: "get",
+                    url: "/admin/category/sfood/" + val,
+                    datatype: "json",
+                    success: function (data) {
+                        if (data.length > 0) {
+                            $("#table-filter3").find("option").remove().end();
+                            $("#table-filter3").append("<option>소분류</option>");
+                            $.each(data, function (key, value) {
+                                $("#table-filter3").append("<option value='" + value.scode + "'>" + value.categoryName + "</option>");
+                            });
+                        } else {
+                            $("#table-filter3").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                            return;
+                        }
+                    },
 
-                error: function(x, o, e) {
-                    var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                    alert(msg);
-                }
-            });
+                    error: function (x, o, e) {
+                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                        alert(msg);
+                    }
+                });
+            }else{
+                $("#table-filter3").find("option").remove().end();
+                $("#table-filter3").append("<option value='0'>소분류 </option>");
+            }
+        }
+
+
+
+        $('#table-filter4').change( function(){
+            get_detail_region( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        function get_detail_region(o){
+            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+            console.log(val)
+            if(val != ''){
+                $.ajax({
+                    type:"get",
+                    url:"/admin/region/" + val,
+                    datatype: "json",
+                    success: function(data) {
+                        if(data.length > 0) {
+                            $("#table-filter5").find("option").remove().end();
+                            $("#table-filter4").append("<option>중분류</option>");
+                            $.each(data, function(key, value) {
+                                $("#table-filter5").append("<option value='" + value.regionId + "'>" + value.districtName + "</option>");
+                            });
+                        } else {
+                            $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");
+                            return;
+                        }
+                    },
+
+                    error: function(x, o, e) {
+                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                        alert(msg);
+                    }
+                });
+            }else{
+                $("#table-filter5").find("option").remove().end();
+                $("#table-filter5").append("<option>군</option>");
+            }
         }
     } );
+
+    function filterFoodCategory(){
+        console.log('00000')
+        var bCode = $('#table-filter1 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var mCode = $('#table-filter2 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var sCode = $('#table-filter3 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var regionId = $('#table-filter5 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+
+        var query = null;
+        if(bCode != '' && mCode != '' && sCode != ''){
+            query = "bCode=" + bCode + "&mCode=" + mCode + "&sCode=" + sCode;
+        }else if(bCode != '' && mCode != '' && sCode == ''){
+            query = "bCode=" + bCode + "&mCode=" + mCode + "&sCode=0";
+        }else if(bCode != '' && mCode == '' && sCode != ''){
+            query = "bCode=" + bCode + "&mCode=0&sCode=0";
+        }
+        console.log(regionId + '^&*^&*^*');
+        if(regionId == "군" || regionId == ''){
+            query = query + "&regionId=0";
+        }else{
+            query = query + "&regionId=" + regionId;
+        }
+        // console.log(val)
+        $('#example').dataTable().fnClearTable();
+        $.ajax({
+            type:"get",
+            url:"/admin/category/green/filter?" + query,
+            datatype: "json",
+            success: function(data) {
+                if(data.length > 0) {
+                    var response_data = [];
+                    for (step = 0; step < data.length; step++) {
+                        // Runs 5 times, with values of step 0 through 4.
+                        response_data.push(data[step])
+                    }
+                    console.log(response_data)
+                    // $('#example tbody tr').replaceWith(data);
+                    // $('#payload tr').remove();
+                    // $('#payload').html(data);
+                    $('#example').dataTable().fnAddData(response_data);
+                    // $.each(data, function(key, value) {
+                    //     $("#example tbody").append("<tr>" +
+                    //         "<td> hihihii </td>" +
+                    //         "<td> hihihii </td>" +
+                    //         "<td> hihihii </td>" +
+                    //         "<td> hihihii </td>" +
+                    //         "<td> hihihii </td>" +
+                    //         "</tr>");
+                    // });
+
+                } else {
+                    return;
+                }
+            },
+
+            error: function(x, o, e) {
+                var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                alert(msg);
+            }
+        });
+    }
+
     $('.selectpicker').selectpicker();
 
 </script>

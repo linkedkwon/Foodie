@@ -85,7 +85,7 @@ public class ShopController {
                                       @AuthenticationPrincipal AuthUserDetails userDetails) {
         ModelAndView mav = new ModelAndView();
 
-        List<Shop> commentList;
+        Shop commentList;
         List<HashTag> hashTags;
         commentList = shopService.getShopDetail(shopId);
         hashTags = tagService.getHashTags(shopId);
@@ -95,43 +95,41 @@ public class ShopController {
         String url = "/shop?id=" + shopId + "&page=";
 
         //category
-        String bCode = Optional.ofNullable(commentList.get(0).getBigCategory()).orElseGet(()->{return "0";});
-        String mCode = Optional.ofNullable(commentList.get(0).getMiddleCategory()).orElseGet(()->{return "0";});
+        String bCode = Optional.ofNullable(commentList.getBigCategory()).orElseGet(()->{return "0";});
+        String mCode = Optional.ofNullable(commentList.getMiddleCategory()).orElseGet(()->{return "0";});
 
         //tasteRating
         String tasteRatingInfo = reviewService.getShopTasteRatingAVG(shopId);
         String[] str = tasteRatingInfo.split(",");
-        commentList.get(0).setTasteRating(str[0]);
+        commentList.setTasteRating(str[0]);
 
         //logRating
-        commentList.get(0).setFoodieLogRating(Optional.ofNullable(commentList.get(0).getFoodieLogRating())
+        commentList.setFoodieLogRating(Optional.ofNullable(commentList.getFoodieLogRating())
                 .orElseGet(()->{return "없음";}));
 
         //menu imgaes
-        commentList.get(0).setMenuImages(commentList.get(0).getMenuImages().replace("[", "").replace("]", "").replaceAll("\"",""));
+        commentList.setMenuImages(commentList.getMenuImages().replace("[", "").replace("]", "").replaceAll("\"",""));
 
         mav.addObject("tasteRatingCnt", str[1]);
-        mav.addObject("category", foodCategoryService.getShopCategory(bCode, mCode, commentList.get(0).getAddress()));
+        mav.addObject("category", foodCategoryService.getShopCategory(bCode, mCode, commentList.getAddress()));
         mav.addObject("reviews", reviewService.getItemsByShopId(shopId, idx));
         mav.addObject("paginations", paginationService.getPagination(size, idx, reviewInterval, url));
         mav.addObject("btnUrls", paginationService.getPaginationBtn(size, idx, reviewInterval, url));
         mav.addObject("payload", commentList);
+
         mav.addObject("userId", (userDetails != null) ? userDetails.getUser().getId() : 0);
         mav.addObject("userRole", (userDetails != null) ? userDetails.getUser().getRoleType() : "GENERAL");
 
-        if (commentList.size() > 0) {
-            String background = commentList.get(0).getBackground();
-            if (background == "1") {
+            String background = commentList.getBackground();
+            if (background.equals("1")) {
                 mav.setViewName("detail-green");
-            } else if (background == "2") {
+            } else if (background.equals("2")) {
                 mav.setViewName("detail-red");
             } else {
                 mav.setViewName("detail-mustard");
             }
             mav.addObject("hashTags", hashTags);
             return mav;
-        }
-        return null;
     }
 
 
