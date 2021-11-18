@@ -266,7 +266,7 @@
                         <div style="width: 90%;margin:auto;margin-top: 20px;    font-size: 9pt;    border: 1px solid lightgray">
                             <div style="    border-bottom: 1px solid lightgray;">
                                 <div style="display: inline-flex;">
-                                    <div  style="    height: 31px; text-align:center; width: 120px; padding-top: 6px;background: rgb(247, 247, 247);   border: 1px solid lightgray"> 음식 카테고리</div>
+                                    <div  style="    height: 31px; text-align:center; width: 120px; padding-top: 6px;background: rgb(247, 247, 247);   border-right: 1px solid lightgray"> 음식 카테고리</div>
                                     <p style="    padding-left: 20px;  padding-top: 5px;  margin-bottom: 0;">
                                         <select id="table-filter1" style="    height: 20px;">
                                             <option value="">대분류</option>
@@ -289,26 +289,44 @@
                                     </p>
                                 </div>
                             </div>
-                            <div style="display: inline-flex;">
-                                <div  style="height: 31px; text-align:center; width: 120px;  padding-top: 6px; background: rgb(247, 247, 247); border: 1px solid lightgray"> 지역 </div>
-                                <p style="    padding-left: 20px;  padding-top: 5px;  margin-bottom: 0;">
-    <!--                            <p th:text="${regionInfos}"></p>-->
+                            <div style="    border-bottom: 1px solid lightgray;">
+                                <div style="display: inline-flex;">
+                                    <div  style="    height: 31px; text-align:center; width: 120px; padding-top: 6px;background: rgb(247, 247, 247);   border-right: 1px solid lightgray"> 지역</div>
+                                    <p style="    padding-left: 20px;  padding-top: 5px;  margin-bottom: 0;">
+
                                     <select id="table-filter4" style="    height: 20px;">
-                                        <option value="">시</option>
+                                        <option value="">1차 지역 선택</option>
                                         <option
-                                                th:each="val : ${regionInfos}"
-                                                th:value="${val}"
-                                                th:utext="${val}"
-                                        ></option>
+                                            th:each="val : ${regionInfos}"
+                                            th:value="${val}"
+                                            th:utext="${val}">
+                                        </option>
                                     </select>
                                     <select id="table-filter5" style="    height: 20px;">
-                                        <option value="">군</option>
+                                        <option value="">2차 지역 선택</option>
                                     </select>
+
+                                    <select id="table-filter6" style="    height: 20px;">
+                                        <option value="">3차 지역 선택</option>
+                                    </select>
+                                    </p>
+                                </div>
+                            </div>
+                            <div style="display: inline-flex;">
+                                <div  style="height: 31px; text-align:center; width: 120px;  padding-top: 6px; background: rgb(247, 247, 247); border-right: 1px solid lightgray"> 검색어 </div>
+                                <p style="    padding-left: 20px;  padding-top: 5px;  margin-bottom: 0;">
+                                    <select id="table-filter7" style="  height: 20px;">
+                                        <option value="">선택</option>
+                                        <option value="">업소명</option>
+                                        <option value="">등록자</option>
+                                        <option value="">아이디</option>
+                                        <option value="">전화번호</option>
+                                    </select>
+                                    <input type="text" style="height: 20px; width: 120px;"/>
                                 </p>
                             </div>
-                            <div style="border-top: 1px solid lightgray; height: 31px;">
-                                <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px;" onclick="filterFoodCategory()">조회</button>
-                            </div>
+                            <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; border-radius: 5px;" onclick="filterFoodCategory()">초기화</button>
+                            <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="filterFoodCategory()">검색</button>
                         </div>
 
                         <div class="card-body" style="width:100%; padding-right: 0px;margin: auto;">
@@ -587,6 +605,10 @@
             get_detail_region( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
         });
 
+        $('#table-filter5').change( function(){
+            get_detail_region_third( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
         function get_detail_region(o){
             var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
             console.log(val)
@@ -599,8 +621,9 @@
                         if(data.length > 0) {
                             $("#table-filter5").find("option").remove().end();
                             $("#table-filter4").append("<option>중분류</option>");
+                            $("#table-filter5").append("<option value=''>" + '2차 지역 선택' + "</option>");
                             $.each(data, function(key, value) {
-                                $("#table-filter5").append("<option value='" + value.regionId + "'>" + value.districtName + "</option>");
+                                $("#table-filter5").append("<option value='" + value.districtName + "'>" + value.districtName + "</option>");
                             });
                         } else {
                             $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");
@@ -615,10 +638,44 @@
                 });
             }else{
                 $("#table-filter5").find("option").remove().end();
-                $("#table-filter5").append("<option>군</option>");
+                $("#table-filter5").append("<option>2차 지역 선택</option>");
+            }
+        }
+
+        function get_detail_region_third(o){
+            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+            console.log(val);
+            if(val != ''){
+                $.ajax({
+                    type:"get",
+                    url:"/admin/region/" + val,
+                    datatype: "json",
+                    success: function(data) {
+                        if(data.length > 0) {
+                            $("#table-filter5").find("option").remove().end();
+                            $("#table-filter4").append("<option>중분류</option>");
+                            $("#table-filter5").append("<option value=''>" + '2차 지역 선택' + "</option>");
+                            $.each(data, function(key, value) {
+                                $("#table-filter5").append("<option value='" + value.districtName + "'>" + value.districtName + "</option>");
+                            });
+                        } else {
+                            $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");
+                            return;
+                        }
+                    },
+
+                    error: function(x, o, e) {
+                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                        alert(msg);
+                    }
+                });
+            }else{
+                $("#table-filter5").find("option").remove().end();
+                $("#table-filter5").append("<option>2차 지역 선택</option>");
             }
         }
     } );
+
 
     function filterFoodCategory(){
         console.log('00000')
