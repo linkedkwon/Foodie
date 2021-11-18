@@ -229,12 +229,13 @@ public class AdminController {
     @RequestMapping(value = "/registerEnvRegion", method = RequestMethod.GET)
     public ModelAndView getregisterEnvRegion(){
         ModelAndView mav = new ModelAndView();
-        List<String> regionsInfos;
-        regionsInfos = regionAdminService.getRegionProvinceInfo();
+        List<EpicureRegion> regionsInfos;
+        regionsInfos = regionAdminService.getEpicureProvince();
 //        regions = regionAdminService.findRegionProvinceInfoAll();
 //        categoryMInfos = foodCategoryAdminService.getAdminRegionMCategory(100);
 //        categorySInfos = foodCategoryAdminService.getAdminRegionSCategory(1000);
         mav.addObject("regionInfos", regionsInfos);
+
 //        mav.addObject("categoryMInfos", categoryMInfos);
 //        mav.addObject("provinceInfos", regions);
         mav.setViewName("admin-register-env-region");

@@ -258,11 +258,11 @@
                     <div class="card shadow mb-4" style="    height: 800px;">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> 카테고리설정 ( <a href="/admin/registerEnv/red">레드리스트</a> / <a href="/admin/registerEnv/green">그린리스트</a>)</h6>
+                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvRegion" class="text-primary">지역설정 </a></h6>
+                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvSubway"> 역세권설정 </a></h6>
+                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvFoodVillege"> 맛집촌설정 </a></h6>
                             <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvTheme"> 테마설정 </a></h6>
                             <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvHastag"> 해시태그설정 </a></h6>
-                            <h6 class="m-0 font-weight-bold text-primary" style="padding-left: 20px; float: left;"> <a class="text-primary" href="/admin/registerEnvRegion">지역설정 </a></h6>
-                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvFoodVillege"> 맛집촌설정 </a></h6>
-                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvSubway"> 역세권설정 </a></h6>
                         </div>
                         <div class="card-body" style="  justify-content: center;display: flex ;  margin: auto;">
 
@@ -278,7 +278,7 @@
                                     <tbody  id="bcode">
                                     <tr  th:each="val : ${regionInfos}">
                                         <td onclick="get_city(event)">
-                                            <input type="checkbox" id="category_1" th:value="${val}" th:name="${val}" th:text="${' ' + val}"/>
+                                            <input type="checkbox" id="category_1" th:value="${val.id}" th:name="${val.listName}" th:text="${' ' + val.listName}"/>
                                             <div style="float: right">
                                                 <a href="javascript:void(0)" data-href="#layer2" id="modify_category1"><i class="fa fa-pencil"> </i></a>
                                                 <a href="javascript:void(0)" data-href="#layer3"  id="remove_category1"><i class=" fa fa-ban"> </i></a>
