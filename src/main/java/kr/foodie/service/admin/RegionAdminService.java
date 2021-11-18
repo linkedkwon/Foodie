@@ -20,13 +20,18 @@ public class RegionAdminService {
         this.regionRepository = regionRepository;
         this.epicureRegionRepository = epicureRegionRepository;
     }
+    public List<EpicureRegion> getEpicureProvince() {
+        return epicureRegionRepository.findByParentNoAndVisiable();
+    }
+    public List<EpicureRegion> getEpicureDistrict(Integer parentNo) {
+        return epicureRegionRepository.getEpicureDistrict(parentNo);
+    }
+
     public List<String> getRegionProvinceInfo() {
         return regionRepository.findRegionProvinceInfo();
     }
 
-    public List<EpicureRegion> getEpicureProvince() {
-        return epicureRegionRepository.findByParentNoAndVisiable();
-    }
+
 
     public List<Region> getRegionRegionInfo(Integer regionId) {
         return regionRepository.findByRegionId(regionId);
