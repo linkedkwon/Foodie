@@ -258,11 +258,12 @@
                     <div class="card shadow mb-4" style="    height: 800px;">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary" style="padding-left: 20px; float: left;"> 카테고리설정 ( <a href="/admin/registerEnv/red">레드리스트</a> / <a class="text-primary" href="/admin/registerEnv/green">그린리스트</a>)</h6>
+                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvRegion">지역설정 </a></h6>
+                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvSubway"> 역세권설정 </a></h6>
+                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvFoodVillege"> 맛집촌설정 </a></h6>
                             <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvTheme"> 테마설정 </a></h6>
                             <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvHastag"> 해시태그설정 </a></h6>
-                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvRegion">지역설정 </a></h6>
-                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvFoodVillege"> 맛집촌설정 </a></h6>
-                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvSubway"> 역세권설정 </a></h6>
+
                         </div>
                         <div class="card-body" style="  justify-content: center;display: flex ;  margin: auto;">
 
@@ -728,8 +729,7 @@
         // $('#mcode tr:eq(0)').addClass('highlight');
         // $('#scode tr:eq(0)').addClass('highlight').siblings().removeClass('highlight');
 
-        $('#add_category1').on('click', function(){
-            alert("click");
+        $('#example1').on('click', '#add_category1', function(){
             var $href = $(this).attr('href');
             layer_popup($href);
         });
@@ -1132,12 +1132,11 @@
             // console.log(val.children[0].value)
             $.ajax({
                 type:"get",
-                url:"/admin/category/mfood/" + val + "?serviceType=green",
+                url:"/admin/category/mfood/" + val,
                 datatype: "json",
                 success: function(data) {
                 if(data.length > 0) {
                     $("#mcode").find("td").remove();
-                    $("#scode").find("td").remove();
                     $.each(data, function(key, value) {
                         $("#mcode").append("<tr>" +
                             " <td onclick=\"get_scode(event)\">\n" +
@@ -1174,7 +1173,7 @@
             var val = event.currentTarget.children[0].value; // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
             $.ajax({
                 type:"get",
-                url:"/admin/category/sfood/" + val + "?serviceType=green",
+                url:"/admin/category/sfood/" + val,
                 datatype: "json",
                 success: function(data) {
                     if(data.length > 0) {

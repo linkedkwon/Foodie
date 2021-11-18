@@ -1,7 +1,9 @@
 package kr.foodie.service.admin;
 
+import kr.foodie.domain.shop.EpicureRegion;
 import kr.foodie.domain.shop.Region;
 import kr.foodie.repo.RegionRepository;
+import kr.foodie.repo.admin.EpicureRegionRepository;
 import kr.foodie.repo.admin.FoodCategoryAdminRepository;
 import kr.foodie.repo.admin.RegionAdminRepository;
 import org.springframework.stereotype.Service;
@@ -12,13 +14,20 @@ import java.util.List;
 public class RegionAdminService {
 
     private final RegionAdminRepository regionRepository;
+    private final EpicureRegionRepository epicureRegionRepository;
 
-    public RegionAdminService(RegionAdminRepository regionRepository) {
+    public RegionAdminService(RegionAdminRepository regionRepository, EpicureRegionRepository epicureRegionRepository) {
         this.regionRepository = regionRepository;
+        this.epicureRegionRepository = epicureRegionRepository;
     }
     public List<String> getRegionProvinceInfo() {
         return regionRepository.findRegionProvinceInfo();
     }
+
+    public List<EpicureRegion> getEpicureProvince() {
+        return epicureRegionRepository.findByParentNoAndVisiable();
+    }
+
     public List<Region> getRegionRegionInfo(Integer regionId) {
         return regionRepository.findByRegionId(regionId);
     }

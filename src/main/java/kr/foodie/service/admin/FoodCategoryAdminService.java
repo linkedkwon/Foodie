@@ -31,18 +31,10 @@ public class FoodCategoryAdminService {
 //        category += address.split(" ")[0]+ " " + address.split(" ")[1];
 //        category += bCode.equalsIgnoreCase("0")? "":" | " + foodCategoryAdminRepository.findByBCodeAndLevel(Integer.parseInt(bCode),1).get(0).getCategoryName();
 
-        if(bCode.equals("0")){
-            category.put("대분류 - None","None");
-            category.put("중분류 - None","None");
-            category.put("소분류 - None","None");
-        }else{
-            foodCategoryAdminRepository.findByBCodeAndLevel(Integer.parseInt(bCode),1).get(0).getBCode();
-            category.put(bCode.toString(),foodCategoryAdminRepository.findByBCodeAndLevel(Integer.parseInt(bCode),1).get(0).getCategoryName());
-            category.put(mCode.toString(),foodCategoryAdminRepository.findByMCodeAndLevel(Integer.parseInt(mCode),2).get(0).getCategoryName());
-            category.put(sCode.toString(),foodCategoryAdminRepository.findBySCodeAndLevel(Integer.parseInt(sCode),3).get(0).getCategoryName());
-        }
-
-
+        foodCategoryAdminRepository.findByBCodeAndLevel(Integer.parseInt(bCode),1).get(0).getBCode();
+        category.put(bCode.toString(),foodCategoryAdminRepository.findByBCodeAndLevel(Integer.parseInt(bCode),1).get(0).getCategoryName());
+        category.put(mCode.toString(),foodCategoryAdminRepository.findByMCodeAndLevel(Integer.parseInt(mCode),2).get(0).getCategoryName());
+        category.put(sCode.toString(),foodCategoryAdminRepository.findBySCodeAndLevel(Integer.parseInt(sCode),3).get(0).getCategoryName());
 
 
         return category;

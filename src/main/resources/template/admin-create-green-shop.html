@@ -395,8 +395,8 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="recommend-menu">포토스팟</label>
-                                                        <input type="text" class="form-control" id="recommend-menu" placeholder="포토스팟" th:field="${shop.recommandMenu}">
+                                                        <label for="recommend-menu">추천스팟</label>
+                                                        <input type="text" class="form-control" id="recommend-menu" placeholder="추천메뉴" th:field="${shop.recommandMenu}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -429,11 +429,11 @@
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
                                                                 <input class="custom-control-input" id="reservation-y" type="radio" name="reservation">
-                                                                <label class="custom-control-label" for="reservation-y" value="T" th:field="${shop.isReservation}">가능</label>
+                                                                <label class="custom-control-label" for="reservation-y" value="Y" th:field="${shop.isReservation}">가능</label>
                                                             </div>
                                                             <div class="custom-control custom-radio">
                                                                 <input class="custom-control-input" id="reservation-n" type="radio" name="reservation" >
-                                                                <label class="custom-control-label" for="reservation-n" value="F" th:field="${shop.isReservation}">불가능</label>
+                                                                <label class="custom-control-label" for="reservation-n" value="N" th:field="${shop.isReservation}">불가능</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -632,7 +632,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="form-group" style="    padding-top: 40px;">
-                                                    <label for="restaurants-location-detial">VIEW 이미지 추가</label>
+                                                    <label for="restaurants-location-detial">가게 이미지 추가</label>
                                                     <div>
 <!--                                                        <div class="input_warp">-->
 <!--                                                            <a href="javascript:" onclick="fileUploadAction();" class="my_buttom">파일업로드</a>-->
@@ -1183,7 +1183,7 @@
             if(val != ''){
                 $.ajax({
                     type:"get",
-                    url:"/admin/category/mfood/" + val + "?serviceType=green",
+                    url:"/admin/category/mfood/" + val,
                     datatype: "json",
                     success: function(data) {
                         if(data.length > 0) {
@@ -1224,7 +1224,7 @@
             if(val != '') {
                 $.ajax({
                     type: "get",
-                    url: "/admin/category/sfood/" + val + "?serviceType=green",
+                    url: "/admin/category/sfood/" + val,
                     datatype: "json",
                     success: function (data) {
                         if (data.length > 0) {
