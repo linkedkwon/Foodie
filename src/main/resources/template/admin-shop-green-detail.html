@@ -367,19 +367,19 @@
                                                         <label for="table-filter3" style="width: 400px;">여행지 카테고리</label>
                                                         <div style="display: flex">
                                                             <select id="table-filter1" class="custom-select" th:field="${shop.bigCategory}">
+                                                                <option th:value="${adminCategory.get(adminCategory.keySet().toArray()[0])}" th:text="${adminCategory.values().toArray()[0]+ '(선택됨)'}" selected></option>
                                                                 <option
                                                                         th:each="val : ${categoryInfos}"
                                                                         th:value="${val.bCode}"
                                                                         th:utext="${val.categoryName}"
                                                                 ></option>
-                                                                <option th:value="${adminCategory.get(adminCategory.keySet().toArray()[0])}" th:text="${adminCategory.values().toArray()[0]+ '(선택됨)'}" selected>대분류</option>
                                                             </select>
                                                             <select id="table-filter2" class="custom-select"  th:field="${shop.middleCategory}">
-                                                                <option th:value="${adminCategory.get(adminCategory.keySet().toArray()[1])}" th:text="${adminCategory.values().toArray()[1]+ '(선택됨)'}" selected>대분류</option>
+                                                                <option th:value="${adminCategory.get(adminCategory.keySet().toArray()[1])}" th:text="${adminCategory.values().toArray()[1]+ '(선택됨)'}" selected></option>
                                                                 <option value="" >중분류</option>
                                                             </select>
                                                             <select id="table-filter3" class="custom-select"  th:field="${shop.smallCategory}">
-                                                                <option th:value="${adminCategory.get(adminCategory.keySet().toArray()[2])}" th:text="${adminCategory.values().toArray()[2]+ '(선택됨)'}" selected>대분류</option>
+                                                                <option th:value="${adminCategory.get(adminCategory.keySet().toArray()[2])}" th:text="${adminCategory.values().toArray()[2]+ '(선택됨)'}" selected></option>
                                                                 <option value="" >소분류</option>
                                                             </select>
                                                         </div>
@@ -431,11 +431,11 @@
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
                                                                 <input class="custom-control-input" id="reservation-y" type="radio" name="reservation">
-                                                                <label class="custom-control-label" for="reservation-y" value="Y" th:field="${shop.isReservation}">가능</label>
+                                                                <label class="custom-control-label" for="reservation-y" value="T" th:field="${shop.isReservation}">가능</label>
                                                             </div>
                                                             <div class="custom-control custom-radio">
                                                                 <input class="custom-control-input" id="reservation-n" type="radio" name="reservation" >
-                                                                <label class="custom-control-label" for="reservation-n" value="N" th:field="${shop.isReservation}">불가능</label>
+                                                                <label class="custom-control-label" for="reservation-n" value="F" th:field="${shop.isReservation}">불가능</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -523,7 +523,7 @@
                                                                 <option value='세종'> 세종</option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter5" th:field="${shop.regionId}">
-<!--                                                                <option th:value="${regionInfosWithId[0].getDistrictName()}" th:text="${regionInfosWithId[0].getDistrictName()}"  selected>지역</option>-->
+                                                                <option th:value="${regionInfosWithId[0].getRegionId}" th:text="${regionInfosWithId[0].getDistrictName()}"  selected>지역</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -534,8 +534,8 @@
                                                         <label for="select-tags" style="width: 400px;">역세권 설정</label>
                                                         <div style="display: flex">
                                                             <select class="custom-select" id="table-filter7">
-<!--                                                                <option th:value="${subwayInfosWithId[0].getProvinceName()}"  selected>지역</option>-->
-                                                                <option value="수정중">수정중</option>
+                                                                <option th:value="${subwayInfosWithId[0].getProvinceName()}"  th:text="${subwayInfosWithId[0].getProvinceName()}"  selected>지역</option>
+<!--                                                                <option value="수정중">수정중</option>-->
                                                                 <option value="수도권">수도권</option>
                                                                 <option value="인천">인천</option>
                                                                 <option value="부산">부산</option>
@@ -544,13 +544,13 @@
                                                                 <option value="대전">대전</option>
                                                             </select>
                                                             <select class="custom-select" id="table-filter8">
-<!--                                                                <option th:value="${subwayInfosWithId[0].getDistrictName()}"  selected>지역</option>-->
-                                                                <option value="수정중">수정중</option>
+                                                                <option th:value="${subwayInfosWithId[0].getDistrictName()}"  th:text="${subwayInfosWithId[0].getDistrictName()}" >지역</option>
+<!--                                                                <option value="수정중">수정중</option>-->
                                                             </select>
                                                             <select class="custom-select" id="table-filter9" th:field="*{shop.subwayTypeId}">
-<!--                                                                <option th:value="${subwayInfosWithId[0].getSubwayName()} + '선택됨'"  selected>지역</option>-->
+                                                                <option th:value="${subwayInfosWithId[0].getRegionId()}"  th:text="${subwayInfosWithId[0].getSubwayName()}" selected>지역</option>
                                                             </select>
-                                                            <input class="form-control" id="exit" type="text" name="exit"  th:field="${shop.exitNum}" style="    width: 45px;font-size: 1rem !important;">
+                                                            <input class="form-control" id="exit" type="text" name="exit"  th:field="${shop.exitNum}" style=" width: 45px;font-size: 1rem !important;">
                                                         </div>
                                                     </div>
                                                     <!--<div class="form-group">
@@ -630,7 +630,7 @@
                                                                 <!--/*@thymesVar id="Arrays" type=""*/-->
                                                                 <!--                                                                <p th:text="${#strings.arraySplit(payload[0].themeList, ',')}"></p>-->
                                                                 <!--                                                                <p th:text="${payload[0].themeList.split(',')[0]}"></p>-->
-                                                                <input class="custom-control-input" th:id="${theme.themeId}" th:value="${theme.themeId}" th:if="${shop.themeList}" th:checked="${#arrays.contains(#strings.arraySplit(shop.themeList,','),  '' + theme.themeId.toString())} == true" th:field="${shop.themeList}" type="checkbox" name="theme">
+                                                                <input  type="checkbox"  name="theme"  class="custom-control-input" th:id="${theme.themeId}" th:value="${theme.themeId}" th:if="${shop.themeList}" th:checked="${#arrays.contains(#strings.arraySplit(shop.themeList,','),  '' + theme.themeId.toString())} == true" th:field="${shop.themeList}" >
 <!--                                                                <label class="custom-control-label" th:for="${theme.themeId}" th:text="${#arrays.contains(#strings.arraySplit(shop.themeList,','), theme.themeId.toString())}" > </label>-->
                                                                 <label class="custom-control-label" th:for="${theme.themeId}" th:text="${theme.getName()}" > </label>
                                                             </div>

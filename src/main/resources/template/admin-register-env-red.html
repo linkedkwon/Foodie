@@ -1107,11 +1107,12 @@
             // console.log(val.children[0].value)
             $.ajax({
                 type:"get",
-                url:"/admin/category/mfood/" + val,
+                url:"/admin/category/mfood/" + val+ "?serviceType=red",
                 datatype: "json",
                 success: function(data) {
                 if(data.length > 0) {
                     $("#mcode").find("td").remove();
+                    $("#scode").find("td").remove();
                     $.each(data, function(key, value) {
                         $("#mcode").append("<tr>" +
                             " <td onclick=\"get_scode(event)\">\n" +
@@ -1148,7 +1149,7 @@
             var val = event.currentTarget.children[0].value; // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
             $.ajax({
                 type:"get",
-                url:"/admin/category/sfood/" + val,
+                url:"/admin/category/sfood/" + val+ "?serviceType=red",
                 datatype: "json",
                 success: function(data) {
                     if(data.length > 0) {

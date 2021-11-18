@@ -6,9 +6,11 @@ import kr.foodie.domain.category.Category;
 import kr.foodie.domain.category.FoodCategory;
 import kr.foodie.domain.category.Theme;
 import kr.foodie.domain.shop.*;
+import kr.foodie.repo.admin.TripCategoryAdminRepository;
 import kr.foodie.service.*;
 import kr.foodie.service.admin.FoodCategoryAdminService;
 import kr.foodie.service.admin.RegionAdminService;
+import kr.foodie.service.admin.TripCategoryAdminService;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.stereotype.Controller;
@@ -38,10 +40,11 @@ public class AdminController {
     private final RegionService regionService;
     private final UserService userService;
     private final CategoryService categoryService;
+    private final TripCategoryAdminService tripCategoryAdminService;
 
     public AdminController(ShopService shopService, TagService tagService,
                            RegionAdminService regionAdminService, FoodCategoryAdminService foodCategoryAdminService,
-                           ReviewService reviewService, PaginationService paginationService, ThemeService themeService, RegionService regionService, TagListService tagListService, UserService userService,CategoryService categoryService) {
+                           ReviewService reviewService, PaginationService paginationService, ThemeService themeService, RegionService regionService, TagListService tagListService, UserService userService,CategoryService categoryService,TripCategoryAdminService tripCategoryAdminService) {
         this.shopService = shopService;
         this.tagService = tagService;
 //        this.regionService = regionService;
@@ -54,6 +57,7 @@ public class AdminController {
         this.tagListService = tagListService;
         this.userService = userService;
         this.categoryService = categoryService;
+        this.tripCategoryAdminService = tripCategoryAdminService;
     }
 
     @GetMapping("/main")
@@ -69,19 +73,24 @@ public class AdminController {
     @RequestMapping(value = "/registerEnv/{shopType}", method = RequestMethod.GET)
     public ModelAndView getregisterEnv(@PathVariable String shopType){
         ModelAndView mav = new ModelAndView();
-        if(shopType.equals("red")){
-            shopType = "0";
-            mav.setViewName("admin-register-env-red");
-        }else{
-            shopType = "1";
-            mav.setViewName("admin-register-env-green");
-        }
         List<FoodCategory> categoryInfos;
         List<FoodCategory> categoryMInfos;
         List<FoodCategory> categorySInfos;
-        categoryInfos = foodCategoryAdminService.getAdminRegionBCategory();
-        categoryMInfos = foodCategoryAdminService.getAdminRegionMCategory(100);
-        categorySInfos = foodCategoryAdminService.getAdminRegionSCategory(1000);
+
+        if(shopType.equals("red")){
+            shopType = "0";
+            mav.setViewName("admin-register-env-red");
+            categoryInfos = foodCategoryAdminService.getAdminRegionBCategory();
+            categoryMInfos = foodCategoryAdminService.getAdminRegionMCategory(100);
+            categorySInfos = foodCategoryAdminService.getAdminRegionSCategory(1000);
+
+        }else{
+            shopType = "1";
+            mav.setViewName("admin-register-env-green");
+            categoryInfos = tripCategoryAdminService.getTripBcodeCategory();
+            categoryMInfos = foodCategoryAdminService.getAdminRegionMCategory(100);
+            categorySInfos = foodCategoryAdminService.getAdminRegionSCategory(1000);
+        }
         mav.addObject("categoryInfos", categoryInfos);
         mav.addObject("categoryMInfos", categoryMInfos);
         mav.addObject("categorySInfos", categorySInfos);
@@ -477,12 +486,20 @@ public class AdminController {
 
     @ResponseBody
     @RequestMapping(value ="/category/{type}/{id}", method= RequestMethod.GET)
-    public List<FoodCategory> getCategorySelectInfos(Model model, @PathVariable String type, @PathVariable Integer id){
+    public List<FoodCategory> getCategorySelectInfos(Model model, @PathVariable String type, @PathVariable Integer id, @RequestParam String serviceType){
         List<FoodCategory> categoryInfoList = null;
-        if(type.equals("mfood")){
-            categoryInfoList = foodCategoryAdminService.getAdminRegionMCategory(id);
-        }else if (type.equals("sfood")){
-            categoryInfoList = foodCategoryAdminService.getAdminRegionSCategory(id);
+        if(serviceType.equals("red")){
+            if(type.equals("mfood")){
+                categoryInfoList = foodCategoryAdminService.getAdminRegionMCategory(id);
+            }else if (type.equals("sfood")){
+                categoryInfoList = foodCategoryAdminService.getAdminRegionSCategory(id);
+            }
+        }else if(serviceType.equals("green")){
+            if(type.equals("mfood")){
+                categoryInfoList = tripCategoryAdminService.getTripMcodeCategory(id);
+            }else if (type.equals("sfood")){
+                categoryInfoList = tripCategoryAdminService.getTripScodeCategory(id);
+            }
         }
         return categoryInfoList;
     }
@@ -521,6 +538,8 @@ public class AdminController {
         }
         return categoryInfoList;
     }
+
+
 
     @ResponseBody
     @RequestMapping(value ="/category/{type}/moveMinusOne/{id}", method= RequestMethod.PUT)
@@ -626,7 +645,7 @@ public class AdminController {
             String server = "foodie.speedgabia.com";
             int port = 21;
             String user = "foodie";
-            String pw = "a584472yscp@@";
+            String pw = "a584472yscp%40%40";
             FTPClient con = null;
             Date from = new Date();
             SimpleDateFormat nowDateHHmmss = new SimpleDateFormat("HHmmss");
@@ -673,5 +692,21 @@ public class AdminController {
         String viewName = shopService.updateShopInfo(shop, shopId);
         return viewName;
     }
+
+    @ResponseBody
+    @RequestMapping(value ="/category/{type}/addcode/{id}", method= RequestMethod.POST)
+    public List<FoodCategory> addBcode(Model model, @PathVariable String type, @PathVariable Integer id, @RequestParam String serviceType){
+        List<FoodCategory> categoryInfoList = null;
+
+        if(type.equals("mfood")){
+            categoryInfoList = foodCategoryAdminService.getAdminRegionMCategory(id);
+        }else if (type.equals("sfood")){
+            categoryInfoList = foodCategoryAdminService.getAdminRegionSCategory(id);
+        }else if(type.equals("bfood")){
+            categoryInfoList = foodCategoryAdminService.updateSeqPlusOne(1, id);
+        }
+        return categoryInfoList;
+    }
+
 
 }

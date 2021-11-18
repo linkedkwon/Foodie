@@ -704,7 +704,8 @@
         // $('#mcode tr:eq(0)').addClass('highlight');
         // $('#scode tr:eq(0)').addClass('highlight').siblings().removeClass('highlight');
 
-        $('#example1').on('click', '#add_category1', function(){
+        $('#add_category1').on('click', function(){
+            alert("click");
             var $href = $(this).attr('href');
             layer_popup($href);
         });
@@ -1107,11 +1108,12 @@
             // console.log(val.children[0].value)
             $.ajax({
                 type:"get",
-                url:"/admin/category/mfood/" + val,
+                url:"/admin/category/mfood/" + val + "?serviceType=green",
                 datatype: "json",
                 success: function(data) {
                 if(data.length > 0) {
                     $("#mcode").find("td").remove();
+                    $("#scode").find("td").remove();
                     $.each(data, function(key, value) {
                         $("#mcode").append("<tr>" +
                             " <td onclick=\"get_scode(event)\">\n" +
@@ -1148,7 +1150,7 @@
             var val = event.currentTarget.children[0].value; // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
             $.ajax({
                 type:"get",
-                url:"/admin/category/sfood/" + val,
+                url:"/admin/category/sfood/" + val + "?serviceType=green",
                 datatype: "json",
                 success: function(data) {
                     if(data.length > 0) {
