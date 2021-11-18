@@ -502,6 +502,15 @@ public class AdminController {
     }
 
     @ResponseBody
+    @RequestMapping(value ="/epicure/{parentNo}", method= RequestMethod.GET)
+    public Map<String, List> getEpicureDistrict(Model model, @PathVariable Integer parentNo){
+        List<EpicureRegion> regionInfos = regionAdminService.getEpicureDistrict(parentNo);
+        Map<String, List> infos = new HashMap<>();
+        infos.put("data", regionInfos);
+        return infos;
+    }
+
+    @ResponseBody
     @RequestMapping(value ="/region/type/2/{provinceName}/{districtName}", method= RequestMethod.GET)
     public List<Region> getRegionSubwayInfoWithRegionType2(Model model, @PathVariable String provinceName, @PathVariable String districtName){
         List<Region> regionInfos = regionAdminService.getRegionSubwayInfoWithRegionType2(districtName, provinceName);

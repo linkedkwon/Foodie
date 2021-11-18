@@ -265,45 +265,31 @@
                             <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvHastag"> 해시태그설정 </a></h6>
                         </div>
                         <div class="card-body" style="  justify-content: center;display: flex ;  margin: auto;">
-
-<!--                            <div class="">-->
                             <div class="tableFixHead">
                                 <div id="categoryHead1">
                                     <span>시</span>
                                 </div>
-
                                 <table class="table-bordered display" id="example1" style="width: 220px;" cellspacing="0">
-<!--                                    <thead>-->
-<!--                                    </thead>-->
                                     <tbody  id="bcode">
                                     <tr  th:each="val : ${regionInfos}">
                                         <td onclick="get_city(event)">
-                                            <input type="checkbox" id="category_1" th:value="${val.id}" th:name="${val.listName}" th:text="${' ' + val.listName}"/>
-                                            <div style="float: right">
-                                                <a href="javascript:void(0)" data-href="#layer2" id="modify_category1"><i class="fa fa-pencil"> </i></a>
-                                                <a href="javascript:void(0)" data-href="#layer3"  id="remove_category1"><i class=" fa fa-ban"> </i></a>
-                                            </div>
+                                            <input type="checkbox" class="chkRadio" id="category_1" th:value="${val.id}" th:name="${val.listName}" th:text="${' ' + val.listName}"/>
                                         </td>
                                     </tr>
                                     </tbody>
-<!--                                    <tfoot>-->
-<!--                                    <tr>-->
-
-<!--                                    </tr>-->
-<!--                                    </tfoot>-->
                                 </table>
                                 <div style="    background: aliceblue;" id="stickyId1">
                                     <div>
-                                        <a href="" id="move_category1_plus" onclick="move_one(1)"><button class="btn btn-primary">위로 </button></a>
-                                        <a href="" id="move_category1_minus" onclick="minus_one(1)"><button class="btn btn-primary">아래로 </button></a>
-                                        <a href="#layer1" id="add_category1"><button class="btn btn-primary">추가 </button></a>
-                                        <a href="#layer1"><button class="btn btn-primary">수정 </button></a>
+                                        <a href="javascript:void(0)" onclick="rowMoveEvent('up', 'bcode'); return false;"><button class="btn btn-primary">위로 </button></a>
+                                        <a href="javascript:void(0)" onclick="rowMoveEvent('down', 'bcode'); return false;"><button class="btn btn-primary">아래로 </button></a>
+                                        <a href="#layer1" id="addRegion"><button class="btn btn-primary">추가 </button></a>
+                                        <a href="#layer1" id="modifyRegion"><button class="btn btn-primary">수정 </button></a>
                                     </div>
                                     <div>
-                                        <a href="" onclick="move_one(1)"><button class="btn btn-primary">처음 </button></a>
-                                        <a href="" onclick="minus_one(1)"><button class="btn btn-primary">마지막 </button></a>
-                                        <a href="#layer1"><button class="btn btn-primary">삭제 </button></a>
-                                        <a href="#layer1"><button class="btn btn-primary">저장 </button></a>
+                                        <a href="javascript:void(0)" onclick="rowMoveEvent('upFirst', 'bcode')"><button class="btn btn-primary">처음 </button></a>
+                                        <a href="javascript:void(0)" onclick="rowMoveEvent('downLast', 'bcode')"><button class="btn btn-primary">마지막 </button></a>
+                                        <a href="#layer1" id="removeRegion"><button class="btn btn-primary">삭제 </button></a>
+                                        <a href="#layer1" id="saveRegion"><button class="btn btn-primary">저장 </button></a>
                                     </div>
                                 </div>
                             </div>
@@ -313,31 +299,43 @@
                                     <span>군/구</span>
                                 </div>
                                 <table class="table-bordered display" id="example2"  style="width: 220px;" cellspacing="0">
-<!--                                    <thead>-->
-
-<!--                                    </thead>-->
                                     <tbody id="mcode">
                                         <tr  th:each="val : ${categoryMInfos}">
-                                            <td onclick="get_scode(event)">
-                                                <input type="checkbox" id="category_2" th:value="${val.mCode}" th:name="${val.categoryName}" th:text="${' ' + val.categoryName}"/>
-                                                <div style="float: right">
-                                                    <a href="javascript:void(0)" data-href="#layer5" id="modify_category2"><i class="fa fa-pencil"> </i></a>
-                                                    <a href="javascript:void(0)" data-href="#layer6"  id="remove_category2"><i class=" fa fa-ban"> </i></a>
-                                                </div>
-                                            </td>
                                         </tr>
                                     </tbody>
-<!--                                    <tfoot id="stickyId2">-->
-<!--                                    <tr>-->
-
-<!--                                    </tr>-->
-<!--                                    </tfoot>-->
                                 </table>
                                 <div style="background: aliceblue;" id="stickyId2">
                                     <div>
-                                        <a href="" onclick="move_one(1)"><button class="btn btn-primary">위로 </button></a>
-                                        <a href="" onclick="minus_one(1)"><button class="btn btn-primary">아래로 </button></a>
+                                        <a href="javascript:void(0)"  onclick="rowMoveEvent('up', 'mcode'); return false;"><button class="btn btn-primary">위로 </button></a>
+                                        <a href="javascript:void(0)"  onclick="rowMoveEvent('down', 'mcode'); return false;"><button class="btn btn-primary">아래로 </button></a>
                                         <a href="#layer4" id="add_category2"><button class="btn btn-primary">추가 </button></a>
+                                        <a href="#layer1"><button class="btn btn-primary">수정 </button></a>
+                                    </div>
+                                    <div>
+                                        <a href="javascript:void(0)" onclick="rowMoveEvent('upFirst', 'mcode')"><button class="btn btn-primary">처음 </button></a>
+                                        <a href="javascript:void(0)" onclick="rowMoveEvent('downLast', 'mcode')"><button class="btn btn-primary">마지막 </button></a>
+                                        <a href="#layer1"><button class="btn btn-primary">삭제 </button></a>
+                                        <a href="#layer1"><button class="btn btn-primary">저장 </button></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tableFixHead">
+                                <div id="categoryHead1">
+                                    <span>동</span>
+                                </div>
+
+                                <table class="table-bordered display" id="example1" style="width: 220px;" cellspacing="0">
+                                   <tbody  id="scode">
+                                    <tr  th:each="val : ${regionInfos}">
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div style="    background: aliceblue;" id="stickyId1">
+                                    <div>
+                                        <a href="javascript:void(0)" onclick="rowMoveEvent('upFirst', 'scode')"><button class="btn btn-primary">처음 </button></a>
+                                        <a href="javascript:void(0)" onclick="rowMoveEvent('downLast', 'scode')"><button class="btn btn-primary">마지막 </button></a>
+                                        <a href="#layer1" id="add_category1"><button class="btn btn-primary">추가 </button></a>
                                         <a href="#layer1"><button class="btn btn-primary">수정 </button></a>
                                     </div>
                                     <div>
@@ -404,9 +402,10 @@
                 <!--content //-->
                 <p class="ctxt mb20">추가<br>
                 </p>
-                <input type="text" value=""/>
+                <input type="text" value="" id="add_region">
                 <div class="btn-r">
-                    <a href="#" class="btn-layerClose">Close</a>
+                    <a href="#" class="btn-layerAdd" onclick="addRow()">추가</a>
+                    <a href="#" class="btn-layerClose">닫기</a>
                 </div>
                 <!--// content-->
             </div>
@@ -429,114 +428,6 @@
         </div>
     </div>
 
-    <div id="layer4" class="pop-layer">
-        <div class="pop-container">
-            <div class="pop-conts">
-                <!--content //-->
-                <p class="ctxt mb20">추가<br>
-                </p>
-                <input type="text" value=""/>
-                <div class="btn-r">
-                    <a href="#" class="btn-layerClose">Close</a>
-                </div>
-                <!--// content-->
-            </div>
-        </div>
-    </div>
-    <div id="layer5" class="pop-layer">
-        <div class="pop-container">
-            <div class="pop-conts">
-                <!--content //-->
-                <p class="ctxt mb20">수정<br>
-                </p>
-                <input type="hidden" id ="category_id" value=""/>
-                <input type="text" id ="category_name" value=""/>
-                <div class="btn-r">
-                    <a href="#" class="btn-layerClose">Close</a>
-                </div>
-                <!--// content-->
-            </div>
-        </div>
-    </div>
-    <div id="layer6" class="pop-layer">
-        <div class="pop-container">
-            <div class="pop-conts">
-                <!--content //-->
-                <p class="ctxt mb20">Thank you6.<br>
-                    Your registration was submitted successfully.<br>
-                    Selected invitees will be notified by e-mail on JANUARY 24th.<br><br>
-                    Hope to see you soon!
-                </p>
-
-                <div class="btn-r">
-                    <a href="#" class="btn-layerClose">Close</a>
-                </div>
-                <!--// content-->
-            </div>
-        </div>
-    </div>
-    <div id="layer3" class="pop-layer">
-        <div class="pop-container">
-            <div class="pop-conts">
-                <!--content //-->
-                <p class="ctxt mb20">Thank you3.<br>
-                    Your registration was submitted successfully.<br>
-                    Selected invitees will be notified by e-mail on JANUARY 24th.<br><br>
-                    Hope to see you soon!
-                </p>
-
-                <div class="btn-r">
-                    <a href="#" class="btn-layerClose">Close</a>
-                </div>
-                <!--// content-->
-            </div>
-        </div>
-    </div>
-    <div id="layer7" class="pop-layer">
-        <div class="pop-container">
-            <div class="pop-conts">
-                <!--content //-->
-                <p class="ctxt mb20">추가<br>
-                </p>
-                <input type="text" value=""/>
-                <div class="btn-r">
-                    <a href="#" class="btn-layerClose">Close</a>
-                </div>
-                <!--// content-->
-            </div>
-        </div>
-    </div>
-    <div id="layer8" class="pop-layer">
-        <div class="pop-container">
-            <div class="pop-conts">
-                <!--content //-->
-                <p class="ctxt mb20">수정<br>
-                </p>
-                <input type="hidden" id ="category_id" value=""/>
-                <input type="text" id ="category_name" value=""/>
-                <div class="btn-r">
-                    <a href="#" class="btn-layerClose">Close</a>
-                </div>
-                <!--// content-->
-            </div>
-        </div>
-    </div>
-    <div id="layer9" class="pop-layer">
-        <div class="pop-container">
-            <div class="pop-conts">
-                <!--content //-->
-                <p class="ctxt mb20">Thank you6.<br>
-                    Your registration was submitted successfully.<br>
-                    Selected invitees will be notified by e-mail on JANUARY 24th.<br><br>
-                    Hope to see you soon!
-                </p>
-
-                <div class="btn-r">
-                    <a href="#" class="btn-layerClose">Close</a>
-                </div>
-                <!--// content-->
-            </div>
-        </div>
     </div>
     <!-- Bootstrap core JavaScript-->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
@@ -651,6 +542,23 @@
         display: block;
     }
 
+    a.btn-layerAdd {
+        display: inline-block;
+        height: 25px;
+        padding: 0 14px 0;
+        border: 1px solid #304a8a;
+        background-color: #3f5a9d;
+        font-size: 13px;
+        color: #fff;
+        line-height: 25px;
+    }
+
+    a.btn-layerAdd:hover {
+        border: 1px solid #091940;
+        background-color: #1f326a;
+        color: #fff;
+    }
+
     a.btn-layerClose {
         display: inline-block;
         height: 25px;
@@ -674,48 +582,29 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
+        // $('#bcode').sortable();
+        // $('#bcode tr:eq(0)').addClass('highlight');
 
-        // $("#example3").fixedHeaderTable({ footer: true, cloneHeadToFoot: true, fixedColumn: true, height: 300  });
-
-
-
-
-
-        $('#bcode').sortable();
-        $('#bcode tr:eq(0)').addClass('highlight');
-        // $('#mcode tr:eq(0)').addClass('highlight');
-        // $('#scode tr:eq(0)').addClass('highlight').siblings().removeClass('highlight');
-
-        $('#example1').on('click', '#add_category1', function(){
+        $('#addRegion').on('click', function () {
             var $href = $(this).attr('href');
             layer_popup($href);
         });
+
         $('#example1').on('click', '#modify_category1', function(){
             console.log('click');
             var $href = $(this).attr('data-href');
-            // console.log($(this).parent().parent().siblings('input'))
             console.log($(this).parent().siblings('input')[0].value )
             var category_value = $(this).parent().siblings('input')[0].value
             var category_name = $(this).parent().siblings('input')[0].name
             $('#layer2 #category_id').val(category_value)
             $('#layer2 #category_name').val(category_name)
-            // console.log($(this).parent().siblings('input')[0].val )
-            // console.log($(this).parent().siblings('input')[0])
-            // console.log($(this).parent().siblings('input')[0].val() + '22222')
-            // console.log($('#category_1').val());
-            // console.log($('#category_1').text())
             layer_popup($href);
-            // console.log($('#category_1'))
         });
         $('#example1').on('click', '#remove_category1', function(){
             console.log('click2');
             var $href = $(this).attr('data-href');
             layer_popup($href);
         });
-
-
-
-
         $('#example2').on('click', '#add_category2', function(){
             var $href = $(this).attr('href');
             layer_popup($href);
@@ -723,61 +612,99 @@
         $('#example2').on('click', '#modify_category2', function(){
             console.log('click');
             var $href = $(this).attr('data-href');
-            // console.log($(this).parent().parent().siblings('input'))
             console.log($(this).parent().siblings('input')[0].value )
             var category_value = $(this).parent().siblings('input')[0].value
             var category_name = $(this).parent().siblings('input')[0].name
             $('#layer5 #category_id').val(category_value)
             $('#layer5 #category_name').val(category_name)
-            // console.log($(this).parent().siblings('input')[0].val )
-            // console.log($(this).parent().siblings('input')[0])
-            // console.log($(this).parent().siblings('input')[0].val() + '22222')
-            // console.log($('#category_1').val());
-            // console.log($('#category_1').text())
             layer_popup($href);
-            // console.log($('#category_1'))
         });
         $('#example2').on('click', '#remove_category2', function(){
             console.log('click2');
             var $href = $(this).attr('data-href');
             layer_popup($href);
         });
-
-    // });
-
-
-
-    $('#example3').on('click', '#add_category3', function(){
-        var $href = $(this).attr('href');
-        layer_popup($href);
-    });
-    $('#example3').on('click', '#modify_category3', function(){
-        console.log('click');
-        var $href = $(this).attr('data-href');
-        // console.log($(this).parent().parent().siblings('input'))
-        console.log($(this).parent().siblings('input')[0].value )
-        var category_value = $(this).parent().siblings('input')[0].value
-        var category_name = $(this).parent().siblings('input')[0].name
-        $('#layer8 #category_id').val(category_value)
-        $('#layer8 #category_name').val(category_name)
-        // console.log($(this).parent().siblings('input')[0].val )
-        // console.log($(this).parent().siblings('input')[0])
-        // console.log($(this).parent().siblings('input')[0].val() + '22222')
-        // console.log($('#category_1').val());
-        // console.log($('#category_1').text())
-        layer_popup($href);
-        // console.log($('#category_1'))
-    });
-    $('#example3').on('click', '#remove_category2', function(){
-        console.log('click2');
-        var $href = $(this).attr('data-href');
-        layer_popup($href);
-    });
+        $('#example3').on('click', '#add_category3', function(){
+            var $href = $(this).attr('href');
+            layer_popup($href);
+        });
+        $('#example3').on('click', '#modify_category3', function(){
+            console.log('click');
+            var $href = $(this).attr('data-href');
+            console.log($(this).parent().siblings('input')[0].value )
+            var category_value = $(this).parent().siblings('input')[0].value
+            var category_name = $(this).parent().siblings('input')[0].name
+            $('#layer8 #category_id').val(category_value)
+            $('#layer8 #category_name').val(category_name)
+            layer_popup($href);
+        });
+        $('#example3').on('click', '#remove_category2', function(){
+            console.log('click2');
+            var $href = $(this).attr('data-href');
+            layer_popup($href);
+        });
 
     });
+
+    function addRow(){
+        add_region
+    }
+
+    function rowMoveEvent(direction, type){
+        // 체크된 행(row)의 존재 여부를 파악한다.
+        var regiontype = "#"+type;
+        if(jQuery(regiontype + " .chkRadio:checked").val() && jQuery(regiontype + " .chkRadio:checked").length == 1) {
+            // 체크된 라디오 박스의 행(row)을 변수에 담는다.
+            var row = jQuery(regiontype + " .chkRadio:checked").parent().parent();
+            // 체크된 행(row)의 이동 한계점을 파악하기 위해 인덱스를 파악한다.
+            var num = row.index();
+            // 전체 행의 개수를 구한다.
+            var max = (jQuery(regiontype + " .chkRadio").length - 1);	   // index는 0부터 시작하기에 -1을 해준다.
+            if(direction == "up") {
+                if(num == 0) {
+                    // 체크된 행(row)의 위치가 최상단에 위치해 있을경우 더이상 올라갈 수 없게 막는다.
+                    alert("첫번째로 지정되어 있습니다.\n더이상 순서를 변경할 수 없습니다.");
+                    return false;
+                } else {
+                    // 체크된 행(row)을 한칸 위로 올린다.
+                    row.prev().before(row);
+                }
+            } else if(direction == "down") {
+                if(num >= max) {
+                    // 체크된 행(row)의 위치가 최하단에 위치해 있을경우 더이상 내려갈 수 없게 막는다.
+                    alert("마지막으로 지정되어 있습니다.\n더이상 순서를 변경할 수 없습니다.");
+                    return false;
+                } else {
+                    // 체크된 행(row)을 한칸 아래로 내린다.
+                    row.next().after(row);
+                }
+            } else if(direction == "upFirst") {
+                if(num >= max) {
+                    // 체크된 행(row)의 위치가 최하단에 위치해 있을경우 더이상 내려갈 수 없게 막는다.
+                    alert("첫번째로 지정되어 있습니다.\n더이상 순서를 변경할 수 없습니다.");
+                    return false;
+                } else {
+                    // 체크된 행(row)을 처음으로
+                    row.closest('table').find('tr:first').before(row);
+                }
+            }else if(direction == "downLast") {
+                if(num >= max) {
+                    // 체크된 행(row)의 위치가 최하단에 위치해 있을경우 더이상 내려갈 수 없게 막는다.
+                    alert("마지막으로 지정되어 있습니다.\n더이상 순서를 변경할 수 없습니다.");
+                    return false;
+                } else {
+                    // 체크된 행(row)을 마지막으로
+                    row.closest('table').find('tr:last').after(row);
+                }
+            }
+        } else {
+            alert("선택을 안되었거나 두개이상 클릭되었습니다\n하나 선택해 주세요.");
+        }
+    }
 
     function layer_popup(el){
-
+        alert("layer_popup click")
+        console.log(el)
         var $el = $(el);    //레이어의 id를 $el 변수에 저장
         var isDim = $el.prev().hasClass('dimBg'); //dimmed 레이어를 감지하기 위한 boolean 변수
 
@@ -809,307 +736,81 @@
         });
 
     }
+    function get_city(event){
+        $('#example1').on('click', 'tbody tr', function(event) {
+            $(this).addClass('highlight').siblings().removeClass('highlight');
+        });
 
-
-    function move_one(category){
-        var selected = [];
-        var foodType = null;
-        if (category == '1'){
-            category = "#bcode input:checked"
-            foodType = "bfood"
-
-            $(category).each(function() {
-                selected.push($(this).attr('value'));
-            });
-
-            if(selected.length > 1){
-                alert("check number")
-            }else if(selected.length == 0) {
-                alert("check plz")
-            }else if(selected.length ==1 ){
-                $.ajax({
-                    type:"put",
-                    url:"/admin/category/" + foodType + "/movePlusOne/" + selected[0],
-                    datatype: "json",
-                    success: function(data) {
-                        if(data.length > 0) {
-                            $("#bcode").find("td").remove();
-                            $.each(data, function(key, value) {
-                                $("#bcode").append("<tr>" +
-                                    " <td onclick=\"get_mcode(event)\">\n" +
-                                    "     <input type=\"checkbox\" id=\"category_1\" name= '" + value.categoryName + "' text='"+value.categoryName+"' value='" + value.bcode + "'>\n"+value.categoryName +
-                                    "                                                <div style=\"float: right\">\n" +
-                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer2\" id=\"modify_category1\"><i class=\"fa fa-pencil\"> </i></a>\n" +
-                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer3\"  id=\"remove_category1\"><i class=\" fa fa-ban\"> </i></a>\n" +
-                                    "                                                </div>\n" +
-                                    "                                            </td>" +
-                                    "</tr>");
-                            });
-                        } else {
-                            alert("이미 첫번쨰 행입니다.")
-                            return;
-                        }
-                    },
-
-                    error: function(x, o, e) {
-                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                        alert(msg);
-                    }
-                });
-            }
-        }else if(category == "2"){
-            category = "#mcode input:checked"
-            foodType = "mfood"
-
-            $(category).each(function() {
-                selected.push($(this).attr('value'));
-            });
-
-            if(selected.length > 1){
-                alert("check number")
-            }else if(selected.length == 0) {
-                alert("check plz")
-            }else if(selected.length ==1 ){
-                $.ajax({
-                    type:"put",
-                    url:"/admin/category/" + foodType + "/movePlusOne/" + selected[0],
-                    datatype: "json",
-                    success: function(data) {
-                        if(data.length > 0) {
-                            $("#bcode").find("td").remove();
-                            $.each(data, function(key, value) {
-                                $("#bcode").append("<tr>" +
-                                    " <td onclick=\"get_scode(event)\">\n" +
-                                    "     <input type=\"checkbox\" id=\"category_2\" name= '" + value.categoryName + "' text='"+value.categoryName+"' value='" + value.mcode + "'>\n"+value.categoryName +
-                                    "                                                <div style=\"float: right\">\n" +
-                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer5\" id=\"modify_category2\"><i class=\"fa fa-pencil\"> </i></a>\n" +
-                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer6\"  id=\"remove_category2\"><i class=\" fa fa-ban\"> </i></a>\n" +
-                                    "                                                </div>\n" +
-                                    "                                            </td>" +
-                                    "</tr>");
-                            });
-                        } else {
-                            alert("이미 첫번쨰 행입니다.")
-                            return;
-                        }
-                    },
-
-                    error: function(x, o, e) {
-                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                        alert(msg);
-                    }
-                });
-            }
-        }else{
-            category = "#scode input:checked"
-            foodType = "sfood"
-
-            $(category).each(function() {
-                selected.push($(this).attr('value'));
-            });
-
-            if(selected.length > 1){
-                alert("check number")
-            }else if(selected.length == 0) {
-                alert("check plz")
-            }else if(selected.length ==1 ){
-                $("#scode").find("td").remove();
-                $.ajax({
-                    type:"put",
-                    url:"/admin/category/" + foodType + "/movePlusOne/" + selected[0],
-                    datatype: "json",
-                    success: function(data) {
-                        if(data.length > 0) {
-                            $.each(data, function(key, value) {
-                                $("#scode").append("<tr>" +
-                                    " <td>\n" +
-                                    "     <input type=\"checkbox\" id=\"category_3\" name= '" + value.categoryName + "' text='"+value.categoryName+"' value='" + value.scode + "'>\n"+value.categoryName +
-                                    "                                                <div style=\"float: right\">\n" +
-                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer8\" id=\"modify_category3\"><i class=\"fa fa-pencil\"> </i></a>\n" +
-                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer9\"  id=\"remove_category3\"><i class=\" fa fa-ban\"> </i></a>\n" +
-                                    "                                                </div>\n" +
-                                    "                                            </td>" +
-                                    "</tr>");
-                            });
-                        } else {
-                            alert("이미 첫번쨰 행입니다.")
-                            return;
-                        }
-                    },
-
-                    error: function(x, o, e) {
-                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                        alert(msg);
-                    }
-                });
-            }
-        }
-    }
-
-    function minus_one(category){
-        var selected = [];
-        var foodType = null;
-        if (category == '1'){
-            category = "#bcode input:checked"
-            foodType = "bfood"
-            $(category).each(function() {
-                selected.push($(this).attr('value'));
-            });
-
-            if(selected.length > 1){
-                alert("check number")
-            }else if(selected.length == 0) {
-                alert("check plz")
-            }else if(selected.length ==1 ){
-                $.ajax({
-                    type:"put",
-                    url:"/admin/category/" + foodType + "/moveMinusOne/" + selected[0],
-                    datatype: "json",
-                    success: function(data) {
-                        if(data.length > 0) {
-                            $("#bcode").find("td").remove();
-                            $.each(data, function(key, value) {
-                                $("#bcode").append("<tr>" +
-                                    " <td onclick=\"get_mcode(event)\">\n" +
-                                    "     <input type=\"checkbox\" id=\"category_1\" name= '" + value.categoryName + "' text='"+value.categoryName+"' value='" + value.bcode + "'>\n"+value.categoryName +
-                                    "                                                <div style=\"float: right\">\n" +
-                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer2\" id=\"modify_category1\"><i class=\"fa fa-pencil\"> </i></a>\n" +
-                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer3\"  id=\"remove_category1\"><i class=\" fa fa-ban\"> </i></a>\n" +
-                                    "                                                </div>\n" +
-                                    "                                            </td>" +
-                                    "</tr>");
-                            });
-                        } else {
-                            alert("이미 첫번쨰 행입니다.")
-                            return;
-                        }
-                    },
-
-                    error: function(x, o, e) {
-                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                        alert(msg);
-                    }
-                });
-            }
-        }else if(category == "2"){
-            category = "#mcode input:checked"
-            foodType = "mfood"
-            $(category).each(function() {
-                selected.push($(this).attr('value'));
-            });
-
-            if(selected.length > 1){
-                alert("check number")
-            }else if(selected.length == 0) {
-                alert("check plz")
-            }else if(selected.length ==1 ){
-                $.ajax({
-                    type:"put",
-                    url:"/admin/category/" + foodType + "/moveMinusOne/" + selected[0],
-                    datatype: "json",
-                    success: function(data) {
-                        if(data.length > 0) {
-                            $("#bcode").find("td").remove();
-                            $.each(data, function(key, value) {
-                                $("#bcode").append("<tr>" +
-                                    " <td onclick=\"get_scode(event)\">\n" +
-                                    "     <input type=\"checkbox\" id=\"category_2\" name= '" + value.categoryName + "' text='"+value.categoryName+"' value='" + value.mcode + "'>\n"+value.categoryName +
-                                    "                                                <div style=\"float: right\">\n" +
-                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer2\" id=\"modify_category2\"><i class=\"fa fa-pencil\"> </i></a>\n" +
-                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer3\"  id=\"remove_category2\"><i class=\" fa fa-ban\"> </i></a>\n" +
-                                    "                                                </div>\n" +
-                                    "                                            </td>" +
-                                    "</tr>");
-                            });
-                        } else {
-                            alert("이미 첫번쨰 행입니다.")
-                            return;
-                        }
-                    },
-
-                    error: function(x, o, e) {
-                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                        alert(msg);
-                    }
-                });
-            }
-        }else{
-            category = "#scode input:checked"
-            foodType = "sfood"
-
-            $(category).each(function() {
-                selected.push($(this).attr('value'));
-            });
-
-            if(selected.length > 1){
-                alert("check number")
-            }else if(selected.length == 0) {
-                alert("check plz")
-            }else if(selected.length ==1 ){
-                $.ajax({
-                    type:"put",
-                    url:"/admin/category/" + foodType + "/moveMinusOne/" + selected[0],
-                    datatype: "json",
-                    success: function(data) {
-                        if(data.length > 0) {
-                            $("#bcode").find("td").remove();
-                            $.each(data, function(key, value) {
-                                $("#bcode").append("<tr>" +
-                                    " <td>\n" +
-                                    "     <input type=\"checkbox\" id=\"category_3\" name= '" + value.categoryName + "' text='"+value.categoryName+"' value='" + value.scode + "'>\n"+value.categoryName +
-                                    "                                                <div style=\"float: right\">\n" +
-                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer2\" id=\"modify_category3\"><i class=\"fa fa-pencil\"> </i></a>\n" +
-                                    "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer3\"  id=\"remove_category3\"><i class=\" fa fa-ban\"> </i></a>\n" +
-                                    "                                                </div>\n" +
-                                    "                                            </td>" +
-                                    "</tr>");
-                            });
-                        } else {
-                            alert("이미 첫번쨰 행입니다.")
-                            return;
-                        }
-                    },
-
-                    error: function(x, o, e) {
-                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                        alert(msg);
-                    }
-                });
-            }
-        }
-    }
-
-    // $(document).ready(function() {
-        function get_city(event){
-            $('#example1').on('click', 'tbody tr', function(event) {
-                $(this).addClass('highlight').siblings().removeClass('highlight');
-            });
-
-            var val = event.currentTarget.children[0].value; // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            // console.log(val.children[0].value)
+        var val = event.currentTarget.children[0].value; // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        // console.log(val.children[0].value)
 
 
 
-            $.ajax({
-                type:"get",
-                url: "/category/region/1?name=" + val,
-                datatype: "json",
-                success: function(data) {
+        $.ajax({
+            type:"get",
+            url: "/admin/epicure/" + val,
+            datatype: "json",
+            success: function(data) {
+                var data = data.data;
                 if(data.length > 0) {
-                    $("#mcode").find("td").remove();
+                $("#mcode").find("td").remove();
+                $("#scode").find("td").remove();
+                $.each(data, function(key, value) {
+                    $("#mcode").append("<tr>" +
+                        " <td onclick=\"get_scode(event)\">\n" +
+                        "     <input type=\"checkbox\" class=\"chkRadio\"  id=\"category_2\" name= '" + value.id + "' text='"+value.listName+"' value='" + value.id + "'>\n" + value.listName +
+                        "                                                <div style=\"float: right\">\n" +
+                        "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer2\" id=\"modify_category2\"><i class=\"fa fa-pencil\"> </i></a>\n" +
+                        "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer3\"  id=\"remove_category2\"><i class=\" fa fa-ban\"> </i></a>\n" +
+                        "                                                </div>\n" +
+                        "                                            </td>" +
+                        "</tr>");
+                });
+            } else {
+                $("#mcode").find("td").remove().end().append("<td>NO DATA</td>");
+                return;
+            }
+        },
+
+        error: function(x, o, e) {
+            var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+            alert(msg);
+        }
+        });
+    }
+
+    $('#table-filter2').change( function(){
+        get_scode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+    });
+
+    function get_scode(event){
+        $('#example2').on('click', 'tbody tr', function(event) {
+            $(this).addClass('highlight').siblings().removeClass('highlight');
+        });
+        console.log($(this))
+        var val = event.currentTarget.children[0].value; // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        $.ajax({
+            type:"get",
+            url:"/admin/epicure/" + val,
+            datatype: "json",
+            success: function(data) {
+                var data = data.data;
+                if(data.length > 0) {
+                    $("#scode").find("td").remove();
                     $.each(data, function(key, value) {
-                        $("#mcode").append("<tr>" +
-                            " <td onclick=\"get_scode(event)\">\n" +
-                            "     <input type=\"checkbox\" id=\"category_2\" name= '" + value.districtName + "' text='"+value.districtName+"' value='" + value.districtName + "'>\n" + value.districtName +
+                        $("#scode").append("<tr>" +
+                            " <td>\n" +
+                            "     <input type=\"checkbox\" class=\"chkRadio\"  id=\"category_3\" name= '" + value.id + "' text='"+value.listName+"' value='" + value.id + "'>\n" + value.listName +
                             "                                                <div style=\"float: right\">\n" +
-                            "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer2\" id=\"modify_category2\"><i class=\"fa fa-pencil\"> </i></a>\n" +
-                            "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer3\"  id=\"remove_category2\"><i class=\" fa fa-ban\"> </i></a>\n" +
+                            "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer8\" id=\"modify_category3\"><i class=\"fa fa-pencil\"> </i></a>\n" +
+                            "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer9\"  id=\"remove_category3\"><i class=\" fa fa-ban\"> </i></a>\n" +
                             "                                                </div>\n" +
                             "                                            </td>" +
                             "</tr>");
                     });
                 } else {
-                    $("#mcode").find("td").remove().end().append("<td>NO DATA</td>");
+                    $("#scode").find("td").remove().end().append("<td>NO DATA</td>");
+                    // $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");
                     return;
                 }
             },
@@ -1118,51 +819,8 @@
                 var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
                 alert(msg);
             }
-            });
-        }
-
-        $('#table-filter2').change( function(){
-            get_scode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
         });
-
-        function get_scode(event){
-            $('#example2').on('click', 'tbody tr', function(event) {
-                $(this).addClass('highlight').siblings().removeClass('highlight');
-            });
-            console.log($(this))
-            var val = event.currentTarget.children[0].value; // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            $.ajax({
-                type:"get",
-                url:"/admin/category/sfood/" + val,
-                datatype: "json",
-                success: function(data) {
-                    if(data.length > 0) {
-                        $("#scode").find("td").remove();
-                        $.each(data, function(key, value) {
-                            $("#scode").append("<tr>" +
-                                " <td>\n" +
-                                "     <input type=\"checkbox\" id=\"category_3\" name= '" + value.categoryName + "' text='"+value.categoryName+"' value='" + value.scode + "'>\n" + value.categoryName +
-                                "                                                <div style=\"float: right\">\n" +
-                                "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer8\" id=\"modify_category3\"><i class=\"fa fa-pencil\"> </i></a>\n" +
-                                "                                                    <a href=\"javascript:void(0)\" data-href=\"#layer9\"  id=\"remove_category3\"><i class=\" fa fa-ban\"> </i></a>\n" +
-                                "                                                </div>\n" +
-                                "                                            </td>" +
-                                "</tr>");
-                        });
-                    } else {
-                        $("#scode").find("td").remove().end().append("<td>NO DATA</td>");
-                        // $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");
-                        return;
-                    }
-                },
-
-                error: function(x, o, e) {
-                    var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                    alert(msg);
-                }
-            });
-        }
-    // } );
+    }
 </script>
 
 </html>
