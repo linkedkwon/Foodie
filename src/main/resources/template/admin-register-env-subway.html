@@ -294,11 +294,18 @@
 <!--                                    </tfoot>-->
                                 </table>
                                 <div style="    background: aliceblue;" id="stickyId1">
-                                    <a href="" id="move_category1_plus" onclick="move_one(1)"><button class="btn btn-primary">위로 </button></a>
-                                    <a href="" id="move_category1_minus" onclick="minus_one(1)"><button class="btn btn-primary">아래로 </button></a>
-                                    <a href="#layer1" id="add_category1"><button class="btn btn-primary">추가 </button></a>
-                                    <!--                                            <a href="#layer2" id="modify_category1"><button class="btn btn-primary"> 수정 </button></a>-->
-                                    <!--                                            <a href="#layer3" id="remove_category1"><button class="btn btn-primary"> 삭제 </button></a>-->
+                                    <div>
+                                        <a href="" id="move_category1_plus" onclick="move_one(1)"><button class="btn btn-primary">위로 </button></a>
+                                        <a href="" id="move_category1_minus" onclick="minus_one(1)"><button class="btn btn-primary">아래로 </button></a>
+                                        <a href="#layer1" id="add_category1"><button class="btn btn-primary">추가 </button></a>
+                                        <a href="#layer1"><button class="btn btn-primary">수정 </button></a>
+                                    </div>
+                                    <div>
+                                        <a href="" onclick="move_one(1)"><button class="btn btn-primary">처음 </button></a>
+                                        <a href="" onclick="minus_one(1)"><button class="btn btn-primary">마지막 </button></a>
+                                        <a href="#layer1"><button class="btn btn-primary">삭제 </button></a>
+                                        <a href="#layer1"><button class="btn btn-primary">저장 </button></a>
+                                    </div>
                                 </div>
                             </div>
                             <div class="tableFixHead">
@@ -328,9 +335,18 @@
 <!--                                    </tfoot>-->
                                 </table>
                                 <div style="background: aliceblue;" id="stickyId2">
-                                    <a href="" id="move_category2_plus"><button class="btn btn-primary">위로 </button></a>
-                                    <a href="" id="move_category2_minus"><button class="btn btn-primary">아래로 </button></a>
-                                    <a href="#layer4" id="add_category2"><button class="btn btn-primary">추가 </button></a>
+                                    <div>
+                                        <a href="" id="move_category2_plus"><button class="btn btn-primary">위로 </button></a>
+                                        <a href="" id="move_category2_minus"><button class="btn btn-primary">아래로 </button></a>
+                                        <a href="#layer4" id="add_category2"><button class="btn btn-primary">추가 </button></a>
+                                        <a href="#layer4"><button class="btn btn-primary">수정 </button></a>
+                                    </div>
+                                    <div>
+                                        <a href=""><button class="btn btn-primary">처음 </button></a>
+                                        <a href=""><button class="btn btn-primary">마지막 </button></a>
+                                        <a href=""><button class="btn btn-primary">삭제 </button></a>
+                                        <a href="#layer4"><button class="btn btn-primary">저장 </button></a>
+                                    </div>
                                 </div>
                             </div>
                             <div class="tableFixHead">
@@ -361,9 +377,18 @@
 <!--                                    </tfoot>-->
                                 </table>
                                 <div id="stickyId3">
-                                    <a href="" id="move_category3_plus"><button class="btn btn-primary">위로 </button></a>
-                                    <a href="" id="move_category3_minus"><button class="btn btn-primary">아래로 </button></a>
-                                    <a href="#layer7" id="add_category3"><button class="btn btn-primary">추가 </button></a>
+                                    <div>
+                                        <a href="" id="move_category3_plus"><button class="btn btn-primary">위로 </button></a>
+                                        <a href="" id="move_category3_minus"><button class="btn btn-primary">아래로 </button></a>
+                                        <a href="#layer7" id="add_category3"><button class="btn btn-primary">추가 </button></a>
+                                        <a href="#layer7"><button class="btn btn-primary">수정 </button></a>
+                                    </div>
+                                    <div>
+                                        <a href=""><button class="btn btn-primary">처음 </button></a>
+                                        <a href=""><button class="btn btn-primary">마지막 </button></a>
+                                        <a href="#layer7"><button class="btn btn-primary">삭제 </button></a>
+                                        <a href="#layer7"><button class="btn btn-primary">저장 </button></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -597,7 +622,6 @@
     th     { background:#eee; }
 
     #stickyId1, #stickyId2, #stickyId3 {
-        padding-left: 20px;
         padding-top: 20px;
         padding-bottom: 20px;
         background: aliceblue;
