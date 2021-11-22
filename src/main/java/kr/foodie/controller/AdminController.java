@@ -392,18 +392,26 @@ public class AdminController {
             shopType = "4";
             mav.setViewName("admin-shop-mint-list");
         }
+        List<EpicureRegion> regionsInfos;
+        regionsInfos = regionAdminService.getEpicureProvince();
+//        regions = regionAdminService.findRegionProvinceInfoAll();
+//        categoryMInfos = foodCategoryAdminService.getAdminRegionMCategory(100);
+//        categorySInfos = foodCategoryAdminService.getAdminRegionSCategory(1000);
+        mav.addObject("regionInfos", regionsInfos);
+
         List<Shop> commentList;
         List<FoodCategory> categoryInfos;
 //        List<Shop> sideCommentListWithOrder;
-        List<String> regionInfos;
-        regionInfos = regionAdminService.getRegionProvinceInfo();
+//        List<String> regionInfos;
+//        regionInfos = regionAdminService.getRegionProvinceInfo();
         categoryInfos = foodCategoryAdminService.getAdminRegionBCategory();
         commentList = shopService.getTop50AdminShopInfos(shopType);
 //        commentListWithOrder = shopService.getShopInfosWithOrder(regionTypeId, shopType, 9);
 //        sideCommentListWithOrder = shopService.getShopInfosWithSideOrder(regionTypeId, shopType, 8);
         mav.addObject("payload", commentList);
+
         mav.addObject("categoryInfos", categoryInfos);
-        mav.addObject("regionInfos", regionInfos);
+//        mav.addObject("regionInfos", regionInfos);
 //        mav.addObject("regionInfo", regiaonInfos);
 //        mav.addObject("priority", commentListWithOrder);
 //        mav.addObject("sidePriority", sideCommentListWithOrder);
@@ -682,6 +690,14 @@ public class AdminController {
         System.out.println("fff");
         String viewName = shopService.updateShopInfo(shop, shopId);
         return viewName;
+    }
+
+    @GetMapping("/shop/list/filter")
+    public Map<String, List> getAdminShopList(@RequestParam String shopType, @RequestParam String address,
+                                        @RequestParam String bCode, @RequestParam String mCode, @RequestParam String sCode){
+        Map<String, List> members = new HashMap<>();
+        members.put("data", shopService.getAdminShopList(shopType, address, bCode, mCode, sCode));
+        return members;
     }
 
 }

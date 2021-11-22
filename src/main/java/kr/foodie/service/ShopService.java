@@ -1,14 +1,11 @@
 package kr.foodie.service;
 
-import com.google.gson.Gson;
-import kr.foodie.domain.shop.Region;
 import kr.foodie.domain.shop.Shop;
 import kr.foodie.domain.shop.ShopDTO;
 import kr.foodie.repo.ShopRepository;
 import kr.foodie.repo.admin.RegionAdminRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.jpa.FullTextEntityManager;
@@ -22,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -229,7 +227,6 @@ public class ShopService {
         FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Shop.class);
 
         List<Shop> result = fullTextQuery.getResultList();
-
         List<Shop> list = result.stream()
                     .filter(e -> e.getShopType().equals(shopType))
                     .collect(Collectors.toList());
@@ -298,5 +295,27 @@ public class ShopService {
         Shop applied = shopRepository.save(updated);
         log.info("Successfully updated = {}", applied);
         return viewName;
+    }
+
+    public List<Shop> getAdminShopList(String shopType, String address, String b, String m, String s) {
+        String jpql = "select new Shop "
+                + "from Shop s "
+                + "where s.shopType = "+shopType;
+
+        if(!b.equals("0")) jpql += " and s.bigCategory like " + b;
+        if(!m.equals("0")) jpql += " and s.middleCategory like " + m;
+        if(!s.equals("0")) jpql += " and s.smallCategory like " + s;
+
+
+
+        if(!b.equals("0")) jpql += " and s.bigCategory like " + b;
+        if(!m.equals("0")) jpql += " and s.middleCategory like " + m;
+        if(!s.equals("0")) jpql += " and s.smallCategory like " + s;
+
+        TypedQuery<Shop> query = em.createQuery(jpql, Shop.class);
+        List<Shop> list1 = query.getResultList();
+
+
+        return list1;
     }
 }

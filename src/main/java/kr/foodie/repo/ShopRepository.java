@@ -84,5 +84,4 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
 
     @Query(value="select * from shop where shop_type = ?1 and replace(shop_name,' ','') like %?2%", nativeQuery = true)
     List<Shop> findDuplicatedShop(String shopType, String shopName);
-
 }

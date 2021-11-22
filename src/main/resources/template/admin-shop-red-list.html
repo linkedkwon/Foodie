@@ -292,30 +292,47 @@
                             <div style="    border-bottom: 1px solid lightgray;">
                                 <div style="display: inline-flex;">
                                     <div  style="    height: 31px; text-align:center; width: 120px; padding-top: 6px;background: rgb(247, 247, 247);   border-right: 1px solid lightgray"> 지역</div>
-                                    <p style="    padding-left: 20px;  padding-top: 5px;  margin-bottom: 0;">
+                                    <p style=" padding-left: 20px; padding-top: 5px; margin-bottom: 0;">
+                                        <select id="table-filter4" style="    height: 20px;">
+                                            <option value="">1차 지역 선택</option>
+                                            <option
+                                                th:each="val : ${regionInfos}"
+                                                th:value="${val.id}"
+                                                th:utext="${val.listName}">
+                                            </option>
+                                        </select>
+                                        <select id="table-filter5" style="height: 20px;">
+                                            <option value="">2차 지역 선택</option>
+                                        </select>
 
-                                    <select id="table-filter4" style="    height: 20px;">
-                                        <option value="">1차 지역 선택</option>
-                                        <option
-                                            th:each="val : ${regionInfos}"
-                                            th:value="${val}"
-                                            th:utext="${val}">
-                                        </option>
-                                    </select>
-                                    <select id="table-filter5" style="    height: 20px;">
-                                        <option value="">2차 지역 선택</option>
-                                    </select>
-
-                                    <select id="table-filter6" style="    height: 20px;">
-                                        <option value="">3차 지역 선택</option>
-                                    </select>
+                                        <select id="table-filter6" style="height: 20px;">
+                                            <option value="">3차 지역 선택</option>
+                                        </select>
+                                    </p>
+                                    <p style=" padding-left: 20px; padding-top: 5px; margin-bottom: 0;">
+                                        등록서비스
+                                        <select id="table-filter7" style="height: 20px;">
+                                            <option value="">전체</option>
+                                            <option value="">프리미엄</option>
+                                            <option value="">인기업소</option>
+                                            <option value="">추천업소</option>
+                                            <option value="">스폐셜업소</option>
+                                            <option value="">줄광고</option>
+                                            <option value="">베스트쿠폰</option>
+                                        </select>
+                                    </p>
+                                        <div style="margin-top: 7px; margin-left: 10px;">
+                                            <input type="checkbox" name="" style="padding-top: 10px;">
+                                        </div>
+                                    <p style=" padding-left: 5px; padding-top: 5px; margin-bottom: 0;">
+                                        쿠폰
                                     </p>
                                 </div>
                             </div>
                             <div style="display: inline-flex;">
                                 <div  style="height: 31px; text-align:center; width: 120px;  padding-top: 6px; background: rgb(247, 247, 247); border-right: 1px solid lightgray"> 검색어 </div>
                                 <p style="    padding-left: 20px;  padding-top: 5px;  margin-bottom: 0;">
-                                    <select id="table-filter7" style="  height: 20px;">
+                                    <select id="table-filter8" style="  height: 20px;">
                                         <option value="">선택</option>
                                         <option value="">업소명</option>
                                         <option value="">등록자</option>
@@ -325,8 +342,8 @@
                                     <input type="text" style="height: 20px; width: 120px;"/>
                                 </p>
                             </div>
-                            <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; border-radius: 5px;" onclick="filterFoodCategory()">초기화</button>
-                            <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="filterFoodCategory()">검색</button>
+                            <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; border-radius: 5px;" onclick="pageReload()">초기화</button>
+                            <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="filterAll()">검색</button>
                         </div>
 
                         <div class="card-body" style="width:100%; padding-right: 0px;margin: auto;">
@@ -335,15 +352,16 @@
                                     <thead>
                                     <tr>
                                         <th style="text-align: center" >사진</th>
-                                        <th>가게이름</th>
-                                        <th>줄광고 </th>
-                                        <th>수정일</th>
-                                        <th>등록일</th>
+                                        <th>내용</th>
+                                        <th>서비스현황</th>
+                                        <th>수정</th>
+                                        <th>삭제</th>
                                     </tr>
                                     </thead>
                                 </table>
                             </div>
                         </div>
+
                     </div>
 
                 </div>
@@ -438,7 +456,9 @@
     .table td{
         text-align: center;
     }
-
+    .table td:nth-child(2){
+        text-align: left;
+    }
 
     /*.data_table {*/
     /*    text-align: center;*/
@@ -469,14 +489,89 @@
             $("#preview").remove();
         });
 
+        $.fn.DataTable.ext.pager.numbers_length = 10;
+
+        $.fn.DataTable.ext.pager.full_numbers_no_ellipses = function(page, pages){
+            var numbers = [];
+            var buttons = $.fn.DataTable.ext.pager.numbers_length;
+            var half = Math.floor( buttons / 2 );
+
+            console.log('page', page);
+            console.log('pages', pages);
+
+            if(pages > 1) {
+                var len = pages / 10;
+                if (len % 10 != 0)
+                    len++;
+                var interval = 10;
+                var idx = 0;
+                for (var i = 0; i < len; i++) {
+                    if (page < interval) {
+                        idx = i;
+                        break;
+                    }
+                    interval += 10;
+                }
+
+                for (var i = 0; i < 10; i++) {
+                    if ((idx * 10) + i >= pages)
+                        break;
+                    numbers.push((idx * 10) + i);
+                }
+            }else{
+                numbers.push(1);
+            }
+            /**
+            var _range = function ( len, start ){
+                var end;
+
+                if ( typeof start === "undefined" ){
+                    start = 0;
+                    end = len;
+
+                } else {
+                    end = start;
+                    start = len;
+                }
+
+                var out = [];
+                for ( var i = start ; i < end; i++ ){ out.push(i); }
+
+                return out;
+            };
+
+            if ( pages <= buttons ) {
+                numbers = _range( 0, pages );
+
+            } else if ( page <= half ) {
+                numbers = _range( 0, buttons);
+
+            } else if ( page >= pages - 1 - half ) {
+                numbers = _range( pages - buttons, pages );
+
+            } else {
+                numbers = _range( page - half, page + half + 1);
+            }*/
 
 
-
+            numbers.DT_el = 'span';
+            return ['first', 'previous', numbers, 'next', 'last'];
+        };
 
         $('#example').DataTable( {
             "ajax": "/admin/category/red/all",
             ordering: false,
-            "pageLength": 30,
+            "lengthChange": false,
+            "pageLength": 15,
+            "pagingType": "full_numbers_no_ellipses",
+            language: {
+                paginate:{
+                    next: '>',
+                    previous: '<',
+                    first:'<<',
+                    last:'>>'
+                }
+            },
             // "paging":true,
             "columns": [
                 // <div>
@@ -487,17 +582,34 @@
                 // </div>
 
                 { 'data': "shopImage", 'render': function (data) { return '<img src="' + data + '" class="thumbnail" style="width: 80px;height:60px;" />'; } },
-                { "data": "shopName" , 'render': function  ( data, type, row ) { return '<div><a href="/admin/shop/red/'+ row.shopId +'">'+ data + '</a> ( 푸디평점 - ' + row.foodieLogRating + ') </div><div><span> 주소 -'+ row.address +'</span></div>'; } },
-                { "data": "shopPaid" },
-                { "data": "updatedAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
-                { "data": "createdAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
+                { "data": "shopName" , 'render': function  ( data, type, row ) {
+                    return '<div><a href="/shop/?id='+ row.shopId +"&page=0"+'" target="_blank">'+ data + '</a> (전문가평가 : ' + row.foodieLogRating + ')</span></div>' +
+                           '<div><span>-<b>주소</b> '+ row.address +'</span></div>' +
+                           '<div><span>-<b>전화번호</b> '+ row.phone +'</span></div>' +
+                           '<div><span>-<b>등록</b> '+ moment(row.createdAt).format("YYYY-MM-DD") +'  -<b>수정</b> '+ moment(row.updatedAt).format("YYYY-MM-DD") +'</span></div>';
+                } },
+                { "data": "shopPaid", 'render':
+                    function (data){
+                        return '<div>'+data == 'y'?'줄광고 : 무기한':'' +'</div>'
+                    }
+                },
+                { "data": "shopId", 'render':
+                    function (data) {
+                        return '<div>수정</div>';
+                    }
+                },
+                { "data": "shopId", 'render':
+                    function (data) {
+                    return '<div>삭제</div>';
+                    }
+                },
             ],
             "columnDefs": [
                 { "width": "15%","targets": 0},
-                { "width": "45%", "targets": 1},
-                { "width": "10%", "targets": 2},
-                { "width": "15%", "targets": 3},
-                { "width": "15%", "targets": 4},
+                { "width": "50%", "targets": 1},
+                { "width": "15%", "targets": 2},
+                { "width": "10%", "targets": 3},
+                { "width": "10%", "targets": 4},
             ],
             initComplete: function () {
                 this.api().columns().every( function () {
@@ -615,15 +727,16 @@
             if(val != ''){
                 $.ajax({
                     type:"get",
-                    url:"/admin/region/" + val,
+                    url:"/admin/epicure/" + val,
                     datatype: "json",
                     success: function(data) {
+                        var data = data.data;
                         if(data.length > 0) {
                             $("#table-filter5").find("option").remove().end();
                             $("#table-filter4").append("<option>중분류</option>");
                             $("#table-filter5").append("<option value=''>" + '2차 지역 선택' + "</option>");
                             $.each(data, function(key, value) {
-                                $("#table-filter5").append("<option value='" + value.districtName + "'>" + value.districtName + "</option>");
+                                $("#table-filter5").append("<option value='" + value.id + "'>" + value.listName + "</option>");
                             });
                         } else {
                             $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");
@@ -648,15 +761,16 @@
             if(val != ''){
                 $.ajax({
                     type:"get",
-                    url:"/admin/region/" + val,
+                    url:"/admin/epicure/" + val,
                     datatype: "json",
                     success: function(data) {
+                        var data = data.data;
                         if(data.length > 0) {
-                            $("#table-filter5").find("option").remove().end();
-                            $("#table-filter4").append("<option>중분류</option>");
-                            $("#table-filter5").append("<option value=''>" + '2차 지역 선택' + "</option>");
+                            $("#table-filter6").find("option").remove().end();
+                            $("#table-filter5").append("<option>중분류</option>");
+                            $("#table-filter6").append("<option value=''>" + '3차 지역 선택' + "</option>");
                             $.each(data, function(key, value) {
-                                $("#table-filter5").append("<option value='" + value.districtName + "'>" + value.districtName + "</option>");
+                                $("#table-filter6").append("<option value='" + value.id + "'>" + value.listName + "</option>");
                             });
                         } else {
                             $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");
@@ -670,12 +784,114 @@
                     }
                 });
             }else{
-                $("#table-filter5").find("option").remove().end();
-                $("#table-filter5").append("<option>2차 지역 선택</option>");
+                $("#table-filter6").find("option").remove().end();
+                $("#table-filter6").append("<option>3차 지역 선택</option>");
             }
         }
     } );
 
+    function pageReload(){
+        window.location.reload();
+    }
+
+    /**
+     * 필터 부분 조회
+     */
+    function filterAll(){
+        var bCode = $('#table-filter1 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var mCode = $('#table-filter2 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var sCode = $('#table-filter3 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var regionId = $('#table-filter4 :selected').val(); //
+        var subwayId = $('#table-filter5 :selected').val();
+        var villageId = $('#table-filter6 :selected').val();
+
+        var param = {"shopType":0,"bCode":bCode,"mCode":mCode, "sCode":sCode,
+                     "regionId":regionId, "subwayId":subwayId,
+                     "villageId":villageId};
+
+        console.log('b',bCode);
+        console.log('m',mCode);
+        console.log('s',sCode);
+        console.log('r',regionId);
+        console.log('s',subwayId);
+        console.log('v',villageId);
+
+
+        $('#example').DataTable( {
+            "ajax": "/admin/shop/filter/list?t="+0+"&b="+bCode+"&m="+mCode+"&s="+sCode+"&r="+regionId+"&sub="+subwayId+"&v="+villageId,
+            ordering: false,
+            "lengthChange": false,
+            "pageLength": 15,
+            "pagingType": "full_numbers_no_ellipses",
+            language: {
+                paginate:{
+                    next: '>',
+                    previous: '<',
+                    first:'<<',
+                    last:'>>'
+                }
+            },
+            // "paging":true,
+            "columns": [
+                // <div>
+                //     <a th:href="@{'/admin/shop/red/'+${shop.shopId}}" th:text="${shop.shopName}"></a>
+                // </div>
+                // <div>
+                //     <span th:text="${'주소- ' + shop.address}"></span>
+                // </div>
+
+                { 'data': "shopImage", 'render': function (data) { return '<img src="' + data + '" class="thumbnail" style="width: 80px;height:60px;" />'; } },
+                { "data": "shopName" , 'render': function  ( data, type, row ) {
+                        return '<div><a href="/shop/?id='+ row.shopId +"&page=0"+'" target="_blank">'+ data + '</a> (전문가평가 : ' + row.foodieLogRating + ')</span></div>' +
+                            '<div><span>-<b>주소</b> '+ row.address +'</span></div>' +
+                            '<div><span>-<b>전화번호</b> '+ row.phone +'</span></div>' +
+                            '<div><span>-<b>등록</b> '+ moment(row.createdAt).format("YYYY-MM-DD") +'  -<b>수정</b> '+ moment(row.updatedAt).format("YYYY-MM-DD") +'</span></div>';
+                    } },
+                { "data": "shopPaid", 'render':
+                        function (data){
+                            return '<div>'+data == 'y'?'줄광고 : 무기한':'' +'</div>'
+                        }
+                },
+                { "data": "shopId", 'render':
+                        function (data) {
+                            return '<div>수정</div>';
+                        }
+                },
+                { "data": "shopId", 'render':
+                        function (data) {
+                            return '<div>삭제</div>';
+                        }
+                },
+            ],
+            "columnDefs": [
+                { "width": "15%","targets": 0},
+                { "width": "50%", "targets": 1},
+                { "width": "15%", "targets": 2},
+                { "width": "10%", "targets": 3},
+                { "width": "10%", "targets": 4},
+            ],
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                } );
+            }
+        } );
+    }
 
     function filterFoodCategory(){
         console.log('00000')

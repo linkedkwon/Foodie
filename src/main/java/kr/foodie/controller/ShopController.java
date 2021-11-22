@@ -6,10 +6,8 @@ import kr.foodie.domain.shop.HashTag;
 
 import kr.foodie.domain.shop.Region;
 import kr.foodie.domain.shop.Shop;
-import kr.foodie.repo.ShopRepository;
 import kr.foodie.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import org.springframework.stereotype.Controller;
@@ -17,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @RequiredArgsConstructor
