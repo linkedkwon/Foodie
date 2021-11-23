@@ -692,12 +692,22 @@ public class AdminController {
         return viewName;
     }
 
+    //area1~3 : 각각 시,구,도
+    //shop1~3 : bCode, mCode, sCode
+    //selectedOption : 선택 검색어 필터(업소명, 등록자..) keyword : 해당 키워드
+    //couponFlag : 쿠폰 여부
     @GetMapping("/shop/list/filter")
-    public Map<String, List> getAdminShopList(@RequestParam String shopType, @RequestParam String address,
-                                        @RequestParam String bCode, @RequestParam String mCode, @RequestParam String sCode){
+    public Map<String, List> getAdminShopList(@RequestParam String shopType,
+                                              @RequestParam String area1, @RequestParam String area2, @RequestParam String area3,
+                                              @RequestParam String shop1, @RequestParam String shop2, @RequestParam String shop3,
+                                              @RequestParam String selectedOption, @RequestParam String keyword, @RequestParam String couponFlag){
+
         Map<String, List> members = new HashMap<>();
-        members.put("data", shopService.getAdminShopList(shopType, address, bCode, mCode, sCode));
+
+        members.put("data", shopService.getAdminShopList(shopType, area1, area2, area3,
+                                                            shop1, shop2, shop3,
+                                                            selectedOption, keyword,
+                                                            couponFlag));
         return members;
     }
-
 }

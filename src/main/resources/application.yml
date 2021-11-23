@@ -18,7 +18,7 @@ spring:
 
 
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://183.111.227.104:3306/foodie?useSSL=false&characterEncoding=utf8&serverTimezone=UTC
+    url: jdbc:mysql://183.111.227.104:3306/foodie?useSSL=false&characterEncoding=utf8&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull
     username: test
     password: Foodie123!@#
 
