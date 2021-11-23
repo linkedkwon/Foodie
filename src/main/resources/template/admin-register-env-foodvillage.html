@@ -262,14 +262,14 @@
                 <div class="card shadow mb-4" style="    height: 800px;">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> 카테고리설정 ( <a
-                                href="/admin/registerEnv/red"  class="text-primary" >레드리스트</a> / <a href="/admin/registerEnv/green">그린리스트</a>)
+                                href="/admin/registerEnv/red">레드리스트</a> / <a href="/admin/registerEnv/green">그린리스트</a>)
                         </h6>
                         <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"><a
                                 href="/admin/registerEnv/region">지역설정 </a></h6>
                         <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"><a
                                 href="/admin/registerEnv/subway"> 역세권설정 </a></h6>
                         <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"><a
-                                href="/admin/registerEnv/foodVillage"> 맛집촌설정 </a></h6>
+                                href="/admin/registerEnv/foodVillage"  class="text-primary"> 맛집촌설정 </a></h6>
                         <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"><a
                                 href="/admin/registerEnv/theme"> 테마설정 </a></h6>
                         <!--<h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"><a
@@ -278,12 +278,12 @@
                     <div class="card-body" style="  justify-content: center;display: flex ;  margin: auto;">
                         <div class="tableFixHead">
                             <div id="categoryHead1">
-                                <span>1차 카테고리</span>
+                                <span>맛집촌</span>
                             </div>
                             <table class="table-bordered display" id="example1" style="width: 240px;" cellspacing="0">
                                 <tbody id="bcode">
                                 <tr th:each="val : ${regionInfos}">
-                                    <td onclick="get_city(event)">
+                                    <td>
                                         <input type="checkbox" class="chkRadio" id="category_1" th:value="${val.id}"
                                                th:name="${val.listName}" th:text="${' ' + val.listName}"/>
                                     </td>
@@ -316,90 +316,6 @@
                                         <button class="featureButton">삭제</button>
                                     </a>
                                     <a href="#layer1" id="bcode-save-region">
-                                        <button class="featureButton">저장</button>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tableFixHead">
-
-                            <div id="categoryHead2">
-                                <span>2차 카테고리</span>
-                            </div>
-                            <table class="table-bordered display" id="example2" style="width: 220px;" cellspacing="0">
-                                <tbody id="mcode">
-                                <input type="hidden" id="mcode-parent-no">
-
-                                </tbody>
-                            </table>
-                            <div style="background: aliceblue;" class="stickyId" id="mcodeFunction">
-                                <div>
-                                    <a id='mcode-up' href="javascript:void(0)">
-                                        <button class="featureButton">위로</button>
-                                    </a>
-                                    <a id='mcode-down' href="javascript:void(0)">
-                                        <button class="featureButton">아래로</button>
-                                    </a>
-                                    <a href="#layer1" class="addRegion">
-                                        <button class="featureButton">추가</button>
-                                    </a>
-                                    <a href="#layer2" class="modifyRegion">
-                                        <button class="featureButton">수정</button>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a id='mcode-upFirst'>
-                                        <button class="featureButton">처음</button>
-                                    </a>
-                                    <a id='mcode-downLast' href="javascript:void(0)">
-                                        <button class="featureButton">마지막</button>
-                                    </a>
-                                    <a href="javascript:void(0)" style="padding-left: 10px;"
-                                       id='mcode-remove'>
-                                        <button class="featureButton">삭제</button>
-                                    </a>
-                                    <a href="#layer1" id="mcode-save-region">
-                                        <button class="featureButton">저장</button>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tableFixHead">
-                            <div id="categoryHead1">
-                                <span>3차 카테고리</span>
-                            </div>
-
-                            <table class="table-bordered display" id="example3" style="width: 220px;" cellspacing="0">
-                                <tbody id="scode">
-                                <input type="hidden" id="scode-parent-no">
-                                </tbody>
-                            </table>
-                            <div style="    background: aliceblue;" class="stickyId" id="scodeFunction">
-                                <div>
-                                    <a id='scode-up' href="javascript:void(0)">
-                                        <button class="featureButton">위로</button>
-                                    </a>
-                                    <a id='scode-down' href="javascript:void(0)">
-                                        <button class="featureButton">아래로</button>
-                                    </a>
-                                    <a href="#layer1" class="addRegion">
-                                        <button class="featureButton">추가</button>
-                                    </a>
-                                    <a href="#layer2" class="modifyRegion">
-                                        <button class="featureButton">수정</button>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a id='scode-upFirst' href="javascript:void(0)">
-                                        <button class="featureButton">처음</button>
-                                    </a>
-                                    <a id='scode-downLast' href="javascript:void(0)">
-                                        <button class="featureButton">마지막</button>
-                                    </a>
-                                    <a href="javascript:void(0)" style="padding-left: 10px;" id='scode-remove'>
-                                        <button class="featureButton">삭제</button>
-                                    </a>
-                                    <a href="#layer1" id="scode-save-region">
                                         <button class="featureButton">저장</button>
                                     </a>
                                 </div>
@@ -690,8 +606,6 @@
 <script th:inline="javascript">
 
     let REGION = [];
-    let MREGION = [];
-    let SREGION = [];
 
     $(document).ready(function () {
         REGION = [[${regionInfos}]];
@@ -704,37 +618,13 @@
             layer_popup($href, type);
         });
 
-        $('#mcodeFunction .addRegion').on('click', function () {
-            var $href = $(this).attr('href');
-            const type = "#mcode";
-            $('#type').val(type);
-            layer_popup($href, type);
-        });
-        $('#scodeFunction .addRegion').on('click', function () {
-            var $href = $(this).attr('href');
-            const type = "#scode";
-            $('#type').val(type);
-            layer_popup($href, type);
-        });
-
         $('#bcode-save-region').on('click', () => {
             updateRequest(REGION);
-        })
-
-        $('#mcode-save-region').on('click', () => {
-            updateRequest(MREGION);
-        })
-
-        $('#scode-save-region').on('click', () => {
-            updateRequest(SREGION);
         })
 
         $('.btn-layerAdd').on("click", () => {
             updateListName();
         })
-
-
-
 
         // 수정
         $('#bcodeFunction .modifyRegion').on('click', function () {
@@ -742,23 +632,6 @@
             const type = "#bcode";
             $('#modify-type').val(type);
             var category_name = jQuery("#bcode .chkRadio:checked").parent().text().trim();
-            $('#layer2 #modify-category-name').val(category_name)
-            layer_popup($href, type);
-        });
-
-        $('#mcodeFunction .modifyRegion').on('click', function () {
-            var $href = $(this).attr('href');
-            const type = "#mcode";
-            $('#modify-type').val(type);
-            var category_name = jQuery("#mcode .chkRadio:checked").parent().text().trim();
-            $('#layer2 #modify-category-name').val(category_name)
-            layer_popup($href, type);
-        });
-        $('#scodeFunction .modifyRegion').on('click', function () {
-            var $href = $(this).attr('href');
-            const type = "#scode";
-            $('#modify-type').val(type);
-            var category_name = jQuery("#scode .chkRadio:checked").parent().text().trim();
             $('#layer2 #modify-category-name').val(category_name)
             layer_popup($href, type);
         });
@@ -782,56 +655,6 @@
         })
         $('#bcode-remove').on('click', () => {
             rowMoveEvent('remove', 'bcode', REGION);
-        })
-
-        // 구
-        $('#mcode-up').on('click', () => {
-            rowMoveEvent('up', 'mcode', MREGION);
-        })
-        $('#mcode-down').on('click', () => {
-            rowMoveEvent('down', 'mcode', MREGION);
-        })
-        $('#mcode-upFirst').on('click', () => {
-            rowMoveEvent('upFirst', 'mcode', MREGION);
-        })
-        $('#mcode-downLast').on('click', () => {
-            rowMoveEvent('downLast', 'mcode', MREGION);
-        })
-        $('#mcode-remove').on('click', () => {
-            rowMoveEvent('remove', 'mcode', REGION);
-        })
-        // 동
-        $('#scode-up').on('click', () => {
-            rowMoveEvent('up', 'scode', SREGION);
-        })
-        $('#scode-down').on('click', () => {
-            rowMoveEvent('down', 'scode', SREGION);
-        })
-        $('#scode-upFirst').on('click', () => {
-            rowMoveEvent('upFirst', 'scode', SREGION);
-        })
-        $('#scode-downLast').on('click', () => {
-            rowMoveEvent('downLast', 'scode', SREGION);
-        })
-        $('#scode-remove').on('click', () => {
-            rowMoveEvent('remove', 'scode', SREGION);
-        })
-
-        $('.chkRadio').on('click', () => {
-            if ($('#bcode .chkRadio:checked').length === 0) {
-                if (SREGION === null) {
-                    SREGION || SREGION.empty();
-                }
-                if (MREGION === null) {
-                    MREGION || MREGION.empty();
-                }
-            }
-
-            if ($('mcode .chkRadio:checked').length === 0) {
-                if (SREGION === null) {
-                    SREGION || SREGION.empty();
-                }
-            }
         })
     });
 
@@ -1023,24 +846,10 @@
     const modifyListName = () => {
         const type = $('#modify-type').val();
         const listName = $("#modify-category-name").val();
-
-
-        if (type == "#mcode") {
-            const checked = $("#mcode .chkRadio:checked");
-            checked.parent().contents()[2].data = " " + listName;
-            MREGION.filter(cur => cur.id == checked.val())
-                .map((cur) => cur.listName = listName);
-        } else if (type == "#scode") {
-            const checked = $("#scode .chkRadio:checked");
-            checked.parent().contents()[2].data = " " + listName;
-            SREGION.filter(cur => cur.id == checked.val())
-                .map((cur) => cur.listName = listName);
-        } else {
-            const checked = $("#bcode .chkRadio:checked");
-            checked.parent().contents()[2].data = " " + listName;
-            REGION.filter(cur => cur.id == checked.val())
-                .map((cur) => cur.listName = listName);
-        }
+        const checked = $("#bcode .chkRadio:checked");
+        checked.parent().contents()[2].data = " " + listName;
+        REGION.filter(cur => cur.id == checked.val())
+            .map((cur) => cur.listName = listName);
     }
     const updateListName = () => {
         const type = $('#type').val();
@@ -1054,114 +863,14 @@
             "</tr>");
         console.log("0000")
         console.log(type)
-        if (type === "#mcode") {
-            MREGION.push({
-                listName: listName,
-                visiable: "yes",
-                code: "red_shop_type",
-                parentNo: $("#mcode-parent-no").val(),
-                seq: max + 1
-            });
-            console.log(MREGION)
-
-        } else if (type === "#scode") {
-            SREGION.push({
-                listName: listName,
-                visiable: "yes",
-                code: "red_shop_type",
-                parentNo: $("#scode-parent-no").val(),
-                seq: max + 1
-            });
-            console.log(SREGION)
-        } else {
-            REGION.push({
-                listName: listName,
-                visiable: "yes",
-                code: "red_shop_type",
-                parentNo: "0",
-                seq: max + 1
-            });
-            console.log(REGION)
-        }
-    }
-
-    function get_city(event) {
-        $('#example1').on('click', 'tbody tr', function (event) {
-            $(this).addClass('highlight').siblings().removeClass('highlight');
+        REGION.push({
+            listName: listName,
+            visiable: "yes",
+            code: "food_village",
+            parentNo: "0",
+            seq: max + 1
         });
-
-        var val = event.currentTarget.children[0].value; // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-
-        $('#mcode-parent-no').val(val);
-        $.ajax({
-            type: "get",
-            url: "/admin/epicure/red_shop_type/" + val,
-            datatype: "json",
-            success: function (data) {
-                var data = data.data;
-                if (data.length > 0) {
-                    $("#mcode").find("td").remove();
-                    $("#scode").find("td").remove();
-                    MREGION = data
-                    $.each(data, function (key, value) {
-                        $("#mcode").append("<tr>" +
-                            " <td onclick=\"get_scode(event)\">\n" +
-                            "     <input type=\"checkbox\" class=\"chkRadio\"  id=\"category_2\" name= '" + value.id + "' text='" + value.listName + "' value='" + value.id + "'>\n" + value.listName +
-                            "</td>" +
-                            "</tr>");
-                    });
-                } else {
-                    $("#mcode").find("td").remove().end().append("<tr class=\"none\"><td>NO DATA</td></tr>");
-                    return;
-                }
-            },
-
-            error: function (x, o, e) {
-                var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                alert(msg);
-            }
-        });
-    }
-
-    $('#table-filter2').change(function () {
-        get_scode(this); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-    });
-
-    function get_scode(event) {
-        $('#example2').on('click', 'tbody tr', function (event) {
-            $(this).addClass('highlight').siblings().removeClass('highlight');
-        });
-        console.log($(this))
-        var val = event.currentTarget.children[0].value; // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-        $('#scode-parent-no').val(val);
-        $.ajax({
-            type: "get",
-            url: "/admin/epicure/red_shop_type/" + val,
-            datatype: "json",
-            success: function (data) {
-                var data = data.data;
-                SREGION = data;
-                if (data.length > 0) {
-                    $("#scode").find("td").remove();
-                    $.each(data, function (key, value) {
-                        $("#scode").append("<tr>" +
-                            " <td>\n" +
-                            "     <input type=\"checkbox\" class=\"chkRadio\"  id=\"category_3\" name= '" + value.id + "' text='" + value.listName + "' value='" + value.id + "'>\n" + value.listName +
-                            "</td>" +
-                            "</tr>");
-                    });
-                } else {
-                    $("#scode").find("td").remove().end().append("<tr  class=\"none\"><td>NO DATA</td></tr>");
-                    // $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");
-                    return;
-                }
-            },
-
-            error: function (x, o, e) {
-                var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                alert(msg);
-            }
-        });
+        console.log(REGION)
     }
 </script>
 

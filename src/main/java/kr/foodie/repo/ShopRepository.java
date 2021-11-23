@@ -16,21 +16,24 @@ import java.util.Optional;
 
 public interface ShopRepository extends JpaRepository<Shop, Integer> {
 
-    Page<Shop> findByRegionIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer regionId, String shopType, Pageable pageable);
-    Page<Shop> findByRegionIdInAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(List<Integer> regionId , String shopType, Pageable pageable);
-    Page<Shop> findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer regionId, String shopType, Pageable pageable);
-    Page<Shop> findBySubwayTypeIdInAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(List<Integer> regionId, String shopType, Pageable pageable);
-    List<Shop> findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(Integer regionId, String shopType);
-    List<Shop> findBySubwayTypeIdInAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(List<Integer> regionId, String shopType);
+    Page<Shop> findByArea1stAndArea2stAndArea3stAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st, String shopType, Pageable pageable);
+//    Page<Shop> findByArea1stAndArea2stAndArea3stInAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st , String shopType, Pageable pageable);
+//    List<Shop> findByArea1stAndArea2stAndArea3stAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st, String shopType);
+    List<Shop> findByArea1stAndArea2stAndArea3stAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st , String shopType);
 
-    List<Shop> findByRegionIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(Integer regionId, String shopType);
-    List<Shop> findByRegionIdInAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(List<Integer> regionId, String shopType);
+//    Page<Shop> findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st, String shopType, Pageable pageable);
+    Page<Shop> findBySubwayTypeIdAndShopTypeOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st, String shopType, Pageable pageable);
+//    List<Shop> findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(Integer area1st, Integer area2st, Integer area3st, String shopType);
+    List<Shop> findByArea1stAndArea2stAndArea3stAndShopType(Integer area1st, Integer area2st, Integer area3st, String shopType);
 
-    List<Shop> findTop4ByRegionIdAndShopType(Integer regionId, String shopType);
+//    List<Shop> findByArea1stAndArea2stAndArea3stAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(Integer area1st, Integer area2st, Integer area3st, String shopType);
+//    List<Shop> findByArea1stAndArea2stAndArea3stAndShopType(Integer area1st, Integer area2st, Integer area3st, String shopType);
+
+    List<Shop> findTop4ByArea1stAndArea2stAndArea3stAndShopType(Integer area1st, Integer area2st, Integer area3st, String shopType);
 //    List<Shop> findByShopId(Integer shopId);
 
     @Query(value="select * from shop where shop_type=?1 and region_id=?2 and theme_list like %?3%", nativeQuery = true)
-    List<Shop> findByShopTypeAndRegionAndThemeList(String shopTypeId, Integer regionId, String Filter);
+    List<Shop> findByShopTypeAndRegionAndThemeList(String shopTypeId, Integer area1st, Integer area2st, Integer area3st, String Filter);
 
     // search - 가게이름
     @Query(value="select * from shop where shop_type=?1 and shop_name like %?2%", nativeQuery = true)
@@ -45,7 +48,7 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
     List<Shop> findByShopTypeAndAddress(String shopTypeId, String Filter);
 
 
-    Optional<Integer> countByRegionIdAndShopType(Integer regionId, String shopType);
+    Optional<Integer> countByArea1stAndArea2stAndArea3stAndShopType(Integer area1st, Integer area2st, Integer area3st, String shopType);
 
 
 //    @Query(value="select * from shop where shop_id in (select shop_id from main_board where type = ?1)", nativeQuery = true)
@@ -60,16 +63,17 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
 
     //admin
     List<Shop> findByShopType(String shopType);
-    List<Shop> findTop1000ByShopTypeOrderByUpdatedAtDesc(String shopType);
+    List<Shop> findByShopTypeAndShopTypeIn(String shopType, List<String> background);
+    List<Shop> findByShopTypeIn(List<String> shopType);
     List<Shop> findByBigCategoryAndShopType(Integer bCode, String shopType);
     List<Shop> findByBigCategoryAndMiddleCategoryAndShopType(Integer bCode, Integer mCode, String shopType);
     List<Shop> findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopType(Integer bCode, Integer mCode, Integer sCode, String shopType);
 
     // region
-    List<Shop> findByShopTypeAndRegionId(String shopType, Integer regionId);
-    List<Shop> findByBigCategoryAndShopTypeAndRegionId(Integer bCode, String shopType, Integer regionId);
-    List<Shop> findByBigCategoryAndMiddleCategoryAndShopTypeAndRegionId(Integer bCode, Integer mCode, String shopType, Integer regionId);
-    List<Shop> findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopTypeAndRegionId(Integer bCode, Integer mCode, Integer sCode, String shopType, Integer regionId);
+    List<Shop> findByShopTypeAndArea1stAndArea2stAndArea3st(String shopType, Integer area1st, Integer area2st, Integer area3st);
+    List<Shop> findByBigCategoryAndShopTypeAndArea1stAndArea2stAndArea3st(Integer bCode, String shopType, Integer area1st, Integer area2st, Integer area3st);
+    List<Shop> findByBigCategoryAndMiddleCategoryAndShopTypeAndArea1stAndArea2stAndArea3st(Integer bCode, Integer mCode, String shopType, Integer area1st, Integer area2st, Integer area3st);
+    List<Shop> findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopTypeAndArea1stAndArea2stAndArea3st(Integer bCode, Integer mCode, Integer sCode, String shopType, Integer area1st, Integer area2st, Integer area3st);
 
     @Transactional
     @Modifying

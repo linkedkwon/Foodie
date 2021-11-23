@@ -8,13 +8,15 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Data
 @NoArgsConstructor
 @Table(name = "REVIEW")
 public class Review {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = IDENTITY)
     @Column(name = "REVIEW_ID")
     private Integer reviewId;
 

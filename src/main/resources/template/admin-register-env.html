@@ -258,11 +258,11 @@
                     <div class="card shadow mb-4" style="    height: 800px;">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary" style="padding-left: 20px; float: left;"> 카테고리설정 ( <a class="text-primary" href="/admin/registerEnv/red">레드리스트</a> / <a class="text-primary" href="/admin/registerEnv/green">그린리스트</a>)</h6>
-                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvTheme"> 테마설정 </a></h6>
-                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvHastag"> 해시태그설정 </a></h6>
-                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvRegion">지역설정 </a></h6>
-                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvFoodVillege"> 맛집촌설정 </a></h6>
-                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvSubway"> 역세권설정 </a></h6>
+                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnv/theme"> 테마설정 </a></h6>
+<!--                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnvHastag"> 해시태그설정 </a></h6>-->
+                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnv/region">지역설정 </a></h6>
+                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnv/foodVillage"> 맛집촌설정 </a></h6>
+                            <h6 class="m-0 font-weight-bold " style="padding-left: 20px; float: left;"> <a href="/admin/registerEnv/subway"> 역세권설정 </a></h6>
                         </div>
                         <div class="card-body" style="  justify-content: center;display: flex ;  margin: auto;">
 
@@ -686,7 +686,7 @@
         color: #fff;
     }
 
-    /*table tbody tr.highlight { background-color: darkgray; }*/
+    table tbody tr.highlight { background-color: darkgray; }
 
 </style>
 <script type="text/javascript">
@@ -1125,7 +1125,7 @@
                             "</tr>");
                     });
                 } else {
-                    $("#mcode").find("td").remove().end().append("<td>NO DATA</td>");
+                    $("#mcode").find("td").remove().end().append("<tr class=\"none\"><td>NO DATA</td></tr>");
                     return;
                 }
             },
@@ -1166,7 +1166,7 @@
                                 "</tr>");
                         });
                     } else {
-                        $("#scode").find("td").remove().end().append("<td>NO DATA</td>");
+                        $("#scode").find("td").remove().end().append("<tr  class=\"none\"><td>NO DATA</td></tr>");
                         // $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");
                         return;
                     }

@@ -1,7 +1,10 @@
 package kr.foodie.domain.category;
 
+import kr.foodie.domain.shop.Region;
 import lombok.Data;
 import javax.persistence.*;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "REGION")
@@ -10,6 +13,7 @@ public class Category {
 
     @Id
     @Column(name = "REGION_ID")
+    @GeneratedValue(strategy = IDENTITY)
     private Long regionId;
 
     @Column(name = "PROVINCE_NAME")

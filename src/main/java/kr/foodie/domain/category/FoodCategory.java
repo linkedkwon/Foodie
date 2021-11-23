@@ -2,10 +2,9 @@ package kr.foodie.domain.category;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "FOOD_CATEGORY")
@@ -14,6 +13,7 @@ public class FoodCategory {
 
     @Id
     @Column(name = "ID")
+    @GeneratedValue(strategy = IDENTITY)
     private Integer id;
 
     @Column(name = "BCODE")
@@ -35,6 +35,6 @@ public class FoodCategory {
     private String categoryName;
 
     @Column(name = "TYPE")
-    private Integer type;
+    private String type;
 
 }

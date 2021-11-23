@@ -40,15 +40,18 @@ public class ShopController {
         int idx = Integer.parseInt(path.orElseGet(() -> {
             return "0";
         }));
-        int size = shopService.getItemSizeByRegionTypeAndShopType(regionId, shopTypeId);
+        Integer area1st =0;
+        Integer area2st =0;
+        Integer area3st =0;
+        int size = shopService.getItemSizeByRegionTypeAndShopType(area1st,  area2st,  area3st, shopTypeId);
 
-        model.addAttribute("regionInfo", regionService.getRegionInfo(Integer.valueOf(regionId)));
-        model.addAttribute("priority", shopService.getShopPremiumInfos(regionId, shopTypeId));
-        model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(regionId, shopTypeId));
-        model.addAttribute("themeList", themeService.getThemeTags(Integer.valueOf(shopTypeId)));
+//        model.addAttribute("regionInfo", regionService.getRegionInfo(area1st,  area2st,  area3st));
+        model.addAttribute("priority", shopService.getShopPremiumInfos(area1st,  area2st,  area3st, shopTypeId));
+        model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(area1st,  area2st,  area3st, shopTypeId));
+        model.addAttribute("themeList", themeService.getThemeTags("red_theme"));
 
         //pagination
-        model.addAttribute("payload", shopService.getShopInfos(regionId, shopTypeId, idx, shopInterval));
+        model.addAttribute("payload", shopService.getShopInfos(area1st, area2st,area3st, shopTypeId, idx, shopInterval));
         model.addAttribute("paginations", paginationService.getPagination(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
         model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
 
@@ -63,13 +66,16 @@ public class ShopController {
         int idx = Integer.parseInt(path.orElseGet(() -> {
             return "0";
         }));
-        int size = shopService.getItemSizeByRegionTypeAndShopType(regionId, shopTypeId);
+        Integer area1st =0;
+        Integer area2st =0;
+        Integer area3st =0;
+        int size = shopService.getItemSizeByRegionTypeAndShopType(area1st,  area2st,  area3st, shopTypeId);
 
-        model.addAttribute("payload", shopService.getSubwayShopInfos(regionId, shopTypeId, idx, shopInterval));
-        model.addAttribute("regionInfo", regionService.getRegionInfo(Integer.valueOf(regionId)));
-        model.addAttribute("priority", shopService.getSubwayPremiumShopInfos(regionId, shopTypeId));
-        model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(regionId, shopTypeId));
-        model.addAttribute("themeList", themeService.getThemeTags(Integer.valueOf(shopTypeId)));
+        model.addAttribute("payload", shopService.getSubwayShopInfos(area1st, area2st, area3st, shopTypeId, idx, shopInterval));
+//        model.addAttribute("regionInfo", regionService.getRegionInfo(area1st,  area2st,  area3st));
+        model.addAttribute("priority", shopService.getSubwayPremiumShopInfos(area1st, area2st, area3st, shopTypeId));
+        model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(area1st, area2st, area3st, shopTypeId));
+        model.addAttribute("themeList", themeService.getThemeTags("red_theme"));
         model.addAttribute("paginations", paginationService.getPagination(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
         model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
 
@@ -98,7 +104,7 @@ public class ShopController {
         //tasteRating
         String tasteRatingInfo = reviewService.getShopTasteRatingAVG(shopId);
         String[] str = tasteRatingInfo.split(",");
-        commentList.setTasteRating(str[0]);
+        commentList.setFoodieLogRating(str[0]);
 
         //logRating
         commentList.setFoodieLogRating(Optional.ofNullable(commentList.getFoodieLogRating())
@@ -117,7 +123,7 @@ public class ShopController {
         mav.addObject("userId", (userDetails != null) ? userDetails.getUser().getId() : 0);
         mav.addObject("userRole", (userDetails != null) ? userDetails.getUser().getRoleType() : "GENERAL");
 
-            String background = commentList.getBackground();
+            String background = commentList.getShopType();
             if (background.equals("1")) {
                 mav.setViewName("detail-green");
             } else if (background.equals("2")) {
@@ -160,9 +166,12 @@ public class ShopController {
         List<Shop> filterList;
         List<Shop> resultFilterList = new ArrayList<>();
         String[] items = filterItems.split(",");
+        Integer area1st =0;
+        Integer area2st =0;
+        Integer area3st =0;
 
         if(items.length > 0) {
-            filterList = shopService.getFilterShopList(shopTypeId, regionId, items[0]);
+            filterList = shopService.getFilterShopList(shopTypeId, area1st, area2st, area3st, items[0]);
             if (items.length > 1) {
                 for (int i = 1; i < items.length; i++) {
                     for (int j = 0; j < filterList.size(); j++) {
@@ -173,11 +182,11 @@ public class ShopController {
                 }
                 results.put("payload", resultFilterList);
             }else{
-                filterList = shopService.getFilterShopList(shopTypeId, regionId, items[0]);
+                filterList = shopService.getFilterShopList(shopTypeId, area1st, area2st, area3st, items[0]);
                 results.put("payload", filterList);
             }
         }else{
-            filterList = shopService.getFilterShopList(shopTypeId, regionId, null);
+            filterList = shopService.getFilterShopList(shopTypeId, area1st, area2st, area3st, null);
             results.put("payload", filterList);
         }
 

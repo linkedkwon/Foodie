@@ -3,7 +3,7 @@ package kr.foodie.controller;
 import kr.foodie.config.security.auth.AuthUserDetails;
 import kr.foodie.config.security.session.AuthenticationService;
 import kr.foodie.domain.user.User;
-import kr.foodie.service.UserService;
+import kr.foodie.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,12 +18,12 @@ import java.util.Optional;
 @RequestMapping("/user/info")
 public class AccountController {
 
-    private final UserService userService;
+    private final MemberService memberService;
     private final AuthenticationService authenticationService;
 
     @GetMapping("")
     public String renderUserInfo(@AuthenticationPrincipal AuthUserDetails obj, Model model){
-        model.addAttribute(userService.findUserByEmail(obj.getUser().getEmail()));
+        model.addAttribute(memberService.findUserByEmail(obj.getUser().getEmail()));
         return "mypage_tab1";
     }
 
@@ -34,7 +34,7 @@ public class AccountController {
                                   .orElseGet(()->{return obj.getUser().getPhoneNum();});
         user.setPhoneNum(phoneNum);
 
-        userService.update(user);
+        memberService.update(user);
         authenticationService.updateAuthentication(user.getEmail());
         return "redirect:/user/info";
     }

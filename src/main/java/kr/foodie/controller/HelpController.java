@@ -2,7 +2,7 @@ package kr.foodie.controller;
 
 import kr.foodie.config.cache.CacheService;
 import kr.foodie.service.MailService;
-import kr.foodie.service.UserService;
+import kr.foodie.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class HelpController {
 
-    private final UserService userService;
+    private final MemberService userService;
     private final MailService mailService;
     private final CacheService cacheService;
 

@@ -47,50 +47,52 @@ public class ShopService {
         }
     }
 
-    public List<Shop> getSubwayShopInfos(Integer regionId, String shopType, int idx, int interval) {
-        if (shopType.equals("1")) {
-            List<Integer> greenListRegionInfos = regionAdminRepository.findGreenRegionInfo(regionId);
-            List<Shop> shops = shopRepository.findBySubwayTypeIdInAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(greenListRegionInfos, shopType,
-                    PageRequest.of(idx, interval, Sort.by("createdAt").descending())).getContent();
+    public List<Shop> getSubwayShopInfos(Integer area1st, Integer area2st, Integer area3st, String shopType, int idx, int interval) {
+        if(shopType.equals("1")){
+            List<Integer> greenListRegionInfos = regionAdminRepository.findGreenRegionInfo(area1st,  area2st,  area3st);
+            List<Shop> shops = shopRepository.findBySubwayTypeIdAndShopTypeOrderByUpdatedAt(area1st,  area2st,  area3st, shopType,
+                    PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
             return addAliasOnShops(shops);
-        } else {
-            List<Shop> shops = shopRepository.findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(regionId, shopType,
-                    PageRequest.of(idx, interval, Sort.by("createdAt").descending())).getContent();
-            return addAliasOnShops(shops);
-        }
-    }
-
-    public List<Shop> getShopInfos(Integer regionId, String shopType, int idx, int interval) {
-        if (shopType.equals("1")) {
-            List<Integer> greenListRegionInfos = regionAdminRepository.findGreenRegionInfo(regionId);
-            List<Shop> shops = shopRepository.findByRegionIdInAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(greenListRegionInfos, shopType,
-                    PageRequest.of(idx, interval, Sort.by("createdAt").descending())).getContent();
-            return addAliasOnShops(shops);
-        } else {
-            List<Shop> shops = shopRepository.findByRegionIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(regionId, shopType,
-                    PageRequest.of(idx, interval, Sort.by("createdAt").descending())).getContent();
+        }else{
+            List<Shop> shops = shopRepository.findBySubwayTypeIdAndShopTypeOrderByUpdatedAt(area1st,  area2st,  area3st, shopType,
+                    PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
             return addAliasOnShops(shops);
         }
     }
 
-    public List<Shop> getSubwayPremiumShopInfos(Integer regionId, String shopType) {
-        if (shopType.equals("1")) {
-            List<Integer> greenListRegionInfos = regionAdminRepository.findGreenRegionInfo(regionId);
-            List<Shop> shops = shopRepository.findBySubwayTypeIdInAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(greenListRegionInfos, shopType);
+    public List<Shop> getShopInfos(Integer area1st, Integer area2st, Integer area3st, String shopType, int idx, int interval) {
+        if(shopType.equals("1")){
+            List<Integer> greenListRegionInfos = regionAdminRepository.findGreenRegionInfo(area1st,  area2st,  area3st);
+            List<Shop> shops = shopRepository.findByArea1stAndArea2stAndArea3stAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(area1st,  area2st,  area3st, shopType,
+                    PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
             return addAliasOnShops(shops);
-        } else {
-            List<Shop> shops = shopRepository.findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(regionId, shopType);
+        }else{
+            List<Shop> shops = shopRepository.findByArea1stAndArea2stAndArea3stAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(area1st,  area2st,  area3st, shopType,
+                    PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
             return addAliasOnShops(shops);
         }
     }
 
-    public List<Shop> getShopPremiumInfos(Integer regionId, String shopType) {
-        if (shopType.equals("1")) {
-            List<Integer> greenListRegionInfos = regionAdminRepository.findGreenRegionInfo(regionId);
-            List<Shop> shops = shopRepository.findByRegionIdInAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(greenListRegionInfos, shopType);
+    public List<Shop> getSubwayPremiumShopInfos(Integer area1st, Integer area2st, Integer area3st, String shopType) {
+        if(shopType.equals("1")) {
+            List<Integer> greenListRegionInfos = regionAdminRepository.findGreenRegionInfo(area1st,  area2st,  area3st);
+//            List<Shop> shops = shopRepository.findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(area1st,  area2st,  area3st, "1");
+//            return addAliasOnShops(shops);
+//        }else{
+//            List<Shop> shops = shopRepository.findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(area1st,  area2st,  area3st, "0");
+//            return addAliasOnShops(shops);
+        }
+        return null;
+    }
+
+
+    public List<Shop> getShopPremiumInfos(Integer area1st, Integer area2st, Integer area3st, String shopType) {
+        if(shopType.equals("1")) {
+            List<Integer> greenListRegionInfos = regionAdminRepository.findGreenRegionInfo(area1st,  area2st,  area3st);
+            List<Shop> shops = shopRepository.findByArea1stAndArea2stAndArea3stAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(area1st,  area2st,  area3st, shopType);
             return addAliasOnShops(shops);
-        } else {
-            List<Shop> shops = shopRepository.findByRegionIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(regionId, shopType);
+        }else{
+            List<Shop> shops = shopRepository.findByArea1stAndArea2stAndArea3stAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(area1st,  area2st,  area3st, shopType);
             return addAliasOnShops(shops);
         }
     }
@@ -106,12 +108,12 @@ public class ShopService {
     }
 
     //    사이드에 그린리스트<-> 레드리스트 우선순위 지정필요
-    public List<Shop> getShopInfosWithSideOrder(Integer regionId, String shopType) {
-        if (shopType.equals("1")) {
-            List<Shop> shops = shopRepository.findTop4ByRegionIdAndShopType(regionId, "0");
+    public List<Shop> getShopInfosWithSideOrder(Integer area1st, Integer area2st, Integer area3st, String shopType) {
+        if(shopType.equals("1")){
+            List<Shop> shops = shopRepository.findByArea1stAndArea2stAndArea3stAndShopType(area1st, area2st, area3st, "0");
             return addAliasOnShops(shops);
-        } else {
-            List<Shop> shops = shopRepository.findTop4ByRegionIdAndShopType(regionId, "1");
+        }else{
+            List<Shop> shops = shopRepository.findByArea1stAndArea2stAndArea3stAndShopType(area1st, area2st, area3st, "1");
             return addAliasOnShops(shops);
         }
     }
@@ -120,23 +122,8 @@ public class ShopService {
         return shopRepository.findById(shopId).orElseThrow();
     }
 
-    public List<Shop> getFilterShopList(String shopTypeId, Integer regionId, String filterItems) {
-        return shopRepository.findByShopTypeAndRegionAndThemeList(shopTypeId, regionId, filterItems);
-    }
-
-    //검색 (with 가게이름)
-    public List<Shop> getFilterShopListWithShopName(String shopTypeId, String filterItems) {
-        return shopRepository.findByShopTypeAndShopName(shopTypeId, filterItems);
-    }
-
-    //검색 (with 주소)
-    public List<Shop> getFilterShopListWithShopAddress(String shopTypeId, String filterItems) {
-        return shopRepository.findByShopTypeAndAddress(shopTypeId, filterItems);
-    }
-
-    //검색 (with 내용)
-    public List<Shop> getFilterShopListWithShopContent(String shopTypeId, String filterItems) {
-        return shopRepository.findByShopTypeAndHistory(shopTypeId, filterItems);
+    public List<Shop> getFilterShopList(String shopTypeId, Integer area1st, Integer area2st, Integer area3st, String filterItems) {
+        return shopRepository.findByShopTypeAndRegionAndThemeList(shopTypeId, area1st, area2st, area3st, filterItems);
     }
 
     public List<Shop> getShopInfoByType(Integer type) {
@@ -162,47 +149,17 @@ public class ShopService {
         return shopRepository.findByAddressContaining(lat, lng, shopType);
     }
 
-    public int getItemSizeByRegionTypeAndShopType(Integer regionId, String shopType) {
-        return shopRepository.countByRegionIdAndShopType(regionId, shopType).orElseGet(() -> {
-            return 0;
-        });
+
+    public int getItemSizeByRegionTypeAndShopType(Integer area1st, Integer area2st, Integer area3st, String shopType){
+        return shopRepository.countByArea1stAndArea2stAndArea3stAndShopType(area1st, area2st, area3st, shopType).orElseGet(()->{return 0;});
     }
 
-    public List<Shop> getAdminShopInfos(String shopType) {
-        return shopRepository.findByShopType(shopType);
+    public List<Shop> getTop50AdminShopInfos(String shopType, List<String> background) {
+        return shopRepository.findByShopTypeIn(background);
     }
-
-    public List<Shop> getTop50AdminShopInfos(String shopType) {
-        return shopRepository.findTop1000ByShopTypeOrderByUpdatedAtDesc(shopType);
-    }
-
-    public List<Shop> getAdminShopInfosWithBcode(Integer bCode, String shopType) {
-        return shopRepository.findByBigCategoryAndShopType(bCode, shopType);
-    }
-
-    public List<Shop> getAdminShopInfosWithBcodeAndMcode(Integer bCode, Integer mCode, String shopType) {
-        return shopRepository.findByBigCategoryAndMiddleCategoryAndShopType(bCode, mCode, shopType);
-    }
-
-    public List<Shop> getAdminShopInfosWithBcodeAndMcodeAndScode(Integer bCode, Integer mCode, Integer sCode, String shopType) {
-        return shopRepository.findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopType(bCode, mCode, sCode, shopType);
-    }
-
-
-    public List<Shop> getAdminShopInfosWithRegionId(String shopType, Integer regionId) {
-        return shopRepository.findByShopTypeAndRegionId(shopType, regionId);
-    }
-
-    public List<Shop> getAdminShopInfosWithBcodeWithRegionId(Integer bCode, String shopType, Integer regionId) {
-        return shopRepository.findByBigCategoryAndShopTypeAndRegionId(bCode, shopType, regionId);
-    }
-
-    public List<Shop> getAdminShopInfosWithBcodeAndMcodeWithRegionId(Integer bCode, Integer mCode, String shopType, Integer regionId) {
-        return shopRepository.findByBigCategoryAndMiddleCategoryAndShopTypeAndRegionId(bCode, mCode, shopType, regionId);
-    }
-
-    public List<Shop> getAdminShopInfosWithBcodeAndMcodeAndScodeWithRegionId(Integer bCode, Integer mCode, Integer sCode, String shopType, Integer regionId) {
-        return shopRepository.findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopTypeAndRegionId(bCode, mCode, sCode, shopType, regionId);
+    //rderByUpdatedAtDesc
+    public List<Shop> getAllShopInfos(List<String> shopType) {
+        return shopRepository.findByShopTypeIn(shopType);
     }
 
     protected List<Shop> addAliasOnShops(List<Shop> shops) {
