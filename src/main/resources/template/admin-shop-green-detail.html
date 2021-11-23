@@ -176,15 +176,12 @@
                                                                         th:value="${val.bCode}"
                                                                         th:utext="${val.categoryName}"
                                                                 ></option>
-                                                                <option th:value="${adminCategory.get(adminCategory.keySet().toArray()[0])}" th:text="${adminCategory.values().toArray()[0]}"></option>
                                                                 <option value="" >대분류</option>
                                                             </select>
                                                             <select id="table-filter2" class="custom-select"  th:field="${shop.middleCategory}">
-                                                                <option th:value="${adminCategory.keySet()[1]}" th:text="${adminCategory.values().toArray()[1]}" >대분류</option>
                                                                 <option value="" >중분류</option>
                                                             </select>
                                                             <select id="table-filter3" class="custom-select"  th:field="${shop.smallCategory}">
-                                                                <option th:value="${adminCategory.keySet()[2]}" th:text="${adminCategory.values().toArray()[2]}" >대분류</option>
                                                                 <option value="" >소분류</option>
                                                             </select>
                                                         </div>

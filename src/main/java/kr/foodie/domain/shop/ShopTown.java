@@ -13,7 +13,7 @@ import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Table(name = "EPICURE_SHOP_TOWN")
+@Table(name = "RANKUP_SHOP_TOWN")
 @Data
 @Builder
 @NoArgsConstructor(access = PROTECTED)

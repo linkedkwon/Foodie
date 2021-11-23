@@ -14,7 +14,7 @@ import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Table(name = "TANKUP_THEME")
+@Table(name = "RANKUP_THEME")
 @Data
 @Builder
 @NoArgsConstructor(access = PROTECTED)
