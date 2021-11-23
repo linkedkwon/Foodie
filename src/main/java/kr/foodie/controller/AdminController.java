@@ -36,12 +36,11 @@ public class AdminController {
     private final PaginationService paginationService;
     private final ThemeService themeService;
     private final RegionService regionService;
-    private final UserService userService;
     private final CategoryService categoryService;
 
     public AdminController(ShopService shopService, TagService tagService,
                            RegionAdminService regionAdminService, FoodCategoryAdminService foodCategoryAdminService,
-                           ReviewService reviewService, PaginationService paginationService, ThemeService themeService, RegionService regionService, TagListService tagListService, UserService userService,CategoryService categoryService) {
+                           ReviewService reviewService, PaginationService paginationService, ThemeService themeService, RegionService regionService, TagListService tagListService, CategoryService categoryService) {
         this.shopService = shopService;
         this.tagService = tagService;
 //        this.regionService = regionService;
@@ -52,7 +51,6 @@ public class AdminController {
         this.themeService = themeService;
         this.regionService = regionService;
         this.tagListService = tagListService;
-        this.userService = userService;
         this.categoryService = categoryService;
     }
 
@@ -329,52 +327,6 @@ public class AdminController {
 //        mav.addObject("greenThemeListInfos", greenthemeListInfos);
         return mav;
     }
-
-    @ResponseBody
-    @RequestMapping(value ={"/user/{userType}/all"}, method= RequestMethod.GET)
-    public Map<String, List> getUserList(@PathVariable String userType){
-        if(userType.equals("0")){
-            userType = "0";
-        }else{
-            userType = "1";
-        }
-//        List<User> userList;
-//        userList = userService.getAllUserInfo(userType);
-        Map<String, List> members = new HashMap<>();
-        members.put("data", userService.getAllUserInfo(userType));
-        return members;
-    }
-
-//    @RequestMapping(value ="/user/{userType}/all", method= RequestMethod.GET)
-//    public ModelAndView getUserList(@PathVariable String userType){
-//        ModelAndView mav = new ModelAndView();
-//        if(userType.equals("0")){
-//            userType = "0";
-//            mav.setViewName("admin-user-list");
-//        }else{
-//            userType = "1";
-//            mav.setViewName("admin-shop-green-list");
-//        }
-//        List<User> userList;
-//        List<FoodCategory> categoryInfos;
-//        List<Shop> sideCommentListWithOrder;
-//        List<String> regionInfos;
-//        regionInfos = regionAdminService.getRegionProvinceInfo();
-//        categoryInfos = foodCategoryAdminService.getAdminRegionBCategory();
-//        userList = userService.getAllUserInfo(userType);
-//        commentListWithOrder = shopService.getShopInfosWithOrder(regionTypeId, shopType, 9);
-//        sideCommentListWithOrder = shopService.getShopInfosWithSideOrder(regionTypeId, shopType, 8);
-//        mav.addObject("payload", userList);
-//        mav.addObject("categoryInfos", categoryInfos);
-//        mav.addObject("regionInfos", regionInfos);
-//        mav.addObject("regionInfo", regiaonInfos);
-//        mav.addObject("priority", commentListWithOrder);
-//        mav.addObject("sidePriority", sideCommentListWithOrder);
-//        if(shopType.equals("0")){
-
-
-//        return mav;
-//    }
 
     @RequestMapping(value ="/shop/{shopType}", method= RequestMethod.GET)
     public ModelAndView getShopList(@PathVariable String shopType){
