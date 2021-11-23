@@ -17,4 +17,12 @@ public interface EpicureRegionRepository extends JpaRepository<EpicureRegion, Lo
     // 군/구 정보 조회
     @Query(value="select * from epicure_region where parent_no = ?1 and visiable = \"yes\" and code= ?2 order by seq", nativeQuery=true)
     List<EpicureRegion> getEpicureDistrict(Integer parentNo, String type);
+
+    // 특정 ID로 시/도 정보조회
+    @Query(value="select * from epicure_region where parent_no = 0 and visiable = \"yes\" and no=?1 and code= ?2 order by seq", nativeQuery=true)
+    List<EpicureRegion> getRegionFirstInfoByRegionId(Integer no, String type);
+
+    // 특정 ID로 시/도 정보조회
+    @Query(value="select * from epicure_region where parent_no = ?1 and visiable = \"yes\" and code= ?2 order by seq", nativeQuery=true)
+    List<EpicureRegion> getRegionSecondInfoByRegionId(Integer no, String type);
 }

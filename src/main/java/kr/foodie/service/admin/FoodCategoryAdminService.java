@@ -42,7 +42,7 @@ public class FoodCategoryAdminService {
         if(mCode.equals("")){
             category.put("mCode", null);
         }else{
-            category.put(sCode.toString(),foodCategoryAdminRepository.findByMCodeAndLevel(Integer.parseInt(sCode),2).get(0).getCategoryName());
+            category.put(mCode.toString(),foodCategoryAdminRepository.findByMCodeAndLevel(Integer.parseInt(mCode),2).get(0).getCategoryName());
         }
         if(sCode.equals("")){
             category.put("sCode", null);

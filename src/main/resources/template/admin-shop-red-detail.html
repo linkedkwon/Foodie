@@ -172,18 +172,28 @@
                                                         <div style="display: flex">
                                                             <select id="table-filter1" class="custom-select" th:field="${shop.bigCategory}">
                                                                 <option
-                                                                        th:each="val : ${categoryInfos}"
-                                                                        th:value="${val.bCode}"
-                                                                        th:utext="${val.categoryName}"
+                                                                        th:each="val : ${firstFoodInfos}"
+                                                                        th:value="${val.id}"
+                                                                        th:utext="${val.listName}"
                                                                 ></option>
                                                                 <option th:value="${adminCategory.get(adminCategory.keySet().toArray()[0])}" th:text="${adminCategory.values().toArray()[0]}"></option>
                                                             </select>
                                                             <select id="table-filter2" class="custom-select"  th:field="${shop.middleCategory}">
                                                                 <option th:value="${adminCategory.keySet()[1]}" th:text="${adminCategory.values().toArray()[1]}" ></option>
+                                                                <option
+                                                                        th:each="val : ${secondFoodInfos}"
+                                                                        th:value="${val.id}"
+                                                                        th:utext="${val.listName}"
+                                                                ></option>
                                                                 <option value="" >중분류</option>
                                                             </select>
                                                             <select id="table-filter3" class="custom-select"  th:field="${shop.smallCategory}">
                                                                 <option th:value="${adminCategory.keySet()[2]}" th:text="${adminCategory.values().toArray()[2]}" ></option>
+                                                                <option
+                                                                        th:each="val : ${thirdFoodInfos}"
+                                                                        th:value="${val.id}"
+                                                                        th:utext="${val.listName}"
+                                                                ></option>
                                                                 <option value="" >소분류</option>
                                                             </select>
                                                         </div>
@@ -259,12 +269,12 @@
                                                         <label for="restaurants-closed">배경</label>
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_1" type="radio" name="background_type" th:field="${shop.background}" value="1" >
+                                                                <input class="custom-control-input" id="background_type_1" type="radio" name="background_type" th:field="${shop.shopType}" value="1" >
                                                                 <label class="custom-control-label" for="background_type_1">레드1</label>
                                                                 <img src="/images/background_red.png" class="thumbnail" height='30px' />
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_3" type="radio" name="background_type" th:field="${shop.background}" value="3" >
+                                                                <input class="custom-control-input" id="background_type_3" type="radio" name="background_type" th:field="${shop.shopType}" value="3" >
                                                                 <label class="custom-control-label" for="background_type_3">레드2</label>
                                                                 <img src="/images/background_mustard.png" class="thumbnail" height='30px' />
                                                             </div>
@@ -280,27 +290,28 @@
                                                     <div class="form-group">
                                                         <label for="select-tags" style="width: 400px;">지역별 설정</label>
                                                         <div style="display: flex">
-                                                            <select class="custom-select" id="table-filter4">
-                                                                <option th:value="${regionInfosWithId[0].getProvinceName()}" th:if="${regionInfosWithId.size()>0}"   th:text="${regionInfosWithId[0].getProvinceName()}" selected>지역</option>
-                                                                <option value='서울'> 서울</option>
-                                                                <option value='경기'>경기</option>
-                                                                <option value='인천'>인천</option>
-                                                                <option value='대전'>대전</option>
-                                                                <option value='광주'>광주</option>
-                                                                <option value='대구'>대구</option>
-                                                                <option value='울산'>울산</option>
-                                                                <option value='부산'>부산</option>
-                                                                <option value='강원'>강원</option>
-                                                                <option value='충청북도'>충청북도</option>
-                                                                <option value='충청남도'>충청남도</option>
-                                                                <option value='전라북도'>전라북도</option>
-                                                                <option value='전라남도'>전라남도</option>
-                                                                <option value='경상북도'>경상북도</option>
-                                                                <option value='경상남도'>경상남도</option>
-                                                                <option value='제주'> 제주</option>
-                                                                <option value='세종'> 세종</option>
+                                                            <select id="table-filter4" class="custom-select" th:field="${shop.area1st}">
+                                                                <!--/*@thymesVar id="listName" type="String"*/-->
+                                                                <option
+                                                                        th:each="val : ${firstRegionInfos}"
+                                                                        th:value="${val.id}"
+                                                                        th:utext="${val.listName}"
+                                                                ></option>
+<!--                                                                <option th:value="${adminCategory.get(adminCategory.keySet().toArray()[0])}" th:text="${adminCategory.values().toArray()[0]}"></option>-->
                                                             </select>
-                                                            <select class="custom-select"  id="table-filter5" th:field="${shop.regionId}">
+                                                            <select class="custom-select"  id="table-filter5" th:field="${shop.area2st}">
+                                                                <option
+                                                                        th:each="val : ${secondRegionInfos}"
+                                                                        th:value="${val.id}"
+                                                                        th:utext="${val.listName}"
+                                                                ></option>
+                                                            </select>
+                                                            <select class="custom-select"  id="table-filter10" th:field="${shop.area3st}">
+                                                                <option
+                                                                        th:each="val : ${thirdRegionInfos}"
+                                                                        th:value="${val.id}"
+                                                                        th:utext="${val.listName}"
+                                                                ></option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -366,9 +377,9 @@
                                                     <div class="form-group">
                                                         <label for="restaurants-closed">맛집촌선택</label>
                                                         <div class="flex" style="display: block;">
-                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;" th:object="${categoryList}" th:each="infos : ${categoryList}">
-                                                                <input class="custom-control-input" th:id="${infos.districtName}" th:value="${infos.regionId}"  type="checkbox" name="theme" th:field="${shop.villageTypeId}">
-                                                                <label class="custom-control-label" th:for="${infos.districtName}" th:text="${infos.districtName}"></label>
+                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;" th:each="infos : ${shopTownList}">
+                                                                <input class="custom-control-input" th:id="${infos.listName}" th:value="${infos.id}"  type="checkbox" name="theme" th:field="${shop.villageTypeId}">
+                                                                <label class="custom-control-label" th:for="${infos.listName}" th:text="${infos.listName}"></label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -382,8 +393,8 @@
                                                         <!--                                                        <p th:text="${payload[0].themeList}"></p>-->
                                                         <div class="flex" style="display: block;">
                                                             <div class="custom-control custom-radio" style="float: left;padding-right:15px;" th:object="${theme}" th:each="theme : ${themeTags}">
-                                                                <input class="custom-control-input" th:id="${theme.themeId}" th:value="${theme.themeId}" th:if="${shop.themeList}" th:checked="${#arrays.contains(#strings.arraySplit(shop.themeList,','),  '' + theme.themeId.toString())} == true" th:field="${shop.themeList}" type="checkbox" name="theme">
-                                                                <label class="custom-control-label" th:for="${theme.themeId}" th:text="${theme.getName()}" > </label>
+                                                                <input class="custom-control-input" th:id="${theme.id}" th:value="${theme.id}" th:if="${shop.themeList}" th:checked="${#arrays.contains(#strings.arraySplit(shop.themeList,','),  '' + theme.id.toString())} == true" th:field="${shop.themeList}" type="checkbox" name="theme">
+                                                                <label class="custom-control-label" th:for="${theme.id}" th:text="${theme.listName}" > </label>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -64,8 +64,8 @@
                                             <option value="">대분류</option>
                                             <option
                                                     th:each="val : ${categoryInfos}"
-                                                    th:value="${val.bCode}"
-                                                    th:utext="${val.categoryName}"
+                                                    th:value="${val.id}"
+                                                    th:utext="${val.listName}"
                                             ></option>
                                         </select>
                                         <select id="table-filter2" style="    height: 20px;">
@@ -386,8 +386,8 @@
                     }
                 },
                 { "data": "shopId", 'render':
-                    function (data) {
-                        return '<div>수정</div>';
+                    function (data, type, row) {
+                        return '<a href="/admin/shop/red/' + row.shopId + '"> <div>수정</div></a>';
                     }
                 },
                 { "data": "shopId", 'render':
@@ -443,7 +443,7 @@
                         $("#table-filter2").find("option").remove().end();
                         $("#table-filter2").append("<option>중분류</option>");
                         $.each(data, function(key, value) {
-                            $("#table-filter2").append("<option value='" + value.mcode + "'>" + value.categoryName + "</option>");
+                            $("#table-filter2").append("<option value='" + value.no + "'>" + value.listName + "</option>");
                         });
                         console.log(data[0])
                     } else {
@@ -596,6 +596,9 @@
         var regionId = $('#table-filter4 :selected').val(); //
         var subwayId = $('#table-filter5 :selected').val();
         var villageId = $('#table-filter6 :selected').val();
+        var selectedOption = $('#table-filter6 :selected').val();
+        var keyword = $('#table-filter6 :selected').val();
+        var couponFlag = $('#table-filter6 :selected').val();
 
         var param = {"shopType":0,"bCode":bCode,"mCode":mCode, "sCode":sCode,
                      "regionId":regionId, "subwayId":subwayId,
@@ -610,7 +613,7 @@
 
 
         $('#example').DataTable( {
-            "ajax": "/admin/shop/filter/list?t="+0+"&b="+bCode+"&m="+mCode+"&s="+sCode+"&r="+regionId+"&sub="+subwayId+"&v="+villageId,
+            "ajax": "/admin/shop/filter/list?t="+1+"&area1="+bCode+"&area2="+mCode+"&area3="+sCode+"&shop1="+regionId+"&shop2="+subwayId+"&shop3="+villageId,
             ordering: false,
             "lengthChange": false,
             "pageLength": 15,

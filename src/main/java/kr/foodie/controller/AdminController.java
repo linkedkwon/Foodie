@@ -212,6 +212,15 @@ public class AdminController {
         List<HashTag> hashTags = tagService.getHashTags(shopId);
         List<Category> categoryList = categoryService.getCategory("3", "서울");
         List<FoodCategory> categoryInfos = null;
+        List<EpicureRegion> firstRegionInfos = null;
+        List<EpicureRegion> secondRegionInfos = null;
+        List<EpicureRegion> thirdRegionInfos = null;
+        List<EpicureRegion> firstFoodInfos = null;
+        List<EpicureRegion> secondFoodInfos = null;
+        List<EpicureRegion> thirdFoodInfos = null;
+        List<ShopTown> shopTownList = null;
+
+        Shop detailInfo = shopService.getShopDetail(shopId);
 
         if (shopType.equals("red")) {
             mav.setViewName("admin-shop-red-detail");
@@ -222,8 +231,29 @@ public class AdminController {
             themeTags = themeService.getThemeTags("green_theme");
             categoryInfos = foodCategoryAdminService.getAdminTripRegionBCategory();
         }
+        if(detailInfo.getBigCategory().equals("")){
+            firstFoodInfos = null;
+        }else{
+            firstFoodInfos = regionAdminService.getRegionFirstInfoByRegionId(Integer.parseInt(detailInfo.getBigCategory()), "shop_type");
+        }
 
-        Shop detailInfo = shopService.getShopDetail(shopId);
+        if(detailInfo.getMiddleCategory().equals("")){
+            secondFoodInfos = null;
+        }else{
+            secondFoodInfos = regionAdminService.getRegionSecondInfoByRegionId(Integer.parseInt(detailInfo.getMiddleCategory()), "shop_type");
+        }
+
+        if(detailInfo.getSmallCategory().equals("")){
+            thirdFoodInfos = null;
+        }else{
+            thirdFoodInfos = regionAdminService.getRegionSecondInfoByRegionId(Integer.parseInt(detailInfo.getSmallCategory()), "shop_type");
+        }
+
+        firstRegionInfos = regionAdminService.getRegionFirstInfoByRegionId(detailInfo.getArea1st(), "area_type");
+        secondRegionInfos = regionAdminService.getRegionSecondInfoByRegionId(detailInfo.getArea2st(), "area_type");
+        thirdRegionInfos = regionAdminService.getRegionSecondInfoByRegionId(detailInfo.getArea3st(), "area_type");
+
+        shopTownList = shopTownService.getAll("town");
 
         if (detailInfo.getMenuImages() != null) {
             detailInfo.setMenuImages(detailInfo.getMenuImages().replace("[", "").replace("]", "").replaceAll("\"", ""));
@@ -258,6 +288,13 @@ public class AdminController {
         mav.addObject("categoryList", categoryList);
         mav.addObject("categoryInfos", categoryInfos);
         mav.addObject("hashTags", hashTags);
+        mav.addObject("firstRegionInfos", firstRegionInfos);
+        mav.addObject("secondRegionInfos", secondRegionInfos);
+        mav.addObject("thirdRegionInfos", thirdRegionInfos);
+        mav.addObject("firstFoodInfos", firstFoodInfos);
+        mav.addObject("secondFoodInfos", secondFoodInfos);
+        mav.addObject("thirdFoodInfos", thirdFoodInfos);
+        mav.addObject("shopTownList", shopTownList);
         mav.addObject("themeTags", themeTags);
 
         return mav;
