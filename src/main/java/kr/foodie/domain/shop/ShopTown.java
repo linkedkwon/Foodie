@@ -1,6 +1,5 @@
-package kr.foodie.domain.category;
+package kr.foodie.domain.shop;
 
-import kr.foodie.domain.shop.RegionCreateDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,13 +13,13 @@ import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Table(name = "TANKUP_THEME")
+@Table(name = "EPICURE_SHOP_TOWN")
 @Data
 @Builder
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PACKAGE)
 @DynamicUpdate
-public class Theme {
+public class ShopTown {
 
     @Id
     @Column(name = "NO")
@@ -42,8 +41,8 @@ public class Theme {
     @Column(name = "VISIABLE")
     private String visiable;
 
-    public static Theme from(RegionCreateDTO dto) {
-        return Theme.builder()
+    public static ShopTown from(RegionCreateDTO dto) {
+        return ShopTown.builder()
                 .id(dto.getId())
                 .code(dto.getCode())
                 .parentNo(dto.getParentNo())

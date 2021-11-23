@@ -2,7 +2,7 @@ package kr.foodie.controller;
 
 import kr.foodie.config.security.auth.AuthUserDetails;
 import kr.foodie.domain.user.User;
-import kr.foodie.service.UserService;
+import kr.foodie.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/auth")
 public class AuthController {
 
-    private final UserService userService;
+    private final MemberService userService;
 
     @GetMapping("/join/user/1")
     public String renderSignUpMember(Model model){

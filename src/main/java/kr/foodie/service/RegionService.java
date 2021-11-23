@@ -17,9 +17,9 @@ public class RegionService {
         this.regionRepository = regionRepository;
     }
 
-    public List<Region> getRegionInfo(Integer regionId) {
-        return regionRepository.findByRegionId(regionId);
-    }
+//    public List<Region> getRegionInfo(Integer area1st, Integer area2st, Integer area3st) {
+//        return regionRepository.findByArea1stAndArea2stAndArea3st(area1st, area2st, area3st);
+//    }
 
     public List<Region> getRegionInfoWithType3(String regionType) {
         return regionRepository.findByRegionType(regionType);

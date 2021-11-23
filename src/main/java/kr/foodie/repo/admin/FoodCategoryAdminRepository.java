@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface FoodCategoryAdminRepository extends JpaRepository<FoodCategory, Long> {
 
-    @Query(value="select * from food_category where level = 1 order by seq", nativeQuery = true)
+    @Query(value="select * from food_category where level = 1 and type is null order by seq", nativeQuery = true)
     List<FoodCategory> findByBcodeOrderBySeq();
 
     @Query(value="select * from food_category where level = 1 and type = 1 order by seq", nativeQuery = true)

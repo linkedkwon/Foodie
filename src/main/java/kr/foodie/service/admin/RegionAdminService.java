@@ -1,43 +1,53 @@
 package kr.foodie.service.admin;
 
+import kr.foodie.common.CommonException;
+import kr.foodie.domain.shop.CreateRegionParam;
 import kr.foodie.domain.shop.EpicureRegion;
 import kr.foodie.domain.shop.Region;
+import kr.foodie.domain.shop.RegionCreateDTO;
 import kr.foodie.repo.RegionRepository;
 import kr.foodie.repo.admin.EpicureRegionRepository;
 import kr.foodie.repo.admin.FoodCategoryAdminRepository;
 import kr.foodie.repo.admin.RegionAdminRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class RegionAdminService {
 
     private final RegionAdminRepository regionRepository;
     private final EpicureRegionRepository epicureRegionRepository;
 
-    public RegionAdminService(RegionAdminRepository regionRepository, EpicureRegionRepository epicureRegionRepository) {
-        this.regionRepository = regionRepository;
-        this.epicureRegionRepository = epicureRegionRepository;
+    public List<EpicureRegion> getEpicureFirstInfo(String type) {
+        return epicureRegionRepository.findByParentNoAndVisiable(type);
     }
-    public List<EpicureRegion> getEpicureProvince() {
-        return epicureRegionRepository.findByParentNoAndVisiable();
+    public List<EpicureRegion> getEpicureDistrict(Integer parentNo, String type) {
+        return epicureRegionRepository.getEpicureDistrict(parentNo, type);
     }
-    public List<EpicureRegion> getEpicureDistrict(Integer parentNo) {
-        return epicureRegionRepository.getEpicureDistrict(parentNo);
+
+    @Transactional
+    public void update(List<RegionCreateDTO> list) {
+        epicureRegionRepository.saveAll(list.stream()
+                .map(EpicureRegion::from)
+                .collect(Collectors.toList()));
     }
 
     public List<String> getRegionProvinceInfo() {
         return regionRepository.findRegionProvinceInfo();
     }
 
-
-
-    public List<Region> getRegionRegionInfo(Integer regionId) {
-        return regionRepository.findByRegionId(regionId);
+    public List<Region> getRegionRegionInfo(Integer area1st, Integer area2st, Integer area3st) {
+//        return regionRepository.findByArea1stAndArea2stAndArea3st(area1st,  area2st,  area3st);
+        return null;
     }
-    public List<Region> getSubwayRegionInfo(Integer regionId) {
-        return regionRepository.findByRegionId(regionId);
+    public List<Region> getSubwayRegionInfo(Integer area1st, Integer area2st, Integer area3st) {
+//        return regionRepository.findByArea1stAndArea2stAndArea3st(area1st,  area2st,  area3st);
+        return null;
     }
 
     public List<Region> getRegionDistrictInfo(String provinceName) {

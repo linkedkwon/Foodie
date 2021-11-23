@@ -2,10 +2,9 @@ package kr.foodie.domain.shop;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 
 @Entity
@@ -15,6 +14,7 @@ public class HashTag {
 
     @Id
     @Column(name = "ID")
+    @GeneratedValue(strategy = IDENTITY)
     private Integer Id;
 
     @Column(name = "SHOP_ID")

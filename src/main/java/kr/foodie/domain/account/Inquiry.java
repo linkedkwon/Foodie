@@ -7,13 +7,15 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Table(name = "INQUIRY")
 @Data
 @NoArgsConstructor
 public class Inquiry {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = IDENTITY)
     @Column(name = "INQUIRY_id")
     private Long inquiryId;
 

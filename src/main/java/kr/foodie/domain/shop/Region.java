@@ -2,10 +2,9 @@ package kr.foodie.domain.shop;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 
 @Entity
@@ -15,6 +14,7 @@ public class Region {
 
     @Id
     @Column(name = "REGION_ID")
+    @GeneratedValue(strategy = IDENTITY)
     private Integer regionId;
 
     @Column(name = "PROVINCE_NAME")

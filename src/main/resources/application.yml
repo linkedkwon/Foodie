@@ -13,10 +13,6 @@ spring:
     cache: false
 
   datasource:
-
-
-
-
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://183.111.227.104:3306/foodie?useSSL=false&characterEncoding=utf8&serverTimezone=UTC
     username: test

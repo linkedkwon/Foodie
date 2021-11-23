@@ -18,7 +18,7 @@ public class ThemeService {
         this.themeRepository = themeRepository;
     }
 
-    public List<Theme> getThemeTags(Integer type) {
-        return themeRepository.findByType(type);
+    public List<Theme> getThemeTags(String type) {
+        return themeRepository.findAllTheme(type);
     }
 }
