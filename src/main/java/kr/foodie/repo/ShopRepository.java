@@ -64,6 +64,12 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
     //admin
     List<Shop> findByShopType(String shopType);
     List<Shop> findByShopTypeAndShopTypeIn(String shopType, List<String> background);
+
+
+    //임시로 만듬
+    List<Shop> findByShopTypeInOrderByShopIdDesc(List<String> shopType);
+
+
     List<Shop> findByShopTypeIn(List<String> shopType);
     List<Shop> findByBigCategoryAndShopType(Integer bCode, String shopType);
     List<Shop> findByBigCategoryAndMiddleCategoryAndShopType(Integer bCode, Integer mCode, String shopType);
@@ -88,4 +94,5 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
 
     @Query(value="select * from shop where shop_type = ?1 and replace(shop_name,' ','') like %?2%", nativeQuery = true)
     List<Shop> findDuplicatedShop(String shopType, String shopName);
+
 }
