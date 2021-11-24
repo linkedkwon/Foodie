@@ -156,15 +156,27 @@ public class AdminController {
 
         // 테마 카테고리
         List<Theme> redThemeListInfos = themeService.getThemeTags("green_theme");;
-        // 음식 카테고리
+        // 여행지 카테고리
         List<EpicureRegion> categoryInfos = regionAdminService.getEpicureFirstInfo("green_shop_type");
         // 맛집촌 리스트
         List<ShopTown> shopTownList = shopTownService.getAll("town");
 
+        List<EpicureRegion> allFirstSubwayInfos = null;
+        List<EpicureRegion> allFirstRegionInfos = null;
+        List<Theme> themeTags = null;
+        themeTags = themeService.getThemeTags("green_theme");
+        allFirstRegionInfos = regionAdminService.getEpicureFirstInfo("area_type");
+        allFirstSubwayInfos = regionAdminService.getEpicureFirstInfo("subway_type");
+
         mav.addObject("shop", Shop.emptyShop());
+        mav.addObject("allFirstRegionInfos", allFirstRegionInfos);
+        mav.addObject("allFirstSubwayInfos", allFirstSubwayInfos);
         mav.addObject("categoryList", categoryInfos);
         mav.addObject("greenThemeListInfos", redThemeListInfos);
         mav.addObject("categoryInfos", shopTownList);
+        mav.addObject("shopTownList", shopTownList);
+        mav.addObject("themeTags", themeTags);
+        mav.setViewName("admin-create-green-shop");
         return mav;
     }
 
@@ -375,14 +387,14 @@ public class AdminController {
     @ResponseBody
     @RequestMapping(value = {"/category/{shopType}/all"}, method = RequestMethod.GET)
     public Map<String, List> getAllCategory(Model model, @PathVariable String shopType) {
+        List<Shop> commentList = null;
         if (shopType.equals("red")) {
-            shopType = "0";
-
-        } else {
             shopType = "1";
+            commentList = shopService.getTop50AdminShopInfos(shopType, Arrays.asList("1","3"));
+        } else {
+            shopType = "2";
+            commentList = shopService.getTop50AdminShopInfos(shopType, Arrays.asList("2","4"));
         }
-        List<Shop> commentList;
-        commentList = shopService.getTop50AdminShopInfos(shopType, Arrays.asList("1","2"));
         Map<String, List> members = new HashMap<>();
         members.put("data", commentList);
         return members;

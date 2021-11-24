@@ -144,17 +144,27 @@
                                                         <label for="table-filter3" style="width: 400px;">여행지 카테고리</label>
                                                         <div style="display: flex">
                                                             <select id="table-filter1" class="custom-select" th:field="${shop.bigCategory}">
-                                                                <option value="">대분류</option>
                                                                 <option
-                                                                        th:each="val : ${categoryInfos}"
-                                                                        th:value="${val.bCode}"
-                                                                        th:utext="${val.categoryName}"
+                                                                        th:each="val : ${allFirstFoodInfos}"
+                                                                        th:value="${val.id}"
+                                                                        th:utext="${val.listName}"
                                                                 ></option>
+                                                                <option value="" >대분류</option>
                                                             </select>
-                                                            <select id="table-filter2" class="custom-select"  th:field="${shop.middleCategory}">
+                                                            <select id="table-filter2" class="custom-select" th:field="${shop.middleCategory}">
+                                                                <option
+                                                                        th:each="val : ${secondFoodInfos}"
+                                                                        th:value="${val.id}"
+                                                                        th:utext="${val.listName}"
+                                                                ></option>
                                                                 <option value="" >중분류</option>
                                                             </select>
-                                                            <select id="table-filter3" class="custom-select"  th:field="${shop.smallCategory}">
+                                                            <select id="table-filter3" class="custom-select" th:field="${shop.smallCategory}">
+                                                                <option
+                                                                        th:each="val : ${thirdFoodInfos}"
+                                                                        th:value="${val.id}"
+                                                                        th:utext="${val.listName}"
+                                                                ></option>
                                                                 <option value="" >소분류</option>
                                                             </select>
                                                         </div>
@@ -244,25 +254,13 @@
                                                     <div class="form-group">
                                                         <label for="restaurants-closed">배경</label>
                                                         <div class="flex">
-<!--                                                            <div class="custom-control custom-radio">-->
-<!--                                                                <input class="custom-control-input" id="background_type_1" type="radio" name="background_type" th:field="${shop.background}" value="1">-->
-<!--                                                                <label class="custom-control-label" for="background_type_1">1번(레드)</label>-->
-<!--                                                                <img src="/images/background_red.png" class="thumbnail" height='30px' />-->
-<!--                                                            </div>-->
-<!--                                                            <div class="custom-control custom-radio">-->
-<!--                                                                <input class="custom-control-input" id="background_type_3" type="radio" name="background_type" th:field="${shop.background}" value="2" >-->
-<!--                                                                <label class="custom-control-label" for="background_type_3">2번(머스타드)</label>-->
-<!--                                                                <img src="/images/background_mustard.png" class="thumbnail" height='30px' />-->
-<!--                                                            </div>-->
-
-
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_2" type="radio" name="background_type" th:field="${shop.background}" value="3" >
+                                                                <input class="custom-control-input" id="background_type_2" type="radio" name="background_type" th:field="${shop.shopType}" value="3" >
                                                                 <label class="custom-control-label" for="background_type_2">3번(그린)</label>
                                                                 <img src="/images/background_green.png" class="thumbnail" height='30px' />
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_4" type="radio" name="background_type" th:field="${shop.background}" value="4" >
+                                                                <input class="custom-control-input" id="background_type_4" type="radio" name="background_type" th:field="${shop.shopType}" value="4" >
                                                                 <label class="custom-control-label" for="background_type_4">4번(민트)</label>
                                                                 <img src="/images/background_mint.png" class="thumbnail" height='30px' />
                                                             </div>
@@ -277,27 +275,30 @@
                                                     <div class="form-group">
                                                         <label for="select-tags" style="width: 400px;">지역별 설정</label>
                                                         <div style="display: flex">
-                                                            <select class="custom-select" id="table-filter4">
-                                                                <option value='' disabled selected>지역</option>
-                                                                <option value='서울'> 서울</option>
-                                                                <option value='경기'>경기</option>
-                                                                <option value='인천'>인천</option>
-                                                                <option value='대전'>대전</option>
-                                                                <option value='광주'>광주</option>
-                                                                <option value='대구'>대구</option>
-                                                                <option value='울산'>울산</option>
-                                                                <option value='부산'>부산</option>
-                                                                <option value='강원'>강원</option>
-                                                                <option value='충청북도'>충청북도</option>
-                                                                <option value='충청남도'>충청남도</option>
-                                                                <option value='전라북도'>전라북도</option>
-                                                                <option value='전라남도'>전라남도</option>
-                                                                <option value='경상북도'>경상북도</option>
-                                                                <option value='경상남도'>경상남도</option>
-                                                                <option value='제주'> 제주</option>
-                                                                <option value='세종'> 세종</option>
+                                                            <select id="table-filter4" class="custom-select" th:field="${shop.area1st}">
+                                                                <!--/*@thymesVar id="listName" type="String"*/-->
+                                                                <option
+                                                                        th:each="val : ${allFirstRegionInfos}"
+                                                                        th:value="${val.id}"
+                                                                        th:utext="${val.listName}"
+                                                                ></option>
+                                                                <option value="" >시</option>
                                                             </select>
-                                                            <select class="custom-select"  id="table-filter5" th:field="${shop.regionId}">
+                                                            <select class="custom-select"  id="table-filter5" th:field="${shop.area2st}">
+                                                                <option
+                                                                        th:each="val : ${secondRegionInfos}"
+                                                                        th:value="${val.id}"
+                                                                        th:utext="${val.listName}"
+                                                                ></option>
+                                                                <option value="" >구</option>
+                                                            </select>
+                                                            <select class="custom-select"  id="table-filter10" th:field="${shop.area3st}">
+                                                                <option
+                                                                        th:each="val : ${thirdRegionInfos}"
+                                                                        th:value="${val.id}"
+                                                                        th:utext="${val.listName}"
+                                                                ></option>
+                                                                <option value="" >동</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -307,20 +308,32 @@
                                                     <div class="form-group">
                                                         <label for="select-tags" style="width: 400px;">역세권 설정</label>
                                                         <div style="display: flex">
-                                                            <select class="custom-select" id="table-filter7">
-                                                                <option value="" disabled selected>지역</option>
-                                                                <option value="수도권">수도권</option>
-                                                                <option value="인천">인천</option>
-                                                                <option value="부산">부산</option>
-                                                                <option value="대구">대구</option>
-                                                                <option value="광주">광주</option>
-                                                                <option value="대전">대전</option>
+                                                            <select id="table-filter7" class="custom-select" th:field="${shop.subwayTypeId}">
+                                                                <!--/*@thymesVar id="listName" type="String"*/-->
+                                                                <option
+                                                                        th:each="val : ${allFirstSubwayInfos}"
+                                                                        th:value="${val.id}"
+                                                                        th:utext="${val.listName}"
+                                                                ></option>
+                                                                <option value="" >지역</option>
                                                             </select>
-                                                            <select class="custom-select" id="table-filter8">
+                                                            <select class="custom-select"  id="table-filter8" th:field="${shop.subway2st}">
+                                                                <option
+                                                                        th:each="val : ${secondSubwayInfos}"
+                                                                        th:value="${val.id}"
+                                                                        th:utext="${val.listName}"
+                                                                ></option>
+                                                                <option value="" >호선</option>
                                                             </select>
-                                                            <select class="custom-select" id="table-filter9" th:field="${shop.subwayTypeId}">
+                                                            <select class="custom-select"  id="table-filter9" th:field="${shop.subway3st}">
+                                                                <option
+                                                                        th:each="val : ${thirdSubwayInfos}"
+                                                                        th:value="${val.id}"
+                                                                        th:utext="${val.listName}"
+                                                                ></option>
+                                                                <option value="" >역</option>
                                                             </select>
-                                                            <input class="form-control" id="exit" type="text" placeholder="출구" name="exit"  th:field="${shop.exitNum}" style="    width: 45px;font-size: 1rem !important;">
+                                                            <input class="form-control" id="exit" type="text" placeholder="출구" name="exit"  th:field="${shop.exitNum}" style="    width: 45px;font-size: 9pt !important;">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -367,13 +380,9 @@
                                                         <label for="restaurants-closed">맛집촌선택</label>
                                                         <!--                                                        <p th:text="${payload[0].themeList}"></p>-->
                                                         <div class="flex" style="display: block;">
-                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;" th:object="${categoryList}" th:each="infos : ${categoryList}">
-                                                                <!--                                                                <p th:text="${#lists.contains(#strings.listSplit(payload[0].themeList,','), theme.themeId)}"></p>-->
-                                                                <!--/*@thymesVar id="Arrays" type=""*/-->
-                                                                <!--                                                                <p th:text="${#strings.arraySplit(payload[0].themeList, ',')}"></p>-->
-                                                                <!--                                                                <p th:text="${payload[0].themeList.split(',')[0]}"></p>-->
-                                                                <input class="custom-control-input" th:id="${infos.districtName}" th:value="${infos.regionId}"  type="checkbox" name="theme" th:field="${shop.villageTypeId}">
-                                                                <label class="custom-control-label" th:for="${infos.districtName}" th:text="${infos.districtName}"></label>
+                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;" th:each="infos : ${shopTownList}">
+                                                                <input class="custom-control-input" th:id="${infos.listName}" th:value="${infos.id}"  type="checkbox" name="theme" th:field="${shop.villageTypeId}">
+                                                                <label class="custom-control-label" th:for="${infos.listName}" th:text="${infos.listName}"></label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -386,13 +395,9 @@
                                                         <label for="restaurants-closed">테마별</label>
                                                         <!--                                                        <p th:text="${payload[0].themeList}"></p>-->
                                                         <div class="flex" style="display: block;">
-                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;" th:object="${theme}" th:each="theme : ${greenThemeListInfos}">
-                                                                <!--                                                                <p th:text="${#lists.contains(#strings.listSplit(payload[0].themeList,','), theme.themeId)}"></p>-->
-                                                                <!--/*@thymesVar id="Arrays" type=""*/-->
-                                                                <!--                                                                <p th:text="${#strings.arraySplit(payload[0].themeList, ',')}"></p>-->
-                                                                <!--                                                                <p th:text="${payload[0].themeList.split(',')[0]}"></p>-->
-                                                                <input class="custom-control-input" th:id="${theme.themeId}" th:value="${theme.themeId}"  th:field="${shop.themeList}"type="checkbox" name="theme">
-                                                                <label class="custom-control-label" th:for="${theme.themeId}" th:text="${theme.name}" > 가능</label>
+                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;" th:object="${theme}" th:each="theme : ${themeTags}">
+                                                                <input class="custom-control-input" th:field="${shop.themeList}" th:id="${theme.listName}" th:value="${theme.listName}" type="checkbox" name="theme">
+                                                                <label class="custom-control-label" th:for="${theme.listName}" th:text="${theme.listName}" > </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -579,6 +584,7 @@
 </body>
 
 <style>
+
     #preview{
         z-index: 9999;
         position:absolute;
@@ -587,6 +593,9 @@
         padding:1px;
         display:none;
         color:#fff;
+    }
+    .custom-select{
+        font-size: 9px !important;
     }
     .form-control{
         font-size: 9px !important;
@@ -653,20 +662,6 @@
         console.log(sel_files)
     }
     $(document).ready(function() {
-        $('#example18').DataTable( {
-            // "ajax": "/admin/recommand/main/regionInfo/1",
-            "columns": [
-                { 'data': "shopImage", 'render': function (data) { return '<img src="' + data + '" class="thumbnail" style="width: 80px;height:60px;" />'; } },
-                { "data": "shopName" , 'render': function  ( data, type, row ) { return '<div><a href="/admin/shop/green/'+ row.shopId +'">'+ data + '</a></div><div><span> 주소 -'+ row.address +'</span></div>'; } },
-                // { "data": "shopName", 'render': function  ( data, type, row ) { return '<button value="row.shopId" onclick="registerShop(' + row.shopId + ')"> 등록 </button>' }  },
-            ],
-            "columnDefs": [
-                { "width": "50px", "targets": 0, "className": "data_table" },
-                { "width": "200px", "targets": 1, "className": "data_table"  },
-                // { "width": "60px", "targets": 2, "className": "data_table"  },
-            ]
-        } );
-
 
         $('button[id^=\'uploadImage\']').click(function (e) {
 
@@ -695,17 +690,7 @@
             $(".tag-list").html(tagsHtml);
         };
 
-       /* var deleteTag = function(value) {
-            var index = tagList.indexOf(value);
 
-            if (index < 0) {
-                return;
-            }
-
-            tagList.splice(index, 1);
-            renderTagList();
-        };
-*/
         $("button[id^='uploa123dImage']").on("change", function(event) {
             console.log(event.currentTarget)
             var dictObject = {}
@@ -819,25 +804,6 @@
                     return;
                 }
 
-
-                // var ul = document.createElement('ul');
-                // ul.setAttribute('class','item-list-wrapper');
-                // document.getElementById(className).appendChild(ul);
-                // fragment.forEach(renderProductList);
-                // // class="active"
-                // function renderProductList(element, index, arr) {
-                //     var li = document.createElement('li');
-                //
-                //     ul.appendChild(li);
-                //
-                //     if(type=='2'){
-                //         if(element.subwayName != null){
-                //             li.innerHTML=li.innerHTML +"<a href='/shop/region/subway/" + element.regionId +"/red'>" +element.subwayName + "("+element.districtCnt + ")" + "</a>";
-                //         }
-                //     }else{
-                //         li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.districtName + "("+element.districtCnt+")" + "</a>";
-                //     }
-                // }
             });
 
         }

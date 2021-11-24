@@ -142,7 +142,7 @@
                                                     <div class="form-group">
                                                         <label for="table-filter3" style="width: 400px;">음식카테고리</label>
                                                         <div style="display: flex">
-                                                            <select id="table-filter1" class="custom-select" th:field="${shop.bigCategory}">
+                                                            <select id="table-filter1" class="custom-selectcustom-select" th:field="${shop.bigCategory}">
                                                                 <option value="">대분류</option>
                                                                 <option
                                                                         th:each="val : ${categoryInfos}"
@@ -235,12 +235,12 @@
                                                         <label for="restaurants-closed">배경</label>
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_1" type="radio" name="background_type" th:field="${shop.background}" value="1">
+                                                                <input class="custom-control-input" id="background_type_1" type="radio" name="background_type" th:field="${shop.shopType}" value="1">
                                                                 <label class="custom-control-label" for="background_type_1">1번(레드)</label>
                                                                 <img src="/images/background_red.png" class="thumbnail" height='30px' />
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_3" type="radio" name="background_type" th:field="${shop.background}" value="2" >
+                                                                <input class="custom-control-input" id="background_type_3" type="radio" name="background_type" th:field="${shop.shopType}" value="2" >
                                                                 <label class="custom-control-label" for="background_type_3">2번(머스타드)</label>
                                                                 <img src="/images/background_mustard.png" class="thumbnail" height='30px' />
                                                             </div>
@@ -298,7 +298,7 @@
                                                             </select>
                                                             <select class="custom-select" id="table-filter9" th:field="${shop.subwayTypeId}">
                                                             </select>
-                                                            <input class="form-control" id="exit" type="text" name="exit"  th:field="${shop.exitNum}" style="    width: 45px;font-size: 1rem !important;">
+                                                            <input class="form-control" id="exit" type="text" name="exit"  th:field="${shop.exitNum}" style="    width: 45px;font-size: 9pt !important;">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -507,7 +507,12 @@
 </body>
 
 <style>
-
+    .custom-select{
+        font-size: 9px !important;
+    }
+    .form-control{
+        font-size: 9px !important;
+    }
     #preview{
         z-index: 9999;
         position:absolute;
@@ -516,6 +521,9 @@
         padding:1px;
         display:none;
         color:#fff;
+    }
+    .custom-select{
+        font-size: 9px !important;
     }
     .form-control{
         font-size: 9px !important;
