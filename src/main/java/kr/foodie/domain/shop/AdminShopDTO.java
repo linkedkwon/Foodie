@@ -11,7 +11,7 @@ public class AdminShopDTO {
     private String themeList;
     private Integer subwayTypeId;
     private Integer villageTypeId;
-    private String shopType;
+    private Integer shopType;
     private String background;
     private Date premiumRegisterDate;
     private String shopPaid;

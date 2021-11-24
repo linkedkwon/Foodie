@@ -154,13 +154,13 @@ public class ShopService {
         return shopRepository.countByArea1stAndArea2stAndArea3stAndShopType(area1st, area2st, area3st, shopType).orElseGet(()->{return 0;});
     }
 
-    public List<Shop> getTop50AdminShopInfos(String shopType, List<String> background) {
+    public List<Shop> getTop50AdminShopInfos(List<Integer> background) {
         //등록되는거 오름차순으로 보여줄려고 임시로 만듬
         return shopRepository.findByShopTypeInOrderByShopIdDesc(background);
         //return shopRepository.findByShopTypeIn(background);
     }
     //rderByUpdatedAtDesc
-    public List<Shop> getAllShopInfos(List<String> shopType) {
+    public List<Shop> getAllShopInfos(List<Integer> shopType) {
         return shopRepository.findByShopTypeIn(shopType);
     }
 
@@ -172,10 +172,10 @@ public class ShopService {
             String mCode = Optional.ofNullable(shop.getMiddleCategory()).orElseGet(() -> {
                 return "0";
             });
-            String type = Optional.ofNullable(shop.getShopType()).orElseGet(() -> {
-                return "0";
+            Integer type = Optional.ofNullable(shop.getShopType()).orElseGet(() -> {
+                return 0;
             });
-            if (type.equals("1")) {
+            if (type.toString().equals("1")) {
                 shop.setShopAlias(tripCategoryService.getTripCategory(bCode, mCode, shop.getAddress()));
             } else {
                 shop.setShopAlias(foodCategoryService.getShopCategory(bCode, mCode, shop.getAddress()));
@@ -226,10 +226,15 @@ public class ShopService {
         Shop shop = shopRepository.findById(shopId).orElseThrow();
         Shop updated = shop.toEntity(shopDto, shopId);
         String viewName = null;
-        if (shop.getShopType().equals("red")) {
-            viewName = "admin-shop-red-list";
-        } else {
-            viewName = "admin-shop-green-list";
+        Integer shopBackground = shop.getShopType();
+        if (shopBackground == 1) {
+            viewName = "redirect:/admin/shop/list/red";
+        } else if (shopBackground == 2) {
+            viewName = "redirect:/admin/shop/list/green";
+        } else if (shopBackground == 3) {
+            viewName = "redirect:/admin/shop/list/mustard";
+        } else if (shopBackground == 4) {
+            viewName = "redirect:/admin/shop/list/mint";
         }
         String server = "foodie.speedgabia.com";
         int port = 21;

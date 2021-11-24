@@ -15,9 +15,8 @@ public class ShopDTO {
     private Integer shopId;
     private Integer regionId;
     private String themeList;
-    private Integer subwayTypeId;
     private Integer villageTypeId;
-    private String shopType;
+    private Integer shopType;
     private String background;
     private Date premiumRegisterDate;
     private String shopPaid;
@@ -29,6 +28,12 @@ public class ShopDTO {
     private String middleCategory;
     private String smallCategory;
     private String address;
+    private Integer area1st;
+    private Integer area2st;
+    private Integer area3st;
+    private String subwayTypeId;
+    private String subway2st;
+    private String subway3st;
     private String roadAddress;
     private String phone;
     private String shopPhone;

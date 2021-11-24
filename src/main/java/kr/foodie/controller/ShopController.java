@@ -123,10 +123,10 @@ public class ShopController {
         mav.addObject("userId", (userDetails != null) ? userDetails.getUser().getId() : 0);
         mav.addObject("userRole", (userDetails != null) ? userDetails.getUser().getRoleType() : "GENERAL");
 
-            String background = commentList.getShopType();
-            if (background.equals("1")) {
+            Integer background = commentList.getShopType();
+            if (background == 1 ) {
                 mav.setViewName("detail-green");
-            } else if (background.equals("2")) {
+            } else if (background == 2 ) {
                 mav.setViewName("detail-red");
             } else {
                 mav.setViewName("detail-mustard");

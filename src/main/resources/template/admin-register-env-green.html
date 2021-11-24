@@ -40,32 +40,6 @@
 
         <!-- Main Content -->
         <div id="content">
-
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                <!-- Sidebar Toggle (Topbar) -->
-                <form class="form-inline">
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                </form>
-
-                <!-- Topbar Search -->
-                <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                               aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-
-
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
@@ -618,7 +592,7 @@
             rowMoveEvent('downLast', 'mcode', MREGION);
         })
         $('#mcode-remove').on('click', () => {
-            rowMoveEvent('remove', 'mcode', REGION);
+            rowMoveEvent('remove', 'mcode', MREGION);
         })
         // 동
         $('#scode-up').on('click', () => {
@@ -647,7 +621,7 @@
                 }
             }
 
-            if ($('mcode .chkRadio:checked').length === 0) {
+            if ($('#mcode .chkRadio:checked').length === 0) {
                 if (SREGION === null) {
                     SREGION || SREGION.empty();
                 }
@@ -669,6 +643,7 @@
                 if (resultCode === "FAIL") {
                     alert(message);
                 }
+                alert(result);
                 location.reload();
             },
             error: function () {
@@ -772,15 +747,15 @@
                     cur[0].seq = max + 1;
                 }
             } else if (direction == "remove") {
-                console.log(target)
+                // console.log(regiontype)
                 console.log($(regiontype + " .chkRadio:checked").val())
                 target.filter((cur) => cur.id == $(regiontype + " .chkRadio:checked").val())
                     .map((cur) => {
                         console.log(cur)
                         cur.visiable = "no"
                     });
+                // console.log(target)
                 row.remove();
-                console.log(target)
             }
         } else {
             alert("선택을 안되었거나 두개이상 클릭되었습니다\n하나 선택해 주세요.");

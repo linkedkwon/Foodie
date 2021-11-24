@@ -417,7 +417,7 @@
                                                             <div style="display: inline-block; width: 155px;text-align: center" th:if="${payload.menuImages}" th:each="item : ${payload.menuImages.split(',')}">
                                                                 <img onerror="this.src='/images/default.png'" style="width: 150px;height: 120px; padding-top: 5px;  float: left;" th:src='${item}'>
                                                                 <br>지
-                                                                <button onclick="prompt('해당 이미지를 지우시겠습니까?')" style="margin-top:15px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
+                                                                <button onclick="prompt('해당 이미지를 지우시겠습니까?')" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
                                                             </div>
                                                             <th:block th:each="num : ${#numbers.sequence(1,12)}">
                                                                 <div style="display: inline-block; width: 155px;text-align: center">

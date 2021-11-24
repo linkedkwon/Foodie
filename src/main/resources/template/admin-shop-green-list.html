@@ -52,6 +52,7 @@
                         <div class="card-header py-3">
                             <!--/*@thymesVar id="background" type="String"*/-->
                             <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;" th:text="${background}">그린리스트 여행지목록</h6>
+                            <input type="hidden" th:value="${shopBackground}" id="background">
                             <a th:href="@{/admin/registerGreenShop}">
                                 <button class="btn btn-info btn-sm" style="float: right">여행지 등록하기</button>
                             </a>
@@ -279,9 +280,9 @@
 
 
 
-
+        var background = $('#background').val();
         $('#example').DataTable( {
-            "ajax": "/admin/category/green/all",
+            "ajax": "/admin/category/"+background+"/all",
             ordering: false,
             "pageLength": 30,
             // "paging":true,

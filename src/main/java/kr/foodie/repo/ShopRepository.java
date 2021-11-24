@@ -67,10 +67,10 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
 
 
     //임시로 만듬
-    List<Shop> findByShopTypeInOrderByShopIdDesc(List<String> shopType);
+    List<Shop> findByShopTypeInOrderByShopIdDesc(List<Integer> shopType);
 
 
-    List<Shop> findByShopTypeIn(List<String> shopType);
+    List<Shop> findByShopTypeIn(List<Integer> shopType);
     List<Shop> findByBigCategoryAndShopType(Integer bCode, String shopType);
     List<Shop> findByBigCategoryAndMiddleCategoryAndShopType(Integer bCode, Integer mCode, String shopType);
     List<Shop> findByBigCategoryAndMiddleCategoryAndSmallCategoryAndShopType(Integer bCode, Integer mCode, Integer sCode, String shopType);

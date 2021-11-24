@@ -66,7 +66,7 @@ public class Shop {
     private String foodieLogRating;
 
     @Column(name = "SHOP_BG_IMAGE")
-    private String shopType;
+    private Integer shopType;
 
     @Column(name = "SHOP_1ST")
     private String bigCategory;
@@ -100,13 +100,13 @@ public class Shop {
     private String roadAddress;
 
     @Column(name = "SUBWAY_1ST")
-    private String subwayTypeId;
+    private String subwayTypeId = null;
 
     @Column(name = "SUBWAY_2ND")
-    private String subway2st;
+    private String subway2st = null;
 
     @Column(name = "SUBWAY_3TH")
-    private String subway3st;
+    private String subway3st = null;
 
     @Column(name = "EXIT_NUM")
     private Integer exitNum;
@@ -205,23 +205,13 @@ public class Shop {
     }
 
     public Shop toEntity(ShopDTO shopDto, Integer shopId) {
-        String shopType;
-        if (this.shopType.equals("red")) {
-            shopType = "0";
-        } else {
-            shopType = "1";
-        }
         return Shop.builder()
                 .shopId(shopId)
                 .shopName(shopDto.getShopName())
                 .shopAlias(shopDto.getShopAlias())
-//                .regionId(shopDto.getRegionId())
                 .themeList(shopDto.getThemeList())
-//                .subwayTypeId(shopDto.getSubwayTypeId())
                 .villageTypeId(shopDto.getVillageTypeId())
-                .shopType(shopType)
-//                .background(shopDto.getBackground())
-//                .premiumRegisterDate(shopDto.getPremiumRegisterDate())
+                .shopType(shopDto.getShopType())
                 .shopPaid(shopDto.getShopPaid())
                 .shopCharge(shopDto.getShopCharge())
                 .tag(shopDto.getTag())
@@ -230,6 +220,12 @@ public class Shop {
                 .smallCategory(shopDto.getSmallCategory())
                 .address(shopDto.getAddress())
                 .roadAddress(shopDto.getRoadAddress())
+                .area1st(shopDto.getArea1st())
+                .area2st(shopDto.getArea2st())
+                .area3st(shopDto.getArea3st())
+                .subwayTypeId(shopDto.getSubwayTypeId())
+                .subway2st(shopDto.getSubway2st())
+                .subway3st(shopDto.getSubway3st())
                 .phone(shopDto.getPhone())
 //                .shopPhone(shopDto.getShopPhone())
                 .detailAddress(shopDto.getDetailAddress())

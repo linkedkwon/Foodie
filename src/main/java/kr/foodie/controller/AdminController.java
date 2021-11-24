@@ -46,6 +46,10 @@ public class AdminController {
     private final ShopTownService shopTownService;
     private static final List<String> regionType = new ArrayList<>(Arrays.asList("red_shop_type", "area_type", "subway_type","green_theme","red_theme", "town", "green_shop_type"));
 
+    static boolean isStringEmpty(String str) {
+        return str == null || str.isEmpty();
+    }
+
     public static String[] parseAdminShopType(String shopType){
         String type = null;
         String templateName = null;
@@ -191,22 +195,23 @@ public class AdminController {
 
         // 테마 카테고리
         List<Theme> redThemeListInfos = themeService.getThemeTags("green_theme");;
-        // 여행지 카테고리
-        List<EpicureRegion> categoryInfos = regionAdminService.getEpicureFirstInfo("green_shop_type");
         // 맛집촌 리스트
         List<ShopTown> shopTownList = shopTownService.getAll("town");
 
-        List<EpicureRegion> allFirstSubwayInfos = null;
+        List<EpicureRegion> allFirstFoodInfos = null;
         List<EpicureRegion> allFirstRegionInfos = null;
-        List<Theme> themeTags = null;
-        themeTags = themeService.getThemeTags("green_theme");
+        List<EpicureRegion> allFirstSubwayInfos = null;
+
+        allFirstFoodInfos = regionAdminService.getEpicureFirstInfo("green_shop_type");
         allFirstRegionInfos = regionAdminService.getEpicureFirstInfo("area_type");
         allFirstSubwayInfos = regionAdminService.getEpicureFirstInfo("subway_type");
+        List<Theme> themeTags = null;
+        themeTags = themeService.getThemeTags("green_theme");
 
         mav.addObject("shop", Shop.emptyShop());
+        mav.addObject("allFirstFoodInfos", allFirstFoodInfos);
         mav.addObject("allFirstRegionInfos", allFirstRegionInfos);
         mav.addObject("allFirstSubwayInfos", allFirstSubwayInfos);
-        mav.addObject("categoryList", categoryInfos);
         mav.addObject("greenThemeListInfos", redThemeListInfos);
         mav.addObject("categoryInfos", shopTownList);
         mav.addObject("shopTownList", shopTownList);
@@ -215,38 +220,40 @@ public class AdminController {
         return mav;
     }
 
-    @RequestMapping(value = "/shop/{shopType}", method = RequestMethod.GET)
+    @RequestMapping(value = "/shop/list/{shopType}", method = RequestMethod.GET)
     public ModelAndView getShopList(@PathVariable String shopType) {
         ModelAndView mav = new ModelAndView();
-        String[] result = parseAdminShopType(shopType);
-        String shopBackground = result[0];
-        mav.setViewName(result[2]);
-
         List<Shop> shopList = null;
-        // 음식 카테고리
         List<EpicureRegion> categoryInfos = null;
-
-        // 지역
         List<EpicureRegion> regionsInfos = regionAdminService.getEpicureFirstInfo("area_type");
 
+        String[] result = parseAdminShopType(shopType);
+        if(result[0].equals("allred")){
+            shopList = shopService.getAllShopInfos(Arrays.asList(1,3));
+            categoryInfos = regionAdminService.getEpicureFirstInfo("red_shop_type");
+        }else if(result[0].equals("allgreen")){
+            shopList = shopService.getAllShopInfos(Arrays.asList(2,4));
+            categoryInfos = regionAdminService.getEpicureFirstInfo("green_shop_type");
+        }
+
+        String shopBackground = result[0];
+        mav.setViewName(result[2]);
+        Integer btype = null;
         // 리스트 호출 (레드, 그린, 레드2, 그린2, 전체 레드, 전체 그린)
-        if(shopBackground.equals("allred")){
-            shopList = shopService.getAllShopInfos(Arrays.asList("1","3"));
+        if(shopBackground.equals("1") | shopBackground.equals("3")){
+            btype = Integer.parseInt(shopBackground);
             categoryInfos = regionAdminService.getEpicureFirstInfo("red_shop_type");
-        }else if(shopBackground.equals("allgreen")){
-            shopList = shopService.getAllShopInfos(Arrays.asList("2","4"));
-            categoryInfos = regionAdminService.getEpicureFirstInfo("green_shop_type");
-        }else if(shopBackground.equals("1") | shopBackground.equals("3")){
-            categoryInfos = regionAdminService.getEpicureFirstInfo("red_shop_type");
-            shopList = shopService.getTop50AdminShopInfos(shopBackground, Arrays.asList(shopBackground));
+            shopList = shopService.getTop50AdminShopInfos(Arrays.asList(btype));
         }else if(shopBackground.equals("2") | shopBackground.equals("4")) {
+            btype = Integer.parseInt(shopBackground);
             categoryInfos = regionAdminService.getEpicureFirstInfo("green_shop_type");
-            shopList = shopService.getTop50AdminShopInfos(shopBackground, Arrays.asList(shopBackground));
+            shopList = shopService.getTop50AdminShopInfos(Arrays.asList(btype));
         }
         mav.addObject("payload", shopList);
         mav.addObject("categoryInfos", categoryInfos);
         mav.addObject("regionInfos", regionsInfos);
         mav.addObject("background", result[1]);
+        mav.addObject("shopBackground", shopBackground);
 
         return mav;
     }
@@ -259,7 +266,7 @@ public class AdminController {
 
         List<HashTag> hashTags = tagService.getHashTags(shopId);
         List<Category> categoryList = categoryService.getCategory("3", "서울");
-        List<FoodCategory> categoryInfos = null;
+        List<EpicureRegion> categoryInfos = null;
         List<EpicureRegion> firstRegionInfos = null;
         List<EpicureRegion> secondRegionInfos = null;
         List<EpicureRegion> thirdRegionInfos = null;
@@ -280,45 +287,45 @@ public class AdminController {
         if (shopType.equals("red")) {
             mav.setViewName("admin-shop-red-detail");
             themeTags = themeService.getThemeTags("red_theme");
-            categoryInfos = foodCategoryAdminService.getAdminRegionBCategory();
+            categoryInfos = regionAdminService.getEpicureFirstInfo("red_shop_type");
             categoryShopType = "red_shop_type";
         } else {
             mav.setViewName("admin-shop-green-detail");
             themeTags = themeService.getThemeTags("green_theme");
-            categoryInfos = foodCategoryAdminService.getAdminTripRegionBCategory();
+            categoryInfos = regionAdminService.getEpicureFirstInfo("green_shop_type");
             categoryShopType = "green_shop_type";
         }
-        if(detailInfo.getBigCategory().equals("")){
+        if(isStringEmpty(detailInfo.getBigCategory())){
             firstFoodInfos = null;
         }else{
             firstFoodInfos = regionAdminService.getRegionFirstInfoByRegionId(Integer.parseInt(detailInfo.getBigCategory()), categoryShopType);
         }
 
-        if(detailInfo.getMiddleCategory().equals("")){
+        if(isStringEmpty(detailInfo.getMiddleCategory())){
             secondFoodInfos = null;
         }else{
             secondFoodInfos = regionAdminService.getRegionSecondInfoByRegionId(Integer.parseInt(detailInfo.getMiddleCategory()), categoryShopType);
         }
 
-        if(detailInfo.getSmallCategory().equals("")){
+        if(isStringEmpty(detailInfo.getSmallCategory())){
             thirdFoodInfos = null;
         }else{
             thirdFoodInfos = regionAdminService.getRegionSecondInfoByRegionId(Integer.parseInt(detailInfo.getSmallCategory()), categoryShopType);
         }
 
-        if(detailInfo.getSubwayTypeId().equals("")){
+        if(isStringEmpty(detailInfo.getSubwayTypeId())){
             firstSubwayInfos = null;
         }else{
             firstSubwayInfos = regionAdminService.getRegionFirstInfoByRegionId(Integer.parseInt(detailInfo.getSubwayTypeId()), "subway_type");
         }
 
-        if(detailInfo.getSubway2st().equals("")){
+        if(isStringEmpty(detailInfo.getSubway2st())){
             secondSubwayInfos = null;
         }else{
             secondSubwayInfos = regionAdminService.getRegionSecondInfoByRegionId(Integer.parseInt(detailInfo.getSubway2st()), "subway_type");
         }
 
-        if(detailInfo.getSubway3st().equals("")){
+        if(isStringEmpty(detailInfo.getSubway3st())){
             thirdSubwayInfos = null;
         }else{
             thirdSubwayInfos = regionAdminService.getRegionSecondInfoByRegionId(Integer.parseInt(detailInfo.getSubway3st()), "subway_type");
@@ -352,7 +359,7 @@ public class AdminController {
         });
 
         HashMap<String, String> map = new HashMap<String, String>();
-        map = foodCategoryAdminService.getShopCategoryNameCode(bCode, mCode, sCode);
+        map = foodCategoryAdminService.getShopCategoryNameCode(bCode, mCode, sCode, categoryShopType);
         int idx = path.orElseGet(() -> {
             return 0;
         });
@@ -425,13 +432,24 @@ public class AdminController {
     @RequestMapping(value = {"/category/{shopType}/all"}, method = RequestMethod.GET)
     public Map<String, List> getAllCategory(Model model, @PathVariable String shopType) {
         List<Shop> commentList = null;
-        if (shopType.equals("red")) {
-            shopType = "1";
-            commentList = shopService.getTop50AdminShopInfos(shopType, Arrays.asList("1","3"));
-        } else {
-            shopType = "2";
-            commentList = shopService.getTop50AdminShopInfos(shopType, Arrays.asList("2","4"));
+        String[] result = parseAdminShopType(shopType);
+        String shopBackground = result[0];
+//        mav.setViewName(result[2]);
+
+        if (shopType.equals("allred")) {
+            commentList = shopService.getTop50AdminShopInfos(Arrays.asList(1,3));
+        } else if (shopType.equals("allgreen")) {
+            commentList = shopService.getTop50AdminShopInfos(Arrays.asList(2,4));
+        } else if(shopType.equals("1")){
+            commentList = shopService.getTop50AdminShopInfos(Arrays.asList(1));
+        }else if(shopType.equals("2")){
+            commentList = shopService.getTop50AdminShopInfos(Arrays.asList(2));
+        }else if(shopType.equals("3")){
+            commentList = shopService.getTop50AdminShopInfos(Arrays.asList(3));
+        }else if(shopType.equals("4")){
+            commentList = shopService.getTop50AdminShopInfos(Arrays.asList(4));
         }
+
         Map<String, List> members = new HashMap<>();
         members.put("data", commentList);
         return members;
@@ -441,17 +459,15 @@ public class AdminController {
     public String addShop(Model model,
                           @ModelAttribute Shop shop, @PathVariable String shopType, MultipartFile[] files) {
         String viewName = null;
+        Integer background = null;
         try {
             System.out.println("fff");
 
             if (shopType.equals("red")) {
-                shopType = "1";
                 viewName = "admin-shop-red-list";
             } else {
-                shopType = "2";
                 viewName = "admin-shop-green-list";
             }
-            shop.setShopType(shopType);
             String server = "foodie.speedgabia.com";
             int port = 21;
             String user = "foodie";
@@ -489,7 +505,6 @@ public class AdminController {
             }
         } catch (Exception ex) {
         }
-        shop.setThemeList("temp");
         shopService.addShopInfo(shop);
 
         return viewName;
@@ -635,4 +650,5 @@ public class AdminController {
         members.put("data", memberService.getAllUserInfo(userType));
         return members;
     }
+
 }

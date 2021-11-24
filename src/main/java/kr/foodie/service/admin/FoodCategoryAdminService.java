@@ -1,23 +1,29 @@
 package kr.foodie.service.admin;
 
 import kr.foodie.domain.category.FoodCategory;
+import kr.foodie.repo.admin.EpicureRegionRepository;
 import kr.foodie.repo.admin.FoodCategoryAdminRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 
+
+
 @Service
 public class FoodCategoryAdminService {
 
-    private final FoodCategoryAdminRepository foodCategoryAdminRepository;
+    private final EpicureRegionRepository epicureRegionRepository;
 
-
-    public FoodCategoryAdminService(FoodCategoryAdminRepository foodCategoryAdminRepository) {
-        this.foodCategoryAdminRepository = foodCategoryAdminRepository;
+    static boolean isStringEmpty(String str) {
+        return str == null || str.isEmpty();
     }
 
-    public HashMap<String, String> getShopCategoryNameCode(String bCode, String mCode, String sCode){
+    public FoodCategoryAdminService(EpicureRegionRepository epicureRegionRepository) {
+        this.epicureRegionRepository = epicureRegionRepository;
+    }
+
+    public HashMap<String, String> getShopCategoryNameCode(String bCode, String mCode, String sCode, String type){
 
         HashMap<String, String> category = new HashMap<String, String>();
 
@@ -28,31 +34,25 @@ public class FoodCategoryAdminService {
         bCode = bCode.contains(",")?bCode.split(",")[0]:bCode;
         mCode = mCode.contains(",")?mCode.split(",")[0]:mCode;
 
-//        category += address.split(" ")[0]+ " " + address.split(" ")[1];
-//        category += bCode.equalsIgnoreCase("0")? "":" | " + foodCategoryAdminRepository.findByBCodeAndLevel(Integer.parseInt(bCode),1).get(0).getCategoryName();
-
-//        foodCategoryAdminRepository.findByBCodeAndLevel(Integer.parseInt(bCode),1).get(0).getBCode();
-//        category.put(bCode.toString(),foodCategoryAdminRepository.findByBCodeAndLevel(Integer.parseInt(bCode),1).get(0).getCategoryName());
-//        category.put(mCode.toString(),foodCategoryAdminRepository.findByMCodeAndLevel(Integer.parseInt(mCode),2).get(0).getCategoryName());
-        if(bCode.equals("")){
+        if(isStringEmpty(bCode)){
             category.put("bCode", null);
         }else{
-            category.put(bCode.toString(),foodCategoryAdminRepository.findByBCodeAndLevel(Integer.parseInt(bCode),1).get(0).getCategoryName());
+            category.put(bCode.toString(),epicureRegionRepository.getRegionFirstInfoByRegionId(Integer.parseInt(bCode),type).get(0).getListName());
         }
-        if(mCode.equals("")){
+        if(isStringEmpty(mCode)){
             category.put("mCode", null);
         }else{
-            category.put(mCode.toString(),foodCategoryAdminRepository.findByMCodeAndLevel(Integer.parseInt(mCode),2).get(0).getCategoryName());
+            category.put(mCode.toString(),epicureRegionRepository.getRegionSecondInfoByRegionId(Integer.parseInt(mCode),type).get(0).getListName());
         }
-        if(sCode.equals("")){
+        if(isStringEmpty(sCode)){
             category.put("sCode", null);
         }else{
-            category.put(sCode.toString(),foodCategoryAdminRepository.findBySCodeAndLevel(Integer.parseInt(sCode),3).get(0).getCategoryName());
+            category.put(sCode.toString(),epicureRegionRepository.getRegionSecondInfoByRegionId(Integer.parseInt(sCode),type).get(0).getListName());
         }
         return category;
     }
 
-    public List<FoodCategory> getAdminRegionBCategory() {
+    /*public List<FoodCategory> getAdminRegionBCategory() {
         return foodCategoryAdminRepository.findByBcodeOrderBySeq();
     }
 
@@ -66,6 +66,6 @@ public class FoodCategoryAdminService {
     public List<FoodCategory> getAdminRegionSCategory(Integer code)
     {
         return foodCategoryAdminRepository.findByScode(code);
-    }
+    }*/
 }
 

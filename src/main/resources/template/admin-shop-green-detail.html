@@ -138,11 +138,11 @@
                                                         <label for="website">추천리스트</label>
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="is-free-y" type="radio" name="reservation"  >
+                                                                <input class="custom-control-input" id="is-free-y" type="radio" name="reservation" value="y" th:field="${shop.shopPaid}">
                                                                 <label class="custom-control-label" for="is-free-y">추천됨</label>
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="is-free-n" type="radio" name="reservation">
+                                                                <input class="custom-control-input" id="is-free-n" type="radio" name="reservation" value="n"  th:field="${shop.shopPaid}">
                                                                 <label class="custom-control-label" for="is-free-n">추천안됨</label>
                                                             </div>
                                                         </div>
@@ -275,14 +275,14 @@
                                                         <label for="restaurants-closed">배경</label>
                                                         <div class="flex">
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_4" type="radio" name="background_type" th:field="${shop.shopType}" value="3" >
-                                                                <label class="custom-control-label" for="background_type_4">3번(민트)</label>
-                                                                <img src="/images/background_mint.png" class="thumbnail" height='30px' />
+                                                                <input class="custom-control-input" id="background_type_2" type="radio" name="background_type" th:field="${shop.shopType}" value=2 >
+                                                                <label class="custom-control-label" for="background_type_2">2번(그린)</label>
+                                                                <img src="/images/background_green.png" class="thumbnail" height='30px' />
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input class="custom-control-input" id="background_type_2" type="radio" name="background_type" th:field="${shop.shopType}" value="4" >
-                                                                <label class="custom-control-label" for="background_type_2">4번(그린)</label>
-                                                                <img src="/images/background_green.png" class="thumbnail" height='30px' />
+                                                                <input class="custom-control-input" id="background_type_4" type="radio" name="background_type" th:field="${shop.shopType}" value=4 >
+                                                                <label class="custom-control-label" for="background_type_4">4번(민트)</label>
+                                                                <img src="/images/background_mint.png" class="thumbnail" height='30px' />
                                                             </div>
 
                                                         </div>
@@ -313,7 +313,7 @@
                                                                 ></option>
                                                                 <option value="" >구</option>
                                                             </select>
-                                                            <select class="custom-select"  id="table-filter10" th:field="${shop.area3st}">
+                                                            <select class="custom-select"  id="table-filter6" th:field="${shop.area3st}">
                                                                 <option
                                                                         th:each="val : ${thirdRegionInfos}"
                                                                         th:value="${val.id}"
@@ -336,7 +336,6 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" >지역</option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter8" th:field="${shop.subway2st}">
                                                                 <option
@@ -344,7 +343,6 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" >호선</option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter9" th:field="${shop.subway3st}">
                                                                 <option
@@ -352,7 +350,6 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" >역</option>
                                                             </select>
                                                             <input class="form-control" id="exit" type="text" name="exit"  th:field="${shop.exitNum}" style="    width: 45px;font-size: 9pt !important;">
                                                         </div>
@@ -410,7 +407,7 @@
                                                         <!--                                                        <p th:text="${payload[0].themeList}"></p>-->
                                                         <div class="flex" style="display: block;">
                                                             <div class="custom-control custom-radio" style="float: left;padding-right:15px;" th:object="${theme}" th:each="theme : ${themeTags}">
-                                                                <input class="custom-control-input" th:checked="${#arrays.contains(#strings.arraySplit(shop.themeList,','), theme.listName)} == true" th:id="${theme.listName}" th:value="${theme.listName}" type="checkbox" name="theme">
+                                                                <input class="custom-control-input" th:if="${shop.themeList != null}" th:field="${shop.themeList}" th:checked="${#arrays.contains(#strings.arraySplit(shop.themeList,','), theme.listName)} == true" th:id="${theme.listName}" th:value="${theme.listName}" type="checkbox" name="theme">
                                                                 <label class="custom-control-label" th:for="${theme.listName}" th:text="${theme.listName}" > </label>
                                                             </div>
                                                         </div>
@@ -425,7 +422,7 @@
                                                                     <div style="display: inline-block; width: 155px;text-align: center" th:if="${payload.menuImages}" th:each="item : ${payload.menuImages.split(',')}">
                                                                         <img onerror="this.src='/images/default.png'" style="width: 150px;height: 120px; padding-top: 5px;  float: left;" th:src='${item}'>
                                                                         <br>
-                                                                        <button onclick="prompt('해당 이미지를 지우시겠습니까?')" style="margin-top:15px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
+                                                                        <button onclick="prompt('해당 이미지를 지우시겠습니까?')" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
                                                                     </div>
                                                                 <th:block th:each="num : ${#numbers.sequence(1,12)}">
                                                                     <div style="display: inline-block; width: 155px;text-align: center">
@@ -648,320 +645,172 @@
         console.log(sel_files)
     }
     $(document).ready(function() {
-        $('#example18').DataTable( {
-            // "ajax": "/admin/recommand/main/regionInfo/1",
-            "columns": [
-                { 'data': "shopImage", 'render': function (data) { return '<img src="' + data + '" class="thumbnail" style="width: 80px;height:60px;" />'; } },
-                { "data": "shopName" , 'render': function  ( data, type, row ) { return '<div><a href="/admin/shop/green/'+ row.shopId +'">'+ data + '</a></div><div><span> 주소 -'+ row.address +'</span></div>'; } },
-                // { "data": "shopName", 'render': function  ( data, type, row ) { return '<button value="row.shopId" onclick="registerShop(' + row.shopId + ')"> 등록 </button>' }  },
-            ],
-            "columnDefs": [
-                { "width": "50px", "targets": 0, "className": "data_table" },
-                { "width": "200px", "targets": 1, "className": "data_table"  },
-                // { "width": "60px", "targets": 2, "className": "data_table"  },
-            ]
-        } );
-
-
-        $('button[id^=\'uploadImage\']').click(function (e) {
-
-            e.preventDefault();
-            // console.log(e);
-            var id = e.target.value;
-            // console.log('#handleImgFileSelect'+id)
-            $('#input_imgs'+id).click();
-
-        });
-
-        // $("#button[id^='uploadImage']").on("change", handleImgFileSelect);
-
-
-        var tagList = [];
-
-        var renderTagList = function() {
-            var i = 0;
-            var tagsHtml = '';
-
-            for(; i < tagList.length; i++) {
-                console.log(tagList)
-                tagsHtml += "<div class=\"tag-item btn-secondary btn\">" + tagList[i].value + "<a class=\"delete-tag-item\" onClick=\"deleteTag('" + tagList[i] + "\')\">×</a></div>"
-            }
-
-            $(".tag-list").html(tagsHtml);
-        };
-
-       /* var deleteTag = function(value) {
-            var index = tagList.indexOf(value);
-
-            if (index < 0) {
-                return;
-            }
-
-            tagList.splice(index, 1);
-            renderTagList();
-        };
-*/
-        $("button[id^='uploa123dImage']").on("change", function(event) {
-            console.log(event.currentTarget)
-            var dictObject = {}
-            const value = event.currentTarget.value;
-            const name = event.currentTarget.innerText;
-            console.log(name)
-            if (tagList.indexOf(value) >= 0) {
-                $('#table-filter3 option:eq(0)').prop('selected', true);
-                return;
-            }
-            dictObject[value] = name;
-            tagList.push(dictObject);
-            renderTagList()
-            $('#table-filter3 option:eq(0)').prop('selected', true);
-        });
-
-
-
-
-
         $('.summernote').summernote();
-
         var xOffset = 10;
         var yOffset = 30;
-
-
         $(document).on("mouseover",".thumbnail",function(e){ //마우스 오버시
-
             $("body").append("<p id='preview'><img src='"+ $(this).attr("src") +"' width='400px' /></p>"); //보여줄 이미지를 선언
             $("#preview")
                 .css("top",(e.pageY - xOffset) + "px")
                 .css("left",(e.pageX + yOffset) + "px")
                 .fadeIn("fast"); //미리보기 화면 설정 셋팅
         });
-
         $(document).on("mousemove",".thumbnail",function(e){ //마우스 이동시
             $("#preview")
                 .css("top",(e.pageY - xOffset) + "px")
                 .css("left",(e.pageX + yOffset) + "px");
         });
-
         $(document).on("mouseout",".thumbnail",function(){ //마우스 아웃시
             $("#preview").remove();
         });
 
-
-
-        var list = document.getElementById('list');
-        function clickButton(){
-            var temp = document.createElement('li');
-            temp.innerHTML = input.value;
-            list.appendChild(temp);
-        }
-        $('#table-filter7').change( function(){
-            var good_a = ["호선", "1호선", "2호선", "3호선", "4호선", "5호선", "6호선", "7호선", "8호선", "9호선", "수인분당선", "신분당선", "중앙선", "공항선",
-                "경춘선", "경강선", "경의중앙선", "공항철도선", "의정부 경전철", "우이 신설선", "용인에버라인", "서해선", "김포골드라인"];
-            var good_b = ["호선","1호선", "2호선"];
-            var good_c = ["호선","1호선", "2호선", "3호선"];
-            var good_d = ["호선","1호선", "2호선"];
-            var good_e = ["호선","1호선"];
-            var good_f = ["호선","1호선"];
-
-            var target = document.getElementById("table-filter8");
-            var val = $( ':selected', this).val();
-            if(val == "수도권") var d = good_a;
-            else if(val == "인천") var d = good_b;
-            else if(val == "부산") var d = good_c;
-            else if(val == "대구") var d = good_d;
-            else if(val == "광주") var d = good_e;
-            else if(val == "대전") var d = good_f;
-
-
-            target.options.length = 0;
-
-            for (x in d) {
-                var opt = document.createElement("option");
-                opt.value = d[x];
-                opt.innerHTML = d[x];
-                target.appendChild(opt);
-            }
+        $('#table-filter1').change( function(){
+            get_category_info( this , "table-filter1"); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
         });
 
+        $('#table-filter2').change( function(){
+            get_category_info( this, "table-filter2" ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        $('#table-filter4').change( function(){
+            get_region_info( this, "table-filter4"); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        $('#table-filter5').change( function(){
+            get_region_info( this, "table-filter5"); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        $('#table-filter7').change( function(){
+            get_subway_info( this, "table-filter7"); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
 
         $('#table-filter8').change( function(){
-            get_subway_scode( this); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+            get_subway_info( this, "table-filter8"); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
         });
 
-        function get_subway_scode(o){
-            var val = $( '#table-filter7 option:selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            var val1 = $('#table-filter8 option:selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+
+
+        function get_subway_info(o, type){
+            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
 
             $.ajax({
-                url: "/category/region/" + 2 + "?b_name=" + encodeURI(val) + "&m_name=" + encodeURI(val1),
+                url:"/admin/epicure/subway_type/" + val,
                 contentType: "application/json",
                 dataType: "json",
                 type:"GET",
             }).done(function (data) {
-                // console.log(data.data)
-                // console.log(data)
+                var data = data.data;
                 if(data.length > 0) {
-                    $("#table-filter9").find("option").remove().end();
-                    $("#table-filter9").append("<option>역</option>");
-                    $.each(data, function(key, value) {
-                        $("#table-filter9").append("<option value='" + value.regionId + "'>" + value.subwayName + "</option>");
-                    });
-                    console.log(data[0])
+                    if(type == "table-filter7") {
+                        $("#table-filter8").find("option").remove().end();
+                        $("#table-filter8").append("<option>호선</option>");
+                        $.each(data, function (key, value) {
+                            $("#table-filter8").append("<option value='" + value.id + "'>" + value.listName + "</option>");
+                        });
+                        console.log(data[0])
+                    }else{
+                        $("#table-filter9").find("option").remove().end();
+                        $("#table-filter9").append("<option>역</option>");
+                        $.each(data, function(key, value) {
+                            $("#table-filter9").append("<option value='" + value.id + "'>" + value.listName + "</option>");
+                        });
+                        console.log(data[0])
+                    }
                 } else {
-                    $("#table-filter9").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                    $("#table-filter9").find("option").remove().end();
-                    $("#table-filter9").append("<option value='0'>NO DATA</option>");
-                    return;
+                    if(type == "table-filter7") {
+                        $("#table-filter8").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                        $("#table-filter8").find("option").remove().end();
+                        $("#table-filter8").append("<option value='0'>NO DATA</option>");
+                        return;
+                    }else{
+                        $("#table-filter9").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                        $("#table-filter9").find("option").remove().end();
+                        $("#table-filter9").append("<option value='0'>NO DATA</option>");
+                        return;
+                    }
                 }
 
-
-                // var ul = document.createElement('ul');
-                // ul.setAttribute('class','item-list-wrapper');
-                // document.getElementById(className).appendChild(ul);
-                // fragment.forEach(renderProductList);
-                // // class="active"
-                // function renderProductList(element, index, arr) {
-                //     var li = document.createElement('li');
-                //
-                //     ul.appendChild(li);
-                //
-                //     if(type=='2'){
-                //         if(element.subwayName != null){
-                //             li.innerHTML=li.innerHTML +"<a href='/shop/region/subway/" + element.regionId +"/red'>" +element.subwayName + "("+element.districtCnt + ")" + "</a>";
-                //         }
-                //     }else{
-                //         li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.districtName + "("+element.districtCnt+")" + "</a>";
-                //     }
-                // }
             });
 
         }
-        $('#table-filter4').change( function(){
-            get_region_mcode( this); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-        });
 
-
-
-        function get_region_mcode(o){
+        function get_region_info(o, type){
             var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
             $.ajax({
-                url: "/category/region/" + 1 + "?name=" + encodeURI(val),
+                url:"/admin/epicure/area_type/" + val,
                 contentType: "application/json",
                 dataType: "json",
                 type:"GET",
             }).done(function (data) {
-
+                var data = data.data;
                 if(data.length > 0) {
-                    $("#table-filter5").find("option").remove().end();
-                    $("#table-filter5").append("<option>중분류</option>");
-                    $.each(data, function(key, value) {
-                        $("#table-filter5").append("<option value='" + value.regionId + "'>" + value.districtName + "</option>");
-                    });
-                    console.log(data[0])
+                    if(type == "table-filter4") {
+                        $("#table-filter5").find("option").remove().end();
+                        $("#table-filter5").append("<option>군/구</option>");
+                        $.each(data, function (key, value) {
+                            $("#table-filter5").append("<option value='" + value.id + "'>" + value.listName + "</option>");
+                        });
+                        console.log(data[0])
+                    }else{
+                        $("#table-filter6").find("option").remove().end();
+                        $("#table-filter6").append("<option>읍/면/동</option>");
+                        $.each(data, function(key, value) {
+                            $("#table-filter6").append("<option value='" + value.id + "'>" + value.listName + "</option>");
+                        });
+                        console.log(data[0])
+                    }
                 } else {
-                    $("#table-filter5").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                    $("#table-filter5").find("option").remove().end();
-                    $("#table-filter5").append("<option value='0'>NO DATA</option>");
-                    return;
+                    if(type == "table-filter4") {
+                        $("#table-filter5").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                        $("#table-filter5").find("option").remove().end();
+                        $("#table-filter5").append("<option value='0'>NO DATA</option>");
+                        return;
+                    }else{
+                        $("#table-filter6").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                        $("#table-filter6").find("option").remove().end();
+                        $("#table-filter6").append("<option value='0'>NO DATA</option>");
+                        return;
+                    }
                 }
 
-
-                // var ul = document.createElement('ul');
-                // ul.setAttribute('class','item-list-wrapper');
-                // document.getElementById(className).appendChild(ul);
-                // fragment.forEach(renderProductList);
-                // // class="active"
-                // function renderProductList(element, index, arr) {
-                //     var li = document.createElement('li');
-                //
-                //     ul.appendChild(li);
-                //
-                //     if(type=='2'){
-                //         if(element.subwayName != null){
-                //             li.innerHTML=li.innerHTML +"<a href='/shop/region/subway/" + element.regionId +"/red'>" +element.subwayName + "("+element.districtCnt + ")" + "</a>";
-                //         }
-                //     }else{
-                //         li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.districtName + "("+element.districtCnt+")" + "</a>";
-                //     }
-                // }
             });
-
         }
-        $('#table-filter5').change( function(){
-            get_region_scode( this); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-        });
-
-        function get_region_scode(o){
-            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            $.ajax({
-                url: "/category/region/" + 2 + "?name=" + encodeURI(val),
-                contentType: "application/json",
-                dataType: "json",
-                type:"GET",
-            }).done(function (fragment) {
-
-                if(data.length > 0) {
-                    $("#table-filter8").find("option").remove().end();
-                    $("#table-filter8").append("<option>중분류</option>");
-                    $.each(data, function(key, value) {
-                        $("#table-filter8").append("<option value='" + value.regionId + "'>" + value.subwayName + "</option>");
-                    });
-                    console.log(data[0])
-                } else {
-                    $("#table-filter8").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                    $("#table-filter8").find("option").remove().end();
-                    $("#table-filter8").append("<option value='0'>NO DATA</option>");
-                    return;
-                }
-
-
-                // var ul = document.createElement('ul');
-                // ul.setAttribute('class','item-list-wrapper');
-                // document.getElementById(className).appendChild(ul);
-                // fragment.forEach(renderProductList);
-                // // class="active"
-                // function renderProductList(element, index, arr) {
-                //     var li = document.createElement('li');
-                //
-                //     ul.appendChild(li);
-                //
-                //     if(type=='2'){
-                //         if(element.subwayName != null){
-                //             li.innerHTML=li.innerHTML +"<a href='/shop/region/subway/" + element.regionId +"/red'>" +element.subwayName + "("+element.districtCnt + ")" + "</a>";
-                //         }
-                //     }else{
-                //         li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.districtName + "("+element.districtCnt+")" + "</a>";
-                //     }
-                // }
-            });
-
-        }
-        $('#table-filter1').change( function(){
-            console.log('click');
-            get_mcode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-        });
-
-        function get_mcode(o){
+        function get_category_info(o, type){
             var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
             console.log(val)
             if(val != ''){
                 $.ajax({
                     type:"get",
-                    url:"/admin/category/mfood/" + val,
+                    url:"/admin/epicure/green_shop_type/" + val,
                     datatype: "json",
                     success: function(data) {
+                        var data = data.data;
                         if(data.length > 0) {
-                            $("#table-filter2").find("option").remove().end();
-                            $("#table-filter2").append("<option>중분류</option>");
-                            $.each(data, function(key, value) {
-                                $("#table-filter2").append("<option value='" + value.mcode + "'>" + value.categoryName + "</option>");
-                            });
-                            console.log(data[0])
+                            if(type == "table-filter1") {
+                                $("#table-filter2").find("option").remove().end();
+                                $("#table-filter2").append("<option>중분류</option>");
+                                $.each(data, function (key, value) {
+                                    $("#table-filter2").append("<option value='" + value.id + "'>" + value.listName + "</option>");
+                                });
+                            }else{
+                                $("#table-filter3").find("option").remove().end();
+                                $("#table-filter3").append("<option>소분류</option>");
+                                $.each(data, function(key, value) {
+                                    $("#table-filter3").append("<option value='" + value.id + "'>" + value.listName + "</option>");
+                                });
+                            }
                         } else {
-                            $("#table-filter2").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                            $("#table-filter3").find("option").remove().end();
-                            $("#table-filter3").append("<option value='0'>NO DATA</option>");
-                            return;
+                            if(type == "table-filter1") {
+                                $("#table-filter2").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                                $("#table-filter3").find("option").remove().end();
+                                $("#table-filter3").append("<option value='0'>NO DATA</option>");
+                                return;
+                            }else {
+                                $("#table-filter2").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                                $("#table-filter3").find("option").remove().end();
+                                $("#table-filter3").append("<option value='0'>NO DATA</option>");
+                                return;
+                            }
                         }
                     },
 
@@ -971,49 +820,20 @@
                     }
                 });
             }else {
-                $("#table-filter2").find("option").remove().end();
-                $("#table-filter2").append("<option value='0'>중분류</option>");
-                $("#table-filter3").find("option").remove().end();
-                $("#table-filter3").append("<option value='0'>소분류</option>");
+                if(type == "table-filter1") {
+                    $("#table-filter2").find("option").remove().end();
+                    $("#table-filter2").append("<option value='0'>중분류</option>");
+                    $("#table-filter3").find("option").remove().end();
+                    $("#table-filter3").append("<option value='0'>소분류</option>");
+                }else{
+                    $("#table-filter3").find("option").remove().end();
+                    $("#table-filter3").append("<option value='0'>소분류 </option>");
+                }
             }
         }
 
-        $('#table-filter2').change( function(){
-            get_scode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-        });
 
-        function get_scode(o){
-            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            console.log(val)
-            if(val != '') {
-                $.ajax({
-                    type: "get",
-                    url: "/admin/category/sfood/" + val,
-                    datatype: "json",
-                    success: function (data) {
-                        if (data.length > 0) {
-                            $("#table-filter3").find("option").remove().end();
-                            $("#table-filter3").append("<option>소분류</option>");
-                            $.each(data, function (key, value) {
-                                $("#table-filter3").append("<option value='" + value.scode + "'>" + value.categoryName + "</option>");
-                            });
-                        } else {
-                            $("#table-filter3").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                            return;
-                        }
-                    },
-
-                    error: function (x, o, e) {
-                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                        alert(msg);
-                    }
-                });
-            }else{
-                $("#table-filter3").find("option").remove().end();
-                $("#table-filter3").append("<option value='0'>소분류 </option>");
-            }
-        }
-    } );
+    });
 
 
 </script>
