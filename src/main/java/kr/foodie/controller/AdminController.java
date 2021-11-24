@@ -130,7 +130,9 @@ public class AdminController {
     }
 
 
-
+    /**
+     * 여기하는중
+     */
 
     @RequestMapping(value = "/registerRedShop", method = RequestMethod.GET)
     public ModelAndView getregisterRedShop(@ModelAttribute("shop") Shop shop) {
@@ -139,16 +141,49 @@ public class AdminController {
         List<Theme> redThemeListInfos = themeService.getThemeTags("red_theme");;
         // 음식 카테고리
         List<EpicureRegion> categoryInfos = regionAdminService.getEpicureFirstInfo("red_shop_type");
-        // 맛집촌 리스트
-        List<ShopTown> shopTownList = shopTownService.getAll("town");
+
+        //대분류, 지역류, 지하철류
+        List<EpicureRegion> allFirstFoodInfos = null;
+        List<EpicureRegion> allFirstRegionInfos = null;
+        List<EpicureRegion> allFirstSubwayInfos = null;
+        //맛집촌
+        List<ShopTown> shopTownList = null;
+        //테마리스트
+        List<Theme> themeTags = null;
+
+
+
+        List<EpicureRegion> secondFoodInfos = null;
+
+
+        allFirstFoodInfos = regionAdminService.getEpicureFirstInfo("red_shop_type");
+        allFirstRegionInfos = regionAdminService.getEpicureFirstInfo("area_type");
+        allFirstSubwayInfos = regionAdminService.getEpicureFirstInfo("subway_type");
+
+        themeTags = themeService.getThemeTags("red_theme");
+        shopTownList = shopTownService.getAll("town");
+
+
+        mav.addObject("allFirstFoodInfos", allFirstFoodInfos);
+        mav.addObject("allFirstRegionInfos", allFirstRegionInfos);
+        mav.addObject("allFirstSubwayInfos", allFirstSubwayInfos);
+
+        mav.addObject("secondFoodInfos", secondFoodInfos);
+
 
         mav.addObject("shop", Shop.emptyShop());
         mav.addObject("categoryList", categoryInfos);
         mav.addObject("redThemeListInfos", redThemeListInfos);
-        mav.addObject("categoryInfos", shopTownList);
+
+        mav.addObject("themeTags", themeTags);
+        mav.addObject("shopTownList", shopTownList);
+
+
         mav.setViewName("admin-create-red-shop");
         return mav;
     }
+
+
 
     @RequestMapping(value = "/registerGreenShop", method = RequestMethod.GET)
     public ModelAndView getRegisterGreenShop() {
@@ -216,11 +251,12 @@ public class AdminController {
         return mav;
     }
 
-
+    //여기 하는중
     @RequestMapping(value = {"/shop/{shopType}/{shopId}", "/{shopId}/{path}"}, method = RequestMethod.GET)
     public ModelAndView getShopDetail(@PathVariable String shopType, @PathVariable Integer shopId, @PathVariable Optional<Integer> path) {
         ModelAndView mav = new ModelAndView();
         List<Theme> themeTags = null;
+
         List<HashTag> hashTags = tagService.getHashTags(shopId);
         List<Category> categoryList = categoryService.getCategory("3", "서울");
         List<FoodCategory> categoryInfos = null;
@@ -287,6 +323,7 @@ public class AdminController {
         }else{
             thirdSubwayInfos = regionAdminService.getRegionSecondInfoByRegionId(Integer.parseInt(detailInfo.getSubway3st()), "subway_type");
         }
+
         allFirstRegionInfos = regionAdminService.getEpicureFirstInfo("area_type");
         allFirstFoodInfos = regionAdminService.getEpicureFirstInfo(categoryShopType);
         allFirstSubwayInfos = regionAdminService.getEpicureFirstInfo("subway_type");
@@ -450,10 +487,10 @@ public class AdminController {
                 } catch (Exception e) {
                 }
             }
-            shopService.addShopInfo(shop);
-
         } catch (Exception ex) {
         }
+        shop.setThemeList("temp");
+        shopService.addShopInfo(shop);
 
         return viewName;
 

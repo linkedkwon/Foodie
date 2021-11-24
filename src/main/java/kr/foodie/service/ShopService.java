@@ -155,7 +155,9 @@ public class ShopService {
     }
 
     public List<Shop> getTop50AdminShopInfos(String shopType, List<String> background) {
-        return shopRepository.findByShopTypeIn(background);
+        //등록되는거 오름차순으로 보여줄려고 임시로 만듬
+        return shopRepository.findByShopTypeInOrderByShopIdDesc(background);
+        //return shopRepository.findByShopTypeIn(background);
     }
     //rderByUpdatedAtDesc
     public List<Shop> getAllShopInfos(List<String> shopType) {
