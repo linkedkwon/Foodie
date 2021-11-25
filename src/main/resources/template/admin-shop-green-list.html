@@ -347,7 +347,7 @@
                         $("#table-filter2").find("option").remove().end();
                         $("#table-filter2").append("<option>중분류</option>");
                         $.each(data, function(key, value) {
-                            $("#table-filter2").append("<option value='" + value.mcode + "'>" + value.categoryName + "</option>");
+                            $("#table-filter2").append("<option value='" + value.no + "'>" + value.listName + "</option>");
                         });
                         console.log(data[0])
                     } else {
@@ -426,7 +426,7 @@
                             $("#table-filter5").find("option").remove().end();
                             $("#table-filter4").append("<option>중분류</option>");
                             $.each(data, function(key, value) {
-                                $("#table-filter5").append("<option value='" + value.regionId + "'>" + value.districtName + "</option>");
+                                $("#table-filter5").append("<option value='" + value.id + "'>" + value.listName + "</option>");
                             });
                         } else {
                             $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");

@@ -378,7 +378,7 @@
                                                         <!--                                                        <p th:text="${payload[0].themeList}"></p>-->
                                                         <div class="flex" style="display: block;">
                                                             <div class="custom-control custom-radio" style="float: left;padding-right:15px;" th:object="${theme}" th:each="theme : ${themeTags}">
-                                                                <input class="custom-control-input" th:if="${shop.themeList != null}" th:field="${shop.themeList}" th:id="${theme.listName}" th:value="${theme.listName}" type="checkbox" name="theme">
+                                                                <input class="custom-control-input" th:id="${theme.listName}" th:value="${theme.listName}" type="checkbox" name="theme">
                                                                 <label class="custom-control-label" th:for="${theme.listName}" th:text="${theme.listName}" > </label>
                                                             </div>
                                                         </div>

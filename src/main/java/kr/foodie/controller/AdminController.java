@@ -228,6 +228,7 @@ public class AdminController {
         List<EpicureRegion> regionsInfos = regionAdminService.getEpicureFirstInfo("area_type");
 
         String[] result = parseAdminShopType(shopType);
+
         if(result[0].equals("allred")){
             shopList = shopService.getAllShopInfos(Arrays.asList(1,3));
             categoryInfos = regionAdminService.getEpicureFirstInfo("red_shop_type");
