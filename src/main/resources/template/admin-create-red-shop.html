@@ -48,7 +48,7 @@
             <div class="container-fluid" style="    width: 700px;">
 
                 <!-- DataTales Example -->
-                <form th:action="@{/admin/shop/add/red}", method="post">
+                <form th:action="@{/admin/shop/add/red}", method="post" onsubmit="return jbSubmit();">
                     <input type="hidden" value="0" th:field="${shop.shopType}">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -142,29 +142,29 @@
                                                     <div class="form-group">
                                                         <label for="select-tags" style="width: 400px;">음식 카테고리</label>
                                                         <div style="display: flex">
-                                                            <select id="table-filter1" class="custom-selectcustom-select" th:field="${shop.bigCategory}">
-                                                                <option value="">대분류</option>
+                                                            <select id="table-filter1" class="custom-select" th:field="${shop.bigCategory}">
                                                                 <option
                                                                         th:each="val : ${allFirstFoodInfos}"
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
+                                                                <option value="" ></option>
                                                             </select>
-                                                            <select id="table-filter2" class="custom-select"  th:field="${shop.middleCategory}">
+                                                            <select id="table-filter2" class="custom-select" th:field="${shop.middleCategory}">
                                                                 <option
                                                                         th:each="val : ${secondFoodInfos}"
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" >중분류</option>
+                                                                <option value="" ></option>
                                                             </select>
-                                                            <select id="table-filter3" class="custom-select"  th:field="${shop.smallCategory}">
+                                                            <select id="table-filter3" class="custom-select" th:field="${shop.smallCategory}">
                                                                 <option
                                                                         th:each="val : ${thirdFoodInfos}"
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" >소분류</option>
+                                                                <option value="" ></option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -229,7 +229,16 @@
                                                     <div class="form-group">
                                                         <div class="form-group">
                                                             <label for="restaurants-closed">포장/배달</label>
-                                                            <input type="text" class="form-control" id="is_delivery" placeholder="포장" th:field="${shop.isDelivery}">
+                                                            <div class="flex">
+                                                                <div class="custom-control custom-radio">
+                                                                    <input class="custom-control-input" id="delivery-y" disabled type="radio" value="Y" name="delivery"  th:field="${shop.isDelivery}">
+                                                                    <label class="custom-control-label" for="delivery-y">가능</label>
+                                                                </div>
+                                                                <div class="custom-control custom-radio">
+                                                                    <input class="custom-control-input" id="delivery-n" disabled type="radio" value="N" name="delivery" th:field="${shop.isDelivery}" >
+                                                                    <label class="custom-control-label" for="delivery-n">불가능</label>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -240,12 +249,12 @@
                                                             <div class="custom-control custom-radio">
 
                                                                 <input class="custom-control-input" id="background_type_1" type="radio" name="background_type" th:field="${shop.shopType}" value="1" >
-                                                                <label class="custom-control-label" for="background_type_1">레드1</label>
+                                                                <label class="custom-control-label" for="background_type_1">1번(레드)</label>
                                                                 <img src="/images/background_red.png" class="thumbnail" height='30px' />
                                                             </div>
                                                             <div class="custom-control custom-radio">
                                                                 <input class="custom-control-input" id="background_type_3" type="radio" name="background_type" th:field="${shop.shopType}" value="3" >
-                                                                <label class="custom-control-label" for="background_type_3">레드2</label>
+                                                                <label class="custom-control-label" for="background_type_3">3번(머스타드)</label>
                                                                 <img src="/images/background_mustard.png" class="thumbnail" height='30px' />
                                                             </div>
 
@@ -261,12 +270,12 @@
                                                         <div style="display: flex">
                                                             <select id="table-filter4" class="custom-select" th:field="${shop.area1st}">
                                                                 <!--/*@thymesVar id="listName" type="String"*/-->
-                                                                <option value="" >시</option>
                                                                 <option
                                                                         th:each="val : ${allFirstRegionInfos}"
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
+                                                                <option value="" ></option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter5" th:field="${shop.area2st}">
                                                                 <option
@@ -274,15 +283,15 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" >구</option>
+                                                                <option value="" ></option>
                                                             </select>
-                                                            <select class="custom-select"  id="table-filter10" th:field="${shop.area3st}">
+                                                            <select class="custom-select"  id="table-filter6" th:field="${shop.area3st}">
                                                                 <option
                                                                         th:each="val : ${thirdRegionInfos}"
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" >동</option>
+                                                                <option value=""></option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -293,12 +302,12 @@
                                                         <div style="display: flex">
                                                             <select id="table-filter7" class="custom-select" th:field="${shop.subwayTypeId}">
                                                                 <!--/*@thymesVar id="listName" type="String"*/-->
-                                                                <option value="" >지역</option>
                                                                 <option
                                                                         th:each="val : ${allFirstSubwayInfos}"
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
+                                                                <option value="" ></option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter8" th:field="${shop.subway2st}">
                                                                 <option
@@ -306,7 +315,6 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" >호선</option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter9" th:field="${shop.subway3st}">
                                                                 <option
@@ -314,9 +322,9 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" >역</option>
+                                                                <option value="" ></option>
                                                             </select>
-                                                            <input class="form-control" id="exit" type="text" name="exit"  th:field="${shop.exitNum}" style="    width: 45px;font-size: 9pt !important;">
+                                                            <input class="form-control" id="exit" type="text" placeholder="출구" name="exit"  th:field="${shop.exitNum}" style="    width: 45px;font-size: 9pt !important;">
                                                         </div>
                                                     </div>
 
@@ -357,7 +365,7 @@
                                                     <div class="form-group">
                                                         <label for="restaurants-closed">맛집촌선택</label>
                                                         <div class="flex" style="display: block;">
-                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;" th:each="infos : ${shopTownList}">
+                                                            <div class="custom-control custom-radio" id="shoptown" style="float: left;padding-right:15px;" th:each="infos : ${shopTownList}">
                                                                 <input class="custom-control-input" th:id="${infos.listName}" th:value="${infos.id}"  type="checkbox" name="theme" th:field="${shop.villageTypeId}">
                                                                 <label class="custom-control-label" th:for="${infos.listName}" th:text="${infos.listName}"></label>
                                                             </div>
@@ -385,15 +393,16 @@
                                             <div class="row">
                                                 <div class="form-group" style="    padding-top: 40px;">
                                                    <label for="restaurants-location-detial">가게 이미지 추가</label>
+                                                    <label for="restaurants-location-detial">가게 이미지 추가</label>
                                                     <div>
-                                                        <div class="imgs_wrap">
+                                                       <div class="imgs_wrap">
                                                             <th:block th:each="num : ${#numbers.sequence(1,12)}">
                                                                 <div style="display: inline-block; width: 155px;text-align: center">
                                                                     <img th:id="'thum'+${num}"  th:value="${num}" onerror="this.src='/images/default.png'" style="width: 150px;height: 120px; padding-top: 5px;  float: left;" src="/images/default.png">
                                                                     <br>
                                                                     <input th:value="${num}" name="files"  th:data="${num}" type="file" th:id="'input_imgs'+${num}" onchange="handleImgFileSelect(this)">
-                                                                    <button type="button" th:value="${num}"  th:id="'uploadImage'+${num}" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">추가</button>
-                                                                    <button type="button" th:onclick="'deleteImageAction(' + ${num} + '); return false;'" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
+                                                                    <button th:value="${num}"  th:id="'uploadImage'+${num}" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">추가</button>
+                                                                    <button th:onclick="'deleteImageAction(' + ${num} + '); return false;'" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
                                                                 </div>
                                                             </th:block>
                                                         </div>
@@ -559,6 +568,221 @@
     }
 </style>
 <script type="text/javascript">
+
+
+    $(document).ready(function() {
+
+        $('#shoptown input[type="checkbox"]').on('change', function() {
+            $('#shoptown input[type="checkbox"]').not(this).prop('checked', false);
+        });
+
+
+
+        $('.summernote').summernote();
+        var xOffset = 10;
+        var yOffset = 30;
+        $(document).on("mouseover",".thumbnail",function(e){ //마우스 오버시
+            $("body").append("<p id='preview'><img src='"+ $(this).attr("src") +"' width='400px' /></p>"); //보여줄 이미지를 선언
+            $("#preview")
+                .css("top",(e.pageY - xOffset) + "px")
+                .css("left",(e.pageX + yOffset) + "px")
+                .fadeIn("fast"); //미리보기 화면 설정 셋팅
+        });
+        $(document).on("mousemove",".thumbnail",function(e){ //마우스 이동시
+            $("#preview")
+                .css("top",(e.pageY - xOffset) + "px")
+                .css("left",(e.pageX + yOffset) + "px");
+        });
+        $(document).on("mouseout",".thumbnail",function(){ //마우스 아웃시
+            $("#preview").remove();
+        });
+
+        $('#table-filter1').change( function(){
+            get_category_info( this , "table-filter1"); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        $('#table-filter2').change( function(){
+            get_category_info( this, "table-filter2" ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        $('#table-filter4').change( function(){
+            get_region_info( this, "table-filter4"); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        $('#table-filter5').change( function(){
+            get_region_info( this, "table-filter5"); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        $('#table-filter7').change( function(){
+            get_subway_info( this, "table-filter7"); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        $('#table-filter8').change( function(){
+            get_subway_info( this, "table-filter8"); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+
+
+        function get_subway_info(o, type){
+            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+
+            $.ajax({
+                url:"/admin/epicure/subway_type/" + val,
+                contentType: "application/json",
+                dataType: "json",
+                type:"GET",
+            }).done(function (data) {
+                var data = data.data;
+                if(data.length > 0) {
+                    if(type == "table-filter7") {
+                        $("#table-filter8").find("option").remove().end();
+                        $("#table-filter8").append("<option></option>");
+                        $.each(data, function (key, value) {
+                            $("#table-filter8").append("<option value='" + value.id + "'>" + value.listName + "</option>");
+                        });
+                        console.log(data[0])
+                    }else{
+                        $("#table-filter9").find("option").remove().end();
+                        $("#table-filter9").append("<option></option>");
+                        $.each(data, function(key, value) {
+                            $("#table-filter9").append("<option value='" + value.id + "'>" + value.listName + "</option>");
+                        });
+                        console.log(data[0])
+                    }
+                } else {
+                    if(type == "table-filter7") {
+                        $("#table-filter8").find("option").remove().end().append("<option value=''></option>");
+                        $("#table-filter8").find("option").remove().end();
+                        $("#table-filter8").append("<option value=''></option>");
+                        return;
+                    }else{
+                        $("#table-filter9").find("option").remove().end().append("<option value=''></option>");
+                        $("#table-filter9").find("option").remove().end();
+                        $("#table-filter9").append("<option value=''></option>");
+                        return;
+                    }
+                }
+
+            });
+
+        }
+
+        function get_region_info(o, type){
+            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+            $.ajax({
+                url:"/admin/epicure/area_type/" + val,
+                contentType: "application/json",
+                dataType: "json",
+                type:"GET",
+            }).done(function (data) {
+                var data = data.data;
+                if(data.length > 0) {
+                    if(type == "table-filter4") {
+                        $("#table-filter5").find("option").remove().end();
+                        $("#table-filter5").append("<option></option>");
+                        $.each(data, function (key, value) {
+                            $("#table-filter5").append("<option value='" + value.id + "'>" + value.listName + "</option>");
+                        });
+                        console.log(data[0])
+                    }else{
+                        $("#table-filter6").find("option").remove().end();
+                        $("#table-filter6").append("<option></option>");
+                        $.each(data, function(key, value) {
+                            $("#table-filter6").append("<option value='" + value.id + "'>" + value.listName + "</option>");
+                        });
+                        console.log(data[0])
+                    }
+                } else {
+                    if(type == "table-filter4") {
+                        $("#table-filter5").find("option").remove().end().append("<option value=''>NO DATA</option>");
+                        $("#table-filter5").find("option").remove().end();
+                        $("#table-filter5").append("<option value=''></option>");
+                        return;
+                    }else{
+                        $("#table-filter6").find("option").remove().end().append("<option value='0>NO DATA</option>");
+                        $("#table-filter6").find("option").remove().end();
+                        $("#table-filter6").append("<option value=''></option>");
+                        return;
+                    }
+                }
+
+            });
+        }
+        function get_category_info(o, type){
+            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+            console.log(val)
+            if(val != ''){
+                $.ajax({
+                    type:"get",
+                    url:"/admin/epicure/green_shop_type/" + val,
+                    datatype: "json",
+                    success: function(data) {
+                        var data = data.data;
+                        if(data.length > 0) {
+                            if(type == "table-filter1") {
+                                $("#table-filter2").find("option").remove().end();
+                                $("#table-filter2").append("<option></option>");
+                                $.each(data, function (key, value) {
+                                    $("#table-filter2").append("<option value='" + value.id + "'>" + value.listName + "</option>");
+                                });
+                            }else{
+                                $("#table-filter3").find("option").remove().end();
+                                $("#table-filter3").append("<option></option>");
+                                $.each(data, function(key, value) {
+                                    $("#table-filter3").append("<option value='" + value.id + "'>" + value.listName + "</option>");
+                                });
+                            }
+                        } else {
+                            if(type == "table-filter1") {
+                                $("#table-filter2").find("option").remove().end().append("<option value=''></option>");
+                                $("#table-filter3").find("option").remove().end();
+                                $("#table-filter3").append("<option value=''></option>");
+                                return;
+                            }else {
+                                $("#table-filter3").find("option").remove().end().append("<option value=''></option>");
+                                // $("#table-filter3").find("option").remove().end();
+                                // $("#table-filter3").append("<option value='0'>NO DATA</option>");
+                                return;
+                            }
+                        }
+                    },
+
+                    error: function(x, o, e) {
+                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                        console.log(msg);
+                    }
+                });
+            }else {
+                if(type == "table-filter1") {
+                    $("#table-filter2").find("option").remove().end();
+                    $("#table-filter2").append("<option value=''></option>");
+                    $("#table-filter3").find("option").remove().end();
+                    $("#table-filter3").append("<option value=''></option>");
+                }else{
+                    $("#table-filter3").find("option").remove().end();
+                    $("#table-filter3").append("<option value=''></option>");
+                }
+            }
+        }
+
+
+    } );
+
+
+</script>
+<script>
+
+    function jbSubmit(){
+        var validated1 = $('#background_type_2').is(':checked');
+        var validated2 = $('#background_type_4').is(':checked');
+        if(validated1 == false && validated2 == false){
+            alert("배경 체크해주세요")
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     var sel_files =[];
     function fileUploadAction(){
         console.log("upload")
@@ -566,7 +790,6 @@
     }
 
     function handleImgFileSelect(e){
-        console.log("돌고래");
         sel_files = [];
         // var target_select = ;
         // var target = target_select;
@@ -609,360 +832,33 @@
         console.log(sel_files)
     }
 
-    $(document).ready(function() {
+    $('button[id^=\'uploadImage\']').click(function (e) {
+        e.preventDefault();
+        var id = e.target.value;
+        $('#input_imgs'+id).click();
 
-        $("#input_imgs").on("change", handleImgFileSelect);
+    });
 
 
-        var tagList = [];
 
-        var renderTagList = function() {
-            var i = 0;
-            var tagsHtml = '';
-
-            for(; i < tagList.length; i++) {
-                console.log(tagList)
-                tagsHtml += "<div class=\"tag-item btn-secondary btn\">" + tagList[i].value + "<a class=\"delete-tag-item\" onClick=\"deleteTag('" + tagList[i] + "\')\">×</a></div>"
-            }
-
-            $(".tag-list").html(tagsHtml);
-        };
-
-        /*
-        var deleteTag = function(value) {
-            var index = tagList.indexOf(value);
-
-            if (index < 0) {
-                return;
-            }
-
-            tagList.splice(index, 1);
-            renderTagList();
-        };
-*/
-        /*
-        $("#table-filter3").on("change", function(event) {
-            console.log(event.currentTarget)
-            var dictObject = {}
-            const value = event.currentTarget.value;
-            const name = event.currentTarget.innerText;
-            console.log(name)
-            if (tagList.indexOf(value) >= 0) {
-                $('#table-filter3 option:eq(0)').prop('selected', true);
-                return;
-            }
-            dictObject[value] = name;
-            tagList.push(dictObject);
-            renderTagList()
+    $("button[id^='uploa123dImage']").on("change", function(event) {
+        console.log(event.currentTarget)
+        var dictObject = {}
+        const value = event.currentTarget.value;
+        const name = event.currentTarget.innerText;
+        console.log(name)
+        if (tagList.indexOf(value) >= 0) {
             $('#table-filter3 option:eq(0)').prop('selected', true);
-        });
-*/
-
-        $('button[id^=\'uploadImage\']').click(function (e) {
-
-            e.preventDefault();
-            // console.log(e);
-            var id = e.target.value;
-            // console.log('#handleImgFileSelect'+id)
-            $('#input_imgs'+id).click();
-
-        });
-
-        $("button[id^='uploa123dImage']").on("change", function(event) {
-            console.log(event.currentTarget)
-            var dictObject = {}
-            const value = event.currentTarget.value;
-            const name = event.currentTarget.innerText;
-            console.log(name)
-            if (tagList.indexOf(value) >= 0) {
-                $('#table-filter3 option:eq(0)').prop('selected', true);
-                return;
-            }
-            dictObject[value] = name;
-            tagList.push(dictObject);
-            renderTagList()
-            $('#table-filter3 option:eq(0)').prop('selected', true);
-        });
-
-
-
-        $('.summernote').summernote();
-
-        var xOffset = 10;
-        var yOffset = 30;
-
-
-        $(document).on("mouseover",".thumbnail",function(e){ //마우스 오버시
-
-            $("body").append("<p id='preview'><img src='"+ $(this).attr("src") +"' width='400px' /></p>"); //보여줄 이미지를 선언
-            $("#preview")
-                .css("top",(e.pageY - xOffset) + "px")
-                .css("left",(e.pageX + yOffset) + "px")
-                .fadeIn("fast"); //미리보기 화면 설정 셋팅
-        });
-
-        $(document).on("mousemove",".thumbnail",function(e){ //마우스 이동시
-            $("#preview")
-                .css("top",(e.pageY - xOffset) + "px")
-                .css("left",(e.pageX + yOffset) + "px");
-        });
-
-        $(document).on("mouseout",".thumbnail",function(){ //마우스 아웃시
-            $("#preview").remove();
-        });
-
-
-
-        var list = document.getElementById('list');
-
-        function clickButton(){
-            var temp = document.createElement('li');
-            temp.innerHTML = input.value;
-            list.appendChild(temp);
+            return;
         }
-
-        $('#table-filter7').change( function() {
-
-            var val = $(':selected', this).val();
-            console.log("qkf", val);
-            //var val = $( '#table-filter7 option:selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            //var val1 = $('#table-filter8 option:selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-
-            $.ajax({
-                url: "/admin/epicure/subway_type/" + val,
-                contentType: "application/json",
-                dataType: "json",
-                type: "GET",
-            }).done(function (data) {
-                var data = data.data;
-                console.log("뿌잉뿌잉", data);
-                if (data.length > 0) {
-                    $("#table-filter8").find("option").remove().end();
-                    $("#table-filter8").append("<option>호선</option>");
-                    $.each(data, function (key, value) {
-                        $("#table-filter8").append("<option value='" + value.id + "'>" + value.listName + "</option>");
-                    });
-                    console.log(data[0])
-                } else {
-                    $("#table-filter8").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                    $("#table-filter8").find("option").remove().end();
-                    $("#table-filter8").append("<option value='0'>NO DATA</option>");
-                    return;
-                }
-            });
-        });
-
-        $('#table-filter8').change( function(){
-            get_subway_scode( this); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-        });
-
-        function get_subway_scode(o){
-            //var val = $( '#table-filter7 option:selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            var val = $('#table-filter8 option:selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-
-            $.ajax({
-                url: "/admin/epicure/subway_type/" + val,
-                contentType: "application/json",
-                dataType: "json",
-                type:"GET",
-            }).done(function (data) {
-                var data = data.data;
-                if(data.length > 0) {
-                    $("#table-filter9").find("option").remove().end();
-                    $("#table-filter9").append("<option>역</option>");
-                    $.each(data, function(key, value) {
-                        $("#table-filter9").append("<option value='" + value.id + "'>" + value.listName + "</option>");
-                    });
-                    console.log(data[0])
-                } else {
-                    $("#table-filter9").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                    $("#table-filter9").find("option").remove().end();
-                    $("#table-filter9").append("<option value='0'>NO DATA</option>");
-                    return;
-                }
-            });
-
-        }
-
-        $('#table-filter4').change( function(){
-            get_region_mcode( this); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-        });
-
-        function get_region_mcode(o){
-            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            $.ajax({
-                url: "/admin/epicure/area_type/" + val,
-                contentType: "application/json",
-                dataType: "json",
-                type:"GET",
-            }).done(function (data) {
-                var data = data.data;
-                if(data.length > 0) {
-                    $("#table-filter5").find("option").remove().end();
-                    $("#table-filter5").append("<option>중분류</option>");
-                    $.each(data, function(key, value) {
-                        $("#table-filter5").append("<option value='" + value.id + "'>" + value.listName + "</option>");
-                    });
-                    console.log(data[0])
-                } else {
-                    $("#table-filter5").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                    $("#table-filter5").find("option").remove().end();
-                    $("#table-filter5").append("<option value='0'>NO DATA</option>");
-                    return;
-                }
+        dictObject[value] = name;
+        tagList.push(dictObject);
+        renderTagList()
+        $('#table-filter3 option:eq(0)').prop('selected', true);
+    });
 
 
-                // var ul = document.createElement('ul');
-                // ul.setAttribute('class','item-list-wrapper');
-                // document.getElementById(className).appendChild(ul);
-                // fragment.forEach(renderProductList);
-                // // class="active"
-                // function renderProductList(element, index, arr) {
-                //     var li = document.createElement('li');
-                //
-                //     ul.appendChild(li);
-                //
-                //     if(type=='2'){
-                //         if(element.subwayName != null){
-                //             li.innerHTML=li.innerHTML +"<a href='/shop/region/subway/" + element.regionId +"/red'>" +element.subwayName + "("+element.districtCnt + ")" + "</a>";
-                //         }
-                //     }else{
-                //         li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.districtName + "("+element.districtCnt+")" + "</a>";
-                //     }
-                // }
-            });
-
-        }
-        $('#table-filter5').change( function(){
-            get_region_scode( this); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-        });
-
-        function get_region_scode(o){
-            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            $.ajax({
-                url: "/admin/epicure/area_type/" + val,
-                contentType: "application/json",
-                dataType: "json",
-                type:"GET",
-            }).done(function (data) {
-                var data = data.data;
-                if(data.length > 0) {
-                    $("#table-filter10").find("option").remove().end();
-                    $("#table-filter10").append("<option>소분류</option>");
-                    $.each(data, function(key, value) {
-                        $("#table-filter10").append("<option value='" + value.id + "'>" + value.listName + "</option>");
-                    });
-                    console.log(data[0])
-                } else {
-                    $("#table-filter10").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                    $("#table-filter10").find("option").remove().end();
-                    $("#table-filter10").append("<option value='0'>NO DATA</option>");
-                    return;
-                }
-
-
-                // var ul = document.createElement('ul');
-                // ul.setAttribute('class','item-list-wrapper');
-                // document.getElementById(className).appendChild(ul);
-                // fragment.forEach(renderProductList);
-                // // class="active"
-                // function renderProductList(element, index, arr) {
-                //     var li = document.createElement('li');
-                //
-                //     ul.appendChild(li);
-                //
-                //     if(type=='2'){
-                //         if(element.subwayName != null){
-                //             li.innerHTML=li.innerHTML +"<a href='/shop/region/subway/" + element.regionId +"/red'>" +element.subwayName + "("+element.districtCnt + ")" + "</a>";
-                //         }
-                //     }else{
-                //         li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.districtName + "("+element.districtCnt+")" + "</a>";
-                //     }
-                // }
-            });
-
-        }
-        $('#table-filter1').change( function(){
-            get_mcode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-        });
-
-        function get_mcode(o){
-            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            console.log(val)
-            if(val != ''){
-                $.ajax({
-                    type:"get",
-                    url:"/admin/epicure/red_shop_type/" + val,
-                    datatype: "json",
-                    success: function(data) {
-                        var data = data.data;
-                        if(data.length > 0) {
-                            $("#table-filter2").find("option").remove().end();
-                            $("#table-filter2").append("<option>중분류</option>");
-                            $.each(data, function(key, value) {
-                                $("#table-filter2").append("<option value='" + value.id + "'>" + value.listName + "</option>");
-                            });
-                            console.log(data[0])
-                        } else {
-                            $("#table-filter2").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                            $("#table-filter3").find("option").remove().end();
-                            $("#table-filter3").append("<option value='0'>NO DATA</option>");
-                            return;
-                        }
-                    },
-
-                    error: function(x, o, e) {
-                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                        alert(msg);
-                    }
-                });
-            }else {
-                $("#table-filter2").find("option").remove().end();
-                $("#table-filter2").append("<option value='0'>중분류</option>");
-                $("#table-filter3").find("option").remove().end();
-                $("#table-filter3").append("<option value='0'>소분류</option>");
-            }
-        }
-
-        $('#table-filter2').change( function(){
-            get_scode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-        });
-
-        function get_scode(o){
-            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            console.log(val)
-            if(val != '') {
-                $.ajax({
-                    type: "get",
-                    url: "/admin/epicure/red_shop_type/" + val,
-                    datatype: "json",
-                    success: function (data) {
-                        data = data.data;
-                        if (data.length > 0) {
-                            $("#table-filter3").find("option").remove().end();
-                            $("#table-filter3").append("<option>소분류</option>");
-                            $.each(data, function (key, value) {
-                                $("#table-filter3").append("<option value='" + value.id + "'>" + value.listName + "</option>");
-                            });
-                        } else {
-                            $("#table-filter3").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                            return;
-                        }
-                    },
-
-                    error: function (x, o, e) {
-                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                        alert(msg);
-                    }
-                });
-            }else{
-                $("#table-filter3").find("option").remove().end();
-                $("#table-filter3").append("<option value='0'>소분류 </option>");
-            }
-        }
-    } );
 
 
 </script>
-
 </html>

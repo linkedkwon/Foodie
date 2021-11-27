@@ -1,8 +1,7 @@
 package kr.foodie.repo;
 
-import kr.foodie.domain.shop.Region;
+import kr.foodie.domain.shopItem.Region;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

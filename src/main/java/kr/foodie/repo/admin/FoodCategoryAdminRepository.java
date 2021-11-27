@@ -1,7 +1,6 @@
 package kr.foodie.repo.admin;
 
 import kr.foodie.domain.category.FoodCategory;
-import kr.foodie.domain.shop.Region;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

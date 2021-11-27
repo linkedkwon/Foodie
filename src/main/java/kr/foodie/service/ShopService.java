@@ -1,12 +1,14 @@
 package kr.foodie.service;
 
-import kr.foodie.domain.shop.AdminListShop;
-import kr.foodie.domain.shop.Shop;
-import kr.foodie.domain.shop.ShopDTO;
+import com.google.gson.Gson;
+import kr.foodie.domain.shopItem.AdminListShop;
+import kr.foodie.domain.shopItem.Shop;
+import kr.foodie.domain.shopItem.ShopDTO;
 import kr.foodie.repo.ShopRepository;
 import kr.foodie.repo.admin.RegionAdminRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.jpa.FullTextEntityManager;
@@ -17,10 +19,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -222,7 +224,7 @@ public class ShopService {
     }
 
     @Transactional
-    public String updateShopInfo(ShopDTO shopDto, Integer shopId) {
+    public String updateShopInfo(ShopDTO shopDto, Integer shopId, MultipartFile[] files) {
         Shop shop = shopRepository.findById(shopId).orElseThrow();
         Shop updated = shop.toEntity(shopDto, shopId);
         String viewName = null;
@@ -247,7 +249,7 @@ public class ShopService {
         String nowHHmmss = nowDateHHmmss.format(from);
         String nowymd = nowDateymd.format(from);
         ArrayList<String> images = new ArrayList<>();
-        /*if(files.length > 0) {
+        if (files.length > 0) {
             try {
                 con = new FTPClient();
                 con.setControlEncoding("utf-8");
@@ -264,15 +266,13 @@ public class ShopService {
                     }
 
                     String result = new Gson().toJson(images);
-                    shop.setMenuImages(result);
+                    updated.setMenuImages(result);
                     con.logout();
                     con.disconnect();
                 }
             } catch (Exception e) {
-                //                redirectAttributes.addFlashAttribute("message",
-                //                        "Could not upload " + file.getOriginalFilename() + "!");
             }
-        }*/
+        }
         Shop applied = shopRepository.save(updated);
         log.info("Successfully updated = {}", applied);
         return viewName;

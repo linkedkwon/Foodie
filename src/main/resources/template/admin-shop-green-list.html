@@ -216,7 +216,7 @@
     <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
 
     <!-- Page level custom scripts -->
-    <script th:src="@{/js/demo/datatables-demo.js}"></script>
+<!--    <script th:src="@{/js/demo/datatables-demo.js}"></script>-->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
@@ -294,10 +294,23 @@
                 //     <span th:text="${'주소- ' + shop.address}"></span>
                 // </div>
 
-                { 'data': "shopImage", 'render': function (data) { return '<img src="' + data + '" class="thumbnail" style="width: 80px;height:60px;" />'; } },
+                { 'data': "menuImages", 'render': function ( data, type, row) {
+                        if(data == ""){
+                            return '<img src="/images/default.png" class="thumbnail" style="width: 80px;height:60px;" />';
+                        }else{
+                            return '<img src="' + row.menuImages + '" class="thumbnail" style="width: 80px;height:60px;" />';
+                        }
+                    }
+                },
                 { "data": "shopName" , 'render': function  ( data, type, row ) { return '<div><a href="/admin/shop/green/'+ row.shopId +'">'+ data + '</a> ( 푸디평점 - ' + row.foodieLogRating + ') </div><div><span> 주소 -'+ row.address +'</span></div>'; } },
                 { "data": "shopPaid" },
-                { "data": "updatedAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
+                { "data": "updatedAt", 'render': function  ( data, type, row ) {
+                        if(data == null){
+                            return ''
+                        }
+                        return moment(data).format("YYYY-MM-DD HH:mm");
+                    }
+                },
                 { "data": "createdAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
             ],
             "columnDefs": [
@@ -307,7 +320,7 @@
                 { "width": "15%", "targets": 3},
                 { "width": "15%", "targets": 4},
             ],
-            initComplete: function () {
+            /*initComplete: function () {
                 this.api().columns().every( function () {
                     var column = this;
                     var select = $('<select><option value=""></option></select>')
@@ -326,7 +339,7 @@
                         select.append( '<option value="'+d+'">'+d+'</option>' )
                     } );
                 } );
-            }
+            }*/
         } );
 
         $('#table-filter1').change( function(){
@@ -507,7 +520,7 @@
         });
     }
 
-    $('.selectpicker').selectpicker();
+    // $('.selectpicker').selectpicker();
 
 </script>
 

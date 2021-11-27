@@ -1,6 +1,6 @@
 package kr.foodie.controller;
 
-import kr.foodie.domain.shop.Shop;
+import kr.foodie.domain.shopItem.Shop;
 import kr.foodie.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

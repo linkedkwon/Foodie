@@ -1,6 +1,5 @@
 package kr.foodie.domain.category;
 
-import kr.foodie.domain.shop.Region;
 import lombok.Data;
 import javax.persistence.*;
 

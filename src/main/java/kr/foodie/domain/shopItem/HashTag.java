@@ -1,4 +1,4 @@
-package kr.foodie.domain.shop;
+package kr.foodie.domain.shopItem;
 
 import lombok.Data;
 
@@ -8,18 +8,19 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 
 @Entity
-@Table(name = "MAIN_BOARD")
+@Table(name = "HASH_TAG")
 @Data
-public class MainBoard {
+public class HashTag {
 
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = IDENTITY)
-    private Integer id;
+    private Integer Id;
 
     @Column(name = "SHOP_ID")
     private Integer shopId;
 
-    @Column(name = "TYPE")
-    private Integer type;
+    @Column(name = "TAG_NAME")
+    private String tagName;
+
 }

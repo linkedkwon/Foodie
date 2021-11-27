@@ -1,8 +1,6 @@
 package kr.foodie.service;
 
-import kr.foodie.domain.shop.HashTag;
-import kr.foodie.domain.shop.Shop;
-import kr.foodie.repo.ShopRepository;
+import kr.foodie.domain.shopItem.HashTag;
 import kr.foodie.repo.TagRepository;
 import org.springframework.stereotype.Service;
 

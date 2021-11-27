@@ -1,7 +1,6 @@
 package kr.foodie.repo;
 
-import kr.foodie.domain.shop.HashTag;
-import kr.foodie.domain.shop.Shop;
+import kr.foodie.domain.shopItem.HashTag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

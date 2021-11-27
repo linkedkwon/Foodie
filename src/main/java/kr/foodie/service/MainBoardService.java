@@ -1,6 +1,6 @@
 package kr.foodie.service;
 
-import kr.foodie.domain.shop.MainBoard;
+import kr.foodie.domain.shopItem.MainBoard;
 import kr.foodie.repo.MainBoardRepository;
 import org.springframework.stereotype.Service;
 

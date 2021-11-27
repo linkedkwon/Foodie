@@ -1,8 +1,6 @@
 package kr.foodie.repo;
 
-import kr.foodie.domain.shop.EpicureRegion;
-import kr.foodie.domain.shop.Shop;
-import kr.foodie.domain.shop.ShopTown;
+import kr.foodie.domain.shopItem.ShopTown;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

@@ -14,7 +14,7 @@
     <!-- Custom fonts for this template -->
     <link rel="stylesheet" type="text/css" th:href="@{/vendor/fontawesome-free/css/all.min.css}">
     <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            href="https://fonts.googleapis.com/css?family=Nunito:∂200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
     <!-- Custom styles for this template -->
@@ -22,7 +22,7 @@
 
     <!-- Custom styles for this page -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/fontawesome-all.min.css}" />
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/css/fontawesome-all.min.css}" />-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/adminlte.min.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin_commons.css}" />
 
@@ -48,7 +48,7 @@
             <div class="container-fluid" style="    width: 700px;">
 
                 <!-- DataTales Example -->
-                <form action="/admin/shop/add/green" method="post" enctype="multipart/form-data" >
+                <form action="/admin/shop/add/green" method="post" enctype="multipart/form-data" onsubmit="return jbSubmit();">
 <!--                    <input type="hidden" th:field="${shop.shopType}" th:value="1" />-->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -149,7 +149,7 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" >대분류</option>
+                                                                <option value="" ></option>
                                                             </select>
                                                             <select id="table-filter2" class="custom-select" th:field="${shop.middleCategory}">
                                                                 <option
@@ -157,7 +157,7 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" >중분류</option>
+                                                                <option value="" ></option>
                                                             </select>
                                                             <select id="table-filter3" class="custom-select" th:field="${shop.smallCategory}">
                                                                 <option
@@ -165,7 +165,7 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" >소분류</option>
+                                                                <option value="" ></option>
                                                             </select>
                                                         </div>
                                                         <div class="flex tag-list"></div>
@@ -275,7 +275,7 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" >시</option>
+                                                                <option value="" ></option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter5" th:field="${shop.area2st}">
                                                                 <option
@@ -283,7 +283,7 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" >구</option>
+                                                                <option value="" ></option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter6" th:field="${shop.area3st}">
                                                                 <option
@@ -291,7 +291,7 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" >동</option>
+                                                                <option value=""></option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -308,6 +308,7 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
+                                                                <option value="" ></option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter8" th:field="${shop.subway2st}">
                                                                 <option
@@ -315,6 +316,7 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
+                                                                <option value="" ></option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter9" th:field="${shop.subway3st}">
                                                                 <option
@@ -322,6 +324,7 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
+                                                                <option value="" ></option>
                                                             </select>
                                                             <input class="form-control" id="exit" type="text" placeholder="출구" name="exit"  th:field="${shop.exitNum}" style="    width: 45px;font-size: 9pt !important;">
                                                         </div>
@@ -362,7 +365,7 @@
                                                     <div class="form-group">
                                                         <label for="restaurants-closed">맛집촌선택</label>
                                                         <div class="flex" style="display: block;">
-                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;" th:each="infos : ${shopTownList}">
+                                                            <div class="custom-control custom-radio" id="shoptown" style="float: left;padding-right:15px;" th:each="infos : ${shopTownList}">
                                                                 <input class="custom-control-input" th:id="${infos.listName}" th:value="${infos.id}"  type="checkbox" name="theme" th:field="${shop.villageTypeId}">
                                                                 <label class="custom-control-label" th:for="${infos.listName}" th:text="${infos.listName}"></label>
                                                             </div>
@@ -376,11 +379,12 @@
                                                         <!--                                                        <div class="form-group">-->
                                                         <label for="restaurants-closed">테마별</label>
                                                         <!--                                                        <p th:text="${payload[0].themeList}"></p>-->
-                                                        <div class="flex" style="display: block;">
-                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;" th:object="${theme}" th:each="theme : ${themeTags}">
-                                                                <input class="custom-control-input" th:id="${theme.listName}" th:value="${theme.listName}" type="checkbox" name="theme">
-                                                                <label class="custom-control-label" th:for="${theme.listName}" th:text="${theme.listName}" > </label>
-                                                            </div>
+                                                        <div class="custom-control custom-radio" style="float: left;padding-right:15px;"  th:field="*{shop.themeList}" th:each="theme, stat : *{themeTags}" multiple="multiple">
+                                                            <!--                                                                <div th:text="${shop.themeList[__${stat.index}__]}"></div>-->
+                                                            <div th:text="${shop.themeList}"></div>
+                                                            <!--                                                                <input class="custom-control-input" th:if="${shop.themeList != null}" th:field="${shop.themeList}" th:checked="${#arrays.contains(#strings.arraySplit(shop.themeList,','), theme.listName)} == true" th:id="${theme.listName}" type="checkbox" name="theme">-->
+                                                            <input class="custom-control-input" th:if="${shop.themeList != null}" th:field="*{shop.themeList}" th:checked="${#arrays.contains(#strings.arraySplit(shop.themeList,','), theme.listName)} == true" th:id="${theme.listName}" th:value="${theme.listName}" type="checkbox">
+                                                            <label class="custom-control-label" th:for="${theme.listName}" th:text="${theme.listName}" > </label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -595,7 +599,15 @@
 </style>
 <script type="text/javascript">
 
+
     $(document).ready(function() {
+
+        $('#shoptown input[type="checkbox"]').on('change', function() {
+            $('#shoptown input[type="checkbox"]').not(this).prop('checked', false);
+        });
+
+
+
         $('.summernote').summernote();
         var xOffset = 10;
         var yOffset = 30;
@@ -654,14 +666,14 @@
                 if(data.length > 0) {
                     if(type == "table-filter7") {
                         $("#table-filter8").find("option").remove().end();
-                        $("#table-filter8").append("<option>호선</option>");
+                        $("#table-filter8").append("<option></option>");
                         $.each(data, function (key, value) {
                             $("#table-filter8").append("<option value='" + value.id + "'>" + value.listName + "</option>");
                         });
                         console.log(data[0])
                     }else{
                         $("#table-filter9").find("option").remove().end();
-                        $("#table-filter9").append("<option>역</option>");
+                        $("#table-filter9").append("<option></option>");
                         $.each(data, function(key, value) {
                             $("#table-filter9").append("<option value='" + value.id + "'>" + value.listName + "</option>");
                         });
@@ -669,14 +681,14 @@
                     }
                 } else {
                     if(type == "table-filter7") {
-                        $("#table-filter8").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                        $("#table-filter8").find("option").remove().end().append("<option value=''></option>");
                         $("#table-filter8").find("option").remove().end();
-                        $("#table-filter8").append("<option value='0'>NO DATA</option>");
+                        $("#table-filter8").append("<option value=''></option>");
                         return;
                     }else{
-                        $("#table-filter9").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                        $("#table-filter9").find("option").remove().end().append("<option value=''></option>");
                         $("#table-filter9").find("option").remove().end();
-                        $("#table-filter9").append("<option value='0'>NO DATA</option>");
+                        $("#table-filter9").append("<option value=''></option>");
                         return;
                     }
                 }
@@ -697,14 +709,14 @@
                 if(data.length > 0) {
                     if(type == "table-filter4") {
                         $("#table-filter5").find("option").remove().end();
-                        $("#table-filter5").append("<option>군/구</option>");
+                        $("#table-filter5").append("<option></option>");
                         $.each(data, function (key, value) {
                             $("#table-filter5").append("<option value='" + value.id + "'>" + value.listName + "</option>");
                         });
                         console.log(data[0])
                     }else{
                         $("#table-filter6").find("option").remove().end();
-                        $("#table-filter6").append("<option>읍/면/동</option>");
+                        $("#table-filter6").append("<option></option>");
                         $.each(data, function(key, value) {
                             $("#table-filter6").append("<option value='" + value.id + "'>" + value.listName + "</option>");
                         });
@@ -712,14 +724,14 @@
                     }
                 } else {
                     if(type == "table-filter4") {
-                        $("#table-filter5").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                        $("#table-filter5").find("option").remove().end().append("<option value=''>NO DATA</option>");
                         $("#table-filter5").find("option").remove().end();
-                        $("#table-filter5").append("<option value='0'>NO DATA</option>");
+                        $("#table-filter5").append("<option value=''></option>");
                         return;
                     }else{
-                        $("#table-filter6").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                        $("#table-filter6").find("option").remove().end().append("<option value='0>NO DATA</option>");
                         $("#table-filter6").find("option").remove().end();
-                        $("#table-filter6").append("<option value='0'>NO DATA</option>");
+                        $("#table-filter6").append("<option value=''></option>");
                         return;
                     }
                 }
@@ -739,27 +751,27 @@
                         if(data.length > 0) {
                             if(type == "table-filter1") {
                                 $("#table-filter2").find("option").remove().end();
-                                $("#table-filter2").append("<option>중분류</option>");
+                                $("#table-filter2").append("<option></option>");
                                 $.each(data, function (key, value) {
                                     $("#table-filter2").append("<option value='" + value.id + "'>" + value.listName + "</option>");
                                 });
                             }else{
                                 $("#table-filter3").find("option").remove().end();
-                                $("#table-filter3").append("<option>소분류</option>");
+                                $("#table-filter3").append("<option></option>");
                                 $.each(data, function(key, value) {
                                     $("#table-filter3").append("<option value='" + value.id + "'>" + value.listName + "</option>");
                                 });
                             }
                         } else {
                             if(type == "table-filter1") {
-                                $("#table-filter2").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                                $("#table-filter2").find("option").remove().end().append("<option value=''></option>");
                                 $("#table-filter3").find("option").remove().end();
-                                $("#table-filter3").append("<option value='0'>NO DATA</option>");
+                                $("#table-filter3").append("<option value=''></option>");
                                 return;
                             }else {
-                                $("#table-filter2").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                                $("#table-filter3").find("option").remove().end();
-                                $("#table-filter3").append("<option value='0'>NO DATA</option>");
+                                $("#table-filter3").find("option").remove().end().append("<option value=''></option>");
+                                // $("#table-filter3").find("option").remove().end();
+                                // $("#table-filter3").append("<option value='0'>NO DATA</option>");
                                 return;
                             }
                         }
@@ -767,18 +779,18 @@
 
                     error: function(x, o, e) {
                         var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                        alert(msg);
+                        console.log(msg);
                     }
                 });
             }else {
                 if(type == "table-filter1") {
                     $("#table-filter2").find("option").remove().end();
-                    $("#table-filter2").append("<option value='0'>중분류</option>");
+                    $("#table-filter2").append("<option value=''></option>");
                     $("#table-filter3").find("option").remove().end();
-                    $("#table-filter3").append("<option value='0'>소분류</option>");
+                    $("#table-filter3").append("<option value=''></option>");
                 }else{
                     $("#table-filter3").find("option").remove().end();
-                    $("#table-filter3").append("<option value='0'>소분류 </option>");
+                    $("#table-filter3").append("<option value=''></option>");
                 }
             }
         }
@@ -789,6 +801,18 @@
 
 </script>
 <script>
+
+    function jbSubmit(){
+        var validated1 = $('#background_type_2').is(':checked');
+        var validated2 = $('#background_type_4').is(':checked');
+        if(validated1 == false && validated2 == false){
+            alert("배경 체크해주세요")
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     var sel_files =[];
     function fileUploadAction(){
         console.log("upload")
@@ -837,6 +861,7 @@
         $(img_id).attr('src', '/images/default.png')
         console.log(sel_files)
     }
+
     $('button[id^=\'uploadImage\']').click(function (e) {
         e.preventDefault();
         var id = e.target.value;

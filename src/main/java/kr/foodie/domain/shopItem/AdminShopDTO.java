@@ -1,20 +1,15 @@
-package kr.foodie.domain.shop;
+package kr.foodie.domain.shopItem;
 
 import lombok.Data;
-import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
-import org.apache.lucene.analysis.standard.ClassicTokenizerFactory;
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
-import org.hibernate.search.annotations.*;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Data
-public class ShopDTO {
+public class AdminShopDTO {
     private Integer shopId;
     private Integer regionId;
     private String themeList;
+    private Integer subwayTypeId;
     private Integer villageTypeId;
     private Integer shopType;
     private String background;
@@ -28,12 +23,6 @@ public class ShopDTO {
     private String middleCategory;
     private String smallCategory;
     private String address;
-    private Integer area1st;
-    private Integer area2st;
-    private Integer area3st;
-    private String subwayTypeId;
-    private String subway2st;
-    private String subway3st;
     private String roadAddress;
     private String phone;
     private String shopPhone;

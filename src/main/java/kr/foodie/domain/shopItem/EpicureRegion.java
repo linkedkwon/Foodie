@@ -1,25 +1,21 @@
-package kr.foodie.domain.shop;
+package kr.foodie.domain.shopItem;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
-import static javax.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PACKAGE;
-import static lombok.AccessLevel.PROTECTED;
+import static javax.persistence.GenerationType.*;
+import static lombok.AccessLevel.*;
 
 @Entity
-@Table(name = "RANKUP_SHOP_TOWN")
+@Table(name = "EPICURE_REGION")
 @Data
 @Builder
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PACKAGE)
 @DynamicUpdate
-public class ShopTown {
+public class EpicureRegion {
 
     @Id
     @Column(name = "NO")
@@ -41,8 +37,8 @@ public class ShopTown {
     @Column(name = "VISIABLE")
     private String visiable;
 
-    public static ShopTown from(RegionCreateDTO dto) {
-        return ShopTown.builder()
+    public static EpicureRegion from(RegionCreateDTO dto) {
+        return EpicureRegion.builder()
                 .id(dto.getId())
                 .code(dto.getCode())
                 .parentNo(dto.getParentNo())

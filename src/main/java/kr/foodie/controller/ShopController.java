@@ -2,10 +2,10 @@ package kr.foodie.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import kr.foodie.config.security.auth.AuthUserDetails;
-import kr.foodie.domain.shop.HashTag;
+import kr.foodie.domain.shopItem.HashTag;
 
-import kr.foodie.domain.shop.Region;
-import kr.foodie.domain.shop.Shop;
+import kr.foodie.domain.shopItem.Region;
+import kr.foodie.domain.shopItem.Shop;
 import kr.foodie.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

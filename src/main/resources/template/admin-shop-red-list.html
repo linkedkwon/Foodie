@@ -50,6 +50,7 @@
                     <div class="card shadow mb-4" style="width: 700px;margin:auto;">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;" th:text="${background}">레드리스트 맛집목록</h6>
+                            <input type="hidden" th:value="${shopBackground}" id="background">
                             <a th:href="@{/admin/registerRedShop}">
                                 <button class="btn btn-info btn-sm" style="float: right">맛집 등록하기</button>
                             </a>
@@ -277,89 +278,14 @@
             $("#preview").remove();
         });
 
-        $.fn.DataTable.ext.pager.numbers_length = 10;
-
-        $.fn.DataTable.ext.pager.full_numbers_no_ellipses = function(page, pages){
-            var numbers = [];
-            var buttons = $.fn.DataTable.ext.pager.numbers_length;
-            var half = Math.floor( buttons / 2 );
-
-            console.log('page', page);
-            console.log('pages', pages);
-
-            if(pages > 1) {
-                var len = pages / 10;
-                if (len % 10 != 0)
-                    len++;
-                var interval = 10;
-                var idx = 0;
-                for (var i = 0; i < len; i++) {
-                    if (page < interval) {
-                        idx = i;
-                        break;
-                    }
-                    interval += 10;
-                }
-
-                for (var i = 0; i < 10; i++) {
-                    if ((idx * 10) + i >= pages)
-                        break;
-                    numbers.push((idx * 10) + i);
-                }
-            }else{
-                numbers.push(1);
-            }
-            /**
-            var _range = function ( len, start ){
-                var end;
-
-                if ( typeof start === "undefined" ){
-                    start = 0;
-                    end = len;
-
-                } else {
-                    end = start;
-                    start = len;
-                }
-
-                var out = [];
-                for ( var i = start ; i < end; i++ ){ out.push(i); }
-
-                return out;
-            };
-
-            if ( pages <= buttons ) {
-                numbers = _range( 0, pages );
-
-            } else if ( page <= half ) {
-                numbers = _range( 0, buttons);
-
-            } else if ( page >= pages - 1 - half ) {
-                numbers = _range( pages - buttons, pages );
-
-            } else {
-                numbers = _range( page - half, page + half + 1);
-            }*/
 
 
-            numbers.DT_el = 'span';
-            return ['first', 'previous', numbers, 'next', 'last'];
-        };
 
+        var background = $('#background').val();
         $('#example').DataTable( {
-            "ajax": "/admin/category/red/all",
+            "ajax": "/admin/category/"+background+"/all",
             ordering: false,
-            "lengthChange": false,
-            "pageLength": 15,
-            "pagingType": "full_numbers_no_ellipses",
-            language: {
-                paginate:{
-                    next: '>',
-                    previous: '<',
-                    first:'<<',
-                    last:'>>'
-                }
-            },
+            "pageLength": 30,
             // "paging":true,
             "columns": [
                 // <div>
@@ -369,37 +295,33 @@
                 //     <span th:text="${'주소- ' + shop.address}"></span>
                 // </div>
 
-                { 'data': "shopImage", 'render': function (data) { return '<img src="' + data + '" class="thumbnail" style="width: 80px;height:60px;" />'; } },
-                { "data": "shopName" , 'render': function  ( data, type, row ) {
-                    return '<div><a href="/shop/?id='+ row.shopId +"&page=0"+'" target="_blank">'+ data + '</a> (전문가평가 : ' + row.foodieLogRating + ')</span></div>' +
-                           '<div><span>-<b>주소</b> '+ row.address +'</span></div>' +
-                           '<div><span>-<b>전화번호</b> '+ row.phone +'</span></div>' +
-                           '<div><span>-<b>등록</b> '+ moment(row.createdAt).format("YYYY-MM-DD") +'  -<b>수정</b> '+ moment(row.updatedAt).format("YYYY-MM-DD") +'</span></div>';
-                } },
-                { "data": "shopPaid", 'render':
-                    function (data){
-                        return '<div>'+data == 'y'?'줄광고 : 무기한':'' +'</div>'
+                { 'data': "menuImages", 'render': function ( data, type, row) {
+                        if(data == "" || data == "[]"){
+                            return '<img src="/images/default.png" class="thumbnail" style="width: 80px;height:60px;" />';
+                        }else{
+                            return '<img src="' + row.menuImages + '" class="thumbnail" style="width: 80px;height:60px;" />';
+                        }
                     }
                 },
-                { "data": "shopId", 'render':
-                    function (data, type, row) {
-                        return '<a href="/admin/shop/red/' + row.shopId + '"> <div>수정</div></a>';
+                { "data": "shopName" , 'render': function  ( data, type, row ) { return '<div><a href="/admin/shop/green/'+ row.shopId +'">'+ data + '</a> ( 푸디평점 - ' + row.foodieLogRating + ') </div><div><span> 주소 -'+ row.address +'</span></div>'; } },
+                { "data": "shopPaid" },
+                { "data": "updatedAt", 'render': function  ( data, type, row ) {
+                        if(data == null){
+                            return ''
+                        }
+                        return moment(data).format("YYYY-MM-DD HH:mm");
                     }
                 },
-                { "data": "shopId", 'render':
-                    function (data) {
-                    return '<div>삭제</div>';
-                    }
-                },
+                { "data": "createdAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
             ],
             "columnDefs": [
                 { "width": "15%","targets": 0},
-                { "width": "50%", "targets": 1},
-                { "width": "15%", "targets": 2},
-                { "width": "10%", "targets": 3},
-                { "width": "10%", "targets": 4},
+                { "width": "45%", "targets": 1},
+                { "width": "10%", "targets": 2},
+                { "width": "15%", "targets": 3},
+                { "width": "15%", "targets": 4},
             ],
-            initComplete: function () {
+            /*initComplete: function () {
                 this.api().columns().every( function () {
                     var column = this;
                     var select = $('<select><option value=""></option></select>')
@@ -418,7 +340,7 @@
                         select.append( '<option value="'+d+'">'+d+'</option>' )
                     } );
                 } );
-            }
+            }*/
         } );
 
         $('#table-filter1').change( function(){
@@ -435,25 +357,25 @@
                     url:"/admin/category/mfood/" + val,
                     datatype: "json",
                     success: function(data) {
-                    if(data.length > 0) {
-                        $("#table-filter2").find("option").remove().end();
-                        $("#table-filter2").append("<option>중분류</option>");
-                        $.each(data, function(key, value) {
-                            $("#table-filter2").append("<option value='" + value.no + "'>" + value.listName + "</option>");
-                        });
-                        console.log(data[0])
-                    } else {
-                        $("#table-filter2").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                        $("#table-filter3").find("option").remove().end();
-                        $("#table-filter3").append("<option value='0'>NO DATA</option>");
-                        return;
-                    }
-                },
+                        if(data.length > 0) {
+                            $("#table-filter2").find("option").remove().end();
+                            $("#table-filter2").append("<option>중분류</option>");
+                            $.each(data, function(key, value) {
+                                $("#table-filter2").append("<option value='" + value.no + "'>" + value.listName + "</option>");
+                            });
+                            console.log(data[0])
+                        } else {
+                            $("#table-filter2").find("option").remove().end().append("<option value='0'>NO DATA</option>");
+                            $("#table-filter3").find("option").remove().end();
+                            $("#table-filter3").append("<option value='0'>NO DATA</option>");
+                            return;
+                        }
+                    },
 
-                error: function(x, o, e) {
-                    var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                    alert(msg);
-                }
+                    error: function(x, o, e) {
+                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                        alert(msg);
+                    }
                 });
             }else {
                 $("#table-filter2").find("option").remove().end();
@@ -505,24 +427,18 @@
             get_detail_region( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
         });
 
-        $('#table-filter5').change( function(){
-            get_detail_region_third( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-        });
-
         function get_detail_region(o){
             var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
             console.log(val)
             if(val != ''){
                 $.ajax({
                     type:"get",
-                    url:"/admin/epicure/" + val,
+                    url:"/admin/region/" + val,
                     datatype: "json",
                     success: function(data) {
-                        var data = data.data;
                         if(data.length > 0) {
                             $("#table-filter5").find("option").remove().end();
                             $("#table-filter4").append("<option>중분류</option>");
-                            $("#table-filter5").append("<option value=''>" + '2차 지역 선택' + "</option>");
                             $.each(data, function(key, value) {
                                 $("#table-filter5").append("<option value='" + value.id + "'>" + value.listName + "</option>");
                             });
@@ -539,150 +455,10 @@
                 });
             }else{
                 $("#table-filter5").find("option").remove().end();
-                $("#table-filter5").append("<option>2차 지역 선택</option>");
-            }
-        }
-
-        function get_detail_region_third(o){
-            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            console.log(val);
-            if(val != ''){
-                $.ajax({
-                    type:"get",
-                    url:"/admin/epicure/" + val,
-                    datatype: "json",
-                    success: function(data) {
-                        var data = data.data;
-                        if(data.length > 0) {
-                            $("#table-filter6").find("option").remove().end();
-                            $("#table-filter5").append("<option>중분류</option>");
-                            $("#table-filter6").append("<option value=''>" + '3차 지역 선택' + "</option>");
-                            $.each(data, function(key, value) {
-                                $("#table-filter6").append("<option value='" + value.id + "'>" + value.listName + "</option>");
-                            });
-                        } else {
-                            $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");
-                            return;
-                        }
-                    },
-
-                    error: function(x, o, e) {
-                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                        alert(msg);
-                    }
-                });
-            }else{
-                $("#table-filter6").find("option").remove().end();
-                $("#table-filter6").append("<option>3차 지역 선택</option>");
+                $("#table-filter5").append("<option>군</option>");
             }
         }
     } );
-
-    function pageReload(){
-        window.location.reload();
-    }
-
-    /**
-     * 필터 부분 조회
-     */
-    function filterAll(){
-        var bCode = $('#table-filter1 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-        var mCode = $('#table-filter2 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-        var sCode = $('#table-filter3 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-        var regionId = $('#table-filter4 :selected').val(); //
-        var subwayId = $('#table-filter5 :selected').val();
-        var villageId = $('#table-filter6 :selected').val();
-        var selectedOption = $('#table-filter6 :selected').val();
-        var keyword = $('#table-filter6 :selected').val();
-        var couponFlag = $('#table-filter6 :selected').val();
-
-        var param = {"shopType":0,"bCode":bCode,"mCode":mCode, "sCode":sCode,
-                     "regionId":regionId, "subwayId":subwayId,
-                     "villageId":villageId};
-
-        console.log('b',bCode);
-        console.log('m',mCode);
-        console.log('s',sCode);
-        console.log('r',regionId);
-        console.log('s',subwayId);
-        console.log('v',villageId);
-
-
-        $('#example').DataTable( {
-            "ajax": "/admin/shop/filter/list?t="+1+"&area1="+bCode+"&area2="+mCode+"&area3="+sCode+"&shop1="+regionId+"&shop2="+subwayId+"&shop3="+villageId,
-            ordering: false,
-            "lengthChange": false,
-            "pageLength": 15,
-            "pagingType": "full_numbers_no_ellipses",
-            language: {
-                paginate:{
-                    next: '>',
-                    previous: '<',
-                    first:'<<',
-                    last:'>>'
-                }
-            },
-            // "paging":true,
-            "columns": [
-                // <div>
-                //     <a th:href="@{'/admin/shop/red/'+${shop.shopId}}" th:text="${shop.shopName}"></a>
-                // </div>
-                // <div>
-                //     <span th:text="${'주소- ' + shop.address}"></span>
-                // </div>
-
-                { 'data': "shopImage", 'render': function (data) { return '<img src="' + data + '" class="thumbnail" style="width: 80px;height:60px;" />'; } },
-                { "data": "shopName" , 'render': function  ( data, type, row ) {
-                        return '<div><a href="/shop/?id='+ row.shopId +"&page=0"+'" target="_blank">'+ data + '</a> (전문가평가 : ' + row.foodieLogRating + ')</span></div>' +
-                            '<div><span>-<b>주소</b> '+ row.address +'</span></div>' +
-                            '<div><span>-<b>전화번호</b> '+ row.phone +'</span></div>' +
-                            '<div><span>-<b>등록</b> '+ moment(row.createdAt).format("YYYY-MM-DD") +'  -<b>수정</b> '+ moment(row.updatedAt).format("YYYY-MM-DD") +'</span></div>';
-                    } },
-                { "data": "shopPaid", 'render':
-                        function (data){
-                            return '<div>'+data == 'y'?'줄광고 : 무기한':'' +'</div>'
-                        }
-                },
-                { "data": "shopId", 'render':
-                        function (data) {
-                            return '<div>수정</div>';
-                        }
-                },
-                { "data": "shopId", 'render':
-                        function (data) {
-                            return '<div>삭제</div>';
-                        }
-                },
-            ],
-            "columnDefs": [
-                { "width": "15%","targets": 0},
-                { "width": "50%", "targets": 1},
-                { "width": "15%", "targets": 2},
-                { "width": "10%", "targets": 3},
-                { "width": "10%", "targets": 4},
-            ],
-            initComplete: function () {
-                this.api().columns().every( function () {
-                    var column = this;
-                    var select = $('<select><option value=""></option></select>')
-                        .appendTo( $(column.footer()).empty() )
-                        .on( 'change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                            );
-
-                            column
-                                .search( val ? '^'+val+'$' : '', true, false )
-                                .draw();
-                        } );
-
-                    column.data().unique().sort().each( function ( d, j ) {
-                        select.append( '<option value="'+d+'">'+d+'</option>' )
-                    } );
-                } );
-            }
-        } );
-    }
 
     function filterFoodCategory(){
         console.log('00000')
@@ -709,7 +485,7 @@
         $('#example').dataTable().fnClearTable();
         $.ajax({
             type:"get",
-            url:"/admin/category/red/filter?" + query,
+            url:"/admin/category/green/filter?" + query,
             datatype: "json",
             success: function(data) {
                 if(data.length > 0) {
@@ -745,7 +521,7 @@
         });
     }
 
-    $('.selectpicker').selectpicker();
+    // $('.selectpicker').selectpicker();
 
 </script>
 

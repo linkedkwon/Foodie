@@ -1,8 +1,7 @@
 package kr.foodie.service;
 
-import kr.foodie.domain.shop.Region;
+import kr.foodie.domain.shopItem.Region;
 import kr.foodie.repo.RegionRepository;
-import kr.foodie.repo.TagRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

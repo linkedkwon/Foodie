@@ -1,7 +1,7 @@
 package kr.foodie.service;
 
 import kr.foodie.domain.account.FavoriteShop;
-import kr.foodie.domain.shop.Shop;
+import kr.foodie.domain.shopItem.Shop;
 import kr.foodie.repo.FavoriteShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

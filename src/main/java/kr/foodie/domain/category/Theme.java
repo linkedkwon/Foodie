@@ -1,6 +1,6 @@
 package kr.foodie.domain.category;
 
-import kr.foodie.domain.shop.RegionCreateDTO;
+import kr.foodie.domain.shopItem.RegionCreateDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

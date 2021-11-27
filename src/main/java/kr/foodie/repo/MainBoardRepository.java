@@ -1,6 +1,6 @@
 package kr.foodie.repo;
 
-import kr.foodie.domain.shop.MainBoard;
+import kr.foodie.domain.shopItem.MainBoard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

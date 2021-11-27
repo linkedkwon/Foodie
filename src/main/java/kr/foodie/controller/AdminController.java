@@ -4,13 +4,11 @@ import com.google.gson.Gson;
 //import kr.foodie.domain.account.ReviewAdmin;
 import kr.foodie.common.CommonResponse;
 import kr.foodie.domain.category.Category;
-import kr.foodie.domain.category.FoodCategory;
 import kr.foodie.domain.category.Theme;
-import kr.foodie.domain.shop.*;
+import kr.foodie.domain.shopItem.*;
 import kr.foodie.service.*;
 import kr.foodie.service.admin.FoodCategoryAdminService;
 import kr.foodie.service.admin.RegionAdminService;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.persistence.Tuple;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -223,6 +220,9 @@ public class AdminController {
     @RequestMapping(value = "/shop/list/{shopType}", method = RequestMethod.GET)
     public ModelAndView getShopList(@PathVariable String shopType) {
         ModelAndView mav = new ModelAndView();
+        if(shopType.equals("null")){
+            return null;
+        }
         List<Shop> shopList = null;
         List<EpicureRegion> categoryInfos = null;
         List<EpicureRegion> regionsInfos = regionAdminService.getEpicureFirstInfo("area_type");
@@ -250,6 +250,8 @@ public class AdminController {
             categoryInfos = regionAdminService.getEpicureFirstInfo("green_shop_type");
             shopList = shopService.getTop50AdminShopInfos(Arrays.asList(btype));
         }
+
+
         mav.addObject("payload", shopList);
         mav.addObject("categoryInfos", categoryInfos);
         mav.addObject("regionInfos", regionsInfos);
@@ -394,6 +396,7 @@ public class AdminController {
 
         mav.addObject("shopTownList", shopTownList);
         mav.addObject("themeTags", themeTags);
+        mav.addObject("imageSize", detailInfo.getMenuImages().split(",").length);
 
         return mav;
     }
@@ -451,23 +454,30 @@ public class AdminController {
             commentList = shopService.getTop50AdminShopInfos(Arrays.asList(4));
         }
 
+        for(int i=0; i<commentList.size(); i++){
+            if (commentList.get(i).getMenuImages() != null) {
+                commentList.get(i).setMenuImages(commentList.get(i).getMenuImages().replace("[", "").replace("]", "").replaceAll("\"", "").split(",")[0]);
+            } else {
+                commentList.get(i).setMenuImages("[]");
+            }
+        }
+
         Map<String, List> members = new HashMap<>();
         members.put("data", commentList);
         return members;
     }
 
     @PostMapping(value = "/shop/add/{shopType}")
-    public String addShop(Model model,
-                          @ModelAttribute Shop shop, @PathVariable String shopType, MultipartFile[] files) {
+    public String addShop(@ModelAttribute Shop shop, @PathVariable String shopType, MultipartFile[] files) {
         String viewName = null;
         Integer background = null;
         try {
             System.out.println("fff");
 
             if (shopType.equals("red")) {
-                viewName = "admin-shop-red-list";
+                viewName = "redirect:/admin/shop/list/red";
             } else {
-                viewName = "admin-shop-green-list";
+                viewName = "redirect:/admin/shop/list/green";
             }
             String server = "foodie.speedgabia.com";
             int port = 21;
@@ -515,7 +525,17 @@ public class AdminController {
     @PostMapping(value = "/shop/update/{shopId}")
     public String updateShop(@ModelAttribute ShopDTO shop, @PathVariable Integer shopId, MultipartFile[] files) {
         System.out.println("fff");
-        String viewName = shopService.updateShopInfo(shop, shopId);
+        if(isStringEmpty(shop.getSubway2st())){
+            shop.setSubway2st(null);
+        }
+        if(isStringEmpty(shop.getSubwayTypeId())){
+            shop.setSubwayTypeId(null);
+        }
+        if(isStringEmpty(shop.getSubway3st())){
+            shop.setSubway3st(null);
+        }
+
+        String viewName = shopService.updateShopInfo(shop, shopId, files);
         return viewName;
     }
 

@@ -1,4 +1,4 @@
-package kr.foodie.domain.shop;
+package kr.foodie.domain.shopItem;
 
 public enum RankUpType {
     yes, no
