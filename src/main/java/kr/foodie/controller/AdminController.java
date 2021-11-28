@@ -433,12 +433,9 @@ public class AdminController {
     }
 
     @ResponseBody
-    @RequestMapping(value = {"/category/{shopType}/all"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/{shopType}/all"}, method = RequestMethod.GET)
     public Map<String, List> getAllCategory(Model model, @PathVariable String shopType) {
         List<Shop> commentList = null;
-        String[] result = parseAdminShopType(shopType);
-        String shopBackground = result[0];
-//        mav.setViewName(result[2]);
 
         if (shopType.equals("allred")) {
             commentList = shopService.getTop50AdminShopInfos(Arrays.asList(1,3));

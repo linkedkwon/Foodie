@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableAsync
 @EnableCaching
 @SpringBootApplication
-@Import(LuceneConfig.class)
+//@Import(LuceneConfig.class)
 public class FoodieApplication implements WebMvcConfigurer {
 
     public static void main(String[] args) {

@@ -137,23 +137,49 @@
                             <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="filterAll()">검색</button>
                         </div>
 
-                    <div class="card-body" style="width:100%; padding-right: 0px;margin: auto;">
-                        <div class="table-responsive" style="font-size: 9pt;margin: auto;    padding-right: 20px;">
-                            <table class="table table-bordered display" id="example" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th style="text-align: center" >사진</th>
-                                    <th>여행지 이름</th>
-                                    <th>줄광고 </th>
-                                    <th>수정일</th>
-                                    <th>등록일</th>
-                                </tr>
-                                </thead>
-                            </table>
+                        <div class="card-body" style="width:100%; padding-right: 0px;margin: auto; padding-bottom: 0px;">
+                            <!-- 전체 등록건수 및 정렬 옵션 -->
+                            <div style="font-size: 9px;margin: auto;    padding-right: 20px;">
+                                <div style="float: left; margin-bottom:10px;">
+                                    <span id="item-size" style="color: #317CC1; font-weight: 600;">총 등록되었습니다.</span>
+                                </div>
+                                <div style="float: right">
+                                    <a>등록일순</a>
+                                    <span>|</span>
+                                    <a>수정일순</a>
+                                    <span>|</span>
+                                    <a>조회순</a>
+                                    <span>|</span>
+                                    <a>평점순</a>
+                                </div>
+                            </div>
+                            <!-- 리스트 테이블 -->
+                            <div class="table-responsive" style="font-size: 9pt;margin: auto;    padding-right: 20px;">
+                                <table class="table table-bordered display" id="list-table" cellspacing="0" border="1px solid #dee2e6">
+                                    <thead>
+                                    <tr>
+                                        <th style="text-align: center" >사진</th>
+                                        <th>내용</th>
+                                        <th>서비스현황</th>
+                                        <th>수정</th>
+                                        <th>삭제</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="pagination" style="margin-bottom: 15px;">
+                            <div style="margin: 0 auto; display: flex;">
+                                <button id="first" onclick="clickButton(this)"><img src="/images/paging_first.gif"/></button>
+                                <button id="prev" onclick="clickButton(this)" style="margin-right: 10px;"><img src="/images/paging_pre.gif"/></button>
+                                <div id = "pages">
+                                </div>
+                                <button id="next" onclick="clickButton(this)" style="margin-left: 10px;"><img src="/images/paging_next.gif"/></button>
+                                <button id="last" onclick="clickButton(this)"><img src="/images/paging_last.gif"/></button>
+                            </div>
                         </div>
                     </div>
-                    </div>
-
                 </div>
                 <!-- /.container-fluid -->
 
@@ -247,6 +273,11 @@
         text-align: center;
     }
 
+    button {
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+    }
 
     /*.data_table {*/
     /*    text-align: center;*/
@@ -278,69 +309,72 @@
         });
 
 
+        <!-- 페이지 로드 시 데이터 -->
+        var param = {
+            'background' :$('#background').val(),
+            'renderOption':'1',
+            'page':1
+        };
 
+        $.ajax({
+            url:"/item/list",
+            type:"POST",
+            data:param,
+            dataType: "json",
+            success:function(data){
+                //1. 맛집 개수 출력
+                $('#item-size').text('총' + data.count + '건의 맛집정보가 검색되었습니다.');
+                var shop = data.data;
 
-        var background = $('#background').val();
-        $('#example').DataTable( {
-            "ajax": "/admin/category/"+background+"/all",
-            ordering: false,
-            "pageLength": 30,
-            // "paging":true,
-            "columns": [
-                // <div>
-                //     <a th:href="@{'/admin/shop/red/'+${shop.shopId}}" th:text="${shop.shopName}"></a>
-                // </div>
-                // <div>
-                //     <span th:text="${'주소- ' + shop.address}"></span>
-                // </div>
+                //2. 상점 리스트 업
+                var tr ='';
+                $.each(shop , function(i){
+                    tr +=
+                        '<tr>' +
+                        '<td>' +
+                        '<img src="' + shop[i].shopImage +'" class="thumbnail" style="width: 80px; height:60px;"/>' +
+                        '</td>' +
+                        '<td>' +
+                        '<div><a href="/admin/shop/green/' + shop[i].shopId + '"/>' + shop[i].shopName + '</div>' +
+                        '</td>' +
+                        '<td>' + shop[i].shopPaid + '</td>' +
+                        '<td>' + moment(shop[i].updatedAt).format("YYYY-MM-DD HH:mm") + '</td>' +
+                        '<td>' + moment(shop[i].createdAt).format("YYYY-MM-DD HH:mm") + '</td>' +
+                        '</tr>';
+                });
+                $("#list-table").append(tr);
 
-                { 'data': "menuImages", 'render': function ( data, type, row) {
-                        if(data == ""){
-                            return '<img src="/images/default.png" class="thumbnail" style="width: 80px;height:60px;" />';
-                        }else{
-                            return '<img src="' + row.menuImages + '" class="thumbnail" style="width: 80px;height:60px;" />';
-                        }
+                //3. 페이지 업
+                var pages = data.pages;
+                var currentPage = data.currentPage;
+                var button = '';
+                $.each(pages, function(i){
+                    if(i == currentPage){
+                        button +=
+                            '<button style="margin-right: 3px; margin-left: 3px; color: #1c294e; font-weight: bold;" value="' + pages[i] + '">' + pages[i] + '</button>'
+                    }else {
+                        button +=
+                            '<button style="margin-right: 3px; margin-left: 3px;" value="' + pages[i] + '">' + pages[i] + '</button>'
                     }
-                },
-                { "data": "shopName" , 'render': function  ( data, type, row ) { return '<div><a href="/admin/shop/green/'+ row.shopId +'">'+ data + '</a> ( 푸디평점 - ' + row.foodieLogRating + ') </div><div><span> 주소 -'+ row.address +'</span></div>'; } },
-                { "data": "shopPaid" },
-                { "data": "updatedAt", 'render': function  ( data, type, row ) {
-                        if(data == null){
-                            return ''
-                        }
-                        return moment(data).format("YYYY-MM-DD HH:mm");
-                    }
-                },
-                { "data": "createdAt", 'render': function  ( data, type, row ) { return moment(data).format("YYYY-MM-DD HH:mm"); }  },
-            ],
-            "columnDefs": [
-                { "width": "15%","targets": 0},
-                { "width": "45%", "targets": 1},
-                { "width": "10%", "targets": 2},
-                { "width": "15%", "targets": 3},
-                { "width": "15%", "targets": 4},
-            ],
-            /*initComplete: function () {
-                this.api().columns().every( function () {
-                    var column = this;
-                    var select = $('<select><option value=""></option></select>')
-                        .appendTo( $(column.footer()).empty() )
-                        .on( 'change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                            );
+                });
+                $("#pages").append(button);
 
-                            column
-                                .search( val ? '^'+val+'$' : '', true, false )
-                                .draw();
-                        } );
+                //4. 버튼들
+                var btns = data.btns;
+                if(btns.first == -1){document.getElementById('first').disabled ='disabled';
+                }else {$("#first").val(btns.first);}
 
-                    column.data().unique().sort().each( function ( d, j ) {
-                        select.append( '<option value="'+d+'">'+d+'</option>' )
-                    } );
-                } );
-            }*/
-        } );
+                if(btns.prev == -1){document.getElementById('prev').disabled = 'disabled';
+                } else {$("#prev").val(btns.prev);}
+
+                if(btns.next == -1){document.getElementById('next').disabled = 'disabled';
+                } else {$("#next").val(btns.next);}
+
+                if(btns.last == -1){document.getElementById('last').disabled = 'disabled';
+                } else {$("#last").val(btns.last);}
+            }
+        });
+
 
         $('#table-filter1').change( function(){
             get_mcode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
@@ -459,69 +493,9 @@
         }
     } );
 
-    function filterFoodCategory(){
-        console.log('00000')
-        var bCode = $('#table-filter1 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-        var mCode = $('#table-filter2 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-        var sCode = $('#table-filter3 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-        var regionId = $('#table-filter5 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-
-        var query = null;
-        if(bCode != '' && mCode != '' && sCode != ''){
-            query = "bCode=" + bCode + "&mCode=" + mCode + "&sCode=" + sCode;
-        }else if(bCode != '' && mCode != '' && sCode == ''){
-            query = "bCode=" + bCode + "&mCode=" + mCode + "&sCode=0";
-        }else if(bCode != '' && mCode == '' && sCode != ''){
-            query = "bCode=" + bCode + "&mCode=0&sCode=0";
-        }
-        console.log(regionId + '^&*^&*^*');
-        if(regionId == "군" || regionId == ''){
-            query = query + "&regionId=0";
-        }else{
-            query = query + "&regionId=" + regionId;
-        }
-        // console.log(val)
-        $('#example').dataTable().fnClearTable();
-        $.ajax({
-            type:"get",
-            url:"/admin/category/green/filter?" + query,
-            datatype: "json",
-            success: function(data) {
-                if(data.length > 0) {
-                    var response_data = [];
-                    for (step = 0; step < data.length; step++) {
-                        // Runs 5 times, with values of step 0 through 4.
-                        response_data.push(data[step])
-                    }
-                    console.log(response_data)
-                    // $('#example tbody tr').replaceWith(data);
-                    // $('#payload tr').remove();
-                    // $('#payload').html(data);
-                    $('#example').dataTable().fnAddData(response_data);
-                    // $.each(data, function(key, value) {
-                    //     $("#example tbody").append("<tr>" +
-                    //         "<td> hihihii </td>" +
-                    //         "<td> hihihii </td>" +
-                    //         "<td> hihihii </td>" +
-                    //         "<td> hihihii </td>" +
-                    //         "<td> hihihii </td>" +
-                    //         "</tr>");
-                    // });
-
-                } else {
-                    return;
-                }
-            },
-
-            error: function(x, o, e) {
-                var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                alert(msg);
-            }
-        });
+    function clickButton(e){
+        alert(e.value);
     }
-
-    // $('.selectpicker').selectpicker();
-
 </script>
 
 </html>
