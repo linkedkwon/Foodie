@@ -133,8 +133,8 @@
                                     <input type="text" id="keyword" style="height: 20px; width: 120px;"/>
                                 </p>
                             </div>
-                            <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; border-radius: 5px;" onclick="pageReload()">초기화</button>
-                            <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="filterAll()">검색</button>
+                            <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; border-radius: 5px;" onclick="window.location.href=window.location.href">초기화</button>
+                            <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="filterSearch()">검색</button>
                         </div>
 
                         <div class="card-body" style="width:100%; padding-right: 0px;margin: auto; padding-bottom: 0px;">
@@ -159,7 +159,7 @@
                                     <thead>
                                     <tr>
                                         <th style="text-align: center" >사진</th>
-                                        <th>내용</th>
+                                        <th style="width: 300px;">내용</th>
                                         <th>서비스현황</th>
                                         <th>수정</th>
                                         <th>삭제</th>
@@ -443,19 +443,32 @@
                 var shop = data.data;
 
                 //2. 상점 리스트 업
-                var tr ='';
-                $.each(shop , function(i){
+                var tr = '';
+                $.each(shop, function (i) {
+                    var imgUrl = '';
+                    if(shop[i].menuImages == "" || "[]") imgUrl = '/images/default.png';
+                    else imgUrl = shop[i].menuImages;
                     tr +=
                         '<tr>' +
                         '<td>' +
-                        '<img src="' + shop[i].shopImage +'" class="thumbnail" style="width: 80px; height:60px;"/>' +
+                        '<img src="' + imgUrl + '" class="thumbnail" style="width: 80px; height:60px;"/>' +
                         '</td>' +
-                        '<td>' +
-                        '<div><a href="/admin/shop/green/' + shop[i].shopId + '"/>' + shop[i].shopName + '</div>' +
+                        '<td style="text-align: left;">' +
+                        '<div>' +
+                        '<a href="/shop?id='+ shop[i].shopId + '&page=0">' + shop[i].shopName + '</a>' +
+                        '<span>(전문가평가:'+ shop[i].foodieLogRating +')</span>' +
+                        '</div>' +
+                        '<hr>' +
+                        '<div>' +
+                        '<span>'+ shop[i].address +' | ' + shop[i].phone + '</span>' +
+                        '</div>' +
+                        '<div>' +
+                        '<span>등록: '+ moment(shop[i].createdAt).format("YYYY-MM-DD") +'  수정: ' + moment(shop[i].updatedAt).format("YYYY-MM-DD") + '</span>' +
+                        '</div>' +
                         '</td>' +
                         '<td>' + shop[i].shopPaid + '</td>' +
-                        '<td>' + moment(shop[i].updatedAt).format("YYYY-MM-DD HH:mm") + '</td>' +
-                        '<td>' + moment(shop[i].createdAt).format("YYYY-MM-DD HH:mm") + '</td>' +
+                        '<td><a href="">수정</a></td>' +
+                        '<td><a href="">삭제</a></td>' +
                         '</tr>';
                 });
                 $("#list-table").append(tr);
@@ -477,17 +490,33 @@
 
                 //4. 버튼들
                 var btns = data.btns;
-                if(btns.first == -1){document.getElementById('first').disabled ='disabled';
-                }else {$("#first").val(btns.first);}
+                if (btns.first == -1) {
+                    document.getElementById('first').disabled = true;
+                } else {
+                    document.getElementById('first').disabled = false;
+                    $("#first").val(btns.first);
+                }
 
-                if(btns.prev == -1){document.getElementById('prev').disabled = 'disabled';
-                } else {$("#prev").val(btns.prev);}
+                if (btns.prev == -1) {
+                    document.getElementById('prev').disabled = true;
+                } else {
+                    document.getElementById('prev').disabled = false;
+                    $("#prev").val(btns.prev);
+                }
 
-                if(btns.next == -1){document.getElementById('next').disabled = 'disabled';
-                } else {$("#next").val(btns.next);}
+                if(btns.next == -1){
+                    document.getElementById('next').disabled = true;
+                } else {
+                    document.getElementById('next').disabled = false;
+                    $("#next").val(btns.next);
+                }
 
-                if(btns.last == -1){document.getElementById('last').disabled = 'disabled';
-                } else {$("#last").val(btns.last);}
+                if(btns.last == -1){
+                    document.getElementById('last').disabled = true;
+                } else {
+                    document.getElementById('last').disabled = false;
+                    $("#last").val(btns.last);
+                }
             }
         });
     } );
@@ -496,6 +525,11 @@
 
     function clickOrdering(e){
         ordering = e.value;
+        clickButton(1);
+    }
+
+    function filterSearch(){
+        //조회 시 기본 정렬 > 등록순
         clickButton(1);
     }
 
@@ -556,22 +590,36 @@
                 var shop = data.data;
 
                 //2. 상점 리스트 업
-                var tr ='';
-                $.each(shop , function(i){
+                var tr = '';
+                $.each(shop, function (i) {
+                    var imgUrl = '';
+                    if(shop[i].menuImages == "" || "[]") imgUrl = '/images/default.png';
+                    else imgUrl = shop[i].menuImages;
                     tr +=
                         '<tr>' +
                         '<td>' +
-                        '<img src="' + shop[i].shopImage +'" class="thumbnail" style="width: 80px; height:60px;"/>' +
+                        '<img src="' + imgUrl + '" class="thumbnail" style="width: 80px; height:60px;"/>' +
                         '</td>' +
-                        '<td>' +
-                        '<div><a href="/admin/shop/green/' + shop[i].shopId + '"/>' + shop[i].shopName + '</div>' +
+                        '<td style="text-align: left;">' +
+                        '<div>' +
+                        '<a href="/shop?id='+ shop[i].shopId + '&page=0">' + shop[i].shopName + '</a>' +
+                        '<span>(전문가평가:'+ shop[i].foodieLogRating +')</span>' +
+                        '</div>' +
+                        '<hr>' +
+                        '<div>' +
+                        '<span>'+ shop[i].address +' | ' + shop[i].phone + '</span>' +
+                        '</div>' +
+                        '<div>' +
+                        '<span>등록: '+ moment(shop[i].createdAt).format("YYYY-MM-DD") +'  수정: ' + moment(shop[i].updatedAt).format("YYYY-MM-DD") + '</span>' +
+                        '</div>' +
                         '</td>' +
                         '<td>' + shop[i].shopPaid + '</td>' +
-                        '<td>' + moment(shop[i].updatedAt).format("YYYY-MM-DD HH:mm") + '</td>' +
-                        '<td>' + moment(shop[i].createdAt).format("YYYY-MM-DD HH:mm") + '</td>' +
+                        '<td><a href="">수정</a></td>' +
+                        '<td><a href="">삭제</a></td>' +
                         '</tr>';
                 });
                 $("#list-table").append(tr);
+
 
                 //3. 페이지 업
                 var pages = data.pages;
@@ -590,17 +638,33 @@
 
                 //4. 버튼들
                 var btns = data.btns;
-                if(btns.first == -1){document.getElementById('first').disabled ='disabled';
-                }else {$("#first").val(btns.first);}
+                if (btns.first == -1) {
+                    document.getElementById('first').disabled = true;
+                } else {
+                    document.getElementById('first').disabled = false;
+                    $("#first").val(btns.first);
+                }
 
-                if(btns.prev == -1){document.getElementById('prev').disabled = 'disabled';
-                } else {$("#prev").val(btns.prev);}
+                if (btns.prev == -1) {
+                    document.getElementById('prev').disabled = true;
+                } else {
+                    document.getElementById('prev').disabled = false;
+                    $("#prev").val(btns.prev);
+                }
 
-                if(btns.next == -1){document.getElementById('next').disabled = 'disabled';
-                } else {$("#next").val(btns.next);}
+                if(btns.next == -1){
+                    document.getElementById('next').disabled = true;
+                } else {
+                    document.getElementById('next').disabled = false;
+                    $("#next").val(btns.next);
+                }
 
-                if(btns.last == -1){document.getElementById('last').disabled = 'disabled';
-                } else {$("#last").val(btns.last);}
+                if(btns.last == -1){
+                    document.getElementById('last').disabled = true;
+                } else {
+                    document.getElementById('last').disabled = false;
+                    $("#last").val(btns.last);
+                }
             }
         });
 

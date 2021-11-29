@@ -130,8 +130,8 @@ public class AdminShopListService {
         }
         else{
             int currentPage = vo.getPage();
-            left = (currentPage / 10) * 10 + 1;
-
+            left = currentPage % 10 == 0 ?
+                    (currentPage / 10 - 1) * 10 + 1 : (currentPage / 10) * 10 + 1;
         }
 
         for(int i = left; i <= pageSize; i++){
@@ -139,7 +139,6 @@ public class AdminShopListService {
                 break;
             pages.add(i);
         }
-
         return pages;
     }
 
@@ -149,12 +148,15 @@ public class AdminShopListService {
         int pageSize = count / 15;
         pageSize += count % 15 > 0 ? 1 : 0;
 
-        int page = vo.getPage(), nextFlag = (page / 10) * 10 + 11;
+        int page = vo.getPage();
+
+        int nextFlag = page % 10 == 0 ? (page / 10 - 1) * 10 + 11 : (page / 10) * 10 + 11;
+        int prevFlag = page % 10 == 0 ? (page / 10 - 2) * 10 + 1: (page / 10 - 1) * 10 + 1;
 
         Map<String, Integer> btnValues = new HashMap<>();
-        btnValues.put("first", page - 11 >= 0 ? 1:-1);
+        btnValues.put("first", page - 11 >= 0 ? 1 : -1);
+        btnValues.put("prev", page - 11 >= 0 ? prevFlag : -1);
         btnValues.put("last", nextFlag <= pageSize ? pageSize : -1);
-        btnValues.put("prev", page - 11 >= 0 ? (page / 10 - 1) * 10 + 1 : -1);
         btnValues.put("next", nextFlag <= pageSize ? nextFlag : -1);
 
         return btnValues;
