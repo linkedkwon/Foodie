@@ -398,7 +398,7 @@
                                             <div class="row">
                                                 <div class="form-group" style="    padding-top: 40px;">
                                                     <label for="restaurants-location-detial">가게 이미지 추가</label>
-                                                    <div th:if="${not #lists.isEmpty(payload.menuImages)}">
+                                                    <div>
                                                         <div class="imgs_wrap">
                                                                 <!--<div style="display: inline-block; width: 155px;text-align: center" th:if="${payload.menuImages}" th:each="item : ${payload.menuImages.split(',')}">
                                                                     <img onerror="this.src='/images/default.png'" style="width: 150px;height: 120px; padding-top: 5px;  float: left;" th:src='${item}'>
@@ -423,6 +423,9 @@
                                                                             <button th:value="${num}"  th:id="'uploadImage'+${num}" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;" >추가</button>
                                                                             <button th:onclick="'deleteImageAction(' + ${num} + '); return false;'" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
                                                                         </div>
+                                                                    </div>
+                                                                    <div th:if="${imageSize == 0}">
+
                                                                     </div>
                                                                     <div style="display: inline-block; width: 155px;text-align: center"  th:each="num : ${#numbers.sequence(imageSize,12)}">
                                                                         <img th:id="'thum'+${num}"  th:value="${num}" onerror="this.src='/images/default.png'" style="width: 150px;height: 120px; padding-top: 5px;  float: left;" src="/images/default.png">

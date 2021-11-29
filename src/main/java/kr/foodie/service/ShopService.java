@@ -168,20 +168,20 @@ public class ShopService {
 
     protected List<Shop> addAliasOnShops(List<Shop> shops) {
         for (Shop shop : shops) {
-            String bCode = Optional.ofNullable(shop.getBigCategory()).orElseGet(() -> {
-                return "0";
+            Integer bCode = Optional.ofNullable(shop.getArea1st()).orElseGet(() -> {
+                return 0;
             });
-            String mCode = Optional.ofNullable(shop.getMiddleCategory()).orElseGet(() -> {
-                return "0";
+            Integer mCode = Optional.ofNullable(shop.getArea2st()).orElseGet(() -> {
+                return 0;
             });
             Integer type = Optional.ofNullable(shop.getShopType()).orElseGet(() -> {
                 return 0;
             });
-            if (type.toString().equals("1")) {
-                shop.setShopAlias(tripCategoryService.getTripCategory(bCode, mCode, shop.getAddress()));
-            } else {
-                shop.setShopAlias(foodCategoryService.getShopCategory(bCode, mCode, shop.getAddress()));
-            }
+//            if (type.toString().equals("1")) {
+//                shop.setShopAlias(tripCategoryService.getTripCategory(bCode, mCode, shop.getAddress()));
+//            } else {
+//                shop.setShopAlias(foodCategoryService.getShopCategory(bCode.toString(), mCode.toString(), shop.getAddress()));
+//            }
         }
         return shops;
     }
