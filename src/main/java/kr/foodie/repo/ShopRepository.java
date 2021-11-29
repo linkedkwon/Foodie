@@ -48,8 +48,8 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
     Optional<Integer> countByArea1stAndArea2stAndArea3stAndShopType(Integer area1st, Integer area2st, Integer area3st, String shopType);
 
 
-//    @Query(value="select * from shop where shop_id in (select shop_id from main_board where type = ?1)", nativeQuery = true)
-    @Query(value="select s.*, r.* , f.* from shop s left join region r on s.region_id = r.region_id left join food_category f on s.big_category = f.bcode where shop_id in (select shop_id from main_board where type = ?1) and f.level=1", nativeQuery = true)
+    @Query(value="select * from rankup_shop_introduce_data where no in (select shop_id from main_board where type = ?1)", nativeQuery = true)
+//    @Query(value="select s.*, r.* from rankup_shop_introduce_data s left join epicure_region r on s.area_1st = r.no where s.no in (select shop_id from main_board where type = ?1)", nativeQuery = true)
     List<Shop> findShopInfoByType(Integer type);
 
     @Query(value="select * from shop where address like %?1% and shop_id not in (select shop_id from main_board where type=?2)", nativeQuery = true)

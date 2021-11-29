@@ -396,7 +396,11 @@ public class AdminController {
 
         mav.addObject("shopTownList", shopTownList);
         mav.addObject("themeTags", themeTags);
-        mav.addObject("imageSize", detailInfo.getMenuImages().split(",").length);
+        if(detailInfo.getMenuImages().equals("")){
+            mav.addObject("imageSize", 0);
+        }else{
+            mav.addObject("imageSize", detailInfo.getMenuImages().split(",").length);
+        }
 
         return mav;
     }

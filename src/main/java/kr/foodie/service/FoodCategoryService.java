@@ -16,16 +16,15 @@ public class FoodCategoryService {
     public String getShopCategory(String bCode, String mCode, String address){
 
         String category = "";
-        bCode = bCode.startsWith(",")?bCode.substring(1):bCode;
-        mCode = mCode.startsWith(",")?mCode.substring(1):mCode;
+        bCode = bCode.toString().startsWith(",")?bCode:bCode;
+        mCode = mCode.toString().startsWith(",")?mCode:mCode;
 
-        bCode = bCode.contains(",")?bCode.split(",")[0]:bCode;
-        mCode = mCode.contains(",")?mCode.split(",")[0]:mCode;
+        bCode = bCode.toString().contains(",")?bCode :bCode;
+        mCode = mCode.toString().contains(",")?mCode:mCode;
 
-//        category += address.split(" ")[0]+ " " + address.split(" ")[1];
-//        category += bCode.equalsIgnoreCase("0")? "":" | " + foodCategoryAdminRepository.findByBCodeAndLevel(Integer.parseInt(bCode),1).get(0).getCategoryName();
-        category += bCode.equalsIgnoreCase("0")? "":"" + foodCategoryAdminRepository.findByBCodeAndLevel(Integer.parseInt(bCode),1).get(0).getCategoryName();
-        category += mCode.equalsIgnoreCase("0")? "":" | " + foodCategoryAdminRepository.findByMCodeAndLevel(Integer.parseInt(mCode),2).get(0).getCategoryName();
+
+//        category += bCode.toString().equalsIgnoreCase("0")? "":"" + foodCategoryAdminRepository.findByBCodeAndLevel(Integer.valueOf(bCode),1).get(0).getCategoryName();
+//        category += mCode.toString().equalsIgnoreCase("0")? "":" | " + foodCategoryAdminRepository.findByMCodeAndLevel(Integer.valueOf(mCode),2).get(0).getCategoryName();
 
         return category;
     }

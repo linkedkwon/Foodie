@@ -18,8 +18,8 @@ public class MainController {
 
     @GetMapping({"","/"})
     public String renderMain(Model model){
-        model.addAttribute("redCommentList", shopService.getShopInfoByType(18));
-        model.addAttribute("greenCommentList", shopService.getShopInfoByType(19));
+//        model.addAttribute("redCommentList", shopService.getShopInfoByType(18));
+//        model.addAttribute("greenCommentList", shopService.getShopInfoByType(19));
         return "main";
     }
 
