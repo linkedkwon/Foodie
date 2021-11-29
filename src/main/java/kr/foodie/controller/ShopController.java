@@ -111,7 +111,11 @@ public class ShopController {
                 .orElseGet(()->{return "없음";}));
 
         //menu imgaes
-        commentList.setMenuImages(commentList.getMenuImages().replace("[", "").replace("]", "").replaceAll("\"",""));
+        String hasMenuImages = Optional.ofNullable(commentList.getMenuImages()).orElseGet(() -> {return "0";});
+        if(!hasMenuImages.equals("0"))
+            commentList.setMenuImages(commentList.getMenuImages().replace("[", "").replace("]", "").replaceAll("\"",""));
+        else
+            commentList.setMenuImages("");
 
         mav.addObject("tasteRatingCnt", str[1]);
         mav.addObject("category", foodCategoryService.getShopCategory(bCode, mCode, commentList.getAddress()));
