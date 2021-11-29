@@ -13,6 +13,7 @@ import java.util.Optional;
 
 public interface ShopRepository extends JpaRepository<Shop, Integer> {
 
+    Page<Shop> findByShopIdOrderByUpdatedAt(Integer shopId, Pageable pageable);
     Page<Shop> findByArea1stAndArea2stAndArea3stAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st, String shopType, Pageable pageable);
 //    Page<Shop> findByArea1stAndArea2stAndArea3stInAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st , String shopType, Pageable pageable);
 //    List<Shop> findByArea1stAndArea2stAndArea3stAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st, String shopType);
@@ -92,4 +93,5 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
     @Query(value="select * from shop where shop_type = ?1 and replace(shop_name,' ','') like %?2%", nativeQuery = true)
     List<Shop> findDuplicatedShop(String shopType, String shopName);
 
+    Optional<Object> findByShopIdOrderByUpdatedAt(Integer shopId);
 }

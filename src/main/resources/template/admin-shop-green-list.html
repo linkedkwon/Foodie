@@ -446,8 +446,12 @@
                 var tr = '';
                 $.each(shop, function (i) {
                     var imgUrl = '';
+                    var shopPaid = '';
                     if(shop[i].menuImages == "" || "[]") imgUrl = '/images/default.png';
                     else imgUrl = shop[i].menuImages;
+                    if(shop[i].shopPaid != null){
+                        shopPaid = shop[i].shopPaid
+                    }
                     tr +=
                         '<tr>' +
                         '<td>' +
@@ -466,8 +470,8 @@
                         '<span>등록: '+ moment(shop[i].createdAt).format("YYYY-MM-DD") +'  수정: ' + moment(shop[i].updatedAt).format("YYYY-MM-DD") + '</span>' +
                         '</div>' +
                         '</td>' +
-                        '<td>' + shop[i].shopPaid + '</td>' +
-                        '<td><a href="">수정</a></td>' +
+                        '<td>' + shopPaid + '</td>' +
+                        '<td><a href="/admin/shop/green/' + shop[i].shopId + '">수정</a></td>' +
                         '<td><a href="">삭제</a></td>' +
                         '</tr>';
                 });

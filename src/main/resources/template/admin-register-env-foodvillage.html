@@ -170,7 +170,7 @@
             </p>
             <input type="text" value="" id="add_region">
             <div class="btn-r">
-                <a href="javascript:void(0)" class="btn-layerAdd">추가</a>
+                <a href="javascript:void(0)" class="btn-layerAdd">등록</a>
                 <a href="javascript:void(0)" class="btn-layerClose">닫기</a>
             </div>
             <!--// content-->
@@ -183,11 +183,11 @@
         <div class="pop-conts">
             <!--content //-->
             <input type="hidden" id="modify-type">
-            <p class=가
+            <p class="ctxt mb20">수정<br>
             </p>
             <input type="text" id="modify-category-name" value=""/>
             <div class="btn-r">
-                <a href="javascript:void(0)" class="btn-layerMODIFY">추가</a>
+                <a href="javascript:void(0)" class="btn-layerMODIFY">수정</a>
                 <a href="javascript:void(0)" class="btn-layerClose">닫기</a>
             </div>
             <!--// content-->
@@ -656,8 +656,8 @@
         REGION.push({
             listName: listName,
             visiable: "yes",
-            code: "food_village",
-            parentNo: "0",
+            code: "town",
+            parentNo: 0,
             seq: max + 1
         });
         console.log(REGION)

@@ -396,10 +396,15 @@ public class AdminController {
 
         mav.addObject("shopTownList", shopTownList);
         mav.addObject("themeTags", themeTags);
-        if(detailInfo.getMenuImages().equals("")){
-            mav.addObject("imageSize", 0);
+        if(detailInfo.getMenuImages().equals("")|| detailInfo.getMenuImages().equals("[]")){
+            mav.addObject("imageSize", -1);
         }else{
-            mav.addObject("imageSize", detailInfo.getMenuImages().split(",").length);
+            int imageSize = detailInfo.getMenuImages().split(",").length;
+            if(imageSize ==1){
+                mav.addObject("imageSize", 0);
+            }else{
+                mav.addObject("imageSize", imageSize-1);
+            }
         }
 
         return mav;
@@ -409,6 +414,14 @@ public class AdminController {
     @PostMapping("/epicure/region")
     public CommonResponse<String> createRegion(@RequestBody List<RegionCreateDTO> param) {
         regionAdminService.update(param);
+        return CommonResponse.<String>builder()
+                .message("정상입니다.")
+                .build();
+    }
+    @ResponseBody
+    @PostMapping("/epicure/theme")
+    public CommonResponse<String> createTheme(@RequestBody List<RegionCreateDTO> param) {
+        themeService.update(param);
         return CommonResponse.<String>builder()
                 .message("정상입니다.")
                 .build();

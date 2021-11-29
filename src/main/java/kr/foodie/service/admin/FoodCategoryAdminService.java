@@ -16,7 +16,7 @@ public class FoodCategoryAdminService {
     private final EpicureRegionRepository epicureRegionRepository;
 
     static boolean isStringEmpty(String str) {
-        return str == null || str.isEmpty();
+        return str == null || str.isEmpty() || str.equals("0");
     }
 
     public FoodCategoryAdminService(EpicureRegionRepository epicureRegionRepository) {

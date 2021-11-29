@@ -125,7 +125,7 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                                <div style="text-align: center;  background: aliceblue;" class="stickyId" id="bcodeFunction">
+                                <div style="text-align: center;  background: aliceblue;" class="stickyId" id="mcodeFunction">
                                     <div>
                                         <a id='mcode-up' href="javascript:void(0)">
                                             <button class="featureButton">위로</button>
@@ -211,11 +211,13 @@
         <div class="pop-container">
             <div class="pop-conts">
                 <!--content //-->
+                <input type="hidden" id="type">
                 <p class="ctxt mb20">추가<br>
                 </p>
-                <input type="text" value=""/>
+                <input type="text" value="" id="add_region">
                 <div class="btn-r">
-                    <a href="#" class="btn-layerClose">Close</a>
+                    <a href="javascript:void(0)" class="btn-layerAdd">등록</a>
+                    <a  href="javascript:void(0)"  class="btn-layerClose">닫기</a>
                 </div>
                 <!--// content-->
             </div>
@@ -529,7 +531,7 @@
             rowMoveEvent('downLast', 'mcode', MREGION);
         })
         $('#mcode-remove').on('click', () => {
-            rowMoveEvent('remove', 'mcode', REGION);
+            rowMoveEvent('remove', 'mcode', MREGION);
         })
 
         $('.chkRadio').on('click', () => {
@@ -554,7 +556,7 @@
     const updateRequest = (target) => {
         alert(target);
         $.ajax({
-            url: "/admin/epicure/region",
+            url: "/admin/epicure/theme",
             type: "POST",
             data: JSON.stringify(target),
             dataType: "json",
@@ -574,7 +576,7 @@
 
     function rowMoveEvent(direction, type, target) {
         // 체크된 행(row)의 존재 여부를 파악한다.
-        console.log("rowEvent")
+        // console.log("rowEvent")
         var regiontype = "#" + type;
         if (jQuery(regiontype + " .chkRadio:checked").val() && jQuery(regiontype + " .chkRadio:checked").length == 1) {
             // 체크된 라디오 박스의 행(row)을 변수에 담는다.
@@ -667,12 +669,14 @@
                     cur[0].seq = max + 1;
                 }
             } else if (direction == "remove") {
-                console.log(target)
+                console.log("target")
+                console.log(regiontype)
                 console.log($(regiontype + " .chkRadio:checked").val())
                 target.filter((cur) => cur.id == $(regiontype + " .chkRadio:checked").val())
                     .map((cur) => {
-                        console.log(cur)
-                        cur.visiable = "no"
+                        console.log("cur")
+                        console.log(cur);
+                        cur.visiable = "no";
                     });
                 row.remove();
                 console.log(target)
@@ -745,11 +749,13 @@
             checked.parent().contents()[2].data = " " + listName;
             MREGION.filter(cur => cur.id == checked.val())
                 .map((cur) => cur.listName = listName);
+            console.log(MREGION)
         } else {
             const checked = $("#bcode .chkRadio:checked");
             checked.parent().contents()[2].data = " " + listName;
             REGION.filter(cur => cur.id == checked.val())
                 .map((cur) => cur.listName = listName);
+            console.log(REGION)
         }
     }
     const updateListName = () => {
@@ -768,8 +774,8 @@
             MREGION.push({
                 listName: listName,
                 visiable: "yes",
-                code: "theme_red",
-                parentNo: $("#mcode-parent-no").val(),
+                code: "green_theme",
+                parentNo: "0",
                 seq: max + 1
             });
             console.log(MREGION)
@@ -778,7 +784,7 @@
             REGION.push({
                 listName: listName,
                 visiable: "yes",
-                code: "theme_green",
+                code: "red_theme",
                 parentNo: "0",
                 seq: max + 1
             });

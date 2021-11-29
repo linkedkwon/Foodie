@@ -121,7 +121,7 @@ public class ShopService {
     }
 
     public Shop getShopDetail(Integer shopId) {
-        return shopRepository.findById(shopId).orElseThrow();
+        return (Shop) shopRepository.findByShopIdOrderByUpdatedAt(shopId).orElseThrow();
     }
 
     public List<Shop> getFilterShopList(String shopTypeId, Integer area1st, Integer area2st, Integer area3st, String filterItems) {

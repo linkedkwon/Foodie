@@ -51,7 +51,7 @@
             <div class="container-fluid" style="    width: 700px;">
 
                 <!-- DataTales Example -->
-                <form th:action="${'/admin/shop/update/'+ payload.shopId}" method="post" enctype="multipart/form-data"  onsubmit="return jbSubmit();">
+                <form th:action="${'/admin/shop/update/'+ payload.shopId}" method="post" enctype="multipart/form-data" onsubmit="return jbSubmit();">
 <!--                    <input type="hidden" th:field="${shop.shopType}" th:value="1" />-->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -152,7 +152,6 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" ></option>
                                                             </select>
                                                             <select id="table-filter2" class="custom-select" th:field="${shop.middleCategory}">
                                                                 <option
@@ -160,7 +159,6 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" ></option>
                                                             </select>
                                                             <select id="table-filter3" class="custom-select" th:field="${shop.smallCategory}">
                                                                 <option
@@ -168,7 +166,6 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" ></option>
                                                             </select>
                                                         </div>
                                                         <div class="flex tag-list"></div>
@@ -279,7 +276,6 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" ></option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter5" th:field="${shop.area2st}">
                                                                 <option
@@ -287,7 +283,6 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" ></option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter6" th:field="${shop.area3st}">
                                                                 <option
@@ -295,7 +290,6 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" ></option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -312,7 +306,6 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value="" ></option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter8" th:field="${shop.subway2st}">
                                                                 <option
@@ -320,7 +313,6 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value=""></option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter9" th:field="${shop.subway3st}">
                                                                 <option
@@ -328,7 +320,6 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
-                                                                <option value=""></option>
                                                             </select>
                                                             <input class="form-control" id="exit" type="text" name="exit"  th:field="${shop.exitNum}" style="    width: 45px;font-size: 9pt !important;">
                                                         </div>
@@ -409,25 +400,26 @@
 
                                                                 <th:block>
                                                                     <div style="display: inline-block; width: 155px;text-align: center"  th:each="num : ${#numbers.sequence(0,imageSize)}">
-                                                                        <div th:if="${imageSize == 1}">
+                                                                        <div th:if="${imageSize == 0}">
                                                                             <img th:id="'thum'+${num}"  th:value="${num}" onerror="this.src='/images/default.png'" style="width: 150px;height: 120px; padding-top: 5px;  float: left;" th:src="${payload.menuImages}">
                                                                             <br>
-                                                                            <input th:value="${num}" name="files"  th:data="${num}" type="file" th:id="'input_imgs'+${num}" onchange="handleImgFileSelect(this)">
+                                                                            <input th:value="${num}" name="files" type="file"  th:src="${payload.menuImages}"   th:data="${num}" th:id="'input_imgs'+${num}" onchange="handleImgFileSelect(this)">
                                                                             <button th:value="${num}"  th:id="'uploadImage'+${num}" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;" >추가</button>
                                                                             <button th:onclick="'deleteImageAction(' + ${num} + '); return false;'" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
                                                                         </div>
-                                                                        <div th:if="${imageSize > 1}">
-                                                                            <img th:id="'thum'+${num}"  th:value="${num}" onerror="this.src='/images/default.png'" style="width: 150px;height: 120px; padding-top: 5px;  float: left;" th:src="${payload.menuImages.split(',')[num]}"}>
+                                                                        <div th:if="${imageSize > 0}">
+                                                                            <div th:text="${payload.menuImages.split(',')[num]}"></div>
+                                                                            <img th:id="'thum'+${num}"  th:value="${num}" onerror="this.src='/images/default.png'" style="width: 150px;height: 120px; padding-top: 5px;  float: left;" th:src="${payload.menuImages.split(',')[num]}">
                                                                             <br>
-                                                                            <input th:value="${num}" name="files"  th:data="${num}" type="file" th:id="'input_imgs'+${num}" onchange="handleImgFileSelect(this)">
+                                                                            <input th:value="${num}" name="files" type="file"  th:src="${payload.menuImages.split(',')[num]}"  th:data="${num}"  th:id="'input_imgs'+${num}" onchange="handleImgFileSelect(this)">
                                                                             <button th:value="${num}"  th:id="'uploadImage'+${num}" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;" >추가</button>
                                                                             <button th:onclick="'deleteImageAction(' + ${num} + '); return false;'" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
                                                                         </div>
                                                                     </div>
-                                                                    <div th:if="${imageSize == 0}">
+                                                                    <div th:if="${imageSize == -1}">
 
                                                                     </div>
-                                                                    <div style="display: inline-block; width: 155px;text-align: center"  th:each="num : ${#numbers.sequence(imageSize,12)}">
+                                                                    <div style="display: inline-block; width: 155px;text-align: center"  th:each="num : ${#numbers.sequence(imageSize+1,12)}">
                                                                         <img th:id="'thum'+${num}"  th:value="${num}" onerror="this.src='/images/default.png'" style="width: 150px;height: 120px; padding-top: 5px;  float: left;" src="/images/default.png">
                                                                         <br>
                                                                         <input th:value="${num}" name="files"  th:data="${num}" type="file" th:id="'input_imgs'+${num}" onchange="handleImgFileSelect(this)">
@@ -603,7 +595,6 @@
         $('#shoptown input[type="checkbox"]').on('change', function() {
             $('#shoptown input[type="checkbox"]').not(this).prop('checked', false);
         });
-
 
 
         $('.summernote').summernote();
@@ -817,7 +808,7 @@
     }
 
     function handleImgFileSelect(e){
-        sel_files = [];
+        // sel_files = [];
         // var target_select = ;
         // var target = target_select;
         var target_index = $('#'+e.id).attr('value');
@@ -825,6 +816,8 @@
         // console.log(e)
         // console.log(target.data);
         var files= $('#'+e.id)[0].files;
+        console.log("files")
+        console.log(e.id)
         var filesArr = Array.prototype.slice.call(files);
         var index = 0;
         filesArr.forEach(function(f) {
@@ -842,7 +835,8 @@
                 //     alert("이미지 가로 720px, 세로 270px로 맞춰서 올려주세요.");
                 // }else{
                 //     var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(" + index +")\" id=\"img_id_"+index+"\"> <img style=\"width: 150px;height: 120px;padding-left: 10px;\" src=\"" + e.target.result + "\" data-file='"+f.name + "' class='selProductFile' title='click to remove'></a>";
-
+                console.log($('#thum' + target_index))
+                console.log(reader)
                 $('#thum' + target_index).attr('src', e.target.result)
                 index++;
                 // }
@@ -851,11 +845,13 @@
         })
     }
     function deleteImageAction(index){
-
-        console.log('index' + index);
+        var files= $('input[id*=input_imgs]')[index].files;
+        console.log("hi");
+        console.log(files);
         sel_files.splice(index, 1);
         var img_id = "#thum"+index;
         $(img_id).attr('src', '/images/default.png')
+        // $(img_id).attr('src', '/images/default.png')
         console.log(sel_files)
     }
 
@@ -868,7 +864,7 @@
 
 
 
-    $("button[id^='uploa123dImage']").on("change", function(event) {
+    /*$("button[id^='uploadImage']").on("change", function(event) {
         console.log(event.currentTarget)
         var dictObject = {}
         const value = event.currentTarget.value;
@@ -882,7 +878,7 @@
         tagList.push(dictObject);
         renderTagList()
         $('#table-filter3 option:eq(0)').prop('selected', true);
-    });
+    });*/
 </script>
 
 
