@@ -72,10 +72,10 @@
                                             ></option>
                                         </select>
                                         <select id="table-filter2" style="    height: 20px;">
-                                            <option value="">중분류</option>
+                                            <option value="-1">중분류</option>
                                         </select>
                                         <select id="table-filter3" style="    height: 20px;">
-                                            <option value="">소분류</option>
+                                            <option value="-1">소분류</option>
                                         </select>
                                     </p>
                                 </div>
@@ -93,11 +93,11 @@
                                             </option>
                                         </select>
                                         <select id="table-filter5" style="height: 20px;">
-                                            <option value="">2차 지역 선택</option>
+                                            <option value="-1">2차 지역 선택</option>
                                         </select>
 
                                         <select id="table-filter6" style="height: 20px;">
-                                            <option value="">3차 지역 선택</option>
+                                            <option value="-1">3차 지역 선택</option>
                                         </select>
                                     </p>
                                     <p style=" padding-left: 20px; padding-top: 5px; margin-bottom: 0;">
@@ -124,13 +124,13 @@
                                 <div  style="height: 31px; text-align:center; width: 120px;  padding-top: 6px; background: rgb(247, 247, 247); border-right: 1px solid lightgray"> 검색어 </div>
                                 <p style="    padding-left: 20px;  padding-top: 5px;  margin-bottom: 0;">
                                     <select id="table-filter8" style="  height: 20px;">
-                                        <option value="">선택</option>
-                                        <option value="">업소명</option>
-                                        <option value="">등록자</option>
-                                        <option value="">아이디</option>
-                                        <option value="">전화번호</option>
+                                        <option value="-1">선택</option>
+                                        <option value="업소명">업소명</option>
+                                        <option value="등록자">등록자</option>
+                                        <option value="아이디">아이디</option>
+                                        <option value="전화번호">전화번호</option>
                                     </select>
-                                    <input type="text" style="height: 20px; width: 120px;"/>
+                                    <input type="text" id="keyword" style="height: 20px; width: 120px;"/>
                                 </p>
                             </div>
                             <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; border-radius: 5px;" onclick="pageReload()">초기화</button>
@@ -144,13 +144,13 @@
                                     <span id="item-size" style="color: #317CC1; font-weight: 600;">총 등록되었습니다.</span>
                                 </div>
                                 <div style="float: right">
-                                    <a>등록일순</a>
+                                    <button onclick="clickOrdering(this)" value = "등록일순">등록일순</button>
                                     <span>|</span>
-                                    <a>수정일순</a>
+                                    <button onclick="clickOrdering(this)" value = "수정일순">수정일순</button>
                                     <span>|</span>
-                                    <a>조회순</a>
+                                    <button onclick="clickOrdering(this)" value = "조회순">조회순</button>
                                     <span>|</span>
-                                    <a>평점순</a>
+                                    <button onclick="clickOrdering(this)" value = "평점순">평점순</button>
                                 </div>
                             </div>
                             <!-- 리스트 테이블 -->
@@ -308,12 +308,128 @@
             $("#preview").remove();
         });
 
+        $('#table-filter1').change( function(){
+            get_category_info( this , "table-filter1"); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
 
-        <!-- 페이지 로드 시 데이터 -->
+        $('#table-filter2').change( function(){
+            get_category_info( this, "table-filter2" ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        $('#table-filter4').change( function(){
+            get_region_info( this, "table-filter4"); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+        $('#table-filter5').change( function(){
+            get_region_info( this, "table-filter5"); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
+        });
+
+
+        function get_region_info(o, type){
+            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+            $.ajax({
+                url:"/admin/epicure/area_type/" + val,
+                contentType: "application/json",
+                dataType: "json",
+                type:"GET",
+            }).done(function (data) {
+                var data = data.data;
+                if(data.length > 0) {
+                    if(type == "table-filter4") {
+                        $("#table-filter5").find("option").remove().end();
+                        $("#table-filter5").append("<option value='-1'>2차 지역 선택</option>");
+                        $.each(data, function (key, value) {
+                            $("#table-filter5").append("<option value='" + value.id + "'>" + value.listName + "</option>");
+                        });
+                        console.log(data[0])
+                    }else{
+                        $("#table-filter6").find("option").remove().end();
+                        $("#table-filter6").append("<option value='-1'>3차 지역 선택</option>");
+                        $.each(data, function(key, value) {
+                            $("#table-filter6").append("<option value='" + value.id + "'>" + value.listName + "</option>");
+                        });
+                        console.log(data[0])
+                    }
+                } else {
+                    if(type == "table-filter4") {
+                        $("#table-filter5").find("option").remove().end().append("<option value='-1'>NO DATA</option>");
+                        $("#table-filter5").find("option").remove().end();
+                        $("#table-filter5").append("<option value='-1'></option>");
+                        return;
+                    }else{
+                        $("#table-filter6").find("option").remove().end().append("<option value='-1'>NO DATA</option>");
+                        $("#table-filter6").find("option").remove().end();
+                        $("#table-filter6").append("<option value='-1'></option>");
+                        return;
+                    }
+                }
+
+            });
+        }
+        function get_category_info(o, type){
+            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+            console.log(val)
+            if(val != ''){
+                $.ajax({
+                    type:"get",
+                    url:"/admin/epicure/green_shop_type/" + val,
+                    datatype: "json",
+                    success: function(data) {
+                        var data = data.data;
+                        if(data.length > 0) {
+                            if(type == "table-filter1") {
+                                $("#table-filter2").find("option").remove().end();
+                                $("#table-filter2").append("<option value='-1'>중분류</option>");
+                                $.each(data, function (key, value) {
+                                    $("#table-filter2").append("<option value='" + value.id + "'>" + value.listName + "</option>");
+                                });
+                            }else{
+                                $("#table-filter3").find("option").remove().end();
+                                $("#table-filter3").append("<option value='-1'>소분류</option>");
+                                $.each(data, function(key, value) {
+                                    $("#table-filter3").append("<option value='" + value.id + "'>" + value.listName + "</option>");
+                                });
+                            }
+                        } else {
+                            if(type == "table-filter1") {
+                                $("#table-filter2").find("option").remove().end().append("<option value='-1'>중분류</option>");
+                                $("#table-filter3").find("option").remove().end();
+                                $("#table-filter3").append("<option value='-1'>소분류</option>");
+                                return;
+                            }else {
+                                $("#table-filter3").find("option").remove().end().append("<option value='-1'>소분류</option>");
+                                // $("#table-filter3").find("option").remove().end();
+                                // $("#table-filter3").append("<option value='0'>NO DATA</option>");
+                                return;
+                            }
+                        }
+                    },
+
+                    error: function(x, o, e) {
+                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                        console.log(msg);
+                    }
+                });
+            }else {
+                if(type == "table-filter1") {
+                    $("#table-filter2").find("option").remove().end();
+                    $("#table-filter2").append("<option value=''></option>");
+                    $("#table-filter3").find("option").remove().end();
+                    $("#table-filter3").append("<option value=''></option>");
+                }else{
+                    $("#table-filter3").find("option").remove().end();
+                    $("#table-filter3").append("<option value=''></option>");
+                }
+            }
+        }
+
+
+    <!-- 페이지 로드 시 데이터 -->
         var param = {
             'background' :$('#background').val(),
             'renderOption':'1',
-            'page':1
+            'page':1,
+            'order':"등록일순"
         };
 
         $.ajax({
@@ -351,10 +467,123 @@
                 $.each(pages, function(i){
                     if(i == currentPage){
                         button +=
-                            '<button style="margin-right: 3px; margin-left: 3px; color: #1c294e; font-weight: bold;" value="' + pages[i] + '">' + pages[i] + '</button>'
+                            '<button style="margin-right: 3px; margin-left: 3px; color: #1c294e; font-weight: bold;" value="' + pages[i] + '" onclick="clickButton(this)">' + pages[i] + '</button>'
                     }else {
                         button +=
-                            '<button style="margin-right: 3px; margin-left: 3px;" value="' + pages[i] + '">' + pages[i] + '</button>'
+                            '<button style="margin-right: 3px; margin-left: 3px;" value="' + pages[i] + '" onclick="clickButton(this)">' + pages[i] + '</button>'
+                    }
+                });
+                $("#pages").append(button);
+
+                //4. 버튼들
+                var btns = data.btns;
+                if(btns.first == -1){document.getElementById('first').disabled ='disabled';
+                }else {$("#first").val(btns.first);}
+
+                if(btns.prev == -1){document.getElementById('prev').disabled = 'disabled';
+                } else {$("#prev").val(btns.prev);}
+
+                if(btns.next == -1){document.getElementById('next').disabled = 'disabled';
+                } else {$("#next").val(btns.next);}
+
+                if(btns.last == -1){document.getElementById('last').disabled = 'disabled';
+                } else {$("#last").val(btns.last);}
+            }
+        });
+    } );
+
+    var ordering = "등록일순";
+
+    function clickOrdering(e){
+        ordering = e.value;
+        clickButton(1);
+    }
+
+    function clickButton(e){
+        $('#list-table tr:not(:first)').remove();
+        $("#pages").empty();
+        console.log('오더에여', ordering);
+        var page = e == 1 ? 1:e.value;
+
+        var shop1st = $('#table-filter1 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var shop2nd = $('#table-filter2 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var shop3th = $('#table-filter3 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var area1st = $('#table-filter4 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var area2nd = $('#table-filter5 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var area3th = $('#table-filter6 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var selectedOption = $('#table-filter8 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var keyword = $('#keyword').val()
+
+        // - 1일시 검색하지 않음.
+        if(selectedOption == "") selectedOption = "-1";
+        if(keyword == "") keyword = "-1";
+        if(shop1st == "") shop1st = "-1";
+        if(shop2nd == "") shop2nd = "-1";
+        if(shop3th == "") shop3th = -1;
+        if(area1st == "") area1st = -1;
+        if(area2nd == "") area2nd = -1;
+        if(area3th == "") area3th = -1;
+
+        console.log(shop1st);
+        console.log(shop2nd);
+        console.log(shop3th);
+        console.log(area1st);
+        console.log(area2nd);
+        console.log(area3th);
+
+        var param = {
+            'background' :$('#background').val(),
+            'renderOption': '2',
+            'page': page,
+            'shop1st' : shop1st,
+            'shop2nd' : shop2nd,
+            'shop3th' : shop3th,
+            'area1st' : area1st,
+            'area2nd' : area2nd,
+            'area3th' : area3th,
+            'selectedOption': selectedOption,
+            'keyword':keyword,
+            'order': ordering
+        }
+        $.ajax({
+            url:"/item/list",
+            type:"POST",
+            data:param,
+            dataType: "json",
+            success:function(data){
+                //1. 맛집 개수 출력
+                $('#item-size').text('총' + data.count + '건의 맛집정보가 검색되었습니다.');
+                var shop = data.data;
+
+                //2. 상점 리스트 업
+                var tr ='';
+                $.each(shop , function(i){
+                    tr +=
+                        '<tr>' +
+                        '<td>' +
+                        '<img src="' + shop[i].shopImage +'" class="thumbnail" style="width: 80px; height:60px;"/>' +
+                        '</td>' +
+                        '<td>' +
+                        '<div><a href="/admin/shop/green/' + shop[i].shopId + '"/>' + shop[i].shopName + '</div>' +
+                        '</td>' +
+                        '<td>' + shop[i].shopPaid + '</td>' +
+                        '<td>' + moment(shop[i].updatedAt).format("YYYY-MM-DD HH:mm") + '</td>' +
+                        '<td>' + moment(shop[i].createdAt).format("YYYY-MM-DD HH:mm") + '</td>' +
+                        '</tr>';
+                });
+                $("#list-table").append(tr);
+
+                //3. 페이지 업
+                var pages = data.pages;
+                var currentPage = data.currentPage;
+                var button = '';
+                $.each(pages, function(i){
+                    if(i == currentPage){
+                        button +=
+                            '<button style="margin-right: 3px; margin-left: 3px; color: #1c294e; font-weight: bold;" value="' + pages[i] + '" onclick="clickButton(this)">' + pages[i] + '</button>'
+                    }else {
+                        button +=
+                            '<button style="margin-right: 3px; margin-left: 3px;" value="' + pages[i] + '" onclick="clickButton(this)">' + pages[i] + '</button>'
                     }
                 });
                 $("#pages").append(button);
@@ -375,126 +604,6 @@
             }
         });
 
-
-        $('#table-filter1').change( function(){
-            get_mcode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-        });
-
-
-        function get_mcode(o){
-            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            console.log(val)
-            if(val != ''){
-                $.ajax({
-                    type:"get",
-                    url:"/admin/category/mfood/" + val,
-                    datatype: "json",
-                    success: function(data) {
-                    if(data.length > 0) {
-                        $("#table-filter2").find("option").remove().end();
-                        $("#table-filter2").append("<option>중분류</option>");
-                        $.each(data, function(key, value) {
-                            $("#table-filter2").append("<option value='" + value.no + "'>" + value.listName + "</option>");
-                        });
-                        console.log(data[0])
-                    } else {
-                        $("#table-filter2").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                        $("#table-filter3").find("option").remove().end();
-                        $("#table-filter3").append("<option value='0'>NO DATA</option>");
-                        return;
-                    }
-                },
-
-                error: function(x, o, e) {
-                    var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                    alert(msg);
-                }
-                });
-            }else {
-                $("#table-filter2").find("option").remove().end();
-                $("#table-filter2").append("<option value='0'>중분류</option>");
-                $("#table-filter3").find("option").remove().end();
-                $("#table-filter3").append("<option value='0'>소분류</option>");
-            }
-        }
-
-        $('#table-filter2').change( function(){
-            get_scode( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-        });
-
-        function get_scode(o){
-            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            console.log(val)
-            if(val != '') {
-                $.ajax({
-                    type: "get",
-                    url: "/admin/category/sfood/" + val,
-                    datatype: "json",
-                    success: function (data) {
-                        if (data.length > 0) {
-                            $("#table-filter3").find("option").remove().end();
-                            $("#table-filter3").append("<option>소분류</option>");
-                            $.each(data, function (key, value) {
-                                $("#table-filter3").append("<option value='" + value.scode + "'>" + value.categoryName + "</option>");
-                            });
-                        } else {
-                            $("#table-filter3").find("option").remove().end().append("<option value='0'>NO DATA</option>");
-                            return;
-                        }
-                    },
-
-                    error: function (x, o, e) {
-                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                        alert(msg);
-                    }
-                });
-            }else{
-                $("#table-filter3").find("option").remove().end();
-                $("#table-filter3").append("<option value='0'>소분류 </option>");
-            }
-        }
-
-
-
-        $('#table-filter4').change( function(){
-            get_detail_region( this ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
-        });
-
-        function get_detail_region(o){
-            var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-            console.log(val)
-            if(val != ''){
-                $.ajax({
-                    type:"get",
-                    url:"/admin/region/" + val,
-                    datatype: "json",
-                    success: function(data) {
-                        if(data.length > 0) {
-                            $("#table-filter5").find("option").remove().end();
-                            $("#table-filter4").append("<option>중분류</option>");
-                            $.each(data, function(key, value) {
-                                $("#table-filter5").append("<option value='" + value.id + "'>" + value.listName + "</option>");
-                            });
-                        } else {
-                            $("#table-filter3").find("option").remove().end().append("<option>NO DATA</option>");
-                            return;
-                        }
-                    },
-
-                    error: function(x, o, e) {
-                        var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                        alert(msg);
-                    }
-                });
-            }else{
-                $("#table-filter5").find("option").remove().end();
-                $("#table-filter5").append("<option>군</option>");
-            }
-        }
-    } );
-
-    function clickButton(e){
-        alert(e.value);
     }
 </script>
 

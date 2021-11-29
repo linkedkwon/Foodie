@@ -1,7 +1,6 @@
 package kr.foodie.controller;
 
 import kr.foodie.domain.shopItem.AdminShopListVO;
-import kr.foodie.service.ShopService;
 import kr.foodie.service.admin.AdminShopListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

@@ -29,4 +29,7 @@ public class AdminShopListVO {
 
     //현재 페이지
     private Integer page;
+
+    //정렬 여부
+    private String order;
 }

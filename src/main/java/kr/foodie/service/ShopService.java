@@ -288,12 +288,12 @@ public class ShopService {
                 "and s.shopType = " + shopType;
 
         if (!a1.equals("0")) jpql += " and r.area1st =" + Integer.parseInt(a1);
-        if (!a2.equals("0")) jpql += " and r.area2nd =" + Integer.parseInt(a2);
-        if (!a3.equals("0")) jpql += " and r.area3th =" + Integer.parseInt(a3);
+        if (!a2.equals("0")) jpql += " and r.area2st =" + Integer.parseInt(a2);
+        if (!a3.equals("0")) jpql += " and r.area3st =" + Integer.parseInt(a3);
 
-        if (!s1.equals("0")) jpql += " and r.shop1st like '%" + s1 + "%'";
-        if (!s2.equals("0")) jpql += " and r.shop2nd like '%" + s2 + "%'";
-        if (!s3.equals("0")) jpql += " and r.shop3th like '%" + s3 + "%'";
+        if (!s1.equals("0")) jpql += " and r.bigCategory like '%" + s1 + "%'";
+        if (!s2.equals("0")) jpql += " and r.middleCategory like '%" + s2 + "%'";
+        if (!s3.equals("0")) jpql += " and r.smallCategory like '%" + s3 + "%'";
 
         if (option.equals("업소명")) jpql += " and r.shopName like '%" + keyword + "%'";
         if (option.equals("등록자")) jpql += " and r.shopCharge like '%" + keyword + "%'";
