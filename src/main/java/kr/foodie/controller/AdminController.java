@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -493,6 +494,7 @@ public class AdminController {
             } else {
                 viewName = "redirect:/admin/shop/list/green";
             }
+
             String server = "foodie.speedgabia.com";
             int port = 21;
             String user = "foodie";
@@ -537,7 +539,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "/shop/update/{shopId}")
-    public String updateShop(@ModelAttribute ShopDTO shop, @PathVariable Integer shopId, MultipartFile[] files) {
+    public String updateShop(@ModelAttribute ShopDTO shop,@PathVariable Integer shopId, @RequestParam("files") MultipartFile[] files) {
         System.out.println("fff");
         if(isStringEmpty(shop.getSubway2st())){
             shop.setSubway2st(null);
@@ -552,6 +554,18 @@ public class AdminController {
         String viewName = shopService.updateShopInfo(shop, shopId, files);
         return viewName;
     }
+
+    @ResponseBody
+    @PostMapping("/shop/image/update/{shopId}")
+    public String updateImages(@PathVariable String shopId, @RequestBody ExistImages existImages) {
+
+        System.out.println(existImages);
+//        String viewName = shopService.updateShopInfo(shop, shopId, files);
+        String aa = "";
+
+        return "";
+    }
+
 
     //area1~3 : 각각 시,구,도
     //shop1~3 : bCode, mCode, sCode

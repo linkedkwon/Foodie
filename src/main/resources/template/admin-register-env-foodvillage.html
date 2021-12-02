@@ -100,7 +100,7 @@
                                         <button class="featureButton">처음</button>
                                     </a>
                                     <a id='bcode-downLast' href="javascript:void(0)">
-                                        <button class="featureButton">마지막</button>
+                                        <button class="featureButton">맨끝</button>
                                     </a>
                                     <a id='bcode-remove' href="javascript:void(0)" style="padding-left: 10px;">
                                         <button class="featureButton">삭제</button>
@@ -399,7 +399,19 @@
 
     $(document).ready(function () {
         REGION = [[${regionInfos}]];
-
+        $("#example1").on('click', 'tr', function(e){
+            if( $(e.target).is('input:checkbox') ) return;
+            var checkboxes = $('#example1 tr td input[type=checkbox]');
+            for(var i=0; i<checkboxes.length; i++){
+                if(checkboxes[i] != checkboxes){
+                    checkboxes[i].checked = false;
+                }
+            }
+            var chkbox = $(this).find('td:first-child :checkbox');
+            console.log(chkbox)
+            $(this).addClass('highlight').siblings().removeClass('highlight');
+            chkbox.prop('checked', !chkbox.prop('checked'));
+        });
         //추가
         $('#bcodeFunction .addRegion').on('click', function () {
             var $href = $(this).attr('href');
@@ -450,7 +462,7 @@
 
 
     const updateRequest = (target) => {
-        alert(target);
+        // alert(target);
         $.ajax({
             url: "/admin/epicure/region",
             type: "POST",

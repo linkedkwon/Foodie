@@ -405,7 +405,7 @@
                                                                             <br>
                                                                             <input th:value="${num}" name="files" type="file"  th:src="${payload.menuImages}"   th:data="${num}" th:id="'input_imgs'+${num}" onchange="handleImgFileSelect(this)">
                                                                             <button th:value="${num}"  th:id="'uploadImage'+${num}" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;" >추가</button>
-                                                                            <button th:onclick="'deleteImageAction(' + ${num} + '); return false;'" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
+                                                                            <button th:value="${num}" th:id="'deleteImage'+${num}" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
                                                                         </div>
                                                                         <div th:if="${imageSize > 0}">
                                                                             <div th:text="${payload.menuImages.split(',')[num]}"></div>
@@ -413,7 +413,7 @@
                                                                             <br>
                                                                             <input th:value="${num}" name="files" type="file"  th:src="${payload.menuImages.split(',')[num]}"  th:data="${num}"  th:id="'input_imgs'+${num}" onchange="handleImgFileSelect(this)">
                                                                             <button th:value="${num}"  th:id="'uploadImage'+${num}" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;" >추가</button>
-                                                                            <button th:onclick="'deleteImageAction(' + ${num} + '); return false;'" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
+                                                                            <button th:value="${num}" th:id="'deleteImage'+${num}" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
                                                                         </div>
                                                                     </div>
                                                                     <div th:if="${imageSize == -1}">
@@ -424,7 +424,7 @@
                                                                         <br>
                                                                         <input th:value="${num}" name="files"  th:data="${num}" type="file" th:id="'input_imgs'+${num}" onchange="handleImgFileSelect(this)">
                                                                         <button th:value="${num}"  th:id="'uploadImage'+${num}" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;" >추가</button>
-                                                                        <button th:onclick="'deleteImageAction(' + ${num} + '); return false;'" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
+                                                                        <button th:value="${num}" th:id="'deleteImage'+${num}" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
                                                                     </div>
                                                                 </th:block>
                                                         </div>
@@ -589,8 +589,13 @@
         vertical-align: middle !important;
     }
 </style>
-<script type="text/javascript">
+<script th:inline="javascript">
+
+    let IMAGES = [];
+    let SHOP_ID = [];
     $(document).ready(function() {
+        IMAGES = [[${payload.menuImages}]];
+        SHOP_ID = [[${payload.shopId}]];
 
         $('#shoptown input[type="checkbox"]').on('change', function() {
             $('#shoptown input[type="checkbox"]').not(this).prop('checked', false);
@@ -788,13 +793,33 @@
     });
 
     function jbSubmit(){
+        console.log("IMAGES")
+        console.log(IMAGES);
         var validated1 = $('#background_type_2').is(':checked');
         var validated2 = $('#background_type_4').is(':checked');
         if(validated1 == false && validated2 == false){
             alert("배경 체크해주세요")
             return false;
         }else{
-            return true;
+            var images = {
+                'existImages': IMAGES
+            }
+            $.ajax({
+                type:"POST",
+                url:"/admin/shop/image/update/" + SHOP_ID,
+                datatype: "json",
+                data: JSON.stringify(images),
+                contentType: "application/json; charset=UTF-8",
+                success: function(data) {
+                    console.log(data)
+                    return true
+                },
+
+                error: function(x, o, e) {
+                    var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                    alert(msg);
+                }
+            });
         }
     }
 
@@ -846,13 +871,17 @@
     }
     function deleteImageAction(index){
         var files= $('input[id*=input_imgs]')[index].files;
-        console.log("hi");
-        console.log(files);
+        // console.log("hi");
+        // console.log(files);
         sel_files.splice(index, 1);
         var img_id = "#thum"+index;
+        var img_src = $(img_id).attr('src');
+        // console.log(img_src)
+        // console.log(IMAGES.split(","))
+        IMAGES = IMAGES.split(",").filter((element) => element !== img_src)
         $(img_id).attr('src', '/images/default.png')
         // $(img_id).attr('src', '/images/default.png')
-        console.log(sel_files)
+        // console.log(sel_files)
     }
 
     $('button[id^=\'uploadImage\']').click(function (e) {
@@ -862,23 +891,12 @@
 
     });
 
+    $('button[id^=\'deleteImage\']').click(function (e) {
+        e.preventDefault();
+        var id = e.target.value;
+        deleteImageAction(id);
+    });
 
-
-    /*$("button[id^='uploadImage']").on("change", function(event) {
-        console.log(event.currentTarget)
-        var dictObject = {}
-        const value = event.currentTarget.value;
-        const name = event.currentTarget.innerText;
-        console.log(name)
-        if (tagList.indexOf(value) >= 0) {
-            $('#table-filter3 option:eq(0)').prop('selected', true);
-            return;
-        }
-        dictObject[value] = name;
-        tagList.push(dictObject);
-        renderTagList()
-        $('#table-filter3 option:eq(0)').prop('selected', true);
-    });*/
 </script>
 
 

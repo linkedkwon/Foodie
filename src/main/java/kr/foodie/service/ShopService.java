@@ -220,7 +220,6 @@ public class ShopService {
 
     public Shop addShopInfo(Shop shops) {
         return shopRepository.save(shops);
-//        return shops;
     }
 
     @Transactional
