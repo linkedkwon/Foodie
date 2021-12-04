@@ -881,7 +881,7 @@
             enctype: 'multipart/form-data',
             success: function(data) {
                 console.log(data)
-                return false
+                window.location.href = '/admin/shop/list/allgreen';
             },
 
             error: function(x, o, e) {

@@ -893,7 +893,7 @@
             enctype: 'multipart/form-data',
             success: function(data) {
                 console.log(data)
-                return false
+                window.location.href = '/admin/shop/list/allred';
             },
 
             error: function(x, o, e) {
