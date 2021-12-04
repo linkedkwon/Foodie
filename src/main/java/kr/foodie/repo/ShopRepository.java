@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ShopRepository extends JpaRepository<Shop, Integer> {
+    Shop findByShopId(Integer shopId);
 
     Page<Shop> findByShopIdOrderByUpdatedAt(Integer shopId, Pageable pageable);
     Page<Shop> findByArea1stAndArea2stAndArea3stAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st, String shopType, Pageable pageable);

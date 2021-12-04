@@ -16,9 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -397,6 +398,26 @@ public class AdminController {
 
         mav.addObject("shopTownList", shopTownList);
         mav.addObject("themeTags", themeTags);
+
+        List<Theme> existThemeInfos = new ArrayList<>();
+        List<Theme> extractThemeInfos = new ArrayList<>();
+        List<String> items = new ArrayList<>();
+
+        if(detailInfo.getThemeList() != null) {
+            items = Arrays.asList(detailInfo.getThemeList().split(","));
+        }
+
+        for(int i=0; i<themeTags.size(); i++){
+            if(items.contains(themeTags.get(i).getListName())){
+                existThemeInfos.add(themeTags.get(i));
+            }else{
+                extractThemeInfos.add(themeTags.get(i));
+            }
+        }
+
+        mav.addObject("existThemeInfos", existThemeInfos);
+        mav.addObject("extractThemeInfos", extractThemeInfos);
+
         if(detailInfo.getMenuImages().equals("")|| detailInfo.getMenuImages().equals("[]")){
             mav.addObject("imageSize", -1);
         }else{
@@ -551,19 +572,25 @@ public class AdminController {
             shop.setSubway3st(null);
         }
 
-        String viewName = shopService.updateShopInfo(shop, shopId, files);
+        String viewName = shopService.updateShopInfo(shop, shopId, files, "aa");
         return viewName;
     }
 
-    @ResponseBody
     @PostMapping("/shop/image/update/{shopId}")
-    public String updateImages(@PathVariable String shopId, @RequestBody ExistImages existImages) {
-
-        System.out.println(existImages);
-//        String viewName = shopService.updateShopInfo(shop, shopId, files);
-        String aa = "";
-
-        return "";
+//    public String updateImages(@ModelAttribute ShopDTO shop, @RequestParam("files") MultipartFile[] files, @PathVariable Integer shopId, @RequestBody ExistImages existImages) {
+        public String updateImages(@ModelAttribute ShopDTO shop, @RequestParam("files") MultipartFile[] files, @PathVariable Integer shopId, MultipartHttpServletRequest mtfRequest) {
+        if(isStringEmpty(shop.getSubway2st())){
+            shop.setSubway2st(null);
+        }
+        if(isStringEmpty(shop.getSubwayTypeId())){
+            shop.setSubwayTypeId(null);
+        }
+        if(isStringEmpty(shop.getSubway3st())){
+            shop.setSubway3st(null);
+        }
+        String existImages = ((StandardMultipartHttpServletRequest) mtfRequest).getRequest().getParameter("images");
+        String viewName = shopService.updateShopInfo(shop, shopId, files, existImages);
+        return viewName;
     }
 
 

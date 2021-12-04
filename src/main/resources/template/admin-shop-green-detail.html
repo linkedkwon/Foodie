@@ -51,13 +51,13 @@
             <div class="container-fluid" style="    width: 700px;">
 
                 <!-- DataTales Example -->
-                <form th:action="${'/admin/shop/update/'+ payload.shopId}" method="post" enctype="multipart/form-data" onsubmit="return jbSubmit();">
+                <form id="uploadVehical">
 <!--                    <input type="hidden" th:field="${shop.shopType}" th:value="1" />-->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary" th:text="${payload.shopName}" style="    width: 30%;float: left;"></h6>
 <!--                            <a>-->
-                            <button class="btn btn-info btn-sm" style="float: right;width: 100px;margin-left: 14px;margin-top: -2px;height: 37px;" type="submit">수정하기</button>
+                            <button class="btn btn-info btn-sm" style="float: right;width: 100px;margin-left: 14px;margin-top: -2px;height: 37px;" id="submit" type="submit">수정하기</button>
                             <button class="btn btn-info btn-sm" onclick="return false;" value="상점조회" id="search_duplicated_list_detail" style=" float: right;   width: 100px;margin-left: 14px;margin-top: -2px;height: 37px;">중복확인</button>
 <!--                            </a>-->
                         </div>
@@ -168,7 +168,6 @@
                                                                 ></option>
                                                             </select>
                                                         </div>
-                                                        <div class="flex tag-list"></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -323,6 +322,11 @@
                                                             </select>
                                                             <input class="form-control" id="exit" type="text" name="exit"  th:field="${shop.exitNum}" style="    width: 45px;font-size: 9pt !important;">
                                                         </div>
+                                                        <div class="form-group">
+
+                                                            <div class="flex tag-list"></div>
+                                                        </div>
+
                                                     </div>
 
                                                 </div>
@@ -374,14 +378,21 @@
                                                     <div class="form-group">
                                                         <!--                                                       <div class="form-group">-->
                                                         <label for="restaurants-closed">테마별</label>
-                                                        <div class="flex" style="display: block;">
-                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;"  th:field="*{shop.themeList}" th:each="theme, stat : *{themeTags}" multiple="multiple">
-<!--                                                                <div th:text="${shop.themeList[__${stat.index}__]}"></div>-->
-                                                                <div th:text="${shop.themeList}"></div>
-<!--                                                                <input class="custom-control-input" th:if="${shop.themeList != null}" th:field="${shop.themeList}" th:checked="${#arrays.contains(#strings.arraySplit(shop.themeList,','), theme.listName)} == true" th:id="${theme.listName}" type="checkbox" name="theme">-->
-                                                                <input class="custom-control-input" th:if="${shop.themeList != null}" th:field="*{shop.themeList}" th:checked="${#arrays.contains(#strings.arraySplit(shop.themeList,','), theme.listName)} == true" th:id="${theme.listName}" th:value="${theme.listName}" type="checkbox">
+                                                        <div class="flex" style="display: block;" id="themeInfo">
+<!--                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;"  th:each="theme1 : ${existThemeInfos}" multiple="multiple">-->
+<!--                                                                <input class="custom-control-input" th:id="${theme1.listName}" th:value="${theme1.id}" type="checkbox" th:checked="${1 == 1}">-->
+<!--                                                                <label class="custom-control-label" th:for="${theme1.listName}" th:text="${theme1.listName}" > </label>-->
+<!--                                                            </div>-->
+                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;"  th:each="theme1 : ${existThemeInfos}" multiple="multiple">
+                                                                <input class="custom-control-input" th:id="${theme1.listName}" th:value="${theme1.listName}" type="checkbox" checked>
+                                                                <label class="custom-control-label" th:for="${theme1.listName}" th:text="${theme1.listName}" > </label>
+                                                            </div>
+
+                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;"  th:each="theme : ${extractThemeInfos}" multiple="multiple">
+                                                                <input class="custom-control-input" th:id="${theme.listName}" th:value="${theme.listName}" type="checkbox">
                                                                 <label class="custom-control-label" th:for="${theme.listName}" th:text="${theme.listName}" > </label>
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -391,13 +402,6 @@
                                                     <label for="restaurants-location-detial">가게 이미지 추가</label>
                                                     <div>
                                                         <div class="imgs_wrap">
-                                                                <!--<div style="display: inline-block; width: 155px;text-align: center" th:if="${payload.menuImages}" th:each="item : ${payload.menuImages.split(',')}">
-                                                                    <img onerror="this.src='/images/default.png'" style="width: 150px;height: 120px; padding-top: 5px;  float: left;" th:src='${item}'>
-                                                                    <input th:value="${item}" name="files"  th:data="${item}" type="file" th:id="'input_imgs'+${item}" onchange="handleImgFileSelect(this)">
-                                                                    <br>
-                                                                    <button onclick="prompt('해당 이미지를 지우시겠습니까?')" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
-                                                                </div>-->
-
                                                                 <th:block>
                                                                     <div style="display: inline-block; width: 155px;text-align: center"  th:each="num : ${#numbers.sequence(0,imageSize)}">
                                                                         <div th:if="${imageSize == 0}">
@@ -554,7 +558,7 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script th:src="@{/js/manage-restaurants.js}"></script>
+    <script th:src="@{/js/admin-create-manage-restaurants.js}"></script>
     <script th:src="@{/js/admin-recommand.js}"></script>
 <!--    <script th:src="@{/js/demo/datatables-demo.js}"></script>-->
     <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
@@ -592,10 +596,16 @@
 <script th:inline="javascript">
 
     let IMAGES = [];
+    let SHOP = [];
     let SHOP_ID = [];
+    let sel_files =[];
+    var tagList = [];
     $(document).ready(function() {
         IMAGES = [[${payload.menuImages}]];
         SHOP_ID = [[${payload.shopId}]];
+        SHOP = [[${shop}]];
+        console.log("SHOP")
+        console.log(SHOP)
 
         $('#shoptown input[type="checkbox"]').on('change', function() {
             $('#shoptown input[type="checkbox"]').not(this).prop('checked', false);
@@ -620,6 +630,11 @@
         $(document).on("mouseout",".thumbnail",function(){ //마우스 아웃시
             $("#preview").remove();
         });
+
+        // $("#themeInfo input[type='checkbox']").change(function(e) {
+        //     console.log(e.target.checked)
+
+        // })
 
         $('#table-filter1').change( function(){
             get_category_info( this , "table-filter1"); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
@@ -690,7 +705,6 @@
             });
 
         }
-
         function get_region_info(o, type){
             var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
             $.ajax({
@@ -792,57 +806,107 @@
 
     });
 
-    function jbSubmit(){
-        console.log("IMAGES")
-        console.log(IMAGES);
+
+    $("#uploadVehical").submit(function(event) {
+
+        /* stop form from submitting normally */
+        event.preventDefault();
+        var checked = [];
+        $('#themeInfo input[type=checkbox]').each(function () {
+            if(this.checked) {
+                checked.push($(this).val());
+            }
+        });
+        console.log(checked.toString())
+
+
         var validated1 = $('#background_type_2').is(':checked');
         var validated2 = $('#background_type_4').is(':checked');
         if(validated1 == false && validated2 == false){
             alert("배경 체크해주세요")
             return false;
-        }else{
-            var images = {
-                'existImages': IMAGES
-            }
-            $.ajax({
-                type:"POST",
-                url:"/admin/shop/image/update/" + SHOP_ID,
-                datatype: "json",
-                data: JSON.stringify(images),
-                contentType: "application/json; charset=UTF-8",
-                success: function(data) {
-                    console.log(data)
-                    return true
-                },
-
-                error: function(x, o, e) {
-                    var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
-                    alert(msg);
-                }
-            });
         }
-    }
+        console.log(IMAGES)
+        SHOP.shopName=$('input[name=shopName]').val();
+        SHOP.phone=$('input[name=phone]').val();
+        SHOP.shopPhone=$('input[name=shopPhone]').val();
+        SHOP.foodieLogRating=$('#select-tags1').val();
+        SHOP.shopPaid=$('input[name=shopPaid]').val();
+        SHOP.operationTime=$('input[name=operationTime]').val();
+        SHOP.holiday=$('input[name=holiday]').val();
+        SHOP.bigCategory =$('#table-filter1').val();
+        SHOP.middleCategory =$('#table-filter2').val();
+        SHOP.smallCategory =$('#table-filter3').val();
+        SHOP.homepage=$('input[name=homepage]').val();
+        SHOP.recommandMenu=$('input[name=recommandMenu]').val();
+        SHOP.budget=$('input[name=budget]').val();
+        SHOP.blogShopId=$('input[name=blogShopId]').val();
+        SHOP.instaKeyword=$('input[name=instaKeyword]').val();
+        SHOP.isReservation=$('input[name=isReservation]').val();
+        SHOP.isParking=$('input[name=isParking]').val();
+        SHOP.isDelivery=$('input[name=isDelivery]').val();
+        SHOP.shopType=$('input[name=shopType]').val();
+        SHOP.area1st=$('#table-filter4').val();
+        SHOP.area2st=$('#table-filter5').val();
+        SHOP.area3st=$('#table-filter6').val();
+        SHOP.subwayTypeId=$('#table-filter7').val();
+        SHOP.subway2st=$('#table-filter9').val();
+        SHOP.subway3st=$('#table-filter9').val();
+        SHOP.exitNum=$('input[name=exitNum]').val();
+        SHOP.address=$('input[name=address]').val();
+        SHOP.roadAddress=$('input[name=roadAddress]').val();
+        SHOP.detailAddress=$('input[name=detailAddress]').val();
+        SHOP.tag=$('input[name=tag]').val();
+        SHOP.shoptown=$('input[name=shoptown]').val();
+        SHOP.history=$('textarea[name=history]').val();
+        SHOP.menu=$('textarea[name=menu]').val();
+        SHOP.menuImages=IMAGES.toString();
+        SHOP.themeList = checked.toString();
+
+        console.log(SHOP)
+        var form = $('#uploadVehical')[0];
+        var itemData=new FormData(form);
+        itemData.append("shop", SHOP);
+        itemData.append("files", sel_files);
+        itemData.append("images", IMAGES);
+        itemData.append("themeList", SHOP.themeList);
+
+        $.ajax({
+            type:"POST",
+            url:"/admin/shop/image/update/" + SHOP_ID,
+            cache: false,
+            data: itemData,
+            processData: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            success: function(data) {
+                console.log(data)
+                return false
+            },
+
+            error: function(x, o, e) {
+                var msg = "페이지 호출 중 에러 발생 \n" + x.status + " : " + o + " : " + e;
+                alert(msg);
+                return false;
+            }
+        });
+
+
+    });
 
 
 
 
-    var sel_files =[];
+
+
     function fileUploadAction(){
         console.log("upload")
         $("#input_imgs").trigger('click')
     }
 
     function handleImgFileSelect(e){
-        // sel_files = [];
-        // var target_select = ;
-        // var target = target_select;
         var target_index = $('#'+e.id).attr('value');
-        // console.log(target);
-        // console.log(e)
-        // console.log(target.data);
         var files= $('#'+e.id)[0].files;
-        console.log("files")
-        console.log(e.id)
         var filesArr = Array.prototype.slice.call(files);
         var index = 0;
         filesArr.forEach(function(f) {
@@ -851,7 +915,6 @@
                 return
             }
             sel_files.push(f);
-            // console.log();
             var reader = new FileReader();
             reader.onload = function(e){
                 // var img = new Image();
@@ -869,19 +932,66 @@
             reader.readAsDataURL(f);
         })
     }
+    // function deleteTage(value) {
+    //     console.log(value)
+    //     var index = tagList.indexOf(value);
+    //
+    //     if (index < 0) {
+    //         return;
+    //     }
+    //
+    //     tagList.splice(index, 1);
+    //     renderTagList();
+    // };
+
+
+    var renderTagList = function() {
+        var i = 0;
+        var tagsHtml = '';
+
+        for(; i < tagList.length; i++) {
+            tagsHtml += "<div class=\"tag-item btn-secondary btn\">" + tagList[i] + "<a class=\"delete-tag-item\" onClick=\"deleteTag('" + tagList[i] + "\')\">×</a></div>"
+        }
+
+        $(".tag-list").html(tagsHtml);
+    };
+
+
+    $("#table-filter9").on("change", function(event) {
+        // console.log()
+        // const value = event.currentTarget.value;
+        const value = $('#table-filter9 option:checked').text() + '역'
+        if (tagList.indexOf(value) >= 0) {
+            $('#table-filter9 option:eq(0)').prop('selected', true);
+            return;
+        }
+
+        tagList.push(value);
+        renderTagList()
+        $('#table-filter9 option:eq(0)').prop('selected', true);
+    });
+    function deleteTag(value) {
+        console.log(value)
+        var index = tagList.indexOf(value);
+
+        if (index < 0) {
+            return;
+        }
+
+        tagList.splice(index, 1);
+        renderTagList();
+    };
+
     function deleteImageAction(index){
-        var files= $('input[id*=input_imgs]')[index].files;
-        // console.log("hi");
-        // console.log(files);
         sel_files.splice(index, 1);
         var img_id = "#thum"+index;
         var img_src = $(img_id).attr('src');
-        // console.log(img_src)
-        // console.log(IMAGES.split(","))
-        IMAGES = IMAGES.split(",").filter((element) => element !== img_src)
+        console.log("BEFORE IMAGES")
+        console.log(IMAGES)
+        IMAGES = IMAGES.split(",").filter((element) => element !== img_src);
         $(img_id).attr('src', '/images/default.png')
-        // $(img_id).attr('src', '/images/default.png')
-        // console.log(sel_files)
+        console.log("AFTER IMAGES")
+        console.log(IMAGES)
     }
 
     $('button[id^=\'uploadImage\']').click(function (e) {

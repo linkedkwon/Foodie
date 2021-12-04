@@ -14,6 +14,5 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Getter
 @Setter
 public class ExistImages {
-
     private String existImages;
 }

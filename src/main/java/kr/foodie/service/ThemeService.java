@@ -24,6 +24,7 @@ public class ThemeService {
     public List<Theme> getThemeTags(String type) {
         return themeRepository.findAllTheme(type);
     }
+
     @Transactional
     public void update(List<RegionCreateDTO> list) {
         themeRepository.saveAll(list.stream()

@@ -364,18 +364,20 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row" style="padding-top: 20px;">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <!--                                                        <div class="form-group">-->
-                                                        <label for="restaurants-closed">테마별</label>
+                                                        <label for="restaurants-closed" style="float: left">테마별</label>
+                                                        <br>
                                                         <!--                                                        <p th:text="${payload[0].themeList}"></p>-->
-                                                        <div class="custom-control custom-radio" style="float: left;padding-right:15px;"  th:field="*{shop.themeList}" th:each="theme, stat : *{themeTags}" multiple="multiple">
-                                                            <!--                                                                <div th:text="${shop.themeList[__${stat.index}__]}"></div>-->
-                                                            <div th:text="${shop.themeList}"></div>
-                                                            <!--                                                                <input class="custom-control-input" th:if="${shop.themeList != null}" th:field="${shop.themeList}" th:checked="${#arrays.contains(#strings.arraySplit(shop.themeList,','), theme.listName)} == true" th:id="${theme.listName}" type="checkbox" name="theme">-->
-                                                            <input class="custom-control-input" th:if="${shop.themeList != null}" th:field="*{shop.themeList}" th:checked="${#arrays.contains(#strings.arraySplit(shop.themeList,','), theme.listName)} == true" th:id="${theme.listName}" th:value="${theme.listName}" type="checkbox">
-                                                            <label class="custom-control-label" th:for="${theme.listName}" th:text="${theme.listName}" > </label>
+                                                        <div style="margin-left: -33px;float: left">
+                                                            <div class="custom-control custom-radio" style="float: left;padding-right:15px;"   th:each="theme : ${themeTags}" multiple="multiple">
+                                                                <!--                                                                <div th:text="${shop.themeList[__${stat.index}__]}"></div>-->
+    <!--                                                            <div th:text="${shop.themeList}"></div>-->
+                                                                <input class="custom-control-input" th:field="${shop.themeList}" th:id="${theme.listName}" th:value="${theme.listName}" type="checkbox">
+                                                                <label class="custom-control-label" th:for="${theme.listName}" th:text="${theme.listName}" > </label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

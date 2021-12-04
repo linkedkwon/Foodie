@@ -129,11 +129,13 @@ public class ShopController {
 
             Integer background = commentList.getShopType();
             if (background == 1 ) {
-                mav.setViewName("detail-green");
-            } else if (background == 2 ) {
                 mav.setViewName("detail-red");
-            } else {
+            } else if (background == 2 ) {
+                mav.setViewName("detail-green");
+            } else if (background == 3 ) {
                 mav.setViewName("detail-mustard");
+            }else {
+                mav.setViewName("detail-mint");
             }
             mav.addObject("hashTags", hashTags);
             return mav;

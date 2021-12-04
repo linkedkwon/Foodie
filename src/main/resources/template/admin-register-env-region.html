@@ -119,9 +119,9 @@
                             <div id="categoryHead2">
                                 <span>군/구</span>
                             </div>
+                            <input type="hidden" id="mcode-parent-no">
                             <table class="table-bordered display" id="example2" style="width: 220px;" cellspacing="0">
                                 <tbody id="mcode">
-                                <input type="hidden" id="mcode-parent-no">
 
                                 </tbody>
                             </table>
@@ -162,9 +162,9 @@
                                 <span>동</span>
                             </div>
 
+                            <input type="hidden" id="scode-parent-no">
                             <table class="table-bordered display" id="example3" style="width: 220px;" cellspacing="0">
                                 <tbody id="scode">
-                                <input type="hidden" id="scode-parent-no">
                                 </tbody>
                             </table>
                             <div style="    background: aliceblue;" class="stickyId" id="scodeFunction">
@@ -932,8 +932,8 @@
             success: function (data) {
                 var data = data.data;
                 if (data.length > 0) {
-                    $("#mcode").find("td").remove();
-                    $("#scode").find("td").remove();
+                    $("#mcode").find("tr").remove();
+                    $("#scode").find("tr").remove();
                     MREGION = data
                     $.each(data, function (key, value) {
                         $("#mcode").append("<tr>" +
@@ -974,7 +974,7 @@
                 var data = data.data;
                 SREGION = data;
                 if (data.length > 0) {
-                    $("#scode").find("td").remove();
+                    $("#scode").find("tr").remove();
                     $.each(data, function (key, value) {
                         $("#scode").append("<tr>" +
                             " <td>\n" +

@@ -1,6 +1,7 @@
 package kr.foodie.service;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import kr.foodie.domain.shopItem.AdminListShop;
 import kr.foodie.domain.shopItem.Shop;
 import kr.foodie.domain.shopItem.ShopDTO;
@@ -223,7 +224,7 @@ public class ShopService {
     }
 
     @Transactional
-    public String updateShopInfo(ShopDTO shopDto, Integer shopId, MultipartFile[] files) {
+    public String updateShopInfo(ShopDTO shopDto, Integer shopId, MultipartFile[] files, String existImages) {
         Shop shop = shopRepository.findById(shopId).orElseThrow();
         Shop updated = shop.toEntity(shopDto, shopId);
         String viewName = null;
@@ -248,6 +249,7 @@ public class ShopService {
         String nowHHmmss = nowDateHHmmss.format(from);
         String nowymd = nowDateymd.format(from);
         ArrayList<String> images = new ArrayList<>();
+        String[] items=null;
         if (files.length > 0) {
             try {
                 con = new FTPClient();
@@ -263,8 +265,17 @@ public class ShopService {
                             images.add("http://foodie.speedgabia.com/" + files[i].getOriginalFilename());
                         }
                     }
-
+//                    Gson gson = new Gson();
+//                    JsonObject convertedObject = new Gson().fromJson(existImages, JsonObject.class);
+//                    Map<String, Object> map = gson.fromJson(existImages, Map.class);
+                    if(existImages != null){
+                        items = existImages.replace("[", "").replace("]", "").replaceAll("\"", "").split(",");
+                        for(int i=0; i < items.length; i++){
+                            images.add(items[i]);
+                        }
+                    }
                     String result = new Gson().toJson(images);
+
                     updated.setMenuImages(result);
                     con.logout();
                     con.disconnect();
@@ -304,5 +315,13 @@ public class ShopService {
         javax.persistence.Query query = em.createQuery(jpql, AdminListShop.class);
 
         return query.getResultList();
+    }
+
+    public void updateExistImage(Integer shopId, String existImages){
+        Shop entity = shopRepository.findByShopId(shopId);
+        List<String> list = new ArrayList<>();
+        list.add(existImages);
+        entity.setMenuImages(list.toString());
+        shopRepository.save(entity);
     }
 }
