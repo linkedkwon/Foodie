@@ -6,23 +6,25 @@
         var tagsHtml = '';
 
         for(; i < tagList.length; i++) {
-            tagsHtml += "<div class=\"tag-item btn-secondary btn\">" + tagList[i] + "<a class=\"delete-tag-item\" onClick=\"deleteTag('" + tagList[i] + "\')\">×</a></div>"
+            tagsHtml += "<div class=\"tag-item btn-secondary btn\" style=\"font-size: 8px;\">" + tagList[i] + "<a class=\"delete-tag-item\" onClick=\"deleteTag('" + tagList[i] + "\')\">×</a></div>"
         }
 
         $(".tag-list").html(tagsHtml);
     };
 
 
-    $("#table-filter9").on("change", function(event) {
+    $("#table-filter20").on("change", function(event) {
         // console.log()
         // const value = event.currentTarget.value;
-        const value = $('#table-filter9 option:checked').text() + '역'
+        const value = $('#table-filter8 option:checked').text()
+        const value1 = $('#table-filter9 option:checked').text() + '역'
         if (tagList.indexOf(value) >= 0) {
             $('#table-filter9 option:eq(0)').prop('selected', true);
-            return;
+            // return;
         }
 
-        tagList.push(value);
+        event.target.content = value1;
+        tagList.push(value + ' ' + value1);
         renderTagList()
         $('#table-filter9 option:eq(0)').prop('selected', true);
     });

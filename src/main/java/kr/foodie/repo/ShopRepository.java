@@ -54,6 +54,7 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
 //    @Query(value="select s.*, r.* from rankup_shop_introduce_data s left join epicure_region r on s.area_1st = r.no where s.no in (select shop_id from main_board where type = ?1)", nativeQuery = true)
     List<Shop> findShopInfoByType(Integer type);
 
+
     @Query(value="select * from shop where address like %?1% and shop_id not in (select shop_id from main_board where type=?2)", nativeQuery = true)
     List<Shop> getShopInfoByAddressName(String address, Integer type);
 

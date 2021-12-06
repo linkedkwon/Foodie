@@ -324,7 +324,7 @@
                                                         </div>
                                                         <div class="form-group">
 
-                                                            <div class="flex tag-list"></div>
+                                                            <div class="tag-list"></div>
                                                         </div>
 
                                                     </div>
@@ -932,17 +932,17 @@
             reader.readAsDataURL(f);
         })
     }
-    // function deleteTage(value) {
-    //     console.log(value)
-    //     var index = tagList.indexOf(value);
-    //
-    //     if (index < 0) {
-    //         return;
-    //     }
-    //
-    //     tagList.splice(index, 1);
-    //     renderTagList();
-    // };
+    function deleteTage(value) {
+        console.log(value)
+        var index = tagList.indexOf(value);
+
+        if (index < 0) {
+            return;
+        }
+
+        tagList.splice(index, 1);
+        renderTagList();
+    };
 
 
     var renderTagList = function() {
@@ -957,19 +957,7 @@
     };
 
 
-    $("#table-filter9").on("change", function(event) {
-        // console.log()
-        // const value = event.currentTarget.value;
-        const value = $('#table-filter9 option:checked').text() + '역'
-        if (tagList.indexOf(value) >= 0) {
-            $('#table-filter9 option:eq(0)').prop('selected', true);
-            return;
-        }
 
-        tagList.push(value);
-        renderTagList()
-        $('#table-filter9 option:eq(0)').prop('selected', true);
-    });
     function deleteTag(value) {
         console.log(value)
         var index = tagList.indexOf(value);

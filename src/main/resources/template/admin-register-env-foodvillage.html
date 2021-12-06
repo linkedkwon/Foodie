@@ -76,6 +76,7 @@
                                     <td>
                                         <input type="checkbox" class="chkRadio" id="category_1" th:value="${val.id}"
                                                th:name="${val.listName}" th:text="${' ' + val.listName}"/>
+                                        <label th:for="${val.listName}" >
                                     </td>
                                 </tr>
                                 </tbody>
@@ -400,7 +401,7 @@
     $(document).ready(function () {
         REGION = [[${regionInfos}]];
         $("#example1").on('click', 'tr', function(e){
-            if( $(e.target).is('input:checkbox') ) return;
+            // if( $(e.target).is('input:checkbox') ) return;
             var checkboxes = $('#example1 tr td input[type=checkbox]');
             for(var i=0; i<checkboxes.length; i++){
                 if(checkboxes[i] != checkboxes){
@@ -409,6 +410,10 @@
             }
             var chkbox = $(this).find('td:first-child :checkbox');
             console.log(chkbox)
+            // if($(this).prop('checked')) {
+            //     $('#example1 tr td input[type=checkbox]').prop('checked', false);
+            //     $(this).prop('checked', true);
+            // }
             $(this).addClass('highlight').siblings().removeClass('highlight');
             chkbox.prop('checked', !chkbox.prop('checked'));
         });

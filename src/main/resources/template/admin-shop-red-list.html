@@ -476,7 +476,7 @@
                         '</td>' +
                         '<td>' + shopPaid + '</td>' +
                         '<td><a href="/admin/shop/red/' + shop[i].shopId + '">수정</a></td>' +
-                        '<td><a href="">삭제</a></td>' +
+                        '<td><a onclick="return confirmUser();" href="/admin/shop/delete/red/' + shop[i].shopId + '">삭제</a></td>' +
                         '</tr>';
                 });
                 $("#list-table").append(tr);
@@ -541,6 +541,10 @@
     function filterSearch(){
         //조회 시 기본 정렬 > 등록순
         clickButton(1);
+    }
+
+    function confirmUser(){
+        return confirm("삭제하시겠습니까?");
     }
 
     function clickButton(e){
@@ -608,7 +612,7 @@
                     tr +=
                         '<tr>' +
                         '<td>' +
-                        '<img src="' + imgUrl + '" class="thumbnail" style="width: 80px; height:60px;"/>' +
+                        '<img src="' + imgUrl + '" onerror="this.src=\'/images/default.png\'"class="thumbnail" style="width: 80px; height:60px;"/>' +
                         '</td>' +
                         '<td style="text-align: left;">' +
                         '<div>' +
@@ -624,8 +628,8 @@
                         '</div>' +
                         '</td>' +
                         '<td>' + shop[i].shopPaid + '</td>' +
-                        '<td><a href="">수정</a></td>' +
-                        '<td><a href="">삭제</a></td>' +
+                        '<td><a href="/admin/shop/red/' + shop[i].shopId + '">수정</a></td>' +
+                        '<td><a onclick="return confirmUser();" href="/admin/shop/delete/red/' + shop[i].shopId + '">삭제</a></td>' +
                         '</tr>';
                 });
                 $("#list-table").append(tr);

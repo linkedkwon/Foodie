@@ -324,4 +324,9 @@ public class ShopService {
         entity.setMenuImages(list.toString());
         shopRepository.save(entity);
     }
+
+    public void deleteShop(Integer shopId){
+        Shop entity = shopRepository.findByShopId(shopId);
+        shopRepository.delete(entity);
+    }
 }

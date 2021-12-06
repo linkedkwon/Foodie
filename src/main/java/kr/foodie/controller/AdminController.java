@@ -288,6 +288,11 @@ public class AdminController {
 
 
         Shop detailInfo = shopService.getShopDetail(shopId);
+//        String[] subway2thArray = detailInfo.getSubway2st().split(",");
+//        List<String> list = new ArrayList<String>(Arrays.asList(subway2thArray));
+//        String subway2th = list.get(0);
+//        String otherSubway2th = list.remove(0);
+//        detailInfo.set=
         String categoryShopType = null;
         if (shopType.equals("red")) {
             mav.setViewName("admin-shop-red-detail");
@@ -575,6 +580,19 @@ public class AdminController {
         String viewName = shopService.updateShopInfo(shop, shopId, files, "aa");
         return viewName;
     }
+
+    @RequestMapping(value = {"/shop/delete/{shopType}/{shopId}"}, method = RequestMethod.GET)
+    public String deleteShop(Model model, @PathVariable Integer shopId, @PathVariable String shopType) {
+        String viewName;
+        shopService.deleteShop(shopId);
+        if (shopType.equals("red")) {
+            viewName = "redirect:/admin/shop/list/red";
+        } else {
+            viewName = "redirect:/admin/shop/list/green";
+        }
+        return viewName;
+    }
+
 
     @PostMapping("/shop/image/update/{shopId}")
 //    public String updateImages(@ModelAttribute ShopDTO shop, @RequestParam("files") MultipartFile[] files, @PathVariable Integer shopId, @RequestBody ExistImages existImages) {
