@@ -52,20 +52,32 @@ public class AdminShopListService {
                     jpql += " and s.shopName like '%" + keyword + "%'";
                 else if (selectedOption.equals("등록자"))
                     jpql += " and s.shopCharge like '%" + keyword + "%'";
-                else if (selectedOption.equals("아이디"))
-                    jpql += " and s.uid like '%" + keyword + "%'";
+                //else if (selectedOption.equals("아이디"))
+                //    jpql += " and s.uid like '%" + keyword + "%'";
                 else if (selectedOption.equals("전화번호"))
                     jpql += " and s.phone like '%" + keyword + "%'";
             }
+
+            //등록서비스
+            String registerService = vo.getRegisterService();
+            if(!registerService.equals("-1")){
+                jpql += " and s.shopPaid like '%" + "y" + "%'";
+            }
+
+            //ordering
+            if(vo.getOrder().equals("등록일순")){
+                jpql += " order by s.createdAt desc";
+            }
+            else if(vo.getOrder().equals("수정일순")){
+                jpql += " order by s.updatedAt desc";
+            }
+            else if(vo.getOrder().equals("조회순")){
+                jpql += " order by s.hit desc";
+            }
+            else{
+                jpql += " order by s.foodieLogRating desc";
+            }
         }
-
-        //3. ordering
-        String ordering = vo.getOrder();
-        if(ordering.equals("수정일순")) { jpql += " order by s.updatedAt desc"; }
-        else if(ordering.equals("조회순")) { jpql += " order by s.hit desc"; }
-        else if(ordering.equals("평점순")){ jpql += " order by s.evaluation desc"; }
-        else{ jpql += " order by s.createdAt desc"; }
-
 
         //4. query execute
         TypedQuery<Shop> query = em.createQuery(jpql, Shop.class)
@@ -98,15 +110,20 @@ public class AdminShopListService {
 
             String selectedOption = vo.getSelectedOption();
             String keyword = vo.getKeyword();
-            if(keyword.length() > 0) {
+            if(!selectedOption.equals("-1")) {
                 if (selectedOption.equals("업소명"))
                     jpql += " and s.shopName like '%" + keyword + "%'";
                 else if (selectedOption.equals("등록자"))
                     jpql += " and s.shopCharge like '%" + keyword + "%'";
-                else if (selectedOption.equals("아이디"))
-                    jpql += " and s.uid like '%" + keyword + "%'";
+                    //else if (selectedOption.equals("아이디"))
+                    //    jpql += " and s.uid like '%" + keyword + "%'";
                 else if (selectedOption.equals("전화번호"))
                     jpql += " and s.phone like '%" + keyword + "%'";
+            }
+
+            String registerService = vo.getRegisterService();
+            if(!registerService.equals("-1")){
+                jpql += " and s.shopPaid like '%" + "y" + "%'";
             }
         }
 

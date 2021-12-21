@@ -20,6 +20,9 @@ public class AdminShopListVO {
     private int area2nd;
     private int area3th;
 
+    //등록서비스
+    private String registerService;
+
     //검색어
     private String selectedOption;
     private String keyword;

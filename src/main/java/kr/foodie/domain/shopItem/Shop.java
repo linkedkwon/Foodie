@@ -190,6 +190,10 @@ public class Shop {
     @Column(name = "TAG")
     private String tag;
 
+    //추가됨
+    @Column(name = "HIT")
+    private Integer hit;
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
