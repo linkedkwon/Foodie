@@ -31,12 +31,12 @@ public class RouteController {
 
     @GetMapping("/detail/mustard")
     public String renderDetailMustard(){
-        return "detail-mustard";
+        return "detail-mustard_bak";
     }
 
     @GetMapping("/detail/red")
     public String renderDetailRed(){
-        return "detail-red";
+        return "detail-red_bak";
     }
 
     @GetMapping("/admin/index")

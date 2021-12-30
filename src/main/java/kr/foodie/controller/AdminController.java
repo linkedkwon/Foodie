@@ -254,6 +254,7 @@ public class AdminController {
         }
 
 
+
         mav.addObject("payload", shopList);
         mav.addObject("categoryInfos", categoryInfos);
         mav.addObject("regionInfos", regionsInfos);
@@ -314,7 +315,7 @@ public class AdminController {
         if(isStringEmpty(detailInfo.getMiddleCategory())){
             secondFoodInfos = null;
         }else{
-            secondFoodInfos = regionAdminService.getRegionSecondInfoByRegionId(Integer.parseInt(detailInfo.getMiddleCategory()), categoryShopType);
+            secondFoodInfos = regionAdminService.getEpicureDistrict(Integer.parseInt(detailInfo.getBigCategory()), categoryShopType);
         }
 
         if(isStringEmpty(detailInfo.getSmallCategory())){
@@ -375,12 +376,10 @@ public class AdminController {
         });
         int size = reviewService.getItemSizeByShopId(shopId);
         String url = "/shop/" + shopId + "/";
-        mav.addObject("shop", detailInfo);
+
         mav.addObject("reviews", reviewService.getItemsByShopId(shopId, idx));
         mav.addObject("paginations", paginationService.getPagination(size, idx, reviewInterval, url));
         mav.addObject("btnUrls", paginationService.getPaginationBtn(size, idx, reviewInterval, url));
-
-        mav.addObject("payload", detailInfo);
         mav.addObject("categoryList", categoryList);
         mav.addObject("categoryInfos", categoryInfos);
         mav.addObject("hashTags", hashTags);
@@ -403,7 +402,6 @@ public class AdminController {
 
         mav.addObject("shopTownList", shopTownList);
         mav.addObject("themeTags", themeTags);
-
         List<Theme> existThemeInfos = new ArrayList<>();
         List<Theme> extractThemeInfos = new ArrayList<>();
         List<String> items = new ArrayList<>();
@@ -432,7 +430,10 @@ public class AdminController {
             }else{
                 mav.addObject("imageSize", imageSize-1);
             }
+            detailInfo.setShopImage(detailInfo.getMenuImages().split(",")[0]);
         }
+        mav.addObject("shop", detailInfo);
+        mav.addObject("payload", detailInfo);
 
         return mav;
     }
@@ -466,13 +467,22 @@ public class AdminController {
     @ResponseBody
     @RequestMapping(value = {"/duplicated/{shopType}/{shopName}"}, method = RequestMethod.GET)
     public List<Shop> getDuplicatedInfos(Model model, @PathVariable String shopType, @PathVariable String shopName) {
+        List<Integer> targetList = null;
         if (shopType.equals("red")) {
-            shopType = "0";
+            targetList = Arrays.asList(1,3);
         } else {
-            shopType = "1";
+            targetList = Arrays.asList(2,4);
         }
+
         List<Shop> duplicatedInfos;
-        duplicatedInfos = shopService.getDuplicatedInfos(shopType, shopName.strip());
+        duplicatedInfos = shopService.getDuplicatedInfos(targetList, shopName.strip());
+
+        for(int i=0; i<duplicatedInfos.size(); i++) {
+            int imageSize = duplicatedInfos.get(i).getMenuImages().split(",").length;
+            if (imageSize > 0) {
+                duplicatedInfos.get(i).setShopImage(duplicatedInfos.get(i).getMenuImages().replace("[", "").replace("]", "").replaceAll("\"", "").split(",")[0]);
+            }
+        }
         return duplicatedInfos;
     }
 
@@ -557,6 +567,16 @@ public class AdminController {
                 }
             }
         } catch (Exception ex) {
+        }
+
+        if(shop.getArea1st() == null){
+            shop.setArea1st(null);
+        }
+        if(isStringEmpty(shop.getBigCategory())){
+            shop.setBigCategory(null);
+        }
+        if(isStringEmpty(shop.getSubwayTypeId())){
+            shop.setSubwayTypeId(null);
         }
         shopService.addShopInfo(shop);
 

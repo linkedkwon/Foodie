@@ -46,47 +46,31 @@
             </ul>
             <div id="regionContent1" class="gnb-contents">
                 <ul class="top-menu">
-                    <li onclick="changeRegionCategory1('서울','regionDetailContent1', '1'); return false;"><a href="#">서울</a></li>
-                    <li onclick="changeRegionCategory1('경기','regionDetailContent1', '1'); return false;"><a href="#">경기</a></li>
-                    <li onclick="changeRegionCategory1('인천' ,'regionDetailContent1', '1'); return false;" ><a href="#">인천</a></li>
-                    <li onclick="changeRegionCategory1('대전' ,'regionDetailContent1', '1'); return false;"><a href="#">대전</a></li>
-                    <li onclick="changeRegionCategory1('광주' ,'regionDetailContent1', '1'); return false;"><a href="#">광주</a></li>
-                    <li onclick="changeRegionCategory1('대구' ,'regionDetailContent1', '1'); return false;"><a href="#">대구</a></li>
-                    <li onclick="changeRegionCategory1('울산' , 'regionDetailContent1', '1'); return false;"><a href="#">울산</a></li>
-                    <li onclick="changeRegionCategory1('부산' , 'regionDetailContent1', '1'); return false;"><a href="#">부산</a></li>
-                    <li onclick="changeRegionCategory1('강원' , 'regionDetailContent1', '1'); return false;"><a href="#">강원</a></li>
-                    <li onclick="changeRegionCategory1('충청북도' , 'regionDetailContent1', '1'); return false;"><a href="#">충북</a></li>
-                    <li onclick="changeRegionCategory1('충청남도' , 'regionDetailContent1', '1'); return false;"><a href="#">충남</a></li>
-                    <li onclick="changeRegionCategory1('전라북도' , 'regionDetailContent1', '1'); return false;"><a href="#">전북</a></li>
-                    <li onclick="changeRegionCategory1('전라남도' , 'regionDetailContent1', '1'); return false;"><a href="#">전남</a></li>
-                    <li onclick="changeRegionCategory1('경상북도' , 'regionDetailContent1', '1'); return false;"><a href="#">경북</a></li>
-                    <li onclick="changeRegionCategory1('경상남도' , 'regionDetailContent1', '1'); return false;"><a href="#">경남</a></li>
-                    <li onclick="changeRegionCategory1('제주' ,'regionDetailContent1', '1'); return false;"><a href="#">제주</a></li>
-                    <li onclick="changeRegionCategory1('세종' ,'regionDetailContent1', '1'); return false;"><a href="#">세종</a></li>
+                    <th:block th:each="val : ${regionInfos}">
+                    <li th:onclick="'changeRegionCategory1('+${val.id}+ ',regionDetailContent1,1); return false;'" th:value="${val.id}">
+                        <a th:text="${val.listName}"></a>
+                    </li>
+                    </th:block>
+<!--                    <li onclick="changeRegionCategory1('서울','regionDetailContent1', '1'); return false;"><a href="#">서울</a></li>-->
+<!--                    <li onclick="changeRegionCategory1('경기','regionDetailContent1', '1'); return false;"><a href="#">경기</a></li>-->
+<!--                    <li onclick="changeRegionCategory1('인천' ,'regionDetailContent1', '1'); return false;" ><a href="#">인천</a></li>-->
+<!--                    <li onclick="changeRegionCategory1('대전' ,'regionDetailContent1', '1'); return false;"><a href="#">대전</a></li>-->
+<!--                    <li onclick="changeRegionCategory1('광주' ,'regionDetailContent1', '1'); return false;"><a href="#">광주</a></li>-->
+<!--                    <li onclick="changeRegionCategory1('대구' ,'regionDetailContent1', '1'); return false;"><a href="#">대구</a></li>-->
+<!--                    <li onclick="changeRegionCategory1('울산' , 'regionDetailContent1', '1'); return false;"><a href="#">울산</a></li>-->
+<!--                    <li onclick="changeRegionCategory1('부산' , 'regionDetailContent1', '1'); return false;"><a href="#">부산</a></li>-->
+<!--                    <li onclick="changeRegionCategory1('강원' , 'regionDetailContent1', '1'); return false;"><a href="#">강원</a></li>-->
+<!--                    <li onclick="changeRegionCategory1('충청북도' , 'regionDetailContent1', '1'); return false;"><a href="#">충북</a></li>-->
+<!--                    <li onclick="changeRegionCategory1('충청남도' , 'regionDetailContent1', '1'); return false;"><a href="#">충남</a></li>-->
+<!--                    <li onclick="changeRegionCategory1('전라북도' , 'regionDetailContent1', '1'); return false;"><a href="#">전북</a></li>-->
+<!--                    <li onclick="changeRegionCategory1('전라남도' , 'regionDetailContent1', '1'); return false;"><a href="#">전남</a></li>-->
+<!--                    <li onclick="changeRegionCategory1('경상북도' , 'regionDetailContent1', '1'); return false;"><a href="#">경북</a></li>-->
+<!--                    <li onclick="changeRegionCategory1('경상남도' , 'regionDetailContent1', '1'); return false;"><a href="#">경남</a></li>-->
+<!--                    <li onclick="changeRegionCategory1('제주' ,'regionDetailContent1', '1'); return false;"><a href="#">제주</a></li>-->
+<!--                    <li onclick="changeRegionCategory1('세종' ,'regionDetailContent1', '1'); return false;"><a href="#">세종</a></li>-->
                 </ul>
                 <div id="regionDetailContent1" style="overflow-x: hidden;overflow-y:auto; height: 240px;">
-                    <!--                <ul >-->
-                    <!-- <li><a href="#">강남구<span>(376)</span></a></li>
-                     <li><a href="#">강동구<span>(36)</span></a></li>
-                     <li><a href="#">강북구<span>(136)</span></a></li>
-                     <li><a href="#">강서구<span>(83)</span></a></li>
-                     <li><a href="#">관악구<span>(79)</span></a></li>
-                     <li><a href="#">광진구<span>(102)</span></a></li>
-                     <li><a href="#">구로구<span>(4)</span></a></li>
-                     <li><a href="#">금천구<span>(11)</span></a></li>
-                     <li><a href="#">노원구<span>(59)</span></a></li>
-                     <li><a href="#">도봉구<span>(20)</span></a></li>
-                     <li><a href="#">강남구<span>(376)</span></a></li>
-                     <li><a href="#">강동구<span>(36)</span></a></li>
-                     <li><a href="#">강북구<span>(136)</span></a></li>
-                     <li><a href="#">강서구<span>(83)</span></a></li>
-                     <li><a href="#">관악구<span>(79)</span></a></li>
-                     <li><a href="#">광진구<span>(102)</span></a></li>
-                     <li><a href="#">구로구<span>(4)</span></a></li>
-                     <li><a href="#">금천구<span>(11)</span></a></li>
-                     <li><a href="#">노원구<span>(59)</span></a></li>
-                     <li><a href="#">도봉구<span>(20)</span></a></li>-->
-                    <!--                </ul>-->
+
                 </div>
             </div>
 
@@ -171,18 +155,22 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script th:inline="javascript">
         function changeRegionCategory1(bigName, className, type){
-
-            document.getElementById(className).innerHTML = ""
+            var className = "'"+className+"'";
+            console.log(className)
+            console.log($('"'+className+'"'))
+            // .innerHTML = "a";
 
             if(type == 1 || type==3) {
                 $(".top-menu > li").removeClass('active');
                 event.target.parentElement.classList.add('active')
                 $.ajax({
-                    url: "/category/region/" + type + "?name=" + encodeURI(bigName),
+                    url: "/admin/epicure/area_type/"+bigName,
                     contentType: "application/json",
                     dataType: "json",
                     type:"GET",
                 }).done(function (fragment) {
+
+                    var fragment = fragment.data;
                     var ul = document.createElement('ul');
                     ul.setAttribute('class','item-list-wrapper');
                     document.getElementById(className).appendChild(ul);
@@ -192,13 +180,13 @@
                         var li = document.createElement('li');
 
                         ul.appendChild(li);
-
+                        console.log(element)
                         if(type=='2'){
                             if(element.subwayName != null){
-                                li.innerHTML=li.innerHTML +"<a href='/shop/region/subway/" + element.regionId +"/red'>" +element.subwayName + "("+element.districtCnt + ")" + "</a>";
+                                li.innerHTML=li.innerHTML +"<a href='/shop/region/subway/" + element.id +"/red'>" +element.listName + "("+element.districtCnt + ")" + "</a>";
                             }
                         }else{
-                            li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.regionId +"/red'>" +element.districtName + "("+element.districtCnt+")" + "</a>";
+                            li.innerHTML=li.innerHTML +"<a href='/shop/region/" + element.id +"/red'>" +element.listName + "("+0+")" + "</a>";
                         }
                     }
                 });
@@ -326,8 +314,8 @@
                 $("#regionContent1").show();
                 $("#regionContent2").hide();
                 $("#regionContent3").hide();
-                changeRegionCategory1("서울", 'regionDetailContent1', '1')
-                $("#regionContent1 .top-menu li:eq(0)").addClass("active");
+                changeRegionCategory1(907, 'regionDetailContent1', '1')
+                // $("#regionContent1 .top-menu li:eq(0)").addClass("active");
                 return false;
             });
 
@@ -337,7 +325,7 @@
                 $("div[id*=regionContent]").hide()
                 $("#region1").addClass("active");
                 $("#regionContent1").show();
-                changeRegionCategory1("서울", 'regionDetailContent1', '1')
+                changeRegionCategory1(907, 'regionDetailContent1', '1')
                 $("#regionContent1 .top-menu li:eq(0)").addClass("active");
                 $(".global-nav").css({"height": "315px"});
                 return false;

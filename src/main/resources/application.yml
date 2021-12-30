@@ -75,14 +75,14 @@ spring:
           starttls:
             enable: true
           auth: true
-
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 25MB
 
 
 #logging:
 #  level:
 #    org.hibernate.type: trace
-
-
----
 
 # deploy{to be adding}

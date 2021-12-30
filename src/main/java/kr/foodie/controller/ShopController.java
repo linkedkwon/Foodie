@@ -93,6 +93,7 @@ public class ShopController {
         commentList = shopService.getShopDetail(shopId);
         hashTags = tagService.getHashTags(shopId);
 
+        shopService.updateHit(commentList.getShopId(), commentList.getFoodieHit());
         int idx = page;
         int size = reviewService.getItemSizeByShopId(shopId);
         String url = "/shop?id=" + shopId + "&page=";
@@ -104,7 +105,7 @@ public class ShopController {
         //tasteRating
         String tasteRatingInfo = reviewService.getShopTasteRatingAVG(shopId);
         String[] str = tasteRatingInfo.split(",");
-        commentList.setFoodieLogRating(str[0]);
+//        commentList.setTasteRatingInfo(str[0]);
 
         //logRating
         commentList.setFoodieLogRating(Optional.ofNullable(commentList.getFoodieLogRating())
@@ -125,20 +126,28 @@ public class ShopController {
         mav.addObject("payload", commentList);
 
         mav.addObject("userId", (userDetails != null) ? userDetails.getUser().getId() : 0);
-        mav.addObject("userRole", (userDetails != null) ? userDetails.getUser().getRoleType() : "GENERAL");
+        mav.addObject("userRole", (userDetails != null) ? userDetails.getUser().getRoleType() : "PREMIUM_90");
 
-            Integer background = commentList.getShopType();
-            if (background == 1 ) {
-                mav.setViewName("detail-red");
-            } else if (background == 2 ) {
-                mav.setViewName("detail-green");
-            } else if (background == 3 ) {
-                mav.setViewName("detail-mustard");
-            }else {
-                mav.setViewName("detail-mint");
+        String[] memuImages = commentList.getMenuImages().split(",");
+        if(commentList.getShopImage() == null){
+            if(memuImages.length > 0){
+                mav.addObject("shopImage",memuImages[0]);
             }
-            mav.addObject("hashTags", hashTags);
-            return mav;
+        }else{
+            mav.addObject("shopImage",commentList.getShopImage());
+        }
+        Integer background = commentList.getShopType();
+        if (background == 1 ) {
+            mav.setViewName("detail-red");
+        } else if (background == 2 ) {
+            mav.setViewName("detail-green");
+        } else if (background == 3 ) {
+            mav.setViewName("detail-mustard");
+        }else {
+            mav.setViewName("detail-blue");
+        }
+        mav.addObject("hashTags", hashTags);
+        return mav;
     }
 
 

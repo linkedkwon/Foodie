@@ -34,29 +34,29 @@
             <!-- header-restaurant START -->
             <div class="header-restaurant">
               <div class="left-area">
-                <h2 th:text="${payload[0].shopName}"></h2>
+                <h2 th:text="${payload.shopName}"></h2>
                 <div class="categories">
                   <span th:text="${category}"></span>
                 </div>
 <!--                빼기로함-->
 <!--                <div class="categories" style="margin-top: 10px;">-->
-<!--                  <a th:href="'http://epicure.co.kr/home/'+${payload[0].shopAlias}" th:text="'http://epicure.co.kr/home/'+${payload[0].shopAlias}" style="color:#838383;"></a>-->
+<!--                  <a th:href="'http://epicure.co.kr/home/'+${payload.shopAlias}" th:text="'http://epicure.co.kr/home/'+${payload.shopAlias}" style="color:#838383;"></a>-->
 <!--                </div>-->
               </div>
 
               <div class="right-area">
-                <ul class="scores" th:style="${not #strings.isEmpty(payload[0].foodieLogRating)}? '':'border-right:solid 0px #e4e4e4;'">
-                  <li th:text="${not #strings.isEmpty(payload[0].foodieLogRating)} ? '전문가 평점' : '전문가 평점'"></li>
+                <ul class="scores" th:style="${not #strings.isEmpty(payload.foodieLogRating)}? '':'border-right:solid 0px #e4e4e4;'">
+                  <li th:text="${not #strings.isEmpty(payload.foodieLogRating)} ? '전문가 평점' : '전문가 평점'"></li>
                   <li>
-<!--                    <b style="padding-left:17px;" th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '방문자 평점('+${payload[0].tasteRating}+'점)' : '오감 평점'"></b>-->
+<!--                    <b style="padding-left:17px;" th:text="${not #strings.isEmpty(payload.tasteRating)} ? '방문자 평점('+${payload.tasteRating}+'점)' : '오감 평점'"></b>-->
                     <b style="padding-left:17px;">방문자 평점</b>
-<!--                    <b th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '오감 평점('+${payload[0].tasteRating}+'점)' : '오감 평점(없음)'"></b>-->
+<!--                    <b th:text="${not #strings.isEmpty(payload.tasteRating)} ? '오감 평점('+${payload.tasteRating}+'점)' : '오감 평점(없음)'"></b>-->
 
                     <!--                    <b th:text="'('+${tasteRatingCnt}+'명)'" style="font-size: 12px;"></b>-->
                   </li>
                 </ul>
 
-                <th:block th:switch="${payload[0].foodieLogRating}">
+                <th:block th:switch="${payload.foodieLogRating}">
                   <div class="star" th:case="A">
                     <picture>
                       <img src="/images/ico-detail-star-first.png" style="height: 40px;">
@@ -79,68 +79,68 @@
                   </div>
                 </th:block>
 
-                <th:block th:switch="${payload[0].tasteRating}">
+                <th:block th:switch="${tasteRatingCnt}">
                   <div th:case="5">
                     <picture style="float: left">
                       <img src="/images/ico-point-5-active.png" style="margin-top: 5px; padding-left: 10px; margin-bottom: 5px; height: 25px;">
                     </picture>
-                    <div th:if="${(not #strings.isEmpty(payload[0].tasteRating)) && (!payload[0].tasteRating.toString().equals('0'))}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="'('+${payload[0].tasteRating}+'점)'"></div>
+                    <div th:if="${(not #strings.isEmpty(tasteRatingCnt)) && (!tasteRatingCnt.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${tasteRatingCnt}+'점'"></div>
                     </div>
-                    <div th:unless="${not #strings.isEmpty(payload[0].tasteRating)}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;">( - )</div>
+                    <div th:unless="${not #strings.isEmpty(tasteRatingCnt)}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;"> - </div>
                     </div>
                   </div>
                   <div th:case="4">
                     <picture style="float: left">
                       <img src="/images/ico-point-4-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
                     </picture>
-                    <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '('+${payload[0].tasteRating}+'점)' : ''"></div>
+                    <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${not #strings.isEmpty(tasteRatingCnt)} ? '('+${tasteRatingCnt}+'점)' : ''"></div>
                   </div>
                   <div th:case="3">
                     <picture style="float: left">
                       <img src="/images/ico-point-3-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
                     </picture>
-                    <div th:if="${(not #strings.isEmpty(payload[0].tasteRating)) && (!payload[0].tasteRating.toString().equals('0'))}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="'('+${payload[0].tasteRating}+'점)'"></div>
+                    <div th:if="${(not #strings.isEmpty(tasteRatingCnt)) && (!tasteRatingCnt.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${tasteRatingCnt}+'점'"></div>
                     </div>
-                    <div th:unless="${not #strings.isEmpty(payload[0].tasteRating)}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;">( - )</div>
+                    <div th:unless="${not #strings.isEmpty(tasteRatingCnt)}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;"> - </div>
                     </div>
                   </div>
                   <div th:case="2">
                     <picture style="float: left">
                       <img src="/images/ico-point-2-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
                     </picture>
-                    <div th:if="${(not #strings.isEmpty(payload[0].tasteRating)) && (!payload[0].tasteRating.toString().equals('0'))}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="'('+${payload[0].tasteRating}+'점)'"></div>
+                    <div th:if="${(not #strings.isEmpty(tasteRatingCnt)) && (!tasteRatingCnt.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${tasteRatingCnt}+'점'"></div>
                     </div>
-                    <div th:unless="${not #strings.isEmpty(payload[0].tasteRating)}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;">( - )</div>
+                    <div th:unless="${not #strings.isEmpty(tasteRatingCnt)}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;"> - </div>
                     </div>
                   </div>
                   <div th:case="1">
                     <picture style="float: left">
                       <img src="/images/ico-point-1-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
                     </picture>
-                    <div th:if="${(not #strings.isEmpty(payload[0].tasteRating)) && (!payload[0].tasteRating.toString().equals('0'))}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="'('+${payload[0].tasteRating}+'점)'"></div>
+                    <div th:if="${(not #strings.isEmpty(tasteRatingCnt)) && (!tasteRatingCnt.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${tasteRatingCnt}+'점'"></div>
                     </div>
-                    <div th:unless="${not #strings.isEmpty(payload[0].tasteRating)}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;">( - )</div>
+                    <div th:unless="${not #strings.isEmpty(tasteRatingCnt)}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;"> - </div>
                     </div>
                   </div>
                   <div th:case="0">
                     <picture style="float: left">
                       <img src="/images/noRating.png" style="margin-top: 5px;padding-left: 10px; margin-bottom: 5px; height: 25px;">
                     </picture>
-                    <div th:if="${(not #strings.isEmpty(payload[0].tasteRating)) && (!payload[0].tasteRating.toString().equals('0'))}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="'('+${payload[0].tasteRating}+'점)'"></div>
+                    <div th:if="${(not #strings.isEmpty(tasteRatingCnt)) && (!tasteRatingCnt.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="'('+${tasteRatingCnt}+'점)'"></div>
                     </div>
-                    <div th:unless="${not #strings.isEmpty(payload[0].tasteRating)}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;">( - )</div>
+                    <div th:unless="${not #strings.isEmpty(tasteRatingCnt)}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;">( - )</div>
                     </div>
-<!--                    <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '('+${payload[0].tasteRating}+'점)' : ''"></div>-->
+<!--                    <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="${not #strings.isEmpty(payload.tasteRating)} ? '('+${payload.tasteRating}+'점)' : ''"></div>-->
                   </div>
                 </th:block>
                 <a href="#" class="btn-print">인쇄하기</a>
@@ -150,101 +150,101 @@
 
             <!-- about-restaurant START -->
             <div class="about-restaurant">
-              <img class="left-area" th:src="${payload[0].shopImage}" onerror="this.src='/images/default.png'">
+              <img class="left-area" th:src="${shopImage}" onerror="this.src='/images/default.png'">
 
               <div class="right-area">
 
                 <!-- 1. 주소-->
-                <th:block th:if="${not #strings.isEmpty(payload[0].address)}">
+                <th:block th:if="${not #strings.isEmpty(payload.address)}">
                   <dl>
                     <dt>주소</dt>
                     <dd>
-                      <p id="normal-address" th:text="${payload[0].address}"></p>
+                      <p id="normal-address" th:text="${payload.address}"></p>
                       <div style="margin-top: 2px;">
                         <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 1px 7px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
                           도로명
                         </div>
-                        <b id="road-address" th:text="${payload[0].roadAddress}"></b>
+                        <b id="road-address" th:text="${payload.roadAddress}"></b>
                       </div>
                     </dd>
                   </dl>
                 </th:block>
                 <!-- 2. 전화번호-->
-                <th:block th:if="${not #strings.isEmpty(payload[0].phone)}">
+                <th:block th:if="${not #strings.isEmpty(payload.phone)}">
                   <dl class="line">
                     <dt>전화번호</dt>
-                    <dd th:text="${payload[0].phone}"></dd>
+                    <dd th:text="${payload.phone}"></dd>
                   </dl>
                 </th:block>
 
                 <!-- 3. 찾아가는 길-->
-                <th:block th:if="${not #strings.isEmpty(payload[0].detailAddress)}">
+                <th:block th:if="${not #strings.isEmpty(payload.detailAddress)}">
                   <dl class="line">
                     <dt>찾아가는 길</dt>
-                    <dd th:text="${payload[0].detailAddress}"></dd>
+                    <dd th:text="${payload.detailAddress}"></dd>
                   </dl>
                 </th:block>
 
                 <!-- 4. 영업시간-->
-                <th:block th:if="${not #strings.isEmpty(payload[0].operationTime)}">
+                <th:block th:if="${not #strings.isEmpty(payload.operationTime)}">
                   <dl>
                     <dt>영업시간</dt>
-                    <dd th:text="${payload[0].operationTime}"></dd>
+                    <dd th:text="${payload.operationTime}"></dd>
                   </dl>
                 </th:block>
 
                 <!-- 5. 휴무일-->
-                <th:block th:if="${not #strings.isEmpty(payload[0].holiday)}">
+                <th:block th:if="${not #strings.isEmpty(payload.holiday)}">
                   <dl class="line">
                     <dt>휴무일</dt>
-                    <dd th:text="${payload[0].holiday}"></dd>
+                    <dd th:text="${payload.holiday}"></dd>
                   </dl>
                 </th:block>
 
                 <!-- 6. 추천메뉴-->
-                <th:block th:if="${not #strings.isEmpty(payload[0].recommandMenu)}">
+                <th:block th:if="${not #strings.isEmpty(payload.recommandMenu)}">
                   <dl>
                     <dt>추천메뉴</dt>
-                    <dd th:text="${payload[0].recommandMenu}">닭구이</dd>
+                    <dd th:text="${payload.recommandMenu}">닭구이</dd>
                   </dl>
                 </th:block>
 
                 <!-- 7. 예약-->
-                <th:block th:if="${not #strings.isEmpty(payload[0].isReservation)}">
+                <th:block th:if="${not #strings.isEmpty(payload.isReservation)}">
                   <dl>
                     <dt>예약</dt>
-                    <dd th:text="${payload[0].isReservation}"></dd>
+                    <dd th:text="${payload.isReservation}"></dd>
                   </dl>
                 </th:block>
 
                 <!-- 8. 주차장-->
-                <th:block th:if="${not #strings.isEmpty(payload[0].isParking)}">
+                <th:block th:if="${not #strings.isEmpty(payload.isParking)}">
                   <dl>
                     <dt>주차장</dt>
-                    <dd th:text="${payload[0].isParking}"></dd>
+                    <dd th:text="${payload.isParking}"></dd>
                   </dl>
                 </th:block>
 
                 <!-- 9. 예산-->
-                <th:block th:if="${not #strings.isEmpty(payload[0].budget)}">
+                <th:block th:if="${not #strings.isEmpty(payload.budget)}">
                   <dl class="line">
                     <dt>예산</dt>
-                    <dd th:text="${payload[0].budget}"></dd>
+                    <dd th:text="${payload.budget}"></dd>
                   </dl>
                 </th:block>
 
                 <!--10. 홈페이지-->
-                <th:block th:if="${not #strings.isEmpty(payload[0].homepage)}">
+                <th:block th:if="${not #strings.isEmpty(payload.homepage)}">
                   <dl>
                     <dt>홈페이지</dt>
-                    <dd th:text="${payload[0].homepage}"></dd>
+                    <dd th:text="${payload.homepage}"></dd>
                   </dl>
                 </th:block>
 
                 <!--11. 포장 및 배달 -->
-                <th:block th:if="${not #strings.isEmpty(payload[0].isDelivery)}">
+                <th:block th:if="${not #strings.isEmpty(payload.isDelivery)}">
                   <dt>포장 | 배달</dt>
-                  <dd th:text="${payload[0].isDelivery}"></dd>
+                  <dd th:text="${payload.isDelivery}"></dd>
                 </th:block>
 
                 <dd class="btn-dd">
@@ -270,7 +270,7 @@
                 <h3>HISTORY</h3>
                 <div th:if="${userRole} == 'GENERAL'"  style="float: right;margin-top: -17px;">
                   <div style="float:left">Foodie Premium으로 광고 없이 세부 정보를 이용하세요.</div>
-                  <button style="margin-top: -7px;width: 124px;margin-left: 10px;height: 30px;border-radius: 26px;box-shadow: 0 3px 6px 0 rgb(0 0 0 / 13%);border: solid 1px #e8e8e8;background-color: #fff;float: left;" onclick="location.href='/user/pay'">지금 가입하기 </button>
+                  <button style="margin-top: -7px;width: 150px;margin-left: 10px;height: 30px;border-radius: 26px;box-shadow: 0 3px 6px 0 rgb(0 0 0 / 13%);border: solid 1px #e8e8e8;background-color: #fff;float: left;" onclick="location.href='/user/pay'">프리미엄 이용권 구매</button>
                 </div>
                 <div th:unless="${userRole} == 'GENERAL'">
 
@@ -278,7 +278,7 @@
               </div>
               <div class="section-body" >
                 <p th:if="${userRole} == 'GENERAL'"> </p><br/>
-                <p th:unless="${userRole} == 'GENERAL'"  th:utext="${payload[0].history}"></p>
+                <p th:unless="${userRole} == 'GENERAL'"  th:utext="${payload.history}"></p>
               </div>
             </div>
             <!-- history-section END -->
@@ -292,7 +292,7 @@
                   <h3>MENU</h3>
                   <div th:if="${userRole} == 'GENERAL'"  style="float: right;margin-top: -17px;">
                     <div style="float:left">Foodie Premium으로 광고 없이 세부 정보를 이용하세요.</div>
-                    <button style="margin-top: -7px;width: 124px;margin-left: 10px;height: 30px;border-radius: 26px;box-shadow: 0 3px 6px 0 rgb(0 0 0 / 13%);border: solid 1px #e8e8e8;background-color: #fff;float: left;" onclick="location.href='/user/pay'">지금 가입하기 </button>
+                    <button style="margin-top: -7px;width: 150px;margin-left: 10px;height: 30px;border-radius: 26px;box-shadow: 0 3px 6px 0 rgb(0 0 0 / 13%);border: solid 1px #e8e8e8;background-color: #fff;float: left;" onclick="location.href='/user/pay'">프리미엄 이용권 구매</button>
                   </div>
                   <div th:unless="${userRole} == 'GENERAL'">
 
@@ -306,12 +306,12 @@
                 </div>
                 <div th:unless="${userRole} == 'GENERAL'" class="image-thumbnails">
 
-                  <th:block th:if="${not #strings.isEmpty(payload[0].menuImages.split(',')[0])}">
-                    <div id="menu-img-main" class="detail" th:style="'background-image:url('+${payload[0].menuImages.split(',')[0]}+'); background-size:contain;'">
+                  <th:block th:if="${not #strings.isEmpty(payload.menuImages.split(',')[0])}">
+                    <div id="menu-img-main" class="detail" th:style="'background-image:url('+${payload.menuImages.split(',')[0]}+'); background-size:contain;'">
                     </div>
 
                     <ul>
-                      <li th:each="item : ${payload[0].menuImages.split(',')}">
+                      <li th:each="item : ${payload.menuImages.split(',')}">
                         <img th:src='${item}' style="width: 100%;height: 100%;" onclick="changeMenuImage(this)">
                       </li>
                     </ul>
@@ -322,7 +322,7 @@
                   <li>
                     <dl>
                       <dt>메뉴</dt>
-                      <dd th:text="${payload[0].menu}"></dd>
+                      <dd th:utext="${payload.menu}"></dd>
                     </dl>
                   </li>
                   <li>
@@ -341,8 +341,8 @@
               <div class="section-header">
                 <h3>MAP</h3>
                 <ul>
-                  <li class="naver"><a th:href="@{'https://pcmap.place.naver.com/restaurant/'+ ${payload[0].blogShopId} + '/review/ugc'}" target="_blank">블로그 리뷰 보기</a></li>
-                  <li class="instagram"><a th:href="@{'https://www.instagram.com/explore/tags/'+ ${payload[0].instaKeyword}}" target="_blank">인스타 이미지 보기</a></li>
+                  <li class="naver"><a th:href="@{'https://pcmap.place.naver.com/restaurant/'+ ${payload.blogShopId} + '/review/ugc'}" target="_blank">블로그 리뷰 보기</a></li>
+                  <li class="instagram"><a th:href="@{'https://www.instagram.com/explore/tags/'+ ${payload.instaKeyword}}" target="_blank">인스타 이미지 보기</a></li>
                 </ul>
               </div>
 
@@ -462,7 +462,7 @@
 
     /*<![CDATA[*/
 
-    var address_name = /*[[ ${payload[0].address} ]]*/;
+    var address_name = /*[[ ${payload.address} ]]*/;
 
     /*]]*/
 

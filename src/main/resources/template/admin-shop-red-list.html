@@ -47,7 +47,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4" style="width: 700px;margin:auto;">
+                    <div class="card shadow mb-4" style="width: 800px;margin:auto;">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;" th:text="${background}">레드리스트 맛집목록</h6>
                             <input type="hidden" th:value="${shopBackground}" id="background">
@@ -98,7 +98,7 @@
                                             <option value="-1">3차 지역 선택</option>
                                         </select>
                                     </p>
-                                    <p style=" padding-left: 20px; padding-top: 5px; margin-bottom: 0;">
+                                    <p style=" padding-left: 100px; padding-top: 5px; margin-bottom: 0;">
                                         등록서비스
                                         <select id="table-filter7" style="height: 20px;">
                                             <option value="">전체</option>
@@ -459,16 +459,23 @@
                     tr +=
                         '<tr>' +
                         '<td>' +
-                        '<img src="' + shop[i].menuImages + '" onerror="this.src=\'/images/default.png\'"class="thumbnail" style="width: 80px; height:60px;"/>' +
+                        '<img src="' + shop[i].menuImages.split(",")[0] + '" onerror="this.src=\'/images/default.png\'"class="thumbnail" style="width: 80px; height:60px;"/>' +
                         '</td>' +
-                        '<td style="text-align: left;">' +
+                        '<td style="text-align: left; line-height: 1.5">' +
                             '<div>' +
-                                '<a href="/shop?id='+ shop[i].shopId + '&page=0">' + shop[i].shopName + '</a>' +
+                                '<a target="_blank"  href="/shop?id='+ shop[i].shopId + '&page=0">' + shop[i].shopName + '</a>' +
                                 '<span>(전문가평가:'+ shop[i].foodieLogRating +')</span>' +
+                                '<span>(방문자평점:'+ '<img src="' + shop[i].star + '"/>'  + ')</span>' +
                             '</div>' +
                             '<hr>' +
                             '<div>' +
-                                '<span>'+ shop[i].address +' | ' + shop[i].phone + '</span>' +
+                                '<span>'+ shop[i].address +'<br> <img style="width: 15px;height: 15px;" src="/images/outline_phone_in_talk_black_24dp.png" />' + shop[i].phone + '</span>' +
+                            '</div>' +
+                            '<div>' +
+                            '<span>등록자: '+ shop[i].shopAlias +  '</span>' +
+                            '</div>' +
+                            '<div>' +
+                            '<span>에피큐어 조회수: '+ shop[i].hit +' /  푸디 조회수: ' + shop[i].foodieHit +' / 위키니아 조회수: ' + shop[i].wikiHit + '</span>' +
                             '</div>' +
                             '<div>' +
                             '<span>등록: '+ moment(shop[i].createdAt).format("YYYY-MM-DD") +'  수정: ' + moment(shop[i].updatedAt).format("YYYY-MM-DD") + '</span>' +
@@ -612,16 +619,23 @@
                     tr +=
                         '<tr>' +
                         '<td>' +
-                        '<img src="' + imgUrl + '" onerror="this.src=\'/images/default.png\'"class="thumbnail" style="width: 80px; height:60px;"/>' +
+                        '<img src="' + shop[i].menuImages.split(",")[0] + '" onerror="this.src=\'/images/default.png\'"class="thumbnail" style="width: 80px; height:60px;"/>' +
                         '</td>' +
-                        '<td style="text-align: left;">' +
+                        '<td style="text-align: left;line-height: 1.5">' +
                         '<div>' +
-                        '<a href="/shop?id='+ shop[i].shopId + '&page=0">' + shop[i].shopName + '</a>' +
+                        '<a target="_blank"  href="/shop?id='+ shop[i].shopId + '&page=0">' + shop[i].shopName + '</a>' +
                         '<span>(전문가평가:'+ shop[i].foodieLogRating +')</span>' +
+                        '<span>(방문자평점:'+ '<img src="' + shop[i].star + '"/>'  + ')</span>' +
                         '</div>' +
                         '<hr>' +
                         '<div>' +
-                        '<span>'+ shop[i].address +' | ' + shop[i].phone + '</span>' +
+                        '<span>'+ shop[i].address +'<br> <img style="width: 15px;height: 15px;" src="/images/outline_phone_in_talk_black_24dp.png" />' + shop[i].phone + '</span>' +
+                        '</div>' +
+                        '<div>' +
+                        '<span>등록자: '+ shop[i].shopAlias +  '</span>' +
+                        '</div>' +
+                        '<div>' +
+                        '<span>에피큐어 조회수: '+ shop[i].hit +' /  푸디 조회수: ' + shop[i].foodieHit +' / 위키니아 조회수: ' + shop[i].wikiHit + '</span>' +
                         '</div>' +
                         '<div>' +
                         '<span>등록: '+ moment(shop[i].createdAt).format("YYYY-MM-DD") +'  수정: ' + moment(shop[i].updatedAt).format("YYYY-MM-DD") + '</span>' +

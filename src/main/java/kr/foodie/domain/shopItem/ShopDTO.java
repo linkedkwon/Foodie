@@ -2,6 +2,7 @@ package kr.foodie.domain.shopItem;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import java.util.Date;
 
 @Data
@@ -51,4 +52,9 @@ public class ShopDTO {
     private Date updatedAt;
     private Date createdAt;
     private Integer exitNum;
+    private Integer hit;
+    private Integer epicureHit;
+    private Integer foodieHit;
+    private Integer wikiHit;
+
 }

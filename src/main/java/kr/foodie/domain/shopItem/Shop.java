@@ -110,6 +110,9 @@ public class Shop {
     @Column(name = "THEME")
     private String themeList;
 
+    @Column(name = "hit")
+    private Integer hit;
+
     @Column(name = "SHOP_TOWN")
     private Integer villageTypeId;
 
@@ -190,6 +193,18 @@ public class Shop {
     @Column(name = "TAG")
     private String tag;
 
+    //추가됨
+    @Column(name = "EPICURE_HIT")
+    private Integer epicureHit;
+    //추가됨
+    @Column(name = "FOODIE_HIT")
+    private Integer foodieHit;
+    //추가됨
+    @Column(name = "WIKI_HIT")
+    private Integer wikiHit;
+
+    private String star;
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
@@ -223,7 +238,7 @@ public class Shop {
                 .subway2st(shopDto.getSubway2st())
                 .subway3st(shopDto.getSubway3st())
                 .phone(shopDto.getPhone())
-//                .shopPhone(shopDto.getShopPhone())
+                .shopPhone(shopDto.getShopPhone())
                 .detailAddress(shopDto.getDetailAddress())
                 .operationTime(shopDto.getOperationTime())
                 .holiday(shopDto.getHoliday())
@@ -242,6 +257,9 @@ public class Shop {
                 .blogShopId(shopDto.getBlogShopId())
                 .instaKeyword(shopDto.getInstaKeyword())
                 .exitNum(shopDto.getExitNum())
+                .epicureHit(shopDto.getEpicureHit())
+                .foodieHit(shopDto.getFoodieHit())
+                .wikiHit(shopDto.getWikiHit())
                 .build()
                 ;
     }

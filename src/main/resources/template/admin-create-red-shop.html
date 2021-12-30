@@ -80,13 +80,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="restaurants-manager">담당자</label>
-                                                        <input type="text"  class="form-control" id="restaurants-manager" placeholder="맛집명">
+                                                        <input type="text"  class="form-control" th:field="${shop.shopAlias}"  id="restaurants-manager" placeholder="맛집명">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="restaurants-manager-phone">담당자 연락처</label>
-                                                        <input type="tel" class="form-control" id="restaurants-manager-phone" th:field="${shop.phone}" placeholder="전화번호">
+                                                        <input type="tel" class="form-control" id="restaurants-manager-phone" th:field="${shop.shopPhone}" placeholder="전화번호">
                                                     </div>
                                                 </div>
                                             </div>

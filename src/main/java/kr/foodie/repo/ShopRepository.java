@@ -91,9 +91,23 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
     @Query(value="delete from main_board where shop_id = ?1 and type = ?2", nativeQuery = true)
     void deleteMainRecommand(Integer shopId, Integer type);
 
+    @Transactional
+    @Modifying
+    @Query(value="update rankup_shop_introduce_data set hit=?2 where no = ?1", nativeQuery = true)
+    void updateEpicureHit(Integer shopId, Integer count);
 
-    @Query(value="select * from shop where shop_type = ?1 and replace(shop_name,' ','') like %?2%", nativeQuery = true)
-    List<Shop> findDuplicatedShop(String shopType, String shopName);
+    @Transactional
+    @Modifying
+    @Query(value="update rankup_shop_introduce_data set foodie_hit=?2 where no = ?1", nativeQuery = true)
+    void updateFoodieHit(Integer shopId, Integer count);
+
+    @Transactional
+    @Modifying
+    @Query(value="update rankup_shop_introduce_data set wiki_hit=?2 where no = ?1", nativeQuery = true)
+    void updateWikiHit(Integer shopId, Integer count);
+
+    @Query(value="select * from rankup_shop_introduce_data where shop_bg_image in (?1) and replace(shop_name,' ','') like %?2%", nativeQuery = true)
+    List<Shop> findDuplicatedShop(List<Integer> shopType, String shopName);
 
     Optional<Object> findByShopIdOrderByUpdatedAt(Integer shopId);
 }

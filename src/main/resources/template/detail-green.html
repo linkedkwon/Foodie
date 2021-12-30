@@ -79,15 +79,15 @@
                   </div>
                 </th:block>
 
-                <th:block th:switch="${payload.foodieLogRating}">
+                <th:block th:switch="${tasteRatingCnt}">
                   <div th:case="5">
                     <picture style="float: left">
                       <img src="/images/ico-point-5-active.png" style="margin-top: 5px; padding-left: 10px; margin-bottom: 5px; height: 25px;">
                     </picture>
-                    <div th:if="${(not #strings.isEmpty(payload.foodieLogRating)) && (!payload.foodieLogRating.toString().equals('0'))}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${payload.foodieLogRating}+'점'"></div>
+                    <div th:if="${(not #strings.isEmpty(tasteRatingCnt)) && (!tasteRatingCnt.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${tasteRatingCnt}+'점'"></div>
                     </div>
-                    <div th:unless="${not #strings.isEmpty(payload.foodieLogRating)}">
+                    <div th:unless="${not #strings.isEmpty(tasteRatingCnt)}">
                       <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;"> - </div>
                     </div>
                   </div>
@@ -95,16 +95,16 @@
                     <picture style="float: left">
                       <img src="/images/ico-point-4-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
                     </picture>
-                    <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${not #strings.isEmpty(payload.foodieLogRating)} ? '('+${payload.foodieLogRating}+'점)' : ''"></div>
+                    <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${not #strings.isEmpty(tasteRatingCnt)} ? '('+${tasteRatingCnt}+'점)' : ''"></div>
                   </div>
                   <div th:case="3">
                     <picture style="float: left">
                       <img src="/images/ico-point-3-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
                     </picture>
-                    <div th:if="${(not #strings.isEmpty(payload.foodieLogRating)) && (!payload.foodieLogRating.toString().equals('0'))}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${payload.foodieLogRating}+'점'"></div>
+                    <div th:if="${(not #strings.isEmpty(tasteRatingCnt)) && (!tasteRatingCnt.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${tasteRatingCnt}+'점'"></div>
                     </div>
-                    <div th:unless="${not #strings.isEmpty(payload.foodieLogRating)}">
+                    <div th:unless="${not #strings.isEmpty(tasteRatingCnt)}">
                       <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;"> - </div>
                     </div>
                   </div>
@@ -112,10 +112,10 @@
                     <picture style="float: left">
                       <img src="/images/ico-point-2-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
                     </picture>
-                    <div th:if="${(not #strings.isEmpty(payload.foodieLogRating)) && (!payload.foodieLogRating.toString().equals('0'))}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${payload.foodieLogRating}+'점'"></div>
+                    <div th:if="${(not #strings.isEmpty(tasteRatingCnt)) && (!tasteRatingCnt.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${tasteRatingCnt}+'점'"></div>
                     </div>
-                    <div th:unless="${not #strings.isEmpty(payload.foodieLogRating)}">
+                    <div th:unless="${not #strings.isEmpty(tasteRatingCnt)}">
                       <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;"> - </div>
                     </div>
                   </div>
@@ -123,10 +123,10 @@
                     <picture style="float: left">
                       <img src="/images/ico-point-1-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
                     </picture>
-                    <div th:if="${(not #strings.isEmpty(payload.foodieLogRating)) && (!payload.foodieLogRating.toString().equals('0'))}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${payload.foodieLogRating}+'점'"></div>
+                    <div th:if="${(not #strings.isEmpty(tasteRatingCnt)) && (!tasteRatingCnt.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${tasteRatingCnt}+'점'"></div>
                     </div>
-                    <div th:unless="${not #strings.isEmpty(payload.foodieLogRating)}">
+                    <div th:unless="${not #strings.isEmpty(tasteRatingCnt)}">
                       <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;"> - </div>
                     </div>
                   </div>
@@ -134,10 +134,10 @@
                     <picture style="float: left">
                       <img src="/images/noRating.png" style="margin-top: 5px;padding-left: 10px; margin-bottom: 5px; height: 25px;">
                     </picture>
-                    <div th:if="${(not #strings.isEmpty(payload.foodieLogRating)) && (!payload.foodieLogRating.toString().equals('0'))}">
-                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="'('+${payload.foodieLogRating}+'점)'"></div>
+                    <div th:if="${(not #strings.isEmpty(tasteRatingCnt)) && (!tasteRatingCnt.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="'('+${tasteRatingCnt}+'점)'"></div>
                     </div>
-                    <div th:unless="${not #strings.isEmpty(payload.foodieLogRating)}">
+                    <div th:unless="${not #strings.isEmpty(tasteRatingCnt)}">
                       <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;">( - )</div>
                     </div>
 <!--                    <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="${not #strings.isEmpty(payload.tasteRating)} ? '('+${payload.tasteRating}+'점)' : ''"></div>-->
@@ -150,7 +150,7 @@
 
             <!-- about-restaurant START -->
             <div class="about-restaurant">
-              <img class="left-area" th:src="${payload.shopImage}" onerror="this.src='/images/default.png'">
+              <img class="left-area" th:src="${shopImage}" onerror="this.src='/images/default.png'">
 
               <div class="right-area">
 
@@ -188,7 +188,7 @@
                 <!-- 4. 영업시간-->
                 <th:block th:if="${not #strings.isEmpty(payload.operationTime)}">
                   <dl>
-                    <dt>영업시간</dt>
+                    <dt>운영시간</dt>
                     <dd th:text="${payload.operationTime}"></dd>
                   </dl>
                 </th:block>
@@ -204,7 +204,7 @@
                 <!-- 6. 추천메뉴-->
                 <th:block th:if="${not #strings.isEmpty(payload.recommandMenu)}">
                   <dl>
-                    <dt>추천메뉴</dt>
+                    <dt>포토스폿</dt>
                     <dd th:text="${payload.recommandMenu}">닭구이</dd>
                   </dl>
                 </th:block>
@@ -321,8 +321,8 @@
                 <ul class="info">
                   <li>
                     <dl>
-                      <dt>메뉴</dt>
-                      <dd th:text="${payload.menu}"></dd>
+                      <dt>입장료</dt>
+                      <dd th:utext="${payload.menu}"></dd>
                     </dl>
                   </li>
                   <li>
@@ -341,8 +341,9 @@
               <div class="section-header">
                 <h3>MAP</h3>
                 <ul>
-                  <li class="naver"><a th:href="@{'https://pcmap.place.naver.com/restaurant/'+ ${payload.blogShopId} + '/review/ugc'}" target="_blank">블로그 리뷰 보기</a></li>
-                  <li class="instagram"><a th:href="@{'https://www.instagram.com/explore/tags/'+ ${payload.instaKeyword}}" target="_blank">인스타 이미지 보기</a></li>
+<!--                  <li class="naver"><a th:href="@{'https://pcmap.place.naver.com/restaurant/'+ ${payload.blogShopId} + '/review/ugc'}" target="_blank">블로그 리뷰 보기</a></li>-->
+                  <li class="naver"><a th:href="@{'https://search.naver.com/search.naver?query='+ ${payload.address} + ${payload.shopName} + '&nso=&where=view&sm=tab_viw.all&mode=normal'}" target="_blank">블로그 리뷰 보기</a></li>
+                  <li class="instagram"><a th:href="@{'https://www.instagram.com/explore/tags/'+ ${payload.shopName}}" target="_blank">인스타 이미지 보기</a></li>
                 </ul>
               </div>
 

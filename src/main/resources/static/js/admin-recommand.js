@@ -48,7 +48,6 @@
         // var type = $( '#table-filter1 option:selected').val();
         console.log('value'+ val)
         $('#example18').dataTable().fnClearTable();
-
         $.ajax({
             type:"get",
             url:"/admin/duplicated/green/"+val,

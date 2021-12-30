@@ -1,7 +1,6 @@
 package kr.foodie.service;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import kr.foodie.domain.shopItem.AdminListShop;
 import kr.foodie.domain.shopItem.Shop;
 import kr.foodie.domain.shopItem.ShopDTO;
@@ -100,14 +99,18 @@ public class ShopService {
         }
     }
 
-    public List<Shop> getDuplicatedInfos(String shopType, String shopName) {
-        if (shopType.equals("1")) {
-            List<Shop> greenListDuplicatedInfos = shopRepository.findDuplicatedShop(shopType, shopName);
-            return greenListDuplicatedInfos;
-        } else {
-            List<Shop> redListDuplicatedInfos = shopRepository.findDuplicatedShop(shopType, shopName);
-            return redListDuplicatedInfos;
+
+    public void updateHit(Integer shopId, Integer count) {
+        if(count == null){
+            count=0;
         }
+        shopRepository.updateFoodieHit(shopId, count+1);
+//        return duplicatedInfos;
+//        return;
+    }
+    public List<Shop> getDuplicatedInfos(List<Integer> shopType, String shopName) {
+        List<Shop> duplicatedInfos = shopRepository.findDuplicatedShop(shopType, shopName);
+        return duplicatedInfos;
     }
 
     //    사이드에 그린리스트<-> 레드리스트 우선순위 지정필요
@@ -254,7 +257,7 @@ public class ShopService {
             try {
                 con = new FTPClient();
                 con.setControlEncoding("utf-8");
-                con.connect(server);
+                con.connect(server, port);
                 if (con.login(user, pw)) {
                     con.enterLocalPassiveMode(); // important!
                     con.setFileType(FTP.BINARY_FILE_TYPE);

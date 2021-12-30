@@ -81,7 +81,7 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary" th:text="${payload.shopName}" style="    width: 30%;float: left;"></h6>
 <!--                            <a>-->
-                            <button class="btn btn-info btn-sm" style="float: right;width: 100px;margin-left: 14px;margin-top: -2px;height: 37px;" type="submit">맛집 수정하기</button>
+                            <button class="btn btn-info btn-sm" style="float: right;width: 100px;margin-left: 14px;margin-top: -2px;height: 37px;" type="submit">등록하기</button>
 <!--                            <button class="btn btn-info btn-sm" onclick="return false;" value="상점조회" id="search_duplicated_list_detail" style=" float: right;   width: 100px;margin-left: 14px;margin-top: -2px;height: 37px;">중복확인</button>-->
 <!--                            </a>-->
                         </div>
@@ -108,7 +108,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="restaurants-manager">담당자</label>
-                                                        <input type="text"  class="form-control" id="restaurants-manager" placeholder="맛집명" >
+                                                        <input type="text"  class="form-control" th:field="${shop.shopAlias}" id="restaurants-manager" placeholder="맛집명" >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -171,6 +171,7 @@
                                                         <label for="table-filter3" style="width: 400px;">음식 카테고리</label>
                                                         <div style="display: flex">
                                                             <select id="table-filter1" class="custom-select" th:field="${shop.bigCategory}">
+                                                                <option value="">선택</option>
                                                                 <option
                                                                         th:each="val : ${allFirstFoodInfos}"
                                                                         th:value="${val.id}"
@@ -287,6 +288,7 @@
                                                         <div style="display: flex">
                                                             <select id="table-filter4" class="custom-select" th:field="${shop.area1st}">
                                                                 <!--/*@thymesVar id="listName" type="String"*/-->
+                                                                <option value="">선택</option>
                                                                 <option
                                                                         th:each="val : ${allFirstRegionInfos}"
                                                                         th:value="${val.id}"
@@ -317,6 +319,7 @@
                                                         <div style="display: flex">
                                                             <select id="table-filter7" class="custom-select" th:field="${shop.subwayTypeId}">
                                                                 <!--/*@thymesVar id="listName" type="String"*/-->
+                                                                <option value="">선택</option>
                                                                 <option
                                                                         th:each="val : ${allFirstSubwayInfos}"
                                                                         th:value="${val.id}"
@@ -789,7 +792,7 @@
                                 $("#table-filter3").append("<option value=''></option>");
                                 return;
                             }else {
-                                $("#table-filter2").find("option").remove().end().append("<option value=''></option>");
+                                // $("#table-filter2").find("option").remove().end().append("<option value=''></option>");
                                 $("#table-filter3").find("option").remove().end();
                                 $("#table-filter3").append("<option value=''></option>");
                                 return;
@@ -840,13 +843,19 @@
         }
         console.log(IMAGES)
         SHOP.shopName=$('input[name=shopName]').val();
+        SHOP.shopAlias=$('input[name=shopAlias]').val();
         SHOP.phone=$('input[name=phone]').val();
         SHOP.shopPhone=$('input[name=shopPhone]').val();
         SHOP.foodieLogRating=$('#select-tags1').val();
         SHOP.shopPaid=$('input[name=shopPaid]').val();
         SHOP.operationTime=$('input[name=operationTime]').val();
         SHOP.holiday=$('input[name=holiday]').val();
-        SHOP.bigCategory =$('#table-filter1').val();
+        if($('#table-filter4').val() == ''){
+            SHOP.bigCategory = null;
+        }else{
+            SHOP.bigCategory =$('#table-filter1').val();
+        }
+
         SHOP.middleCategory =$('#table-filter2').val();
         SHOP.smallCategory =$('#table-filter3').val();
         SHOP.homepage=$('input[name=homepage]').val();
@@ -858,11 +867,20 @@
         SHOP.isParking=$('input[name=isParking]').val();
         SHOP.isDelivery=$('input[name=isDelivery]').val();
         SHOP.shopType=$('input[name=shopType]').val();
-        SHOP.area1st=$('#table-filter4').val();
+        if($('#table-filter4').val() == ''){
+            SHOP.area1st = null;
+        }else{
+            SHOP.area1st =$('#table-filter4').val();
+        }
         SHOP.area2st=$('#table-filter5').val();
         SHOP.area3st=$('#table-filter6').val();
-        SHOP.subwayTypeId=$('#table-filter7').val();
-        SHOP.subway2st=$('#table-filter9').val();
+
+        if($('#table-filter7').val() == ''){
+            SHOP.subwayTypeId= null;
+        }else{
+            SHOP.subwayTypeId=$('#table-filter7').val();
+        }
+        SHOP.subway2st=$('#table-filter8').val();
         SHOP.subway3st=$('#table-filter9').val();
         SHOP.exitNum=$('input[name=exitNum]').val();
         SHOP.address=$('input[name=address]').val();
@@ -886,7 +904,7 @@
         $.ajax({
             type:"POST",
             url:"/admin/shop/image/update/" + SHOP_ID,
-            cache: false,
+            // cache: false,
             data: itemData,
             processData: false,
             contentType: false,

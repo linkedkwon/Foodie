@@ -13,303 +13,519 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/commons.css}" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" />
   <link rel="stylesheet" type="text/css" th:href="@{/css/detail.css}" />
-
 </head>
 <body>
-  <div id="app">
-    <div id="contents" class="detail-mustard">
+<div id="app">
+  <div id="contents" class="detail-mustard">
+    <div class="background-wrapper">
+      <a href="javascript:history.back();" class="go-back">뒤로가기</a>
+      <h1>
+        <a href="#">
+          <picture>
+            <source srcset="/images/logo-detail@2x.png 2x">
+            <a href="/"><img src="/images/logo-detail.png" alt="foodie"></a>
+          </picture>
+        </a>
+      </h1>
       <div class="background-wrapper">
-        <a href="javascript:history.back();" class="go-back">뒤로가기</a>
-        <h1>
-          <a href="#">
-            <picture>
-              <source srcset="/images/logo-detail@2x.png 2x">
-              <a href="/"><img src="/images/logo-detail.png" alt="foodie"></a>
-            </picture>
-          </a>
-        </h1>
         <div class="background-wrapper">
-          <div class="background-wrapper">
-            <!-- 실제 컨텐츠 영역 -->
-            <div class="contents">
-              <!-- header-restaurant START -->
-              <div class="header-restaurant">
-                <div class="left-area">
-                  <h2>박포 숯불 바베큐 치킨</h2>
-                  <div class="categories">
-                    <span>한식</span>
-                    <span>가금류</span>
-                    <span>오리</span>
-                  </div>
+          <!-- 실제 컨텐츠 영역 -->
+          <div class="contents">
+            <!-- header-restaurant START -->
+            <div class="header-restaurant">
+              <div class="left-area">
+                <h2 th:text="${payload.shopName}"></h2>
+                <div class="categories">
+                  <span th:text="${category}"></span>
                 </div>
+<!--                빼기로함-->
+<!--                <div class="categories" style="margin-top: 10px;">-->
+<!--                  <a th:href="'http://epicure.co.kr/home/'+${payload.shopAlias}" th:text="'http://epicure.co.kr/home/'+${payload.shopAlias}" style="color:#838383;"></a>-->
+<!--                </div>-->
+              </div>
 
-                <div class="right-area">
-                  <ul class="scores">
-                    <li th:text="'푸디로그 평점('+${payload.foodieLogRating}+')'"/>
-                    <li th:text="'방문자 평점('+${payload.tasteRating}+'점)'"/>
-                  </ul>
-                  <div class="star">
+              <div class="right-area">
+                <ul class="scores" th:style="${not #strings.isEmpty(payload.foodieLogRating)}? '':'border-right:solid 0px #e4e4e4;'">
+                  <li th:text="${not #strings.isEmpty(payload.foodieLogRating)} ? '전문가 평점' : '전문가 평점'"></li>
+                  <li>
+<!--                    <b style="padding-left:17px;" th:text="${not #strings.isEmpty(payload.tasteRating)} ? '방문자 평점('+${payload.tasteRating}+'점)' : '오감 평점'"></b>-->
+                    <b style="padding-left:17px;">방문자 평점</b>
+<!--                    <b th:text="${not #strings.isEmpty(payload.tasteRating)} ? '오감 평점('+${payload.tasteRating}+'점)' : '오감 평점(없음)'"></b>-->
+
+                    <!--                    <b th:text="'('+${tasteRatingCnt}+'명)'" style="font-size: 12px;"></b>-->
+                  </li>
+                </ul>
+
+                <th:block th:switch="${payload.foodieLogRating}">
+                  <div class="star" th:case="A">
                     <picture>
-                      <!--
-                      <source srcset="/images/ico-detail-star@2x.png 2x">
-                      <img src="/images/ico-detail-star.png" alt="">
-                      -->
-                      <source srcset="/images/ico-detail-star@2x.png 2x">
-                      <th:block th:switch="${payload.foodieLogRating}">
-                        <img th:case="A" src="/images/ico-star-first.png" alt=""/>
-                        <img th:case="AA" src="/images/ico-star-second.png" alt=""/>
-                        <img th:case="AAA" src="/images/ico-star-third.png" alt=""/>
-                      </th:block>
+                      <img src="/images/ico-detail-star-first.png" style="height: 40px;">
                     </picture>
                   </div>
+                  <div class="star" th:case="AA">
+                    <picture>
+                      <img src="/images/ico-detail-star-second.png" style="height: 40px;">
+                    </picture>
+                  </div>
+                  <div class="star" th:case="AAA">
+                    <picture>
+                      <img src="/images/ico-detail-star-third.png" style="height: 40px;">
+                    </picture>
+                  </div>
+                  <div class="star" th:case="없음">
+                    <picture>
+                      <img src="/images/noRating.png" style="height: 40px;">
+                    </picture>
+                  </div>
+                </th:block>
+
+                <th:block th:switch="${tasteRatingCnt}">
+                  <div th:case="5">
+                    <picture style="float: left">
+                      <img src="/images/ico-point-5-active.png" style="margin-top: 5px; padding-left: 10px; margin-bottom: 5px; height: 25px;">
+                    </picture>
+                    <div th:if="${(not #strings.isEmpty(tasteRatingCnt)) && (!tasteRatingCnt.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${tasteRatingCnt}+'점'"></div>
+                    </div>
+                    <div th:unless="${not #strings.isEmpty(tasteRatingCnt)}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;"> - </div>
+                    </div>
+                  </div>
+                  <div th:case="4">
+                    <picture style="float: left">
+                      <img src="/images/ico-point-4-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
+                    </picture>
+                    <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${not #strings.isEmpty(tasteRatingCnt)} ? '('+${tasteRatingCnt}+'점)' : ''"></div>
+                  </div>
+                  <div th:case="3">
+                    <picture style="float: left">
+                      <img src="/images/ico-point-3-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
+                    </picture>
+                    <div th:if="${(not #strings.isEmpty(tasteRatingCnt)) && (!tasteRatingCnt.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${tasteRatingCnt}+'점'"></div>
+                    </div>
+                    <div th:unless="${not #strings.isEmpty(tasteRatingCnt)}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;"> - </div>
+                    </div>
+                  </div>
+                  <div th:case="2">
+                    <picture style="float: left">
+                      <img src="/images/ico-point-2-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
+                    </picture>
+                    <div th:if="${(not #strings.isEmpty(tasteRatingCnt)) && (!tasteRatingCnt.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${tasteRatingCnt}+'점'"></div>
+                    </div>
+                    <div th:unless="${not #strings.isEmpty(tasteRatingCnt)}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;"> - </div>
+                    </div>
+                  </div>
+                  <div th:case="1">
+                    <picture style="float: left">
+                      <img src="/images/ico-point-1-active.png" style="margin-top: 5px; padding-left: 10px;margin-bottom: 5px; height: 25px;">
+                    </picture>
+                    <div th:if="${(not #strings.isEmpty(tasteRatingCnt)) && (!tasteRatingCnt.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="${tasteRatingCnt}+'점'"></div>
+                    </div>
+                    <div th:unless="${not #strings.isEmpty(tasteRatingCnt)}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;"> - </div>
+                    </div>
+                  </div>
+                  <div th:case="0">
+                    <picture style="float: left">
+                      <img src="/images/noRating.png" style="margin-top: 5px;padding-left: 10px; margin-bottom: 5px; height: 25px;">
+                    </picture>
+                    <div th:if="${(not #strings.isEmpty(tasteRatingCnt)) && (!tasteRatingCnt.toString().equals('0'))}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;" th:text="'('+${tasteRatingCnt}+'점)'"></div>
+                    </div>
+                    <div th:unless="${not #strings.isEmpty(tasteRatingCnt)}">
+                      <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;">( - )</div>
+                    </div>
+<!--                    <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="${not #strings.isEmpty(payload.tasteRating)} ? '('+${payload.tasteRating}+'점)' : ''"></div>-->
+                  </div>
+                </th:block>
+                <a href="#" class="btn-print">인쇄하기</a>
               </div>
-              <!-- header-restaurant END -->
+            </div>
+            <!-- header-restaurant END -->
 
-              <!-- about-restaurant START -->
-              <div class="about-restaurant">
-                <div class="left-area"></div>
+            <!-- about-restaurant START -->
+            <div class="about-restaurant">
+              <img class="left-area" th:src="${shopImage}" onerror="this.src='/images/default.png'">
 
-                <div class="right-area">
+              <div class="right-area">
+
+                <!-- 1. 주소-->
+                <th:block th:if="${not #strings.isEmpty(payload.address)}">
                   <dl>
                     <dt>주소</dt>
-                    <dd>서울특별시 강서구 내발산동 655-6</dd>
-                  </dl>
-                  <dl class="line">
-                    <dt>전화번호</dt>
-                    <dd>02-2664-4325</dd>
-                  </dl>
-                  <dl class="line">
-                    <dt>찾아가는 길</dt>
-                    <dd>5호선 발산역 7번 출구로 나오면 발산 119 안전센터 인근 도미노 피자 옆</dd>
-                  </dl>
-                  <dl>
-                    <dt>영업시간</dt>
-                    <dd></dd>
-                  </dl>
-                  <dl class="line">
-                    <dt>휴무일</dt>
-                    <dd></dd>
-                  </dl>
-                  <dl>
-                    <dt>추천메뉴</dt>
-                    <dd>닭구이</dd>
-                  </dl>
-                  <dl>
-                    <dt>예약</dt>
-                    <dd></dd>
-                  </dl>
-                  <dl>
-                    <dt>주차장</dt>
-                    <dd>주차불가</dd>
-                  </dl>
-                  <dl class="line">
-                    <dt>예산</dt>
-                    <dd>1-2만원대</dd>
-                  </dl>
-                  <dl>
-                    <dt>포장/배달</dt>
-                    <dd>주차불가</dd>
-                  </dl>
-                  <dl>
-                    <dt>홈페이지</dt>
-                    <dd class="btn-dd">
-                      <div class="util-btn-area">
-                        <a href="javascript:void(0)" class="btn-sm btn-heart" onclick="addFavoriteShop()">찜하기</a>
-                        <a href="javascript:void(0)" class="btn-sm btn-siren" onclick="inquiryBtn()">오류신고</a>
+                    <dd>
+                      <p id="normal-address" th:text="${payload.address}"></p>
+                      <div style="margin-top: 2px;">
+                        <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 1px 7px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
+                          도로명
+                        </div>
+                        <b id="road-address" th:text="${payload.roadAddress}"></b>
                       </div>
                     </dd>
                   </dl>
+                </th:block>
+                <!-- 2. 전화번호-->
+                <th:block th:if="${not #strings.isEmpty(payload.phone)}">
+                  <dl class="line">
+                    <dt>전화번호</dt>
+                    <dd th:text="${payload.phone}"></dd>
+                  </dl>
+                </th:block>
+
+                <!-- 3. 찾아가는 길-->
+                <th:block th:if="${not #strings.isEmpty(payload.detailAddress)}">
+                  <dl class="line">
+                    <dt>찾아가는 길</dt>
+                    <dd th:text="${payload.detailAddress}"></dd>
+                  </dl>
+                </th:block>
+
+                <!-- 4. 영업시간-->
+                <th:block th:if="${not #strings.isEmpty(payload.operationTime)}">
+                  <dl>
+                    <dt>영업시간</dt>
+                    <dd th:text="${payload.operationTime}"></dd>
+                  </dl>
+                </th:block>
+
+                <!-- 5. 휴무일-->
+                <th:block th:if="${not #strings.isEmpty(payload.holiday)}">
+                  <dl class="line">
+                    <dt>휴무일</dt>
+                    <dd th:text="${payload.holiday}"></dd>
+                  </dl>
+                </th:block>
+
+                <!-- 6. 추천메뉴-->
+                <th:block th:if="${not #strings.isEmpty(payload.recommandMenu)}">
+                  <dl>
+                    <dt>추천메뉴</dt>
+                    <dd th:text="${payload.recommandMenu}">닭구이</dd>
+                  </dl>
+                </th:block>
+
+                <!-- 7. 예약-->
+                <th:block th:if="${not #strings.isEmpty(payload.isReservation)}">
+                  <dl>
+                    <dt>예약</dt>
+                    <dd th:text="${payload.isReservation}"></dd>
+                  </dl>
+                </th:block>
+
+                <!-- 8. 주차장-->
+                <th:block th:if="${not #strings.isEmpty(payload.isParking)}">
+                  <dl>
+                    <dt>주차장</dt>
+                    <dd th:text="${payload.isParking}"></dd>
+                  </dl>
+                </th:block>
+
+                <!-- 9. 예산-->
+                <th:block th:if="${not #strings.isEmpty(payload.budget)}">
+                  <dl class="line">
+                    <dt>예산</dt>
+                    <dd th:text="${payload.budget}"></dd>
+                  </dl>
+                </th:block>
+
+                <!--10. 홈페이지-->
+                <th:block th:if="${not #strings.isEmpty(payload.homepage)}">
+                  <dl>
+                    <dt>홈페이지</dt>
+                    <dd th:text="${payload.homepage}"></dd>
+                  </dl>
+                </th:block>
+
+                <!--11. 포장 및 배달 -->
+                <th:block th:if="${not #strings.isEmpty(payload.isDelivery)}">
+                  <dt>포장 | 배달</dt>
+                  <dd th:text="${payload.isDelivery}"></dd>
+                </th:block>
+
+                <dd class="btn-dd">
+                  <div class="util-btn-area" style="float: right;">
+                    <a href="javascript:void(0)" class="btn-sm btn-heart" onclick="addFavoriteShop()">찜하기</a>
+                    <a href="javascript:void(0)" class="btn-sm btn-siren" onclick="inquiryBtn()">오류신고</a>
+                  </div>
+                </dd>
+                </dl>
+              </div>
+            </div>
+            <!-- about-restaurant END -->
+
+            <div class="detail-section hashtag-section">
+              <th:block th:object="${tag}" th:each="tag : ${hashTags}">
+                <a th:text="${tag.tagName}"></a>
+              </th:block>
+            </div>
+
+            <!-- history-section START -->
+            <div class="detail-section history-section">
+              <div class="section-header">
+                <h3>HISTORY</h3>
+                <div th:if="${userRole} == 'GENERAL'"  style="float: right;margin-top: -17px;">
+                  <div style="float:left">Foodie Premium으로 광고 없이 세부 정보를 이용하세요.</div>
+                  <button style="margin-top: -7px;width: 150px;margin-left: 10px;height: 30px;border-radius: 26px;box-shadow: 0 3px 6px 0 rgb(0 0 0 / 13%);border: solid 1px #e8e8e8;background-color: #fff;float: left;" onclick="location.href='/user/pay'">프리미엄 이용권 구매</button>
+                </div>
+                <div th:unless="${userRole} == 'GENERAL'">
+
                 </div>
               </div>
-              <!-- about-restaurant END -->
-
-              <div class="detail-section hashtag-section">
-                <a href="#">치킨</a>
-                <a href="#">음식점</a>
-                <a href="#">강서구 맛집</a>
-                <a href="#">숯불 바베큐 치킨</a>
-                <a href="#">음식점</a>
+              <div class="section-body" >
+                <p th:if="${userRole} == 'GENERAL'"> </p><br/>
+                <p th:unless="${userRole} == 'GENERAL'"  th:utext="${payload.history}"></p>
               </div>
-
-              <!-- history-section START -->
-              <div class="detail-section history-section">
-                <div class="section-header">
-                  <h3>HISTORY</h3>
-                </div>
-                <div class="section-body">
-                  <p>발산동에서 30년 넘게 성업중인 바비큐 치킨집.</p><br/>
-                  <p>숯불에 굽는 바비큐 치킨 하나로 존재감을 알린 30여년 내력의 집이다. 소금구이를 시키고 소금이나 이 집만의</p>
-                  <p>특제 소스에 찍어 먹거나 생맥주를 곁들여 즐기기도 한다. 소금구이 베이스에 양념을 입힌 양념구이도 많이 찾는다. </p>
-                  <p>잠시 가게를 접기도 했지만 다시 돌아온 솜씨 좋은 주인이 잘 구워내 쫄깃하면서도 촉촉한 치킨 맛이 일품이다.</p>
-                </div>
-              </div>
-              <!-- history-section END -->
-
-              <!-- menu-section START -->
-              <div class="detail-section menu-section">
-                <div class="section-header">
+            </div>
+            <!-- history-section END -->
+            <div class="ad-banner" style="width: 100%">
+              <a href="#" class="btn-close"></a>
+            </div>
+            <!-- menu-section START -->
+            <div class="detail-section menu-section" style="padding-top: 20px;">
+              <div class="section-header">
+                <div>
                   <h3>MENU</h3>
+                  <div th:if="${userRole} == 'GENERAL'"  style="float: right;margin-top: -17px;">
+                    <div style="float:left">Foodie Premium으로 광고 없이 세부 정보를 이용하세요.</div>
+                    <button style="margin-top: -7px;width: 150px;margin-left: 10px;height: 30px;border-radius: 26px;box-shadow: 0 3px 6px 0 rgb(0 0 0 / 13%);border: solid 1px #e8e8e8;background-color: #fff;float: left;" onclick="location.href='/user/pay'">프리미엄 이용권 구매</button>
+                  </div>
+                  <div th:unless="${userRole} == 'GENERAL'">
+
+                  </div>
                 </div>
-                
-                <div class="section-body">
-                  <div class="image-thumbnails">
-                    <div class="detail">
-                      <!-- 이미지 추가 -->
+              </div>
+
+              <div class="section-body">
+                <div th:if="${userRole} == 'GENERAL'" style="padding-bottom: 20px;">
+                  <p></p>
+                </div>
+                <div th:unless="${userRole} == 'GENERAL'" class="image-thumbnails">
+
+                  <th:block th:if="${not #strings.isEmpty(payload.menuImages.split(',')[0])}">
+                    <div id="menu-img-main" class="detail" th:style="'background-image:url('+${payload.menuImages.split(',')[0]}+'); background-size:contain;'">
                     </div>
+
                     <ul>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
-                      </li>
-                      <li>
-                        <a href="#"></a>
+                      <li th:each="item : ${payload.menuImages.split(',')}">
+                        <img th:src='${item}' style="width: 100%;height: 100%;" onclick="changeMenuImage(this)">
                       </li>
                     </ul>
-                  </div>
+                  </th:block>
+                </div>
 
-                   <ul class="info">
-                    <li>
-                      <dl>
-                        <dt>메뉴</dt>
-                        <dd>치킨 (1마리 1만8천원), 골뱅이소면 (1만5천원)</dd>
-                      </dl>
-                    </li>
-                    <li>
-                      <dl>
-                        <dt>부가세</dt>
-                        <dd></dd>
-                      </dl>
-                    </li>
-                   </ul>
+                <ul class="info">
+                  <li>
+                    <dl>
+                      <dt>메뉴</dt>
+                      <dd th:utext="${payload.menu}"></dd>
+                    </dl>
+                  </li>
+                  <li>
+                    <dl>
+                      <dt>부가세</dt>
+                      <dd></dd>
+                    </dl>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- menu-section END -->
+
+            <!-- map-section START -->
+            <div class="detail-section map-section">
+              <div class="section-header">
+                <h3>MAP</h3>
+                <ul>
+                  <li class="naver"><a th:href="@{'https://pcmap.place.naver.com/restaurant/'+ ${payload.blogShopId} + '/review/ugc'}" target="_blank">블로그 리뷰 보기</a></li>
+                  <li class="instagram"><a th:href="@{'https://www.instagram.com/explore/tags/'+ ${payload.instaKeyword}}" target="_blank">인스타 이미지 보기</a></li>
+                </ul>
+              </div>
+
+              <div class="section-body">
+                <div id="restaurant-map"></div>
+                <div id="clickLatlng"></div>
+              </div>
+            </div>
+            <!-- map-section END -->
+
+            <div class="detail-section critique-section">
+              <div class="section-header">
+                <h3>CRITIQUE</h3>
+                <span>- 나의 오감을 만족시켰는가?</span>
+                <div class="score-info">
+                  5.0 탁월 4.0 감동 3.0 좋음 2.0 평범 1.0 실망
                 </div>
               </div>
-              <!-- menu-section END -->
 
-              <!-- map-section START -->
-              <div class="detail-section map-section">
-                <div class="section-header">
-                  <h3>MAP</h3>
-                  <ul>
-                    <li class="naver"><a href="#">블로그 리뷰 보기</a></li>
-                    <li class="instagram"><a href="#">인스타 이미지 보기</a></li>
-                  </ul>
+              <div class="section-body">
+                <div class="btn-score-area">
+                  <a href="javascript:void(0)" class="point5" onclick="clickStarRating(5,0)"></a>
+                  <a href="javascript:void(0)" class="point4" onclick="clickStarRating(4,1)"></a>
+                  <a href="javascript:void(0)" class="point3" onclick="clickStarRating(3,2)"></a>
+                  <a href="javascript:void(0)" class="point2" onclick="clickStarRating(2,3)"></a>
+                  <a href="javascript:void(0)" class="point1" onclick="clickStarRating(1,4)"></a>
                 </div>
-                
-                <div class="section-body">
-                  <div id="restaurant-map"></div>
-                </div>
-              </div>
-              <!-- map-section END -->
+                <input type="hidden" id="star-rating" value="0"/>
 
-              <div class="detail-section critique-section">
-                <div class="section-header">
-                  <h3>CRITIQUE</h3>
-                  <span>- 나의 오감을 만족시켰는가?</span>
-                  <div class="score-info">
-                    5.0 탁월 4.0 감동 3.0 좋음 2.0 평범 1.0 실망
-                  </div>
+                <div class="commnet-form">
+                  <textarea id="comment" cols="30" rows="10" placeholder="오감평가를 등록하고 포인트를 받아보세요."></textarea>
+                  <a href="javascript:void(0)" class="btn btn-primary" onclick="addReview()">등록하기</a>
                 </div>
 
-                <div class="section-body">
-                  <div class="btn-score-area">
-                    <a href="javascript:void(0)" class="point5" onclick="clickStarRating(5,0)"></a>
-                    <a href="javascript:void(0)" class="point4" onclick="clickStarRating(4,1)"></a>
-                    <a href="javascript:void(0)" class="point3" onclick="clickStarRating(3,2)"></a>
-                    <a href="javascript:void(0)" class="point2" onclick="clickStarRating(2,3)"></a>
-                    <a href="javascript:void(0)" class="point1" onclick="clickStarRating(1,4)"></a>
-                  </div>
-                  <input type="hidden" id="star-rating" value="0"/>
-                  <div class="commnet-form">
-                    <textarea id="comment" cols="30" rows="10" placeholder="오감평가를 등록하고 포인트를 받아보세요."></textarea>
-                    <a href="javascript:void(0)" class="btn btn-primary" onclick="addReview()">등록하기</a>
-                  </div>
-
-                  <ul class="comment-list">
-                    <li th:each="item : ${reviews}" th:style="${item.bestComment == '1'?'background-color: #f2f6ff;':''}">
-                      <th:block th:switch="${item.bestComment}">
-                        <div class="li-div-best" th:case="1">
-                          <div class="best-div">BEST</div>
-                          <span class="user-id" th:text="${item.userName}"></span>
-                        </div>
-                        <div th:case="0">
-                          <span class="user-id" th:text="${item.userName}"></span>
-                        </div>
-                      </th:block>
-
-                      <th:block th:switch="${item.starRating}">
-                        <span th:case="5" class="point point5"></span>
-                        <span th:case="4" class="point point4"></span>
-                        <span th:case="3" class="point point3"></span>
-                        <span th:case="2" class="point point2"></span>
-                        <span th:case="1" class="point point1"></span>
-                      </th:block>
-                      <div class="comment" th:text="${item.content}"></div>
-
-                      <th:block th:switch="${item.bestComment}">
-                        <a th:case="0" href="javascript:void(0)" class="delete-btn-detail"
-                           th:style="${item.userId} == ${userId} ? 'display:block' : 'display:none'"
-                           th:onclick="|javascript:deleteReview('${item.reviewId}')|">
-                          삭제
-                        </a>
-                      </th:block>
-                    </li>
-                  </ul>
-
-                  <div class="pagination">
-                    <th:block th:if="${btnUrls.get('prev') != 'javascript:void(0)'}">
-                      <a th:href="${btnUrls.get('prev')}" class="prev"></a>
+                <ul class="comment-list">
+                  <li th:each="item : ${reviews}" th:style="${item.bestComment == '1'?'background-color: #f2f6ff; padding-top:30px;':''}">
+                    <th:block th:switch="${item.bestComment}">
+                      <div class="li-div-best" th:case="1" style="margin-bottom: 25px; margin-top: -25px;">
+                        <div class="best-div">BEST</div>
+                        <span class="user-id" th:text="${item.userName}"></span>
+                      </div>
+                      <div th:case="0" style="height: fit-content;width: 70px;    text-overflow: ellipsis">
+                        <span class="user-id" th:text="${item.userName}" style="height: fit-content"></span>
+                      </div>
                     </th:block>
-                    <th:block th:if="${btnUrls.get('prev') == 'javascript:void(0)'}">
-                      <div style="width: 20px"></div>
+
+                    <th:block th:switch="${item.starRating}">
+                      <span th:case="5" class="point point5"></span>
+                      <span th:case="4" class="point point4"></span>
+                      <span th:case="3" class="point point3"></span>
+                      <span th:case="2" class="point point2"></span>
+                      <span th:case="1" class="point point1"></span>
                     </th:block>
-                    <a th:each="item : ${paginations}" th:href="${item.path}"
-                       th:text="${item.idx}" th:class="${item.classValue}"></a>
-                    <th:block th:if="${btnUrls.get('next') != 'javascript:void(0)'}">
-                      <a th:href="${btnUrls.get('next')}" class="next"></a>
+                    <div class="comment" th:text="${item.content}" style="height: fit-content; margin-bottom: 20px;"></div>
+
+                    <th:block th:switch="${item.bestComment}">
+                      <a th:case="0" href="javascript:void(0)" class="delete-btn-detail"
+                         th:style="${item.userId} == ${userId} ? 'display:block' : 'display:none'"
+                         th:onclick="|javascript:deleteReview('${item.reviewId}')|">
+                        삭제
+                      </a>
                     </th:block>
-                    <th:block th:if="${btnUrls.get('next') == 'javascript:void(0)'}">
-                      <div style="width: 20px"></div>
-                    </th:block>
-                  </div>
+                  </li>
+                </ul>
+
+                <div class="pagination">
+                  <th:block th:if="${btnUrls.get('prev') != 'javascript:void(0)'}">
+                    <a th:href="${btnUrls.get('prev')}" class="prev"></a>
+                  </th:block>
+                  <th:block th:if="${btnUrls.get('prev') == 'javascript:void(0)'}">
+                    <div style="width: 20px"></div>
+                  </th:block>
+                  <a th:each="item : ${paginations}" th:href="${item.path}"
+                     th:text="${item.idx}" th:class="${item.classValue}"></a>
+                  <th:block th:if="${btnUrls.get('next') != 'javascript:void(0)'}">
+                    <a th:href="${btnUrls.get('next')}" class="next"></a>
+                  </th:block>
+                  <th:block th:if="${btnUrls.get('next') == 'javascript:void(0)'}">
+                    <div style="width: 20px"></div>
+                  </th:block>
                 </div>
               </div>
             </div>
-            <!-- 실제 컨텐츠 영역 END -->
           </div>
+          <!-- 실제 컨텐츠 영역 END -->
         </div>
-
-        <!-- detail footer -->
-        <div th:replace="./fragments/detail-footer.html"/>
-
       </div>
+
+      <!-- detail footer -->
+      <div th:replace="./fragments/detail-footer.html"/>
+
     </div>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/commons.js}"></script>
-    <script type="text/javascript" th:src="@{/js/detail.js}"></script>
   </div>
+  <style>
+    .right-area picture{
+      padding-left: 10px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/commons.js}"></script>
+  <script type="text/javascript" th:src="@{/js/detail.js}"></script>
+
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4c14aafa4e5ccfc24a35c501adea41eb&libraries=services"></script>
+  <script th:inline="javascript">
+    var mapContainer = document.getElementById('restaurant-map'), // 지도를 표시할 div
+            mapOption = {
+              center: new kakao.maps.LatLng(38.00994423, 126.9531742), // 지도의 중심좌표
+              level: 6 // 지도의 확대 레벨 (레벨 클수록 축소)
+            };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption);  // 지도를 생성합니다
+
+
+    // 주소-좌표 변환 객체를 생성합니다
+    var geocoder = new kakao.maps.services.Geocoder();
+
+    /*<![CDATA[*/
+
+    var address_name = /*[[ ${payload.address} ]]*/;
+
+    /*]]*/
+
+    // 주소로 좌표를 검색합니다
+    geocoder.addressSearch(address_name, function(result, status) {
+
+      // 정상적으로 검색이 완료됐으면
+      if (status === kakao.maps.services.Status.OK) {
+
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+          map: map,
+          position: coords
+        });
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+      }
+    });
+
+    // 지도를 클릭한 위치에 표출할 마커입니다
+    var marker = new kakao.maps.Marker({
+      // 지도 중심좌표에 마커를 생성합니다
+      position: map.getCenter()
+    });
+    // 지도에 마커를 표시합니다
+    marker.setMap(map);
+
+    // 지도에 클릭 이벤트를 등록합니다
+    // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+    kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
+      // 클릭한 위도, 경도 정보를 가져옵니다
+      var latlng = mouseEvent.latLng;
+
+      // 마커 위치를 클릭한 위치로 옮깁니다
+      marker.setPosition(latlng);
+
+      var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+      message += '경도는 ' + latlng.getLng() + ' 입니다';
+
+      var resultDiv = document.getElementById('clickLatlng');
+      resultDiv.innerHTML = message;
+
+    });
+
+    // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+    var mapTypeControl = new kakao.maps.MapTypeControl();
+
+    // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+    // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+    map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+    // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+    var zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+    function changeMenuImage(e){
+        document.getElementById('menu-img-main').style.backgroundImage="url('"+e.src+"')";
+    }
+  </script>
+</div>
 </body>
 </html>

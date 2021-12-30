@@ -81,7 +81,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="restaurants-manager">담당자</label>
-                                                        <input type="text"  class="form-control" id="restaurants-manager" placeholder="맛집명" >
+                                                        <input type="text"  class="form-control"  th:field="${shop.shopAlias}"  id="restaurants-manager" placeholder="맛집명" >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -144,6 +144,7 @@
                                                         <label for="table-filter3" style="width: 400px;">여행지 카테고리</label>
                                                         <div style="display: flex">
                                                             <select id="table-filter1" class="custom-select" th:field="${shop.bigCategory}">
+                                                                <option value="">선택</option>
                                                                 <option
                                                                         th:each="val : ${allFirstFoodInfos}"
                                                                         th:value="${val.id}"
@@ -267,6 +268,7 @@
                                                         <div style="display: flex">
                                                             <select id="table-filter4" class="custom-select" th:field="${shop.area1st}">
                                                                 <!--/*@thymesVar id="listName" type="String"*/-->
+                                                                <option value="">선택</option>
                                                                 <option
                                                                         th:each="val : ${allFirstRegionInfos}"
                                                                         th:value="${val.id}"
@@ -297,6 +299,7 @@
                                                         <div style="display: flex">
                                                             <select id="table-filter7" class="custom-select" th:field="${shop.subwayTypeId}">
                                                                 <!--/*@thymesVar id="listName" type="String"*/-->
+                                                                <option value="">선택</option>
                                                                 <option
                                                                         th:each="val : ${allFirstSubwayInfos}"
                                                                         th:value="${val.id}"
@@ -309,13 +312,16 @@
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
+                                                                <option value="" text="" disabled></option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter9" th:field="${shop.subway3st}">
+                                                                <option value="" text="" disabled></option>
                                                                 <option
                                                                         th:each="val : ${thirdSubwayInfos}"
                                                                         th:value="${val.id}"
                                                                         th:utext="${val.listName}"
                                                                 ></option>
+
                                                             </select>
                                                             <input class="form-control" id="exit" type="text" placeholder="출구" name="exit"  th:field="${shop.exitNum}" style="    width: 45px;font-size: 9pt !important;">
                                                         </div>
@@ -371,7 +377,7 @@
                                                         <label for="restaurants-closed" style="float: left">테마별</label>
                                                         <br>
                                                         <!--                                                        <p th:text="${payload[0].themeList}"></p>-->
-                                                        <div style="margin-left: -33px;float: left">
+                                                        <div style="float: left">
                                                             <div class="custom-control custom-radio" style="float: left;padding-right:15px;"   th:each="theme : ${themeTags}" multiple="multiple">
                                                                 <!--                                                                <div th:text="${shop.themeList[__${stat.index}__]}"></div>-->
     <!--                                                            <div th:text="${shop.themeList}"></div>-->
@@ -600,6 +606,36 @@
         });
 
 
+        $('#example18').DataTable( {
+            "columns": [
+                { 'data': "shopImage", 'render': function (data, type, row) { return '<img src="' + row.shopImage + '" class="thumbnail" style="width: 80px;height:60px;" />'; } },
+                { "data": "shopName" , 'render': function  ( data, type, row ) { return '<div><a  target="_blank"  href="/admin/shop/green/'+ row.shopId +'">'+ data + '</a></div><div><span> 주소 -'+ row.address +'</span></div>'; } },
+            ],
+            "columnDefs": [
+                { "width": "50px", "targets": 0, "className": "data_table" },
+                { "width": "200px", "targets": 1, "className": "data_table"  },
+            ],
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                } );
+            }
+        } );
 
         $('.summernote').summernote();
         var xOffset = 10;
