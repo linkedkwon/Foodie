@@ -102,16 +102,16 @@
                                         등록서비스
                                         <select id="table-filter7" style="height: 20px;">
                                             <option value="">전체</option>
-                                            <option value="">프리미엄</option>
+                                            <option value="프리미엄">프리미엄</option>
                                             <option value="">인기업소</option>
                                             <option value="">추천업소</option>
                                             <option value="">스폐셜업소</option>
-                                            <option value="">줄광고</option>
+                                            <option value="줄광고">줄광고</option>
                                             <option value="">베스트쿠폰</option>
                                         </select>
                                     </p>
                                         <div style="margin-top: 7px; margin-left: 10px;">
-                                            <input type="checkbox" name="" style="padding-top: 10px;">
+                                            <input type="checkbox" id="couponValue" name="" style="padding-top: 10px;">
                                         </div>
                                     <p style=" padding-left: 5px; padding-top: 5px; margin-bottom: 0;">
                                         쿠폰
@@ -567,7 +567,15 @@
         var area2nd = $('#table-filter5 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
         var area3th = $('#table-filter6 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
         var selectedOption = $('#table-filter8 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-        var keyword = $('#keyword').val()
+        var registerService = $('#table-filter7 :selected').val();
+        var keyword = $('#keyword').val();
+
+        var couponFlag;
+        if($('input:checkbox[id="couponValue"]').is(":checked"))
+            couponFlag = 1;
+        else
+            couponFlag = 0;
+
 
         // - 1일시 검색하지 않음.
         if(selectedOption == "") selectedOption = "-1";
@@ -578,6 +586,7 @@
         if(area1st == "") area1st = -1;
         if(area2nd == "") area2nd = -1;
         if(area3th == "") area3th = -1;
+        if(registerService == "") registerService = "-1";
 
         console.log(shop1st);
         console.log(shop2nd);
@@ -596,9 +605,11 @@
             'area1st' : area1st,
             'area2nd' : area2nd,
             'area3th' : area3th,
+            'registerService' : registerService,
             'selectedOption': selectedOption,
             'keyword':keyword,
-            'order': ordering
+            'order': ordering,
+            'couponFlag':couponFlag
         }
         $.ajax({
             url:"/item/list",
