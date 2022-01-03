@@ -99,7 +99,7 @@ public class ShopController {
         String url = "/shop?id=" + shopId + "&page=";
 
         //category
-        String bCode = Optional.ofNullable(commentList.getBigCategory()).orElseGet(()->{return "0";});Shop.java
+        String bCode = Optional.ofNullable(commentList.getBigCategory()).orElseGet(()->{return "0";});
         String mCode = Optional.ofNullable(commentList.getMiddleCategory()).orElseGet(()->{return "0";});
 
         //tasteRating
