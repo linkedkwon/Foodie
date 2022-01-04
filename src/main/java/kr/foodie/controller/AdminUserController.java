@@ -1,21 +1,23 @@
 package kr.foodie.controller;
 
 import kr.foodie.domain.user.AdminUserListVO;
-import kr.foodie.service.AdminUserService;
+import kr.foodie.service.admin.AdminUserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping(path = "/admin")
 public class AdminUserController {
 
-    @Autowired
-    private AdminUserService adminUserService;
+    private final AdminUserService adminUserService;
 
     @GetMapping("/user/0/all")
     public String renderGeneralUserList(){
@@ -39,6 +41,12 @@ public class AdminUserController {
         data.put("btns", adminUserService.getBtnPages(vo, size));
 
         return data;
+    }
+
+    @ResponseBody
+    @PostMapping("/delete/user")
+    public String deleteCheckedList(@RequestParam(value ="list[]") List<Integer> list){
+        return adminUserService.deleteUserById(list);
     }
 
 }

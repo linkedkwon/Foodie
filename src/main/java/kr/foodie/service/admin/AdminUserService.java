@@ -1,24 +1,34 @@
-package kr.foodie.service;
+package kr.foodie.service.admin;
 
 import kr.foodie.domain.user.AdminUserListVO;
 import kr.foodie.domain.user.User;
+import kr.foodie.repo.InquiryRepository;
+import kr.foodie.repo.ReviewRepository;
+import kr.foodie.repo.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@RequiredArgsConstructor
 @Service
 public class AdminUserService {
 
     @PersistenceContext
     private EntityManager em;
+
+    private final UserRepository userRepository;
+    private final ReviewRepository reviewRepository;
+    private final InquiryRepository inquiryRepository;
 
     public List<User> getAdminUserList(AdminUserListVO vo){
         String jpql = "select s from User s ";
@@ -86,7 +96,19 @@ public class AdminUserService {
             else if(vo.getOption().equals("이름"))
                 jpql += "and s.name like '%" + vo.getKeyword() + "%'";
         }
+        jpql += "order by s.createdDate desc";
 
         return jpql;
+    }
+
+    @Transactional
+    public String deleteUserById(List<Integer> list){
+        for(int o : list){
+            userRepository.deleteById(o);
+            reviewRepository.deleteAllByUserId(o);
+            inquiryRepository.deleteAllByUserId(o);
+        }
+
+        return "1";
     }
 }

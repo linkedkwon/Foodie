@@ -19,5 +19,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<Integer> countByPhoneNum(String phonNum);
 
     List<User> findAllByUserType(String userType);
+
+    void deleteById(int userId);
+
 }
 
