@@ -72,7 +72,7 @@ public class MemberService {
         user.setRoleType(RoleType.GENERAL);
         user.setCreatedDate(time);
         user.setLastModifiedDate(time);
-
+        user.setVisitedCnt(0);
         userRepository.save(user);
 
         return "signup_done";

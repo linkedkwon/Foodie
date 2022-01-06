@@ -72,6 +72,7 @@ public enum OAuthIdentifier {
                 .lastModifiedDate(time)
                 .provider(provider)
                 .providerId(providerId)
+                .visitedCnt(0)
                 .build();
     }
 }
