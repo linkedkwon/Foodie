@@ -242,7 +242,6 @@
         width: 90%;
     }
     .ad-banner,
-    #footer > div,
     .main-section .card-list-wrapper .card-item,
     .main-section.recommend-restaurants2 .nav-tabs {
         width: 100%;
@@ -257,40 +256,11 @@
         background-position: center;
         width: auto;
     }
-    #footer {
-        min-width: 100%;
-    }
-    #footer .left-area,
-    #footer .right-area {
-        float: none;
-    }
 }
 
 /*@media all and (max-width:1024px){}*/
 
 @media all and (max-width:768px){
-    #header {
-        height: 90px;
-    }
-    #header .btn-category {
-        top: 50%;
-        transform: translateY(-50%);
-        width: 15%;
-        background: url(/images/ico-category-red.png) left center/65% no-repeat;
-    }
-    #header .inner-wrapper > div {
-        height: 100%;
-    }
-    #header h1 {
-        width: auto;
-        height: 100% !important;
-        padding-top: 0;
-        background: url(/images/logo-red.png) center/50% no-repeat;
-    }
-    #header .util-menu {
-        top: 50%;
-        transform: translateY(-50%);
-    }
     .main-banner {
         height: 340px;
     }
@@ -323,9 +293,6 @@
     .main-section.recommend-restaurants2 .nav-tabs li:nth-of-type(5n) {
         margin: 0 0 9px 0;
     }
-    #footer {
-        padding: 1.5rem 1rem;
-    }
     .foodie-illustration {
         width: auto;
         margin-top: 0;
@@ -334,9 +301,6 @@
 }
 
 @media all and (max-width:480px){
-    #header .btn-category {
-        width: 25%;
-    }
     .main-banner {
         height: 200px;
     }
@@ -361,21 +325,12 @@
     .card-item .info li.address {
         width: 100%;
     }
-    #footer .left-area .company-info ul {
-        float: none;
-    }
-    #footer .right-area li a {
-        font-size: 12px;
-    }
     .foodie-illustration {
         height: 8rem;
     }
 }
 
 @media all and (max-width:360px){
-    #header .util-menu>li {
-        margin-right: 10px;
-    }
     .main-section .card-list-wrapper>li {
         width: 48.6%;
     }
@@ -384,9 +339,6 @@
     }
     .main-section .card-list-wrapper .card-item .img {
         height: 120px;
-    }
-    #footer > div {
-        width: 100%;
     }
     .foodie-illustration {
         height: 4.5rem;
