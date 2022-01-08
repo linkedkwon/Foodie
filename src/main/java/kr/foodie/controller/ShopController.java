@@ -8,14 +8,17 @@ import kr.foodie.domain.shopItem.Region;
 import kr.foodie.domain.shopItem.Shop;
 import kr.foodie.service.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Controller
@@ -85,6 +88,7 @@ public class ShopController {
         return shopType.equals("red") ? "submain-red" : "submain-green";
     }
 
+    // TODO 외주
     @GetMapping(value = "/shop")
     public ModelAndView getShopDetail(@RequestParam(value = "id") Integer shopId,
                                       @RequestParam(value = "page") Integer page,
@@ -135,12 +139,11 @@ public class ShopController {
         commentList.setFoodieLogRating(Optional.ofNullable(commentList.getFoodieLogRating())
                 .orElseGet(()->{return "없음";}));
 
-        //menu imgaes
-        String hasMenuImages = Optional.ofNullable(commentList.getMenuImages()).orElseGet(() -> {return "0";});
-        if(!hasMenuImages.equals("0"))
-            commentList.setMenuImages(commentList.getMenuImages().replace("[", "").replace("]", "").replaceAll("\"",""));
-        else
-            commentList.setMenuImages("");
+        //shop image
+        mav.addObject("shopImage",extractShopImage(commentList));
+
+        //menu images
+        commentList.setMenuImages(extractMenuImages(commentList));
 
         mav.addObject("tasteRatingCnt", str[1]);
         mav.addObject("category", foodCategoryService.getShopCategory(bCode, mCode, commentList.getAddress()));
@@ -152,14 +155,6 @@ public class ShopController {
         mav.addObject("userId", (userDetails != null) ? userDetails.getUser().getId() : 0);
         mav.addObject("userRole", (userDetails != null) ? userDetails.getUser().getRoleType() : "PREMIUM_90");
 
-        String[] memuImages = commentList.getMenuImages().split(",");
-        if(commentList.getShopImage() == null){
-            if(memuImages.length > 0){
-                mav.addObject("shopImage",memuImages[0]);
-            }
-        }else{
-            mav.addObject("shopImage",commentList.getShopImage());
-        }
         Integer background = commentList.getShopType();
         if (background == 1 ) {
             mav.setViewName("detail-red");
@@ -171,6 +166,43 @@ public class ShopController {
             mav.setViewName("detail-blue");
         }
         return mav;
+    }
+
+    private String extractShopImage(Shop commentList) {
+        String menuImgStr = commentList.getMenuImages();
+        String replacedImg = commentList.getShopImage();
+
+        if (StringUtils.hasText(menuImgStr)) {
+            String[] images = menuImgStr
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replaceAll("\"", "")
+                    .split(",");
+
+            return Arrays.stream(images)
+                    .findFirst()
+                    .orElse(replacedImg);
+        }
+
+        return replacedImg;
+    }
+
+    private String extractMenuImages(Shop commentList) {
+        String menuImgStr = commentList.getMenuImages();
+
+        if (StringUtils.hasText(menuImgStr)) {
+            String[] menuImages = menuImgStr
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replaceAll("\"", "")
+                    .split(",");
+
+            return Arrays.stream(menuImages)
+                    .skip(1L)
+                    .collect(Collectors.joining(","));
+        }
+
+        return Strings.EMPTY;
     }
 
 

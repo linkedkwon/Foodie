@@ -74,7 +74,7 @@
             <!-- Begin Page Content -->
             <div class="container-fluid" style="    width: 700px;">
 
-                <!-- DataTales Example -->
+                <!-- DataTales Example TODO 외주 -->
                 <form id="uploadVehical">
 <!--                    <input type="hidden" th:field="${shop.shopType}" th:value="1" />-->
                     <div class="card shadow mb-4">
@@ -821,7 +821,7 @@
 
     });
 
-
+    //TODO 외주
     $("#uploadVehical").submit(function(event) {
 
         /* stop form from submitting normally */
@@ -972,6 +972,9 @@
         $(img_id).attr('src', '/images/default.png')
         console.log("AFTER IMAGES")
         console.log(IMAGES)
+
+        var imgInput = document.getElementById("input_imgs"+index);
+        imgInput.value = "";
     }
 
     $('button[id^=\'uploadImage\']').click(function (e) {
