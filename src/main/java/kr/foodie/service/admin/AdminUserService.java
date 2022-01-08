@@ -14,10 +14,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -110,5 +107,27 @@ public class AdminUserService {
         }
 
         return "1";
+    }
+
+    public String updateUserMemo(int userId, String content){
+        Optional<User> entity = Optional.of(userRepository.findById(userId).orElseGet(() -> {
+            return new User();
+        }));
+
+        entity.get().setMemo(content);
+
+        userRepository.save(entity.get());
+
+        return "1";
+    }
+
+    public String getMemo(int userId){
+        Optional<User> entity = Optional.of(userRepository.findUserById(userId).orElseGet(() -> {
+            User user = new User();
+            user.setMemo("");
+            return user;
+        }));
+
+        return entity.get().getMemo();
     }
 }

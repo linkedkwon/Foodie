@@ -289,6 +289,31 @@
                                     </thead>
                                 </table>
                             </div>
+
+
+                            <!-- 메모 모달 -->
+                            <div class="modal-memo" style="display: none; position: fixed; width: 48%; left:53%; margin-left: -20%; height: 500px; top:50%; margin-top: -200px; overflow: auto;">
+                                <div class="container-fluid">
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">메모</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <textarea id="summernote"></textarea>
+
+                                                <div style="text-align: center; padding-top: 10px;">
+                                                    <div style="display: inline-block;">
+                                                        <button style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="closeModalMemo()">닫기</button>
+                                                        <button id="memoEditBtn" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="editMemo(this)">수정</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
 
                         <div class="pagination" style="padding: 0 20px 0 20px; margin-bottom: 15px;">
@@ -365,6 +390,9 @@
 
     <!-- Page level custom scripts -->
     <script th:src="@{/js/demo/datatables-demo.js}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
@@ -427,6 +455,17 @@
 
         $(document).on("mouseout",".thumbnail",function(){ //마우스 아웃시
             $("#preview").remove();
+        });
+
+        $('#summernote').summernote({
+            height: 300,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'paragraph']],
+                ['insert', ['link']],
+            ]
         });
 
         <!-- 페이지 로드 시 데이터 -->
@@ -533,7 +572,7 @@
                         '<span>' + user[i].visitedCnt + '</span>' +
                         '</td>' +
                         '<td style="text-align: center">' +
-                        '<a href="/">' + '메모' + '</a>' +
+                        '<button onclick="memoModalPopUp(this)" value = "' + user[i].id + '">메모</button>' +
                         '</td>' +
                         '<td style="text-align: center">' +
                         '<a href="/">' + '수정' + '</a>' +
@@ -649,5 +688,52 @@
         $("input[name=cbx_chkAll]").prop("checked", false);
     }
 
+    function memoModalPopUp(e){
+        var userId = e.value;
+        //유저 아이디로 메모 요청
+
+        $.ajax({
+            url: "/admin/user/memo?id=" + userId,
+            type: "GET",
+            success: function (data) {
+                $('#memoEditBtn').val(userId);
+                $('#summernote').summernote('code', data);
+                $('#summernote').summernote({
+                    placeholder: '최대 500자 작성 가능합니다.',
+                    height: 300,
+                    lang: 'ko-KR',
+                    callbacks: {
+                        onImageUpload: function(files, editor, welEditable) {
+                            for(var i = files.length -1; i>=0; i--) {
+                                sendFile(files[i], this);
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
+        $(".modal-memo").css("display", "");
+    }
+
+    function closeModalMemo(){
+        $('#summernote').summernote('reset');
+        $(".modal-memo").css("display", "none");
+    }
+
+    function editMemo(e) {
+        var userId = e.value;
+        var content = $('#summernote').summernote('code');
+
+        $.ajax({
+            url: "/admin/user/edit/memo?id=" + userId + "&content=" + content,
+            type: "POST",
+            success: function (data) {
+                console.log('성공');
+                alert('메모가 정상적으로 입력되었습니다.');
+                closeModalMemo();
+            }
+        });
+    }
 </script>
 </html>

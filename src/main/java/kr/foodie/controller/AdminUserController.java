@@ -49,4 +49,17 @@ public class AdminUserController {
         return adminUserService.deleteUserById(list);
     }
 
+    @ResponseBody
+    @PostMapping("/user/edit/memo")
+    public String editMemo(@RequestParam(value = "id") Integer userId,
+                           @RequestParam(value = "content") String content){
+        return adminUserService.updateUserMemo(userId, content);
+    }
+
+    @ResponseBody
+    @GetMapping("/user/memo")
+    public String getMemo(@RequestParam(value = "id") Integer userId){
+        return adminUserService.getMemo(userId);
+    }
+
 }
