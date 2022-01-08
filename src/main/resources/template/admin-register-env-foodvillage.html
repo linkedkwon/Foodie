@@ -589,6 +589,16 @@
                         console.log(cur)
                         cur.visiable = "no"
                     });
+
+                target
+                    .filter(
+                        cur => cur.seq > num +1 // num == 4, sea == 5
+                    )
+                    .map((cur) => {
+                        cur.seq--;
+                        console.log(cur);
+                    });
+
                 row.remove();
                 console.log(target)
             }

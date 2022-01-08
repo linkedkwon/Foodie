@@ -32,6 +32,9 @@ public class ShopController {
     private final PaginationService paginationService;
     private final ThemeService themeService;
 
+    static boolean isStringEmpty(String str) {
+        return str == null || str.isEmpty();
+    }
     @GetMapping({"/shop/region/{regionId}/{shopType}", "/shop/region/{regionId}/{shopType}/{path}"})
     public String getCategory(@PathVariable Integer regionId, @PathVariable String shopType,
                               @PathVariable Optional<String> path, Model model) {
@@ -89,19 +92,39 @@ public class ShopController {
         ModelAndView mav = new ModelAndView();
 
         Shop commentList;
-        List<HashTag> hashTags;
         commentList = shopService.getShopDetail(shopId);
-        hashTags = tagService.getHashTags(shopId);
 
         shopService.updateHit(commentList.getShopId(), commentList.getFoodieHit());
+        List<String> list = new ArrayList<String>();
+        String[] hash = commentList.getTag().split("#");
+        if(hash.length == 1){
+            hash = commentList.getTag().split(" ");
+        }
+        for(int i=0; i<hash.length; i++){
+            if(!(isStringEmpty(hash[i]))){
+                list.add(hash[i]);
+            }
+        }
+
+
+
         int idx = page;
         int size = reviewService.getItemSizeByShopId(shopId);
         String url = "/shop?id=" + shopId + "&page=";
 
         //category
-        String bCode = Optional.ofNullable(commentList.getBigCategory()).orElseGet(()->{return "0";});Shop.java
-        String mCode = Optional.ofNullable(commentList.getMiddleCategory()).orElseGet(()->{return "0";});
-
+        String bCode;
+        String mCode;
+        if(isStringEmpty(commentList.getBigCategory())){
+            bCode = "0";
+        }else{
+            bCode = Optional.ofNullable(commentList.getBigCategory()).orElseGet(()->{return "0";});
+        }
+        if(isStringEmpty(commentList.getMiddleCategory())){
+            mCode = "0";
+        }else{
+            mCode = Optional.ofNullable(commentList.getMiddleCategory()).orElseGet(()->{return "0";});
+        }
         //tasteRating
         String tasteRatingInfo = reviewService.getShopTasteRatingAVG(shopId);
         String[] str = tasteRatingInfo.split(",");
@@ -124,7 +147,7 @@ public class ShopController {
         mav.addObject("paginations", paginationService.getPagination(size, idx, reviewInterval, url));
         mav.addObject("btnUrls", paginationService.getPaginationBtn(size, idx, reviewInterval, url));
         mav.addObject("payload", commentList);
-
+        mav.addObject("hash", list);
         mav.addObject("userId", (userDetails != null) ? userDetails.getUser().getId() : 0);
         mav.addObject("userRole", (userDetails != null) ? userDetails.getUser().getRoleType() : "PREMIUM_90");
 
@@ -146,7 +169,6 @@ public class ShopController {
         }else {
             mav.setViewName("detail-blue");
         }
-        mav.addObject("hashTags", hashTags);
         return mav;
     }
 

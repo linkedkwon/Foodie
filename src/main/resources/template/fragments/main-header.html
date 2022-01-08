@@ -47,7 +47,7 @@
             <div id="regionContent1" class="gnb-contents">
                 <ul class="top-menu">
                     <th:block th:each="val : ${regionInfos}">
-                    <li th:onclick="'changeRegionCategory1('+${val.id}+ ',regionDetailContent1,1); return false;'" th:value="${val.id}">
+                    <li th:onclick="'changeRegionCategory1('+${val.id}+ ',\'regionDetailContent1\',1); return false;'" th:value="${val.id}">
                         <a th:text="${val.listName}"></a>
                     </li>
                     </th:block>
@@ -155,10 +155,9 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script th:inline="javascript">
         function changeRegionCategory1(bigName, className, type){
-            var className = "'"+className+"'";
             console.log(className)
-            console.log($('"'+className+'"'))
-            // .innerHTML = "a";
+            document.getElementById(className).innerHTML = ""
+
 
             if(type == 1 || type==3) {
                 $(".top-menu > li").removeClass('active');

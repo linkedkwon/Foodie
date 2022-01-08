@@ -627,7 +627,8 @@ public class AdminController {
             shop.setSubway3st(null);
         }
         String existImages = ((StandardMultipartHttpServletRequest) mtfRequest).getRequest().getParameter("images");
-        String viewName = shopService.updateShopInfo(shop, shopId, files, existImages);
+        MultipartFile[] files1 = ((StandardMultipartHttpServletRequest) mtfRequest).getFiles("files").toArray(new MultipartFile[0]);
+        String viewName = shopService.updateShopInfo(shop, shopId, files1, existImages);
         return viewName;
     }
 

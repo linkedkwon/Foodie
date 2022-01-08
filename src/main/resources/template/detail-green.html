@@ -257,12 +257,12 @@
               </div>
             </div>
             <!-- about-restaurant END -->
-
-            <div class="detail-section hashtag-section">
-              <th:block th:object="${tag}" th:each="tag : ${hashTags}">
-                <a th:text="${tag.tagName}"></a>
-              </th:block>
-            </div>
+<!--              <a th:text="${payload.getTag()}"></a>-->
+              <div class="detail-section hashtag-section">
+                <th:block  th:each="tag : ${hash}">
+                  <a th:text="${tag}"></a>
+                </th:block>
+              </div>
 
             <!-- history-section START -->
             <div class="detail-section history-section">
@@ -325,12 +325,7 @@
                       <dd th:utext="${payload.menu}"></dd>
                     </dl>
                   </li>
-                  <li>
-                    <dl>
-                      <dt>부가세</dt>
-                      <dd></dd>
-                    </dl>
-                  </li>
+
                 </ul>
               </div>
             </div>

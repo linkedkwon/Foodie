@@ -133,7 +133,7 @@
                                     <input type="text" id="keyword" style="height: 20px; width: 120px;"/>
                                 </p>
                             </div>
-                            <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; border-radius: 5px;" onclick="window.location.href=window.location.href">초기화</button>
+                            <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; border-radius: 5px;" onclick="window.location.href='/admin/shop/list/allgreen'">초기화</button>
                             <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="filterSearch()">검색</button>
                         </div>
 
@@ -422,163 +422,189 @@
                 }
             }
         }
+    console.log(getUrlParams().updated)
+    if(getUrlParams().updated == "true"){
+        console.log("updated_page")
+        clickButtonAfterUpdate()
+    }else{
+        console.log("default_page")
+        clickButton(1);
+    }
 
 
-    <!-- 페이지 로드 시 데이터 -->
-        var param = {
-            'background' :$('#background').val(),
-            'renderOption':'1',
-            'page':1,
-            'order':"등록일순"
-        };
+    /* < 페이지 로드 시 데이터
 
-        $.ajax({
-            url:"/item/list",
-            type:"POST",
-            data:param,
-            dataType: "json",
-            success:function(data){
-                //1. 맛집 개수 출력
-                $('#item-size').text('총' + data.count + '건의 맛집정보가 검색되었습니다.');
-                var shop = data.data;
+         var param = {
+             'background' :$('#background').val(),
+             'renderOption':'1',
+             'page':1,
+             'order':"등록일순"
+         };
 
-                //2. 상점 리스트 업
-                var tr = '';
-                $.each(shop, function (i) {
-                    var imgUrl = '';
-                    var shopPaid = '';
-                    // if(shop[i].menuImages == "" || "[]") imgUrl = '/images/default.png';
-                    // else imgUrl = shop[i].menuImages;
-                    if(shop[i].shopPaid != null){
-                        shopPaid = shop[i].shopPaid
-                    }
-                    tr +=
-                        '<tr>' +
-                        '<td>' +
-                            '<img src="' + shop[i].menuImages + '" onerror="this.src=\'/images/default.png\'"class="thumbnail" style="width: 80px; height:60px;"/>' +
-                            '</td>' +
-                            '<td style="text-align: left;">' +
-                            '<div>' +
-                            '<a target="_blank"  href="/shop?id='+ shop[i].shopId + '&page=0">' + shop[i].shopName + '</a>' +
-                            '<span>(전문가평가:'+ shop[i].foodieLogRating +')</span>' +
-                            '<span>(방문자평점:'+ '<img src="' + shop[i].star + '"/>'  + ')</span>' +
-                            '</div>' +
-                            '<hr>' +
-                            '<div>' +
-                                '<span>'+ (shop[i].address == '' ? "" : shop[i].address + '<br>') + '<img style="width: 15px;height: 15px;" src="/images/outline_phone_in_talk_black_24dp.png" />' + shop[i].phone + '</span>' +
-                            '</div>' +
-                            '<div>' +
-                            '<span>등록자: '+ shop[i].shopAlias +  '</span>' +
-                            '</div>' +
-                            '<div>' +
-                            '<span>에피큐어 조회수: '+ (shop[i].hit == null ? 0 : shop[i].hit) +' /  푸디 조회수: ' + (shop[i].foodieHit == null ? 0 : shop[i].foodieHit) +' / 위키니아 조회수: ' + (shop[i].wikiHit == null ? 0: shop[i].wikiHit) + '</span>' +
-                            '</div>' +
-                            '<div>' +
-                            '<span>등록: '+ moment(shop[i].createdAt).format("YYYY-MM-DD") +'  수정: ' + moment(shop[i].updatedAt).format("YYYY-MM-DD") + '</span>' +
-                            '</div>' +
-                        '</td>' +
-                        '<td>' + shopPaid + '</td>' +
-                        '<td><a href="/admin/shop/green/' + shop[i].shopId + '">수정</a></td>' +
-                        '<td><a onclick="return confirmUser();" href="/admin/shop/delete/green/' + shop[i].shopId + '">삭제</a></td>' +
-                        '</tr>';
-                });
-                $("#list-table").append(tr);
+         $.ajax({
+             url:"/item/list",
+             type:"POST",
+             data:param,
+             dataType: "json",
+             success:function(data){
+                 //1. 맛집 개수 출력
+                 $('#item-size').text('총' + data.count + '건의 맛집정보가 검색되었습니다.');
+                 var shop = data.data;
 
-                //3. 페이지 업
-                var pages = data.pages;
-                var currentPage = data.currentPage;
-                var button = '';
-                $.each(pages, function(i){
-                    if(i == currentPage){
-                        button +=
-                            '<button style="margin-right: 3px; margin-left: 3px; color: #1c294e; font-weight: bold;" value="' + pages[i] + '" onclick="clickButton(this)">' + pages[i] + '</button>'
-                    }else {
-                        button +=
-                            '<button style="margin-right: 3px; margin-left: 3px;" value="' + pages[i] + '" onclick="clickButton(this)">' + pages[i] + '</button>'
-                    }
-                });
-                $("#pages").append(button);
+                 //2. 상점 리스트 업
+                 var tr = '';
+                 $.each(shop, function (i) {
+                     var imgUrl = '';
+                     var shopPaid = '';
+                     // if(shop[i].menuImages == "" || "[]") imgUrl = '/images/default.png';
+                     // else imgUrl = shop[i].menuImages;
+                     if(shop[i].shopPaid != null){
+                         shopPaid = shop[i].shopPaid
+                     }
+                     tr +=
+                         '<tr>' +
+                         '<td>' +
+                             '<img src="' + shop[i].menuImages + '" onerror="this.src=\'/images/default.png\'"class="thumbnail" style="width: 80px; height:60px;"/>' +
+                             '</td>' +
+                             '<td style="text-align: left;">' +
+                             '<div>' +
+                             '<a target="_blank"  href="/shop?id='+ shop[i].shopId + '&page=0">' + shop[i].shopName + '</a>' +
+                             '<span>(전문가평가:'+ shop[i].foodieLogRating +')</span>' +
+                             '<span>(방문자평점:'+ '<img src="' + shop[i].star + '"/>'  + ')</span>' +
+                             '</div>' +
+                             '<hr>' +
+                             '<div>' +
+                                 '<span>'+ (shop[i].address == '' ? "" : shop[i].address + '<br>') + '<img style="width: 15px;height: 15px;" src="/images/outline_phone_in_talk_black_24dp.png" />' + shop[i].phone + '</span>' +
+                             '</div>' +
+                             '<div>' +
+                             '<span>등록자: '+ shop[i].shopAlias +  '</span>' +
+                             '</div>' +
+                             '<div>' +
+                             '<span>에피큐어 조회수: '+ (shop[i].hit == null ? 0 : shop[i].hit) +' /  푸디 조회수: ' + (shop[i].foodieHit == null ? 0 : shop[i].foodieHit) +' / 위키니아 조회수: ' + (shop[i].wikiHit == null ? 0: shop[i].wikiHit) + '</span>' +
+                             '</div>' +
+                             '<div>' +
+                             '<span>등록: '+ moment(shop[i].createdAt).format("YYYY-MM-DD") +'  수정: ' + moment(shop[i].updatedAt).format("YYYY-MM-DD") + '</span>' +
+                             '</div>' +
+                         '</td>' +
+                         '<td>' + shopPaid + '</td>' +
+                         '<td><a href="/admin/shop/green/' + shop[i].shopId + '">수정</a></td>' +
+                         '<td><a onclick="return confirmUser();" href="/admin/shop/delete/green/' + shop[i].shopId + '">삭제</a></td>' +
+                         '</tr>';
+                 });
+                 $("#list-table").append(tr);
 
-                //4. 버튼들
-                var btns = data.btns;
-                if (btns.first == -1) {
-                    document.getElementById('first').disabled = true;
-                } else {
-                    document.getElementById('first').disabled = false;
-                    $("#first").val(btns.first);
-                }
+                 //3. 페이지 업
+                 var pages = data.pages;
+                 var currentPage = data.currentPage;
+                 var button = '';
+                 $.each(pages, function(i){
+                     if(i == currentPage){
+                         button +=
+                             '<button style="margin-right: 3px; margin-left: 3px; color: #1c294e; font-weight: bold;" value="' + pages[i] + '" onclick="clickButton(this)">' + pages[i] + '</button>'
+                     }else {
+                         button +=
+                             '<button style="margin-right: 3px; margin-left: 3px;" value="' + pages[i] + '" onclick="clickButton(this)">' + pages[i] + '</button>'
+                     }
+                 });
+                 $("#pages").append(button);
 
-                if (btns.prev == -1) {
-                    document.getElementById('prev').disabled = true;
-                } else {
-                    document.getElementById('prev').disabled = false;
-                    $("#prev").val(btns.prev);
-                }
+                 //4. 버튼들
+                 var btns = data.btns;
+                 if (btns.first == -1) {
+                     document.getElementById('first').disabled = true;
+                 } else {
+                     document.getElementById('first').disabled = false;
+                     $("#first").val(btns.first);
+                 }
 
-                if(btns.next == -1){
-                    document.getElementById('next').disabled = true;
-                } else {
-                    document.getElementById('next').disabled = false;
-                    $("#next").val(btns.next);
-                }
+                 if (btns.prev == -1) {
+                     document.getElementById('prev').disabled = true;
+                 } else {
+                     document.getElementById('prev').disabled = false;
+                     $("#prev").val(btns.prev);
+                 }
 
-                if(btns.last == -1){
-                    document.getElementById('last').disabled = true;
-                } else {
-                    document.getElementById('last').disabled = false;
-                    $("#last").val(btns.last);
-                }
+                 if(btns.next == -1){
+                     document.getElementById('next').disabled = true;
+                 } else {
+                     document.getElementById('next').disabled = false;
+                     $("#next").val(btns.next);
+                 }
+
+                 if(btns.last == -1){
+                     document.getElementById('last').disabled = true;
+                 } else {
+                     document.getElementById('last').disabled = false;
+                     $("#last").val(btns.last);
+                 }
+             }
+         });*/
+     } );
+
+     var ordering = "등록일순";
+
+     function confirmUser(){
+         return confirm("삭제하시겠습니까?");
+     }
+     function clickOrdering(e){
+         ordering = e.value;
+         clickButton(1);
+     }
+
+     function filterSearch(){
+         //조회 시 기본 정렬 > 등록순
+         clickButton(1);
+     }
+
+
+    serialize = function(obj) {
+        var str = [];
+        for (var p in obj)
+            if (obj.hasOwnProperty(p)) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
             }
-        });
-    } );
-
-    var ordering = "등록일순";
-
-    function confirmUser(){
-        return confirm("삭제하시겠습니까?");
+        return str.join("&");
     }
-    function clickOrdering(e){
-        ordering = e.value;
-        clickButton(1);
-    }
+    function getUrlParams() {
+        var params = {};
 
-    function filterSearch(){
-        //조회 시 기본 정렬 > 등록순
-        clickButton(1);
+        window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+            function(str, key, value) {
+                params[key] = value;
+            }
+        );
+
+        return params;
     }
 
-    function clickButton(e){
+    function clickButtonAfterUpdate() {
         $('#list-table tr:not(:first)').remove();
         $("#pages").empty();
         console.log('오더에여', ordering);
-        var page = e == 1 ? 1:e.value;
 
-        var shop1st = $('#table-filter1 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-        var shop2nd = $('#table-filter2 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-        var shop3th = $('#table-filter3 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-        var area1st = $('#table-filter4 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-        var area2nd = $('#table-filter5 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-        var area3th = $('#table-filter6 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-        var selectedOption = $('#table-filter8 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
-        var registerService = $('#table-filter7 :selected').val();
-        var keyword = $('#keyword').val()
 
-        var couponFlag;
-        if($('input:checkbox[id="couponValue"]').is(":checked"))
-            couponFlag = 1;
-        else
-            couponFlag = 0;
+        var page = getUrlParams().page;
+        var shop1st = getUrlParams().shop1st; // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var shop2nd = getUrlParams().shop2nd;  // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var shop3th = getUrlParams().shop3th;  // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var area1st = getUrlParams().area1st; // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var area2nd = getUrlParams().area2nd; // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var area3th = getUrlParams().area3th;  // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var selectedOption = getUrlParams().selectedOption;  // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+        var registerService =getUrlParams().registerService;
+        var keyword = getUrlParams().keyword;
+        var couponFlag = getUrlParams().couponFlag;
 
         // - 1일시 검색하지 않음.
-        if(selectedOption == "") selectedOption = "-1";
-        if(keyword == "") keyword = "-1";
-        if(shop1st == "") shop1st = "-1";
-        if(shop2nd == "") shop2nd = "-1";
-        if(shop3th == "") shop3th = -1;
-        if(area1st == "") area1st = -1;
-        if(area2nd == "") area2nd = -1;
-        if(area3th == "") area3th = -1;
-        if(registerService == "") registerService = "-1";
+        if (selectedOption == "") selectedOption = "-1";
+        if (keyword == "") keyword = "-1";
+        if (shop1st == "") shop1st = "-1";
+        if (shop2nd == "") shop2nd = "-1";
+        if (shop3th == "") shop3th = -1;
+        if (area1st == "") area1st = -1;
+        if (area2nd == "") area2nd = -1;
+        if (area3th == "") area3th = -1;
+        if (registerService == "") registerService = "-1";
 
         console.log(shop1st);
         console.log(shop2nd);
@@ -587,28 +613,29 @@
         console.log(area2nd);
         console.log(area3th);
 
+
         var param = {
-            'background' :$('#background').val(),
+            'background': $('#background').val(),
             'renderOption': '2',
             'page': page,
-            'shop1st' : shop1st,
-            'shop2nd' : shop2nd,
-            'shop3th' : shop3th,
-            'area1st' : area1st,
-            'area2nd' : area2nd,
-            'area3th' : area3th,
+            'shop1st': shop1st,
+            'shop2nd': shop2nd,
+            'shop3th': shop3th,
+            'area1st': area1st,
+            'area2nd': area2nd,
+            'area3th': area3th,
             'registerService': registerService,
             'selectedOption': selectedOption,
-            'keyword':keyword,
+            'keyword': keyword,
             'order': ordering,
             'couponFlag': couponFlag
         }
         $.ajax({
-            url:"/item/list",
-            type:"POST",
-            data:param,
+            url: "/item/list",
+            type: "POST",
+            data: param,
             dataType: "json",
-            success:function(data){
+            success: function (data) {
                 //1. 맛집 개수 출력
                 $('#item-size').text('총' + data.count + '건의 맛집정보가 검색되었습니다.');
                 var shop = data.data;
@@ -621,7 +648,7 @@
                     console.log(shop[i].hit)
                     // if(shop[i].menuImages == "" || "[]") imgUrl = '/images/default.png';
                     // else imgUrl = shop[i].shopImage;
-                    if(shop[i].shopPaid != null){
+                    if (shop[i].shopPaid != null) {
                         shopPaid = shop[i].shopPaid
                     }
                     tr +=
@@ -631,26 +658,26 @@
                         '</td>' +
                         '<td style="text-align: left;line-height: 1.5">' +
                         '<div>' +
-                        '<a target="_blank" href="/shop?id='+ shop[i].shopId + '&page=0">' + shop[i].shopName + '</a>' +
-                        '<span>(전문가평가:'+ shop[i].foodieLogRating +')</span>' +
-                        '<span>(방문자평점:'+ '<img src="' + shop[i].star + '"/>'  + ')</span>' +
+                        '<a target="_blank" href="/shop?id=' + shop[i].shopId + '&page=0">' + shop[i].shopName + '</a>' +
+                        '<span>(전문가평가:' + shop[i].foodieLogRating + ')</span>' +
+                        '<span>(방문자평점:' + '<img src="' + shop[i].star + '"/>' + ')</span>' +
                         '</div>' +
                         '<hr>' +
                         '<div>' +
-                        '<span>'+ (shop[i].address == '' ? "" : shop[i].address + '<br>') + '<img style="width: 15px;height: 15px;" src="/images/outline_phone_in_talk_black_24dp.png" />' + shop[i].phone + '</span>' +
+                        '<span>' + (shop[i].address == '' ? "" : shop[i].address + '<br>') + '<img style="width: 15px;height: 15px;" src="/images/outline_phone_in_talk_black_24dp.png" />' + shop[i].phone + '</span>' +
                         '</div>' +
                         '<div>' +
-                        '<span>등록자: '+ shop[i].shopAlias +  '</span>' +
+                        '<span>등록자: ' + shop[i].shopAlias + '</span>' +
                         '</div>' +
                         '<div>' +
-                        '<span>에피큐어 조회수: '+ (shop[i].hit == null ? 0 : shop[i].hit) +' /  푸디 조회수: ' + (shop[i].foodieHit == null ? 0 : shop[i].foodieHit) +' / 위키니아 조회수: ' + (shop[i].wikiHit == null ? 0: shop[i].wikiHit) + '</span>' +
+                        '<span>에피큐어 조회수: ' + (shop[i].hit == null ? 0 : shop[i].hit) + ' /  푸디 조회수: ' + (shop[i].foodieHit == null ? 0 : shop[i].foodieHit) + ' / 위키니아 조회수: ' + (shop[i].wikiHit == null ? 0 : shop[i].wikiHit) + '</span>' +
                         '</div>' +
                         '<div>' +
-                        '<span>등록: '+ moment(shop[i].createdAt).format("YYYY-MM-DD") +'  수정: ' + moment(shop[i].updatedAt).format("YYYY-MM-DD") + ' 조회수: ' + shop[i].hit + '</span>' +
+                        '<span>등록: ' + moment(shop[i].createdAt).format("YYYY-MM-DD") + '  수정: ' + moment(shop[i].updatedAt).format("YYYY-MM-DD") + ' 조회수: ' + shop[i].hit + '</span>' +
                         '</div>' +
                         '</td>' +
                         '<td>' + shop[i].shopPaid + '</td>' +
-                        '<td><a href="/admin/shop/green/' + shop[i].shopId + '">수정</a></td>' +
+                        '<td><a href="/admin/shop/green/' + shop[i].shopId + '?' + serialize(param) + '">수정</a></td>' +
                         '<td><a onclick="return confirmUser();" href="/admin/shop/delete/green/' + shop[i].shopId + '">삭제</a></td>' +
                         '</tr>';
                 });
@@ -661,11 +688,11 @@
                 var pages = data.pages;
                 var currentPage = data.currentPage;
                 var button = '';
-                $.each(pages, function(i){
-                    if(i == currentPage){
+                $.each(pages, function (i) {
+                    if (i == currentPage) {
                         button +=
                             '<button style="margin-right: 3px; margin-left: 3px; color: #1c294e; font-weight: bold;" value="' + pages[i] + '" onclick="clickButton(this)">' + pages[i] + '</button>'
-                    }else {
+                    } else {
                         button +=
                             '<button style="margin-right: 3px; margin-left: 3px;" value="' + pages[i] + '" onclick="clickButton(this)">' + pages[i] + '</button>'
                     }
@@ -688,14 +715,14 @@
                     $("#prev").val(btns.prev);
                 }
 
-                if(btns.next == -1){
+                if (btns.next == -1) {
                     document.getElementById('next').disabled = true;
                 } else {
                     document.getElementById('next').disabled = false;
                     $("#next").val(btns.next);
                 }
 
-                if(btns.last == -1){
+                if (btns.last == -1) {
                     document.getElementById('last').disabled = true;
                 } else {
                     document.getElementById('last').disabled = false;
@@ -703,8 +730,166 @@
                 }
             }
         });
-
     }
+        function clickButton(e){
+         $('#list-table tr:not(:first)').remove();
+         $("#pages").empty();
+         console.log('오더에여', ordering);
+         var page = e == 1 ? 1:e.value;
+
+         var shop1st = $('#table-filter1 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+         var shop2nd = $('#table-filter2 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+         var shop3th = $('#table-filter3 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+         var area1st = $('#table-filter4 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+         var area2nd = $('#table-filter5 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+         var area3th = $('#table-filter6 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+         var selectedOption = $('#table-filter8 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
+         var registerService = $('#table-filter7 :selected').val();
+         var keyword = $('#keyword').val()
+
+         var couponFlag;
+         if($('input:checkbox[id="couponValue"]').is(":checked"))
+             couponFlag = 1;
+         else
+             couponFlag = 0;
+
+         // - 1일시 검색하지 않음.
+         if(selectedOption == "") selectedOption = "-1";
+         if(keyword == "") keyword = "-1";
+         if(shop1st == "") shop1st = "-1";
+         if(shop2nd == "") shop2nd = "-1";
+         if(shop3th == "") shop3th = -1;
+         if(area1st == "") area1st = -1;
+         if(area2nd == "") area2nd = -1;
+         if(area3th == "") area3th = -1;
+         if(registerService == "") registerService = "-1";
+
+         console.log(shop1st);
+         console.log(shop2nd);
+         console.log(shop3th);
+         console.log(area1st);
+         console.log(area2nd);
+         console.log(area3th);
+
+
+         var param = {
+             'background' :$('#background').val(),
+             'renderOption': '2',
+             'page': page,
+             'shop1st' : shop1st,
+             'shop2nd' : shop2nd,
+             'shop3th' : shop3th,
+             'area1st' : area1st,
+             'area2nd' : area2nd,
+             'area3th' : area3th,
+             'registerService': registerService,
+             'selectedOption': selectedOption,
+             'keyword':keyword,
+             'order': ordering,
+             'couponFlag': couponFlag
+         }
+         $.ajax({
+             url:"/item/list",
+             type:"POST",
+             data:param,
+             dataType: "json",
+             success:function(data){
+                 //1. 맛집 개수 출력
+                 $('#item-size').text('총' + data.count + '건의 맛집정보가 검색되었습니다.');
+                 var shop = data.data;
+
+                 //2. 상점 리스트 업
+                 var tr = '';
+                 $.each(shop, function (i) {
+                     var imgUrl = '';
+                     var shopPaid = '';
+                     console.log(shop[i].hit)
+                     // if(shop[i].menuImages == "" || "[]") imgUrl = '/images/default.png';
+                     // else imgUrl = shop[i].shopImage;
+                     if(shop[i].shopPaid != null){
+                         shopPaid = shop[i].shopPaid
+                     }
+                     tr +=
+                         '<tr>' +
+                         '<td>' +
+                         '<img src="' + shop[i].menuImages.split(",")[0] + '" onerror="this.src=\'/images/default.png\'"class="thumbnail" style="width: 80px; height:60px;"/>' +
+                         '</td>' +
+                         '<td style="text-align: left;line-height: 1.5">' +
+                         '<div>' +
+                         '<a target="_blank" href="/shop?id='+ shop[i].shopId + '&page=0">' + shop[i].shopName + '</a>' +
+                         '<span>(전문가평가:'+ shop[i].foodieLogRating +')</span>' +
+                         '<span>(방문자평점:'+ '<img src="' + shop[i].star + '"/>'  + ')</span>' +
+                         '</div>' +
+                         '<hr>' +
+                         '<div>' +
+                         '<span>'+ (shop[i].address == '' ? "" : shop[i].address + '<br>') + '<img style="width: 15px;height: 15px;" src="/images/outline_phone_in_talk_black_24dp.png" />' + shop[i].phone + '</span>' +
+                         '</div>' +
+                         '<div>' +
+                         '<span>등록자: '+ shop[i].shopAlias +  '</span>' +
+                         '</div>' +
+                         '<div>' +
+                         '<span>에피큐어 조회수: '+ (shop[i].hit == null ? 0 : shop[i].hit) +' /  푸디 조회수: ' + (shop[i].foodieHit == null ? 0 : shop[i].foodieHit) +' / 위키니아 조회수: ' + (shop[i].wikiHit == null ? 0: shop[i].wikiHit) + '</span>' +
+                         '</div>' +
+                         '<div>' +
+                         '<span>등록: '+ moment(shop[i].createdAt).format("YYYY-MM-DD") +'  수정: ' + moment(shop[i].updatedAt).format("YYYY-MM-DD") + ' 조회수: ' + shop[i].hit + '</span>' +
+                         '</div>' +
+                         '</td>' +
+                         '<td>' + shop[i].shopPaid + '</td>' +
+                         '<td><a href="/admin/shop/green/' + shop[i].shopId + '?' +serialize(param) + '">수정</a></td>' +
+                         '<td><a onclick="return confirmUser();" href="/admin/shop/delete/green/' + shop[i].shopId + '">삭제</a></td>' +
+                         '</tr>';
+                 });
+                 $("#list-table").append(tr);
+
+
+                 //3. 페이지 업
+                 var pages = data.pages;
+                 var currentPage = data.currentPage;
+                 var button = '';
+                 $.each(pages, function(i){
+                     if(i == currentPage){
+                         button +=
+                             '<button style="margin-right: 3px; margin-left: 3px; color: #1c294e; font-weight: bold;" value="' + pages[i] + '" onclick="clickButton(this)">' + pages[i] + '</button>'
+                     }else {
+                         button +=
+                             '<button style="margin-right: 3px; margin-left: 3px;" value="' + pages[i] + '" onclick="clickButton(this)">' + pages[i] + '</button>'
+                     }
+                 });
+                 $("#pages").append(button);
+
+                 //4. 버튼들
+                 var btns = data.btns;
+                 if (btns.first == -1) {
+                     document.getElementById('first').disabled = true;
+                 } else {
+                     document.getElementById('first').disabled = false;
+                     $("#first").val(btns.first);
+                 }
+
+                 if (btns.prev == -1) {
+                     document.getElementById('prev').disabled = true;
+                 } else {
+                     document.getElementById('prev').disabled = false;
+                     $("#prev").val(btns.prev);
+                 }
+
+                 if(btns.next == -1){
+                     document.getElementById('next').disabled = true;
+                 } else {
+                     document.getElementById('next').disabled = false;
+                     $("#next").val(btns.next);
+                 }
+
+                 if(btns.last == -1){
+                     document.getElementById('last').disabled = true;
+                 } else {
+                     document.getElementById('last').disabled = false;
+                     $("#last").val(btns.last);
+                 }
+             }
+         });
+
+     }
 </script>
 
 </html>

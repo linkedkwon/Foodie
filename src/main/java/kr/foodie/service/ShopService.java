@@ -262,21 +262,26 @@ public class ShopService {
                     con.enterLocalPassiveMode(); // important!
                     con.setFileType(FTP.BINARY_FILE_TYPE);
 
-                    for (int i = 0; i < files.length; i++) {
-                        if (!(files[i].getOriginalFilename().equals(""))) {
-                            con.storeFile(files[i].getOriginalFilename(), files[i].getInputStream());
-                            images.add("http://foodie.speedgabia.com/" + files[i].getOriginalFilename());
-                        }
-                    }
+
 //                    Gson gson = new Gson();
 //                    JsonObject convertedObject = new Gson().fromJson(existImages, JsonObject.class);
 //                    Map<String, Object> map = gson.fromJson(existImages, Map.class);
                     if(existImages != null){
                         items = existImages.replace("[", "").replace("]", "").replaceAll("\"", "").split(",");
                         for(int i=0; i < items.length; i++){
-                            images.add(items[i]);
+                            if(!(items[i].equals(""))){
+                                images.add(items[i]);
+                            }
                         }
                     }
+
+                    for (int i = 0; i < files.length; i++) {
+                        if (!(files[i].getOriginalFilename().equals(""))) {
+                            con.storeFile(files[i].getOriginalFilename(), files[i].getInputStream());
+                            images.add("http://foodie.speedgabia.com/" + files[i].getOriginalFilename());
+                        }
+                    }
+
                     String result = new Gson().toJson(images);
 
                     updated.setMenuImages(result);

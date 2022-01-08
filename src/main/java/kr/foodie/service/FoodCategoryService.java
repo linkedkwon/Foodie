@@ -1,5 +1,6 @@
 package kr.foodie.service;
 
+import kr.foodie.repo.admin.EpicureRegionRepository;
 import kr.foodie.repo.admin.FoodCategoryAdminRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class FoodCategoryService {
 
-    private final FoodCategoryAdminRepository foodCategoryAdminRepository;
+    private final EpicureRegionRepository epicureRegionRepository;
 
     public String getShopCategory(String bCode, String mCode, String address){
 
@@ -23,8 +24,8 @@ public class FoodCategoryService {
         mCode = mCode.toString().contains(",")?mCode:mCode;
 
 
-//        category += bCode.toString().equalsIgnoreCase("0")? "":"" + foodCategoryAdminRepository.findByBCodeAndLevel(Integer.valueOf(bCode),1).get(0).getCategoryName();
-//        category += mCode.toString().equalsIgnoreCase("0")? "":" | " + foodCategoryAdminRepository.findByMCodeAndLevel(Integer.valueOf(mCode),2).get(0).getCategoryName();
+        category += bCode.toString().equalsIgnoreCase("0")? "":"" + epicureRegionRepository.findByCode(Integer.parseInt(bCode)).get(0).getListName();
+        category += mCode.toString().equalsIgnoreCase("0")? "":" | " + epicureRegionRepository.findByCode(Integer.parseInt(mCode)).get(0).getListName();
 
         return category;
     }

@@ -65,7 +65,8 @@ public class MainController {
                     .replace("경상남도", "경남")
                     .replace("경상북도", "경북")
                     .replace("전라남도", "전남")
-                    .replace("전라북도", "전북"));
+                    .replace("전라북도", "전북")
+                    .replace("도", ""));
         }
         mav.addObject("regionInfos", regionsInfos);
         mav.setViewName("main");
