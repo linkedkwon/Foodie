@@ -38,4 +38,5 @@ public class AccountController {
         authenticationService.updateAuthentication(user.getEmail());
         return "redirect:/user/info";
     }
+
 }

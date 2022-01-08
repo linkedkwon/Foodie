@@ -111,4 +111,7 @@ public class MemberService {
         return userRepository.findAllByUserType(userType);
     }
 
+    public User findUserById(int userId){
+        return userRepository.findUserById(userId).orElseGet(() -> { return new User();});
+    }
 }
