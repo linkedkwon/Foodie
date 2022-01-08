@@ -728,6 +728,7 @@ public class AdminController {
         return mav;
     }
 
+    /**
     @RequestMapping(value = "/comment/all", method = RequestMethod.GET)
     public ModelAndView getAllComment() {
         ModelAndView mav = new ModelAndView();
@@ -742,7 +743,7 @@ public class AdminController {
         members.put("data", reviewService.getAllReviews());
         return members;
     }
-
+    */
 
 
     @RequestMapping(value = "/userList", method = RequestMethod.GET)

@@ -1,10 +1,12 @@
 package kr.foodie.controller;
 
 import kr.foodie.domain.user.AdminUserListVO;
+import kr.foodie.service.MemberService;
 import kr.foodie.service.admin.AdminUserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.dom4j.rule.Mode;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -18,9 +20,15 @@ import java.util.Map;
 public class AdminUserController {
 
     private final AdminUserService adminUserService;
+    private final MemberService memberService;
 
+    /**
+     * 1. 회원 관리
+     */
     @GetMapping("/user/0/all")
-    public String renderGeneralUserList(){
+    public String renderGeneralUserList(@RequestParam(value = "page", required = false) Integer page,
+                                        @RequestParam(value = "userType", required = false) String userType, @RequestParam(value = "option", required = false) String option,
+                                        @RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "renderOption", required = false) String renderOption){
         return "admin-user-list";
     }
 
@@ -62,4 +70,27 @@ public class AdminUserController {
         return adminUserService.getMemo(userId);
     }
 
+    /**
+     * 2. 회원 상세(이메일 눌렀을 때)
+     */
+    @GetMapping("/user/detail")
+    public String renderUserDetail(@RequestParam(value = "id") Integer userId, @RequestParam(value = "page") Integer page,
+                                   @RequestParam(value = "userType") String userType, @RequestParam(value = "option") String option,
+                                   @RequestParam(value = "keyword") String keyword, @RequestParam(value = "renderOption") String renderOption,
+                                   Model model){
+        model.addAttribute("user", memberService.findUserById(userId));
+        return "admin-user-detail";
+    }
+
+    /**
+     * 3. 회원 수정
+     */
+    @GetMapping("/user/edit")
+    public String renderUserEdit(@RequestParam(value = "id") Integer userId, @RequestParam(value = "page") Integer page,
+                                 @RequestParam(value = "userType") String userType, @RequestParam(value = "option") String option,
+                                 @RequestParam(value = "keyword") String keyword, @RequestParam(value = "renderOption") String renderOption,
+                                 Model model){
+        model.addAttribute("user", memberService.findUserById(userId));
+        return "admin-user-edit";
+    }
 }

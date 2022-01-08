@@ -248,85 +248,114 @@
 
             <!-- Begin Page Content -->
             <div class="card shadow mb-4" style="width: 800px;margin:auto;">
-                <div class="card-header py-3">
-                    <!--/*@thymesVar id="background" type="String"*/-->
-                    <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">맛집 회원 관리</h6>
-                </div>
                 <div>
-                    <div style="width: 90%;margin:auto;margin-top: 20px;    font-size: 9pt;    border: 1px solid lightgray">
-                        <div style="display: inline-flex;">
-                            <div  style="height: 31px; text-align:center; width: 120px;  padding-top: 6px; background: rgb(247, 247, 247); border-right: 1px solid lightgray"> 검색어 </div>
-                            <p style="    padding-left: 20px;  padding-top: 5px;  margin-bottom: 0;">
-                                <select id="table-filter8" style="  height: 20px;">
-                                    <option value="">선택</option>
-                                    <option value="이메일">이메일</option>
-                                    <option value="이름">이름</option>
-                                </select>
-                                <input type="text" id="keyword" style="height: 20px; width: 120px;"/>
-                            </p>
-                        </div>
-                        <button value="조회" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="filterSearch()">검색</button>
-                    </div>
-
                     <div class="card-body" style="width:100%; padding-right: 0px;margin: auto; padding-bottom: 0px;">
+
+                        <!-- 1. 회원정보 -->
                         <div style="float: left; margin-bottom:10px;">
-                            <span id="item-size" style="color: #317CC1; font-weight: 600; font-size: 10px;"></span>
+                            <span style="color: #317CC1; font-weight: 600; font-size: 10px;">회원 정보입니다.</span>
                         </div>
-                        <!-- 리스트 테이블 -->
+                        <!-- 테이블 -->
                         <div class="table-responsive" style="font-size: 9pt;margin: auto;    padding-right: 20px;">
-                            <table class="table table-bordered display" id="list-table" cellspacing="0" border="1px solid #dee2e6">
+                            <table class="table table-bordered display" cellspacing="0" border="1px solid #dee2e6" th:object="${user}">
                                 <thead>
-                                <tr>
-                                    <th style=""><input type="checkbox" id="cbx_chkAll" name="cbx_chkAll" value=""></th>
-                                    <th style="text-align: center; width: 240px;" >이메일</th>
-                                    <th style="text-align: center; width: 100px;">이름</th>
-                                    <th style="text-align: center; width: 100px;">가입일</th>
-                                    <th style="text-align: center; width: 80px;">방문</th>
-                                    <th style="text-align: center; width: 80px;">메모</th>
-                                    <th style="text-align: center; width: 80px;">수정</th>
-                                    <th style="text-align: center; width: 80px;">삭제</th>
-                                </tr>
+                                    <tr>
+                                        <td class="gray-bg" align="center" width="15%">이메일</td>
+                                        <td width="35%" th:text="${user.email}"></td>
+                                        <td class="gray-bg" align="center" width="15%">이름</td>
+                                        <td width="35%" th:text="${user.name}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="gray-bg" align="center" width="15%">비밀번호</td>
+                                        <td width="35%" th:text="${user.password}"></td>
+                                        <td class="gray-bg" align="center" width="15%">전화번호</td>
+                                        <td width="35%" th:text="${user.telNum}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="gray-bg" align="center" width="15%">휴대전화</td>
+                                        <td width="35%" th:text="${user.phoneNum}"></td>
+                                        <td class="gray-bg" align="center" width="15%">방문횟수</td>
+                                        <td width="35%" th:text="${user.visitedCnt}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="gray-bg" align="center" width="15%">주소</td>
+                                        <td colspan="3" th:text="${#strings.arraySplit(user.address, '+')[1]} + ' ' +${#strings.arraySplit(user.address, '+')[2]}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="gray-bg" align="center" width="15%">이메일수신</td>
+                                        <td width="35%" th:text="${user.emailReceivedType} == '1'? '수신동의':'수신거부'"></td>
+                                        <td class="gray-bg" align="center" width="15%">SNS수신</td>
+                                        <td width="35%" th:text="${user.snsReceivedType} == '1'? '수신동의':'수신거부'"></td>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                            <table class="table table-bordered display" cellspacing="0" border="1px solid #dee2e6">
+                                <thead>
+                                    <tr>
+                                        <td class="gray-bg" align="center">관리자 메모<span id="tip"> + 회원은 볼 수 없음</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td height="60" valign="top" th:utext="${user.memo}"></td>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div style="text-align: center">
+                                <div style="display: inline-flex;">
+                                    <a class="button-style" href="/">수정</a>
+                                    <a id="back-first-a" class="button-style" href="/">목록</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- 2. 맛집정보 -->
+                        <div style="float: left; margin-bottom:10px;">
+                            <span style="color: #317CC1; font-weight: 600; font-size: 10px;">맛집 정보 - 0건</span>
+                        </div>
+                        <!-- 테이블 -->
+                        <div class="table-responsive" style="font-size: 9pt;margin: auto;    padding-right: 20px;">
+                            <table class="table table-bordered display" cellspacing="0" border="1px solid #dee2e6">
+                                <thead>
+                                    <tr class="gray-bg">
+                                        <td width="120">사진</td>
+                                        <td>내용</td>
+                                        <td width="200">등록서비스</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">등록한 맛집정보가 없습니다.</td>
+                                    </tr>
                                 </thead>
                             </table>
                         </div>
 
-
-                        <!-- 메모 모달 -->
-                        <div class="modal-memo" style="display: none; position: fixed; width: 48%; left:53%; margin-left: -20%; height: 500px; top:50%; margin-top: -200px; overflow: auto;">
-                            <div class="container-fluid">
-                                <div class="col-md-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="card-title">메모</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <textarea id="summernote"></textarea>
-
-                                            <div style="text-align: center; padding-top: 10px;">
-                                                <div style="display: inline-block;">
-                                                    <button style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="closeModalMemo()">닫기</button>
-                                                    <button id="memoEditBtn" style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="editMemo(this)">수정</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                        <!-- 3. 결제정보 -->
+                        <div style="float: left; margin-bottom:10px;">
+                            <span style="color: #317CC1; font-weight: 600; font-size: 10px;">결제정보 - 0건</span>
                         </div>
-                    </div>
-
-                    <div class="pagination" style="padding: 0 20px 0 20px; margin-bottom: 15px;">
-                        <div>
-                            <button value="선택삭제" style="font-size: 10px; width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="deleteCheckedUsers()">선택삭제</button>
+                        <!-- 테이블 -->
+                        <div class="table-responsive" style="font-size: 9pt;margin: auto;    padding-right: 20px;">
+                            <table class="table table-bordered display" cellspacing="0" border="1px solid #dee2e6">
+                                <thead>
+                                    <tr class="gray-bg">
+                                        <td>결제 내역</td>
+                                        <td width="120">서비스명</td>
+                                        <td width="90">등록기간</td>
+                                        <td width="70">결제금액</td>
+                                        <td width="80">결제방법</td>
+                                        <td width="80">결제승인</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6">결제내역이 존재하지 않습니다.</td>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
-                        <div style="margin: 0 auto; display: flex;">
-                            <button id="first" onclick="clickButton(this)"><img src="/images/paging_first.gif"/></button>
-                            <button id="prev" onclick="clickButton(this)" style="margin-right: 10px;"><img src="/images/paging_pre.gif"/></button>
-                            <div id = "pages">
+
+                        <div style="text-align: center">
+                            <div style="display: inline-flex;">
+                                <a id="back-second-a" class="button-style" href="/">목록</a>
                             </div>
-                            <button id="next" onclick="clickButton(this)" style="margin-left: 10px;"><img src="/images/paging_next.gif"/></button>
-                            <button id="last" onclick="clickButton(this)"><img src="/images/paging_last.gif"/></button>
                         </div>
                     </div>
                 </div>
@@ -415,11 +444,33 @@
     }
     .table td, .table th{
         padding: 7px !important;
-        text-align: center;
     }
 
-    .table td{
-        text-align: center;
+    .gray-bg{
+        background-color: #f7f7f7;
+    }
+
+    .button-style{
+        font-size: 12px;
+        width: 50px;
+        margin-right: 5px;
+        height: 25px;
+        float: right;
+        margin-top: 3px;
+        margin-bottom: 10px;
+        background-color: #f7f7f7;
+        border-radius: 5px;
+        border: 1px solid gainsboro;
+        color: slategray;
+        padding-top: 3px;
+    }
+
+    #tip{
+        margin-left: 6px;
+        color: #3399FF;
+        font-size: 8pt;
+        font-family: dotum;
+        letter-spacing: -1px;
     }
 
     button {
@@ -438,325 +489,35 @@
         var xOffset = 10;
         var yOffset = 30;
 
-        $(document).on("mouseover",".thumbnail",function(e){ //마우스 오버시
+        $(document).on("mouseover", ".thumbnail", function (e) { //마우스 오버시
 
-            $("body").append("<p id='preview'><img src='"+ $(this).attr("src") +"' width='400px' /></p>"); //보여줄 이미지를 선언
+            $("body").append("<p id='preview'><img src='" + $(this).attr("src") + "' width='400px' /></p>"); //보여줄 이미지를 선언
             $("#preview")
-                .css("top",(e.pageY - xOffset) + "px")
-                .css("left",(e.pageX + yOffset) + "px")
+                .css("top", (e.pageY - xOffset) + "px")
+                .css("left", (e.pageX + yOffset) + "px")
                 .fadeIn("fast"); //미리보기 화면 설정 셋팅
         });
 
-        $(document).on("mousemove",".thumbnail",function(e){ //마우스 이동시
+        $(document).on("mousemove", ".thumbnail", function (e) { //마우스 이동시
             $("#preview")
-                .css("top",(e.pageY - xOffset) + "px")
-                .css("left",(e.pageX + yOffset) + "px");
+                .css("top", (e.pageY - xOffset) + "px")
+                .css("left", (e.pageX + yOffset) + "px");
         });
 
-        $(document).on("mouseout",".thumbnail",function(){ //마우스 아웃시
+        $(document).on("mouseout", ".thumbnail", function () { //마우스 아웃시
             $("#preview").remove();
         });
 
-        $('#summernote').summernote({
-            height: 300,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'paragraph']],
-                ['insert', ['link']],
-            ]
-        });
-
-        <!-- 페이지 로드 시 데이터 -->
-        //url에 붙어 있는지 없는지 확인
-
+        //뒤로가기 url 만들기
         var link = document.location.href;
-        console.log('링크에여 ', link.length);
-
-        var param;
-        if(link.length < 40) {
-            param = {
-                page: 1,
-                'userType': '1',
-                'option': "없음",
-                'keyword': "없음",
-                'renderOption': '1'
-            };
-        }
-        else{
-            var url = new URL(link);
-            var urlParams = url.searchParams;
-            param = {
-                page: urlParams.get('page'),
-                'userType': '1',
-                'option': urlParams.get('option'),
-                'keyword': urlParams.get('keyword'),
-                'renderOption': urlParams.get('renderOption')
-            };
-
-            $('#table-filter8 :selected').val(urlParams.get('option'));
-            $('#keyword').val(urlParams.get('keyword'));
-        }
-
-        //전역 현재 페이지(삭제 기능에 사용)
-        var currentPage = 1;
-        appendData(param);
-
-        //체크박스 전체 선택, 해제
-        $("#cbx_chkAll").click(function() {
-            if($("#cbx_chkAll").is(":checked")) $("input[name=userId_checkBox]").prop("checked", true);
-            else $("input[name=userId_checkBox]").prop("checked", false);
-        });
-
+        var url = new URL(link);
+        var urlParams = url.searchParams;
+        var backLink = "/admin/user/"+urlParams.get('userType')+"/all?page="
+            + urlParams.get('page') + "&userType=" + urlParams.get('userType')
+            + "&option=" + urlParams.get('option') + "&keyword=" + urlParams.get('keyword')
+            + "&renderOption=" + urlParams.get('renderOption');
+        $("#back-first-a").attr("href", backLink);
+        $("#back-second-a").attr("href", backLink);
     });
-
-    //검색 함수
-    function filterSearch(){
-        clickButton(1);
-    }
-
-    //삭제 후 현재 페이지 기준 요청 함수
-    function deleteAndUpdate(currentPage){
-        $('#list-table tr:not(:first)').remove();
-        $("#pages").empty();
-
-        var option = $('#table-filter8 :selected').val();
-        var keyword = $('#keyword').val();
-        if(option == "") option = "-1";
-        if(keyword == "") keyword = "-1";
-
-        var param = {
-            page: currentPage,
-            'userType': '1',
-            'option': option,
-            'keyword': keyword,
-            'renderOption': '2'
-        }
-
-        appendData(param);
-    }
-
-    //페이지 이동 함수
-    function clickButton(e){
-        $('#list-table tr:not(:first)').remove();
-        $("#pages").empty();
-
-        var page = e == 1 ? 1:e.value;
-        var option = $('#table-filter8 :selected').val();
-        var keyword = $('#keyword').val();
-        if(option == "") option = "-1";
-        if(keyword == "") keyword = "-1";
-
-        var param = {
-            page: page,
-            'userType': '1',
-            'option': option,
-            'keyword': keyword,
-            'renderOption': '2'
-        };
-
-        appendData(param);
-    }
-
-    /**
-     * 리스트 요청 및 테이블 어팬드 함수
-     */
-    function appendData(param){
-        $.ajax({
-            url:"/admin/user/list",
-            type:"POST",
-            data:param,
-            dataType: "json",
-            success:function(data){
-                //1. 맛집 개수 출력;
-                $('#item-size').text('총 ' + data.size + '의 회원이 검색되었습니다.');
-                var user = data.item;
-
-                //3. 페이지 업
-                var pages = data.pages;
-                var thisPage = data.currentPage;
-
-                var button = '';
-                $.each(pages, function(i){
-                    if(i == thisPage){
-                        button +=
-                            '<button style="margin-right: 3px; margin-left: 3px; color: #1c294e; font-weight: bold;" value="' + pages[i] + '" onclick="clickButton(this)">' + pages[i] + '</button>'
-
-                        currentPage = pages[i];
-                    }else {
-                        button +=
-                            '<button style="margin-right: 3px; margin-left: 3px;" value="' + pages[i] + '" onclick="clickButton(this)">' + pages[i] + '</button>'
-                    }
-                });
-                $("#pages").append(button);
-
-                //2. 상점 리스트 업
-                var tr = '';
-                $.each(user, function (i) {
-                    tr +=
-                        '<tr>' +
-                            '<td style="text-align: center">' +
-                                '<input type="checkbox" name="userId_checkBox" value="'+ user[i].id +'">' +
-                            '</td>' +
-                            '<td style="text-align: center">' +
-                                '<a href="/admin/user/detail?id=' + user[i].id + '&page=' + currentPage + '&userType=1&option='+ $('#table-filter8 :selected').val() + '&keyword=' + $('#keyword').val() + '&renderOption=1">' + user[i].email + '</a>' +
-                            '</td>' +
-                            '<td style="text-align: center">' +
-                                '<span>' + user[i].name + '</span>' +
-                            '</td>' +
-                            '<td style="text-align: center">' +
-                                '<span>' + moment(user[i].createdDate).format("YYYY-MM-DD") + '</span>' +
-                            '</td>' +
-                            '<td style="text-align: center">' +
-                                '<span>' + user[i].visitedCnt + '</span>' +
-                            '</td>' +
-                            '<td style="text-align: center">' +
-                                '<button onclick="memoModalPopUp(this)" value = "' + user[i].id + '">메모</button>' +
-                            '</td>' +
-                            '<td style="text-align: center">' +
-                                '<a href="/admin/user/edit?id=' + user[i].id + '&page=' + currentPage + '&userType=1&option='+ $('#table-filter8 :selected').val() + '&keyword=' + $('#keyword').val() + '&renderOption=1">수정</a>' +
-                            '</td>' +
-                            '<td style="text-align: center">' +
-                                '<button onclick="deleteClickedUser(this)" value="' + user[i].id + '">' + '삭제' + '</button>' +
-                            '</td>' +
-                        '</tr>';
-                });
-
-                $("#list-table").append(tr);
-
-
-                //4. 버튼들
-                var btns = data.btns;
-                if (btns.first == -1) {
-                    document.getElementById('first').disabled = true;
-                } else {
-                    document.getElementById('first').disabled = false;
-                    $("#first").val(btns.first);
-                }
-
-                if (btns.prev == -1) {
-                    document.getElementById('prev').disabled = true;
-                } else {
-                    document.getElementById('prev').disabled = false;
-                    $("#prev").val(btns.prev);
-                }
-
-                if(btns.next == -1){
-                    document.getElementById('next').disabled = true;
-                } else {
-                    document.getElementById('next').disabled = false;
-                    $("#next").val(btns.next);
-                }
-
-                if(btns.last == -1){
-                    document.getElementById('last').disabled = true;
-                } else {
-                    document.getElementById('last').disabled = false;
-                    $("#last").val(btns.last);
-                }
-
-            }
-        });
-
-        initFalseAllCheckBox();
-    }
-
-    /**
-     * 삭제 관련 함수
-     */
-    //개별 삭제
-    function deleteClickedUser(e){
-        var list = [];
-        list.push(e.value);
-        deleteRequest(list);
-    }
-
-    //선택삭제(체크박스로 삭제)
-    function deleteCheckedUsers(){
-        var list = [];
-        $("input:checkbox[name=userId_checkBox]:checked").each(function (){
-            list.push($(this).val());
-        });
-        deleteRequest(list);
-    }
-
-    //삭제 api 요청 함수
-    function deleteRequest(list){
-        if(list.length < 1)
-            return;
-        $.ajax({
-            url: "/admin/delete/user",
-            type: "POST",
-            data: {list:list},
-            dataType: "json",
-            success: function (data) {
-                const table = document.getElementById('list-table');
-                var rowCnt = table.rows.length - 1;
-
-                if(rowCnt == list.length){
-                    if(currentPage - 1 == 0)
-                        deleteAndUpdate(1);
-                    else
-                        deleteAndUpdate(currentPage - 1);
-                }
-                else {
-                    deleteAndUpdate(currentPage);
-                }
-            }
-        });
-    }
-
-    function initFalseAllCheckBox(){
-        $("input[name=cbx_chkAll]").prop("checked", false);
-    }
-
-    function memoModalPopUp(e){
-        var userId = e.value;
-        //유저 아이디로 메모 요청
-
-        $.ajax({
-            url: "/admin/user/memo?id=" + userId,
-            type: "GET",
-            success: function (data) {
-                $('#memoEditBtn').val(userId);
-                $('#summernote').summernote('code', data);
-                $('#summernote').summernote({
-                    placeholder: '최대 500자 작성 가능합니다.',
-                    height: 300,
-                    lang: 'ko-KR',
-                    callbacks: {
-                        onImageUpload: function(files, editor, welEditable) {
-                            for(var i = files.length -1; i>=0; i--) {
-                                sendFile(files[i], this);
-                            }
-                        }
-                    }
-                });
-            }
-        });
-
-        $(".modal-memo").css("display", "");
-    }
-
-    function closeModalMemo(){
-        $('#summernote').summernote('reset');
-        $(".modal-memo").css("display", "none");
-    }
-
-    function editMemo(e) {
-        var userId = e.value;
-        var content = $('#summernote').summernote('code');
-
-        $.ajax({
-            url: "/admin/user/edit/memo?id=" + userId + "&content=" + content,
-            type: "POST",
-            success: function (data) {
-                console.log('성공');
-                alert('메모가 정상적으로 입력되었습니다.');
-                closeModalMemo();
-            }
-        });
-    }
 </script>
 </html>
