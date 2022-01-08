@@ -307,9 +307,8 @@
                 <div th:unless="${userRole} == 'GENERAL'" class="image-thumbnails">
 
                   <th:block th:if="${not #strings.isEmpty(payload.menuImages.split(',')[0])}">
-                    <div id="menu-img-main" class="detail" th:style="'background-image:url('+${payload.menuImages.split(',')[0]}+'); background-size:contain;'">
+                    <div id="menu-img-main" class="detail" th:style="'background-image:url('+${payload.getMainMenuImage()}+'); background-size:contain;'">
                     </div>
-
                     <ul>
                       <li th:each="item : ${payload.menuImages.split(',')}">
                         <img th:src='${item}' style="width: 100%;height: 100%;" onclick="changeMenuImage(this)">
@@ -525,6 +524,7 @@
     function changeMenuImage(e){
         document.getElementById('menu-img-main').style.backgroundImage="url('"+e.src+"')";
     }
+
   </script>
 </div>
 </body>

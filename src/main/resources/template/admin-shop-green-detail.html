@@ -998,7 +998,6 @@
         console.log("before_sel_files exist images")
         console.log(IMAGES)
 
-
         var target_index = $('#input_imgs'+index).attr('value');
         var files= $('#input_imgs'+index)[0].files;
         var filesArr = Array.prototype.slice.call(files);
@@ -1027,6 +1026,9 @@
         console.log(sel_files)
         console.log("after_sel_files exist images")
         console.log(IMAGES)
+
+        var imgInput = document.getElementById("input_imgs"+index);
+        imgInput.value = "";
     }
 
     $('button[id^=\'uploadImage\']').click(function (e) {
