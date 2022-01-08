@@ -209,7 +209,7 @@ public class ShopService {
 
         List<Shop> result = fullTextQuery.getResultList();
         List<Shop> list = result.stream()
-                .filter(e -> e.getShopType().equals(shopType))
+                .filter(e -> e.getShopType()==Integer.parseInt(shopType))
                 .collect(Collectors.toList());
 
         //list has only 1nd index(key:size, value:list)
