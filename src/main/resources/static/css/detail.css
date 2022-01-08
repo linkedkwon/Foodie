@@ -815,3 +815,191 @@
     text-align: center;
     color: #9d9d9d;
 }
+
+
+/* 반응형 - 미디어쿼리 */
+@media all and (max-width:1080px){
+    #contents {
+        width: 100%;
+    }
+    #contents::before,
+    #contents::after,
+    #contents>.background-wrapper::before,
+    #contents>.background-wrapper>.background-wrapper::before,
+    #contents>.background-wrapper>.background-wrapper::after,
+    #contents>.background-wrapper>.background-wrapper>.background-wrapper::before {
+        background-size: 100% !important;
+    }
+    #contents>.background-wrapper>.background-wrapper::after,
+    #contents>.background-wrapper>.background-wrapper::before,
+    #contents>.background-wrapper>.background-wrapper>.background-wrapper::before {
+        width: 100%;
+        left: 0;
+    }
+    #contents .contents {
+        padding: 0 6.5% 0 3%;
+    }
+    #contents>.background-wrapper>.background-wrapper::before {
+        background-position: bottom;
+    }
+    #contents>.background-wrapper>.background-wrapper::after {
+        background-position: top;
+    }
+    #contents .contents .about-restaurant .left-area {
+        width: 40%;
+        height: auto;
+    }
+    #contents .contents .about-restaurant .right-area {
+        width: 55%;
+    }
+    #contents .contents .detail-section.critique-section .section-body .comment-list li > div:first-of-type {
+        width: 10% !important;
+    }
+    #contents .contents .detail-section.critique-section .section-body .comment-list li .comment {
+        width: 80%;
+        margin: 0 auto 0;
+    }
+    #contents .contents .detail-section.menu-section .section-body .info li dl dd {
+        line-height: 1.29;
+    }
+    .pagination {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+@media all and (max-width:1024px){
+    #contents .contents .detail-section.menu-section .section-body .image-thumbnails .detail {
+        width: 65%;
+        height: 29.8rem;
+        float: left;
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-size: cover !important;
+    }
+}
+
+@media all and (max-width:768px){
+    #contents .contents .about-restaurant .left-area,
+    #contents .contents .about-restaurant .right-area{
+        width: 100%;
+    }
+    #contents .contents .about-restaurant .right-area {
+        margin: 5% 0;
+    }
+    #contents .contents .detail-section.menu-section .section-body .image-thumbnails .detail {
+        width: 100%;
+        height: 20rem;
+        background-position: center;
+    }
+    #contents .contents .detail-section.menu-section .section-body .image-thumbnails ul {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 12px;
+    }
+    #contents .contents .detail-section.menu-section .section-body .image-thumbnails ul li {
+        width: 19.2%;
+    }
+    #contents .contents .detail-section.menu-section .section-body .image-thumbnails ul li:nth-of-type(5n) {
+        margin: 0 0 7px 0;
+    }
+    #contents .contents .detail-section.critique-section .section-body .comment-list li > div:first-of-type {
+        width: 15% !important;
+    }
+    .detail-footer .left-area,
+    .detail-footer>ul {
+        float: none;
+    }
+    .detail-footer>ul {
+        padding-left: 10px;
+    }
+}
+
+@media all and (max-width:640px){
+    #contents .contents .detail-section.critique-section .section-header {
+        height: auto;
+    }
+    #contents .contents .detail-section.critique-section .section-header .score-info {
+        position: initial;
+        margin: 7px 0 11px;
+    }
+    #contents .contents .detail-section.menu-section .section-body .info li dl dt {
+        flex: 0 0 70px;
+        -webkit-flex: 0 0 70px;
+    }
+    #contents .contents .detail-section.menu-section .section-body .image-thumbnails ul li {
+        width: 19%;
+    }
+    #contents .contents .detail-section.critique-section .section-body .comment-list li {
+        display: block;
+        padding: 20px 2% 0;
+    }
+    #contents .contents .detail-section.critique-section .section-body .comment-list li > div:first-of-type {
+        float: left;
+        width: 80% !important;
+    }
+    #contents .contents .detail-section.critique-section .section-body .comment-list li .point {
+        float: right;
+        width: 33px;
+        margin-right: 0;
+    }
+    #contents .contents .detail-section.critique-section .section-body .comment-list li .comment {
+        clear: both;
+        width: 100%;
+        margin: 0 auto;
+    }
+    #contents .contents .detail-section.critique-section .section-body .commnet-form .btn-primary {
+        max-width: 81px;
+    }
+}
+
+@media all and (max-width:480px){
+    #contents>.background-wrapper {
+        padding: 0 17px;
+    }
+    #contents>.background-wrapper .go-back {
+        width: 38px;
+        overflow: hidden;
+        font-size: 0;
+        left: 13px;
+    }
+    #contents .contents .header-restaurant .left-area {
+        width: 100%;
+    }
+    #contents .contents .detail-section.menu-section .section-body .image-thumbnails .detail {
+        height: 15rem;
+    }
+    #contents .contents .detail-section.menu-section .section-body .image-thumbnails ul li {
+        width: 23.8%;
+    }
+    #contents .contents .detail-section.menu-section .section-body .image-thumbnails ul li:nth-of-type(4n) {
+        margin: 0 0 7px 0;
+    }
+    #contents .contents .detail-section.menu-section .section-body .image-thumbnails ul li:nth-of-type(5n) {
+        margin: 0 6px 7px 0;
+    }
+    #contents>.background-wrapper h1 {
+        margin-bottom: 0;
+    }
+}
+
+@media all and (max-width:360px){
+    #contents .contents .about-restaurant .right-area dl dd {
+        width: 100%;
+    }
+    #contents .contents .detail-section.map-section .section-header ul li {
+        width: fit-content !important;
+    }
+    #contents .contents .detail-section.map-section .section-header ul li a {
+        font-size: 0;
+    }
+    #contents .contents .detail-section.menu-section .section-body .image-thumbnails ul li {
+        width: 31.7%;
+    }
+    #contents .contents .detail-section.menu-section .section-body .image-thumbnails ul li:nth-of-type(3n) {
+        margin: 0 0 7px 0;
+    }
+    #contents .contents .detail-section.menu-section .section-body .image-thumbnails ul li:nth-of-type(4n) {
+        margin: 0 6px 7px 0;
+    }
+}
