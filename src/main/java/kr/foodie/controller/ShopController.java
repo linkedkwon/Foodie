@@ -125,6 +125,7 @@ public class ShopController {
         }else{
             mCode = Optional.ofNullable(commentList.getMiddleCategory()).orElseGet(()->{return "0";});
         }
+
         //tasteRating
         String tasteRatingInfo = reviewService.getShopTasteRatingAVG(shopId);
         String[] str = tasteRatingInfo.split(",");

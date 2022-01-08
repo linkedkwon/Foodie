@@ -30,7 +30,8 @@ public class AuthUserDetailsService implements UserDetailsService, OAuth2UserSer
                 .orElseThrow(()->{
                     return new UsernameNotFoundException(username + "not found");
                 });
-        return new AuthUserDetails(entity);
+
+        return new AuthUserDetails(updateVisitedCnt(entity));
     }
 
     @Override
@@ -47,7 +48,7 @@ public class AuthUserDetailsService implements UserDetailsService, OAuth2UserSer
                     return user;
                 });
 
-        return new AuthUserDetails(entity);
+        return new AuthUserDetails(updateVisitedCnt(entity));
     }
 
     public static final Map<String, OAuthIdentifier> initIdentifier() {
@@ -57,5 +58,12 @@ public class AuthUserDetailsService implements UserDetailsService, OAuth2UserSer
         registration.put("naver", OAuthIdentifier.NAVER);
 
         return registration;
+    }
+
+    private User updateVisitedCnt(User entity){
+        entity.setVisitedCnt(entity.getVisitedCnt() + 1);
+        userRepository.save(entity);
+
+        return entity;
     }
 }

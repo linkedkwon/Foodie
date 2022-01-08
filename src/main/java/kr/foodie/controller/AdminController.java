@@ -753,17 +753,4 @@ public class AdminController {
         return mav;
     }
 
-    @ResponseBody
-    @RequestMapping(value = {"/user/{userType}/all"}, method = RequestMethod.GET)
-    public Map<String, List> getUserList(@PathVariable String userType) {
-        if (userType.equals("0")) {
-            userType = "0";
-        } else {
-            userType = "1";
-        }
-        Map<String, List> members = new HashMap<>();
-        members.put("data", memberService.getAllUserInfo(userType));
-        return members;
-    }
-
 }

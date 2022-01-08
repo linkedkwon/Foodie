@@ -71,13 +71,19 @@ public class User {
     @Column(name = "PROVIDER_ID")
     private String providerId;
 
+    @Column(name = "VISITED_CNT")
+    private Integer visitedCnt;
+
+    @Column(name = "MEMO", length = 400)
+    private String memo;
+
     //for oauth
     @Builder
     public User(String name, String email, String password, String address,
                 String phoneNum, String emailReceivedType, String snsReceivedType,
                 int point, String userType,
                 RoleType role, Date createdDate, Date lastModifiedDate ,
-                String provider, String providerId){
+                String provider, String providerId, int visitedCnt){
         this.name = name;
         this.email = email;
         this.password = password;
@@ -92,5 +98,6 @@ public class User {
         this.lastModifiedDate = lastModifiedDate;
         this.provider = provider;
         this.providerId = providerId;
+        this.visitedCnt = visitedCnt;
     }
 }
