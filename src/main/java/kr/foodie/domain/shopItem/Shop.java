@@ -267,4 +267,8 @@ public class Shop {
     public static Shop emptyShop() {
         return new Shop();
     }
+
+    public String getMainMenuImage() {
+        return "\"" + menuImages.split(",")[0] + "\"";
+    }
 }

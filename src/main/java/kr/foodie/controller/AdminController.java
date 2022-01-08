@@ -265,6 +265,7 @@ public class AdminController {
     }
 
     //여기 하는중
+    //TODO 외주
     @RequestMapping(value = {"/shop/{shopType}/{shopId}", "/{shopId}/{path}"}, method = RequestMethod.GET)
     public ModelAndView getShopDetail(@PathVariable String shopType, @PathVariable Integer shopId, @PathVariable Optional<Integer> path) {
         ModelAndView mav = new ModelAndView();
