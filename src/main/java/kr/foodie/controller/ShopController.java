@@ -2,11 +2,14 @@ package kr.foodie.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import kr.foodie.config.security.auth.AuthUserDetails;
+import kr.foodie.domain.shopItem.EpicureRegion;
 import kr.foodie.domain.shopItem.HashTag;
 
 import kr.foodie.domain.shopItem.Region;
 import kr.foodie.domain.shopItem.Shop;
+import kr.foodie.repo.admin.EpicureRegionRepository;
 import kr.foodie.service.*;
+import kr.foodie.service.admin.RegionAdminService;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,62 +33,107 @@ public class ShopController {
     private final ShopService shopService;
     private final FoodCategoryService foodCategoryService;
     private final TagService tagService;
-    private final RegionService regionService;
     private final ReviewService reviewService;
     private final PaginationService paginationService;
+    private final EpicureRegionRepository epicureRegionRepository;
     private final ThemeService themeService;
-
+    private final RegionAdminService regionAdminService;
     static boolean isStringEmpty(String str) {
         return str == null || str.isEmpty();
     }
     @GetMapping({"/shop/region/{regionId}/{shopType}", "/shop/region/{regionId}/{shopType}/{path}"})
     public String getCategory(@PathVariable Integer regionId, @PathVariable String shopType,
                               @PathVariable Optional<String> path, Model model) {
-
-        String shopTypeId = shopType.equals("red") ? "0" : "1";
+        List<Integer> type = null;
+        List<Integer> sideType = null;
+        String templateFormat = null;
+        Integer area2st =regionId;
         int idx = Integer.parseInt(path.orElseGet(() -> {
             return "0";
         }));
-        Integer area1st =0;
-        Integer area2st =0;
-        Integer area3st =0;
-        int size = shopService.getItemSizeByRegionTypeAndShopType(area1st,  area2st,  area3st, shopTypeId);
+        int size =0;
+        if (shopType.equals("red")) {
+            type = Arrays.asList(1,3);
+            sideType = Arrays.asList(2,4);
+            templateFormat = "submain-red";
+            size = shopService.getItemSizeByRegionTypeAndShopType(false, area2st, type);
+            model.addAttribute("themeList", themeService.getThemeTags("red_theme"));
+            model.addAttribute("payload", shopService.getShopInfos(area2st, type, false, idx, shopInterval));
+            model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(false, area2st, sideType));
+            model.addAttribute("priority", shopService.getShopPremiumInfos(false, area2st, type));
+            // page 있는경우
+            //model.addAttribute("priority", shopService.getShopPremiumInfos(idx, shopInterval, area2st, type));
 
-//        model.addAttribute("regionInfo", regionService.getRegionInfo(area1st,  area2st,  area3st));
-        model.addAttribute("priority", shopService.getShopPremiumInfos(area1st,  area2st,  area3st, shopTypeId));
-        model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(area1st,  area2st,  area3st, shopTypeId));
-        model.addAttribute("themeList", themeService.getThemeTags("red_theme"));
+        }else if (shopType.equals("green")) {
+            type = Arrays.asList(2,4);
+            sideType = Arrays.asList(1,3);
+            templateFormat = "submain-green";
+            area2st = epicureRegionRepository.findByCode(regionId).get(0).getParentNo();
+            size = shopService.getItemSizeByRegionTypeAndShopType(true, area2st, type);
+            model.addAttribute("themeList", themeService.getThemeTags("green_theme"));
+            model.addAttribute("payload", shopService.getShopInfos(area2st, type, true, idx, shopInterval));
+            model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(true, area2st, sideType));
+            model.addAttribute("priority", shopService.getShopPremiumInfos(true, area2st, type));
+            // page 있는경우
+            //model.addAttribute("priority", shopService.getShopPremiumInfos(idx, shopInterval, area2st, type));
+        }
 
-        //pagination
-        model.addAttribute("payload", shopService.getShopInfos(area1st, area2st,area3st, shopTypeId, idx, shopInterval));
+
+
+
+        String middleRegionName = epicureRegionRepository.findByCode(regionId).get(0).getListName();
+        Integer middleRegionId = epicureRegionRepository.findByCode(regionId).get(0).getId();
+        Integer bigRegionId = epicureRegionRepository.findByCode(regionId).get(0).getParentNo();
+        String bigRegionName = epicureRegionRepository.findByCode(bigRegionId).get(0).getListName();
+        model.addAttribute("bigRegionName", bigRegionName);
+        model.addAttribute("middleRegionName", middleRegionName);
+
+        model.addAttribute("regionId", regionId);
         model.addAttribute("paginations", paginationService.getPagination(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
         model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
-
-        return shopType.equals("red") ? "submain-red" : "submain-green";
+        return templateFormat;
     }
 
     @GetMapping({"/shop/region/subway/{regionId}/{shopType}", "region/{regionId}/{shopType}/{path}"})
     public String getCategory2(@PathVariable Integer regionId, @PathVariable String shopType,
                                @PathVariable Optional<String> path, Model model) throws JsonProcessingException {
 
-        String shopTypeId = shopType.equals("red") ? "0" : "1";
+        List<Integer> type = null;
+        List<Integer> sideType = null;
+        String templateFormat = null;
+        Boolean isGreen = false;
+        Integer area2st =regionId;
+        int size = 0;
+        if (shopType.equals("red")) {
+            type = Arrays.asList(1,3);
+            sideType = Arrays.asList(2,4);
+            templateFormat = "submain-red";
+            size = shopService.getItemSizeByRegionTypeAndShopType(isGreen, area2st, type);
+        }else if (shopType.equals("green")) {
+            type = Arrays.asList(2,4);
+            sideType = Arrays.asList(1,3);
+            templateFormat = "submain-green";
+            isGreen = true;
+            shopService.getItemSizeByRegionTypeAndShopType(isGreen, area2st, type);
+        }
+
         int idx = Integer.parseInt(path.orElseGet(() -> {
             return "0";
         }));
         Integer area1st =0;
-        Integer area2st =0;
         Integer area3st =0;
-        int size = shopService.getItemSizeByRegionTypeAndShopType(area1st,  area2st,  area3st, shopTypeId);
 
-        model.addAttribute("payload", shopService.getSubwayShopInfos(area1st, area2st, area3st, shopTypeId, idx, shopInterval));
+
+        model.addAttribute("payload", shopService.getSubwayShopInfos(area1st, area2st, area3st, 1, idx, shopInterval));
 //        model.addAttribute("regionInfo", regionService.getRegionInfo(area1st,  area2st,  area3st));
-        model.addAttribute("priority", shopService.getSubwayPremiumShopInfos(area1st, area2st, area3st, shopTypeId));
-        model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(area1st, area2st, area3st, shopTypeId));
+        model.addAttribute("priority", shopService.getSubwayPremiumShopInfos(area1st, area2st, area3st,1));
+        model.addAttribute("sidePriority", shopService.getShopInfosWithSideOrder(isGreen, area2st, sideType));
         model.addAttribute("themeList", themeService.getThemeTags("red_theme"));
         model.addAttribute("paginations", paginationService.getPagination(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
         model.addAttribute("btnUrls", paginationService.getPaginationBtn(size, idx, shopInterval, "/shop/region/" + regionId + "/" + shopType + "/"));
 
-        return shopType.equals("red") ? "submain-red" : "submain-green";
+
+        return templateFormat;
     }
 
     // TODO 외주
@@ -100,15 +148,19 @@ public class ShopController {
 
         shopService.updateHit(commentList.getShopId(), commentList.getFoodieHit());
         List<String> list = new ArrayList<String>();
-        String[] hash = commentList.getTag().split("#");
-        if(hash.length == 1){
-            hash = commentList.getTag().split(" ");
-        }
-        for(int i=0; i<hash.length; i++){
-            if(!(isStringEmpty(hash[i]))){
-                list.add(hash[i]);
+        String[] hash = null;
+        if(commentList.getTag() != null) {
+             hash = commentList.getTag().split("#");
+            if(hash.length == 1){
+                hash = commentList.getTag().split(" ");
+            }
+            for(int i=0; i<hash.length; i++){
+                if(!(isStringEmpty(hash[i]))){
+                    list.add(hash[i]);
+                }
             }
         }
+
 
 
 
@@ -119,6 +171,7 @@ public class ShopController {
         //category
         String bCode;
         String mCode;
+        String sCode;
         if(isStringEmpty(commentList.getBigCategory())){
             bCode = "0";
         }else{
@@ -128,6 +181,11 @@ public class ShopController {
             mCode = "0";
         }else{
             mCode = Optional.ofNullable(commentList.getMiddleCategory()).orElseGet(()->{return "0";});
+        }
+        if(isStringEmpty(commentList.getSmallCategory())){
+            sCode = "0";
+        }else{
+            sCode = Optional.ofNullable(commentList.getSmallCategory()).orElseGet(()->{return "0";});
         }
 
         //tasteRating
@@ -146,7 +204,7 @@ public class ShopController {
         commentList.setMenuImages(extractMenuImages(commentList));
 
         mav.addObject("tasteRatingCnt", str[1]);
-        mav.addObject("category", foodCategoryService.getShopCategory(bCode, mCode, commentList.getAddress()));
+        mav.addObject("category", foodCategoryService.getShopCategory(bCode, mCode, sCode, commentList.getAddress()));
         mav.addObject("reviews", reviewService.getItemsByShopId(shopId, idx));
         mav.addObject("paginations", paginationService.getPagination(size, idx, reviewInterval, url));
         mav.addObject("btnUrls", paginationService.getPaginationBtn(size, idx, reviewInterval, url));
@@ -170,7 +228,10 @@ public class ShopController {
 
     private String extractShopImage(Shop commentList) {
         String menuImgStr = commentList.getMenuImages();
-        String replacedImg = commentList.getShopImage();
+        String replacedImg = null;
+        if(commentList.getShopImage() != null){
+            replacedImg = commentList.getShopImage().strip();
+        }
 
         if (StringUtils.hasText(menuImgStr)) {
             String[] images = menuImgStr

@@ -51,7 +51,7 @@ public class ShopDTO {
     private String instaKeyword;
     private Date updatedAt;
     private Date createdAt;
-    private Integer exitNum;
+    private String exitNum;
     private Integer hit;
     private Integer epicureHit;
     private Integer foodieHit;

@@ -38,21 +38,13 @@
                 <div class="categories">
                   <span th:text="${category}"></span>
                 </div>
-<!--                빼기로함-->
-<!--                <div class="categories" style="margin-top: 10px;">-->
-<!--                  <a th:href="'http://epicure.co.kr/home/'+${payload.shopAlias}" th:text="'http://epicure.co.kr/home/'+${payload.shopAlias}" style="color:#838383;"></a>-->
-<!--                </div>-->
               </div>
 
               <div class="right-area">
                 <ul class="scores" th:style="${not #strings.isEmpty(payload.foodieLogRating)}? '':'border-right:solid 0px #e4e4e4;'">
                   <li th:text="${not #strings.isEmpty(payload.foodieLogRating)} ? '전문가 평점' : '전문가 평점'"></li>
                   <li>
-<!--                    <b style="padding-left:17px;" th:text="${not #strings.isEmpty(payload.tasteRating)} ? '방문자 평점('+${payload.tasteRating}+'점)' : '오감 평점'"></b>-->
                     <b style="padding-left:17px;">방문자 평점</b>
-<!--                    <b th:text="${not #strings.isEmpty(payload.tasteRating)} ? '오감 평점('+${payload.tasteRating}+'점)' : '오감 평점(없음)'"></b>-->
-
-                    <!--                    <b th:text="'('+${tasteRatingCnt}+'명)'" style="font-size: 12px;"></b>-->
                   </li>
                 </ul>
 
@@ -140,7 +132,6 @@
                     <div th:unless="${not #strings.isEmpty(tasteRatingCnt)}">
                       <div style="float: left;margin-top: 10px;padding-left: 7px;color: #ff792a;font-weight: normal;">( - )</div>
                     </div>
-<!--                    <div style="float: left;margin-top: 10px;padding-left: 7px;color: #838383;" th:text="${not #strings.isEmpty(payload.tasteRating)} ? '('+${payload.tasteRating}+'점)' : ''"></div>-->
                   </div>
                 </th:block>
                 <a href="#" class="btn-print">인쇄하기</a>
@@ -160,7 +151,7 @@
                     <dt>주소</dt>
                     <dd>
                       <p id="normal-address" th:text="${payload.address}"></p>
-                      <div style="margin-top: 2px;">
+                      <div style="margin-top: 2px;" th:if="${not #strings.isEmpty(payload.roadAddress)}">
                         <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 1px 7px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
                           도로명
                         </div>
@@ -436,6 +427,19 @@
     .right-area picture{
       padding-left: 10px;
     }
+    .section-body span{
+      font-family: NotoSansKR !important;
+      font-size: 12px !important;
+      font-weight: normal !important;
+      font-stretch: normal !important;
+      font-style: normal !important;
+      line-height: 1.25 !important;
+      letter-spacing: normal !important;
+      text-align: left !important;
+      color: #000 !important;
+    }
+    header-restaurant
+
   </style>
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>

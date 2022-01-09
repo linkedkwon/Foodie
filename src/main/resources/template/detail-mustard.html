@@ -160,7 +160,7 @@
                     <dt>주소</dt>
                     <dd>
                       <p id="normal-address" th:text="${payload.address}"></p>
-                      <div style="margin-top: 2px;">
+                      <div style="margin-top: 2px;" th:if="${not #strings.isEmpty(payload.roadAddress)}">
                         <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 1px 7px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
                           도로명
                         </div>
@@ -341,8 +341,8 @@
               <div class="section-header">
                 <h3>MAP</h3>
                 <ul>
-                  <li class="naver"><a th:href="@{'https://pcmap.place.naver.com/restaurant/'+ ${payload.blogShopId} + '/review/ugc'}" target="_blank">블로그 리뷰 보기</a></li>
-                  <li class="instagram"><a th:href="@{'https://www.instagram.com/explore/tags/'+ ${payload.instaKeyword}}" target="_blank">인스타 이미지 보기</a></li>
+                  <li class="naver"><a th:href="@{'https://search.naver.com/search.naver?query='+ ${payload.address} + ${payload.shopName} + '&nso=&where=view&sm=tab_viw.all&mode=normal'}" target="_blank">블로그 리뷰 보기</a></li>
+                  <li class="instagram"><a th:href="@{'https://www.instagram.com/explore/tags/'+ ${payload.shopName}}" target="_blank">인스타 이미지 보기</a></li>
                 </ul>
               </div>
 
@@ -439,6 +439,17 @@
   <style>
     .right-area picture{
       padding-left: 10px;
+    }
+    .section-body span{
+      font-family: NotoSansKR !important;
+      font-size: 12px !important;
+      font-weight: normal !important;
+      font-stretch: normal !important;
+      font-style: normal !important;
+      line-height: 1.25 !important;
+      letter-spacing: normal !important;
+      text-align: left !important;
+      color: #000 !important;
     }
   </style>
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>

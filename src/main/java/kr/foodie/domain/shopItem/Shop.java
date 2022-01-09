@@ -105,7 +105,7 @@ public class Shop {
     private String subway3st = null;
 
     @Column(name = "EXIT_NUM")
-    private Integer exitNum;
+    private String exitNum;
 
     @Column(name = "THEME")
     private String themeList;

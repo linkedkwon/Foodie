@@ -293,8 +293,8 @@
 }
 
 #contents .contents .about-restaurant .right-area dl.line {
-    margin-bottom: 10px;
-    padding-bottom: 15px;
+    margin-bottom: 7px;
+    padding-bottom: 7px;
     border-bottom: 1px solid #d0d0d0
 }
 
@@ -304,16 +304,26 @@
     font-size: 14px;
     font-weight: 500;
     text-align: left;
-    color: #000
+
+    font-family: NotoSansKR;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    color: #000;
 }
 
 #contents .contents .about-restaurant .right-area dl dd {
     width: 366px;
     float: left;
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 13px;
     text-align: left;
-    color: #000
+    font-weight: normal;
+    font-family: NotoSansKR !important;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.38;
+    letter-spacing: normal;
+    color: #000;
 }
 
 #contents .contents .about-restaurant .right-area .util-btn-area {
@@ -387,20 +397,26 @@
 #contents .contents .detail-section.hashtag-section {
     display: flex;
     -webkit-display: flex;
-    margin-top: 20px
 }
 
 #contents .contents .detail-section.hashtag-section a {
-    height: 36px;
-    line-height: 36px;
-    margin: 0 9px 9px 0;
-    padding: 0 23px;
-    font-size: 14px;
-    font-weight: 400;
+    height: 24px;
+    line-height: 24px;
     text-align: center;
-    color: #ff5c17;
     border-radius: 22px;
-    border: 1px solid #ff5c17
+
+    margin: 17px 5px 7px 6px;
+    padding: 4px 14px 3px;
+    border: solid 1.5px #ff5c17;
+    background-color: #fff;
+
+    font-family: NotoSansKR;
+    font-size: 11px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    color: #ff5c17;
 }
 
 #contents .contents .detail-section.hashtag-section a:hover {
@@ -485,7 +501,13 @@
 
 #contents .contents .detail-section.menu-section .section-body .info li dl dd {
     color: #000;
-    font-size: 16px
+    font-size: 16px;
+    font-family: NotoSansKR !important;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-align: left;
 }
 
 #contents .contents .detail-section.map-section {

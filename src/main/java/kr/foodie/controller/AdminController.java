@@ -39,7 +39,6 @@ public class AdminController {
     private final ReviewService reviewService;
     private final PaginationService paginationService;
     private final ThemeService themeService;
-    private final RegionService regionService;
     private final MemberService memberService;
     private final CategoryService categoryService;
     private final ShopTownService shopTownService;
@@ -461,6 +460,26 @@ public class AdminController {
     public Map<String, List> getEpicureDistrict(Model model, @PathVariable Integer parentNo, @PathVariable String type) {
         List<EpicureRegion> regionInfos = regionAdminService.getEpicureDistrict(parentNo, type);
         Map<String, List> infos = new HashMap<>();
+        infos.put("data", regionInfos);
+        return infos;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/epicure/main/{type}", method = RequestMethod.GET)
+    public Map<String, List> getEpicureMainDistrict(Model model, @PathVariable String type) {
+        List<EpicureRegion> regionInfos = regionAdminService.getEpicureFirstInfo(type);
+        Map<String, List> infos = new HashMap<>();
+
+        for(int i=0; i<regionInfos.size(); i++){
+            regionInfos.get(i).setListName(regionInfos.get(i).getListName().replace("특별시", "").replace("광역시", "")
+                    .replace("충청남도", "충남")
+                    .replace("충청북도", "충북")
+                    .replace("경상남도", "경남")
+                    .replace("경상북도", "경북")
+                    .replace("전라남도", "전남")
+                    .replace("전라북도", "전북")
+                    .replace("도", ""));
+        }
         infos.put("data", regionInfos);
         return infos;
     }
