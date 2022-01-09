@@ -1,13 +1,12 @@
 package kr.foodie.controller;
 
+import kr.foodie.VO.FavoriteShopVO;
 import kr.foodie.entity.FavoriteShopEntity;
 import kr.foodie.repository.FavoriteShopRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
@@ -25,5 +24,22 @@ public class FavoriteShopController {
   @GetMapping("/shop/{id}")
   public List<FavoriteShopEntity> findByShopId(@PathVariable int id) {
     return favoriteShopRepository.findByShopId(id);
+  }
+
+  @PostMapping("")
+  public String postFavorite(@RequestBody FavoriteShopVO favoriteShopVO) {
+    favoriteShopRepository.save(FavoriteShopEntity.builder()
+            .userId(favoriteShopVO.getUserId())
+            .shopId(favoriteShopVO.getShopId())
+            .createdAt(Calendar.getInstance().getTime()).build()
+    );
+    //todo: post if not exists
+    return "success";
+  }
+
+  @DeleteMapping("/{id}")
+  public String deleteFavorite(@PathVariable int id) {
+    favoriteShopRepository.deleteById(id);
+    return "success";
   }
 }

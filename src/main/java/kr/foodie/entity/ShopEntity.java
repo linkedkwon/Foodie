@@ -77,4 +77,6 @@ public class ShopEntity {
   private Integer area_3th;
   @Column
   private String areaEtc;
+  @Column
+  private String roadAddress;
 }
