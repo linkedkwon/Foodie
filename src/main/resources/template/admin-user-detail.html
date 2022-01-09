@@ -287,6 +287,10 @@
                                         <td class="gray-bg" align="center" width="15%">SNS수신</td>
                                         <td width="35%" th:text="${user.snsReceivedType} == '1'? '수신동의':'수신거부'"></td>
                                     </tr>
+                                    <tr>
+                                        <td class="gray-bg" align="center" width="15%">포인트</td>
+                                        <td colspan="3" th:text="${user.point}"></td>
+                                    </tr>
                                 </thead>
                             </table>
 
@@ -302,7 +306,7 @@
                             </table>
                             <div style="text-align: center">
                                 <div style="display: inline-flex;">
-                                    <a class="button-style" href="/">수정</a>
+                                    <a id="edit-a" class="button-style" href="/">수정</a>
                                     <a id="back-first-a" class="button-style" href="/">목록</a>
                                 </div>
                             </div>
@@ -518,6 +522,18 @@
             + "&renderOption=" + urlParams.get('renderOption');
         $("#back-first-a").attr("href", backLink);
         $("#back-second-a").attr("href", backLink);
+
+        /**
+         *'<a href="/admin/user/edit?id=' + user[i].id + '&page=' + currentPage + '&userType=0&option='+ $('#table-filter8 :selected').val() + '&keyword=' + $('#keyword').val() + '&renderOption=3">수정</a>'
+         * @type {string}
+         */
+        //수정 url 만들기
+        var editUrl = "/admin/user/edit?id=" + urlParams.get('id') +
+            "&page=" + urlParams.get('page') + "&userType=" + urlParams.get('userType') +
+            "&option=" + urlParams.get('option') + "&keyword=" + urlParams.get('keyword') +
+            "&renderOption=" + urlParams.get('renderOption');
+
+        $("#edit-a").attr("href", editUrl);
     });
 </script>
 </html>

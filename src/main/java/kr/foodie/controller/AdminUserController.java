@@ -1,10 +1,10 @@
 package kr.foodie.controller;
 
 import kr.foodie.domain.user.AdminUserListVO;
+import kr.foodie.domain.user.User;
 import kr.foodie.service.MemberService;
 import kr.foodie.service.admin.AdminUserService;
 import lombok.RequiredArgsConstructor;
-import org.dom4j.rule.Mode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -92,5 +92,12 @@ public class AdminUserController {
                                  Model model){
         model.addAttribute("user", memberService.findUserById(userId));
         return "admin-user-edit";
+    }
+
+    @ResponseBody
+    @PostMapping("/user/edit/info")
+    public String updateUserInfo(@ModelAttribute User vo){
+        adminUserService.updateUserInfo(vo);
+        return "1";
     }
 }

@@ -8,5 +8,5 @@ public class AdminReviewListVO {
     private int page;
     private String option;
     private String keyword;
-
+    private String bestOption;
 }

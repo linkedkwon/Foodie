@@ -600,7 +600,7 @@
                                 '<input type="checkbox" name="userId_checkBox" value="'+ user[i].id +'">' +
                             '</td>' +
                             '<td style="text-align: center">' +
-                                '<a href="/admin/user/detail?id=' + user[i].id + '&page=' + currentPage + '&userType=0&option='+ $('#table-filter8 :selected').val() + '&keyword=' + $('#keyword').val() + '&renderOption=1">' + user[i].email + '</a>' +
+                                '<a href="/admin/user/detail?id=' + user[i].id + '&page=' + currentPage + '&userType=0&option='+ $('#table-filter8 :selected').val() + '&keyword=' + $('#keyword').val() + '&renderOption=3">' + user[i].email + '</a>' +
                             '</td>' +
                             '<td style="text-align: center">' +
                                 '<span>' + user[i].name + '</span>' +
@@ -615,7 +615,7 @@
                                 '<button onclick="memoModalPopUp(this)" value = "' + user[i].id + '">메모</button>' +
                             '</td>' +
                             '<td style="text-align: center">' +
-                                '<a href="/admin/user/edit?id=' + user[i].id + '&page=' + currentPage + '&userType=0&option='+ $('#table-filter8 :selected').val() + '&keyword=' + $('#keyword').val() + '&renderOption=1">수정</a>' +
+                                '<a href="/admin/user/edit?id=' + user[i].id + '&page=' + currentPage + '&userType=0&option='+ $('#table-filter8 :selected').val() + '&keyword=' + $('#keyword').val() + '&renderOption=3">수정</a>' +
                             '</td>' +
                             '<td style="text-align: center">' +
                                 '<button onclick="deleteClickedUser(this)" value="' + user[i].id + '">' + '삭제' + '</button>' +

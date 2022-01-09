@@ -14,7 +14,6 @@ function checkName(){
     return true;
 }
 
-//check pswd1 regular expression
 function checkPassword(){
 
     var reg = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{4,15}$/;

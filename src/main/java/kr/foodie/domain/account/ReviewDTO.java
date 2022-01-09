@@ -12,6 +12,7 @@ public class ReviewDTO {
     private int userId;
     private String shopName;
     private String userName;
+    private String title;
     private String starRating;
     private int reviewId;
     private String content;

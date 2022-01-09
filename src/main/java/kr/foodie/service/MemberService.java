@@ -73,6 +73,7 @@ public class MemberService {
         user.setCreatedDate(time);
         user.setLastModifiedDate(time);
         user.setVisitedCnt(0);
+
         userRepository.save(user);
 
         return "signup_done";
