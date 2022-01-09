@@ -6,7 +6,8 @@ import kr.foodie.repo.InquiryRepository;
 import kr.foodie.repo.ReviewRepository;
 import kr.foodie.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -26,6 +27,7 @@ public class AdminUserService {
     private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
     private final InquiryRepository inquiryRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public List<User> getAdminUserList(AdminUserListVO vo){
         String jpql = "select s from User s ";
@@ -129,5 +131,25 @@ public class AdminUserService {
         }));
 
         return entity.get().getMemo();
+    }
+
+    public void updateUserInfo(User vo){
+        User entity = userRepository.findByEmail(vo.getEmail())
+                .orElseThrow(()->{
+                    return new UsernameNotFoundException("not found");
+                });
+        entity.setName(vo.getName());
+        if(vo.getPassword().length() > 0)
+            entity.setPassword(bCryptPasswordEncoder.encode(vo.getPassword()));
+        entity.setAddress(vo.getAddress());
+        entity.setEmailReceivedType(vo.getEmailReceivedType());
+        entity.setSnsReceivedType(vo.getSnsReceivedType());
+        entity.setTelNum(vo.getTelNum());
+        entity.setMemo(vo.getMemo());
+        entity.setPoint(vo.getPoint());
+        Date time = Calendar.getInstance().getTime();
+        entity.setLastModifiedDate(time);
+
+        userRepository.save(entity);
     }
 }
