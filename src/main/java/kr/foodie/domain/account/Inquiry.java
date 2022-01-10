@@ -34,6 +34,9 @@ public class Inquiry {
     @Column(name = "COMMENT")
     private String comment;
 
+    @Column(name = "GIVEN_REPLY")
+    private String givenReply;
+
     @Column(name = "CREATED_AT")
     private Date createdTime;
 
@@ -41,12 +44,15 @@ public class Inquiry {
     private Date modifiedTime;
 
     @Builder
-    public Inquiry(Integer userId, String title, String userName, String content, String comment, Date createdTime, Date modifiedTime) {
+    public Inquiry(Integer userId, String title, String userName,
+                   String content, String comment, String givenReply,
+                   Date createdTime, Date modifiedTime) {
         this.userId = userId;
         this.title = title;
         this.userName = userName;
         this.content = content;
         this.comment = comment;
+        this.givenReply = givenReply;
         this.createdTime = createdTime;
         this.modifiedTime = modifiedTime;
     }
