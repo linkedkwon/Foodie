@@ -35,6 +35,7 @@ public class ReviewService {
                                 .content(content)
                                 .bestComment("0")
                                 .createdTime(Calendar.getInstance().getTime())
+                                .point(0)
                                 .build());
         return "1";
     }

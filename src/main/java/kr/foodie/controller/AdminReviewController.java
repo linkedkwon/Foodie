@@ -1,6 +1,7 @@
 package kr.foodie.controller;
 
 import kr.foodie.domain.account.AdminReviewListVO;
+import kr.foodie.domain.account.ReviewDTO;
 import kr.foodie.service.admin.AdminReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -40,5 +41,11 @@ public class AdminReviewController {
     @PostMapping("/delete/review")
     public String deleteCheckedList(@RequestParam(value ="list[]") List<Integer> list){
         return adminReviewService.deleteUserById(list);
+    }
+
+    @ResponseBody
+    @PostMapping("/review/switch")
+    public String switchReviewIsBest(@ModelAttribute ReviewDTO dto){
+        return adminReviewService.switchReview(dto);
     }
 }

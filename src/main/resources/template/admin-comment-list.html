@@ -253,7 +253,7 @@
                     <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">댓글 관리</h6>
                 </div>
                 <div>
-                    <div style="width: 90%;margin:auto;margin-top: 20px; font-size: 9pt; border: 1px solid lightgray">
+                    <div style="width: 90%; margin:auto;margin-top: 20px; font-size: 9pt; border: 1px solid lightgray">
                         <div style="display: inline-flex;">
                             <div  style="height: 31px; text-align:center; width: 120px; padding-top: 6px; background: rgb(247, 247, 247); border-right: 1px solid lightgray"> 검색어 </div>
                             <p style="    padding-left: 20px;  padding-top: 5px;  margin-bottom: 0;">
@@ -290,10 +290,10 @@
                                     <th style="width: 30px;"><input type="checkbox" id="cbx_chkAll" name="cbx_chkAll" value=""></th>
                                     <th style="text-align: center; width: 120px;" >가게명</th>
                                     <th style="text-align: center; width: 100px;">이름</th>
-                                    <th style="text-align: center; width: 280px;">내용</th>
+                                    <th style="text-align: center; width: 270px;">내용</th>
                                     <th style="text-align: center; width: 40px;">평점</th>
                                     <th style="text-align: center; width: 100px;">작성일</th>
-                                    <th style="text-align: center; width: 50px;">베스트</th>
+                                    <th style="text-align: center; width: 55px;">베스트</th>
                                     <th style="text-align: center; width: 50px;">삭제</th>
                                 </tr>
                                 </thead>
@@ -321,8 +321,77 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
+
+                        <!-- 베댓 선정 모달 : 일반 -> 베댓 -->
+                        <div class="general-comment-modal" style="display: none; position: fixed; width: 35%; left:60%; margin-left: -20%; height: 500px; top:75%; margin-top: -150px; overflow: auto;">
+                            <div class="container-fluid">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">베스트 댓글 선정</h3><br>
+                                            <h5 class="tip" style="margin-left: 0px;">지급할 포인트를 입력해주세요.</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div style="text-align: center; margin-bottom: 30px;">
+                                                <input type="text" id="general-point" value="0" style="text-align: right;"/>
+                                                <span class="tip"> +지급할 포인트 입력</span>
+                                            </div>
+
+                                            <input type="hidden" id="hidden-general-user-id">
+                                            <input type="hidden" id="hidden-general-review-id">
+
+                                            <div style="text-align: center; padding-top: 10px;">
+                                                <div style="display: inline-block;">
+                                                    <button style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="switchCommentHasBest(0)">선정</button>
+                                                </div>
+                                                <div style="display: inline-block;">
+                                                    <button style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="closeGeneralModalMemo()">닫기</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 베댓 선정 모달 : 베댓 -> 일반 -->
+                        <div class="best-comment-modal" style="display: none; position: fixed; width: 35%; left:60%; margin-left: -20%; height: 500px; top:75%; margin-top: -150px; overflow: auto;">
+                            <div class="container-fluid">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">베스트 댓글 해제</h3><br>
+                                            <h5 class="tip" style="margin-left: 0px;">차감할 포인트를 입력해주세요(차감하지 않아도 됩니다)</h5>
+
+                                        </div>
+                                        <div class="card-body">
+                                            <div style="text-align: center; margin-bottom: 30px;">
+                                                <span class="tip"> 지급된 포인트 : </span>
+                                                <span type="text" id="given-point" style="margin-left: 5px;"/>
+                                            </div>
+                                            <div style="text-align: center; margin-bottom: 30px;">
+                                                <input type="text" id="best-point" value="0" style="text-align: right;"/>
+                                                <span class="tip"> +차감할 포인트 입력</span>
+                                            </div>
+
+                                            <input type="hidden" id="hidden-best-user-id">
+                                            <input type="hidden" id="hidden-best-review-id">
+
+                                            <div style="text-align: center; padding-top: 10px;">
+                                                <div style="display: inline-block;">
+                                                    <button style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="switchCommentHasBest(1)">해제</button>
+                                                </div>
+                                                <div style="display: inline-block;">
+                                                    <button style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="closeBestModalMemo()">닫기</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="pagination" style="padding: 0 20px 0 20px; margin-bottom: 15px;">
@@ -437,6 +506,14 @@
         background-color: transparent;
     }
 
+    .tip{
+        font-size: 12px;
+        margin-left: 6px;
+        color: #3399FF;
+        font-family: dotum;
+        letter-spacing: -1px;
+    }
+
     .btn:hover{color:#fff;}
 
     .overflow-shop{
@@ -450,7 +527,19 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        width:270px;
+        width:260px;
+    }
+
+    .button-style{
+        height: 19px;
+        line-height: 19px;
+        margin-bottom: 5px;
+        background: #9872ff;
+        color: white;
+        font-size: 10px;
+        text-align: center;
+        width: 40px;
+        border-radius: 3px;
     }
 
     /*.data_table {*/
@@ -555,9 +644,18 @@
                         '<td style="text-align: center">' +
                         '<span>' + review[i].createdTime + '</span>' +
                         '</td>' +
-                        '<td style="text-align: center">' +
-                        '<span>' + review[i].bestComment + '</span>' +
-                        '</td>' +
+                        '<td style="text-align: center">';
+
+                        if(review[i].bestComment == 1){
+                            tr +=
+                                '<button class="button-style" value="'+ review[i].userId + ',' + review[i].reviewId + ',' + review[i].point + '" onclick="popUpBestCommentModal(this)">BEST</button>';
+                        }
+                        else{
+                            tr +=
+                                '<button value="' + review[i].userId + ',' + review[i].reviewId + '" onclick="popUpGeneralCommentModal(this)">일반</button>';
+                        }
+
+                tr +=   '</td>' +
                         '<td style="text-align: center">' +
                         '<button onclick="deleteClickedReview(this)" value="' + review[i].reviewId + '">삭제</button>' +
                         '</td>' +
@@ -704,6 +802,93 @@
     function closeModalMemo(){
         $("#txt-area").text("");
         $(".modal-memo").css("display", "none");
+    }
+
+    <!-- 베스트 댓글 모달 및 Api -->
+
+    function popUpGeneralCommentModal(e){
+        var str = e.value.split(',');
+        $("#hidden-general-user-id").val(str[0]);
+        $("#hidden-general-review-id").val(str[1]);
+        $(".general-comment-modal").css("display", "");
+    }
+
+    function closeGeneralModalMemo(){
+        $("#general-point").val(0);
+        $(".general-comment-modal").css("display", "none");
+    }
+
+    function popUpBestCommentModal(e){
+        var str = e.value.split(',');
+        $("#hidden-best-user-id").val(str[0]);
+        $("#hidden-best-review-id").val(str[1]);
+        $("#given-point").text(str[2] + " 포인트");
+
+        $(".best-comment-modal").css("display", "");
+    }
+
+    function closeBestModalMemo(){
+        $("#best-point").val(0);
+        $(".best-comment-modal").css("display", "none");
+    }
+
+    function switchCommentHasBest(flag){
+
+        console.log('유저 아이디', $("#hidden-general-user-id").val());
+        console.log('리뷰 아이디', $("#hidden-general-review-id").val());
+        console.log('포인트', $("#general-point").val());
+        //flag == 0 이면 일반 -> 베댓
+
+        var userId;
+        var reviewId;
+        var point;
+
+        if(flag == 0){
+            userId = $("#hidden-general-user-id").val();
+            reviewId = $("#hidden-general-review-id").val();
+            point = $("#general-point").val();
+        }
+        else{
+            userId = $("#hidden-best-user-id").val();
+            reviewId = $("#hidden-best-review-id").val();
+            point = $("#best-point").val();
+        }
+
+        var param = {
+            'userId': userId,
+            'reviewId': reviewId,
+            'point': point,
+            'bestComment':flag
+        }
+
+        $.ajax({
+            url: "/admin/review/switch",
+            type: "POST",
+            data: param,
+            dataType: "json",
+            success: function (data) {
+                $('#list-table tr:not(:first)').remove();
+                $("#pages").empty();
+
+                var page = currentPage;
+                var option = $('#table-filter8 :selected').val();
+                var keyword = $('#keyword').val();
+                var bestOption = $('#table-filter9 :selected').val();
+                if(keyword == "") keyword = "-1";
+
+                var param = {
+                    page: page,
+                    'option': option,
+                    'keyword': keyword,
+                    'bestOption': bestOption
+                };
+
+                appendData(param);
+                closeBestModalMemo();
+                closeGeneralModalMemo()
+            }
+        });
+
     }
 
 </script>

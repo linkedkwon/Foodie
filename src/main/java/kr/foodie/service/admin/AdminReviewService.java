@@ -3,8 +3,9 @@ package kr.foodie.service.admin;
 import kr.foodie.domain.account.AdminReviewListVO;
 import kr.foodie.domain.account.Review;
 import kr.foodie.domain.account.ReviewDTO;
-import kr.foodie.domain.user.AdminUserListVO;
+import kr.foodie.domain.user.User;
 import kr.foodie.repo.ReviewRepository;
+import kr.foodie.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -26,6 +24,7 @@ public class AdminReviewService {
     private EntityManager em;
 
     private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
 
     private static final String join = "from Review r left join User u "
                             +"on r.userId = u.id "
@@ -34,7 +33,7 @@ public class AdminReviewService {
 
     public List<ReviewDTO> getAdminReviewList(AdminReviewListVO vo){
         String jpql = "select new kr.foodie.domain.account.ReviewDTO("
-                +"r.shopId, s.shopName,r.userId,  u.name,  r.reviewId, r.starRating, r.content, r.bestComment, "
+                +"r.shopId, s.shopName,r.userId,  u.name,  r.reviewId, r.starRating, r.content, r.bestComment, r.point, "
                 +"function('date_format', r.createdTime, '%Y-%m-%d')) " + join;
 
         TypedQuery<ReviewDTO> query = em.createQuery(addQueryByFilter(vo, jpql), ReviewDTO.class)
@@ -128,6 +127,33 @@ public class AdminReviewService {
         for(int o : list){
             reviewRepository.deleteByReviewId(o);
         }
+        return "1";
+    }
+
+    public String switchReview(ReviewDTO dto){
+
+        Optional<User> user = userRepository.findUserById(dto.getUserId());
+        Optional<Review> entity = reviewRepository.findById(dto.getReviewId());
+        int givenPoint = dto.getPoint();
+        int entityPoint = entity.get().getPoint();
+        int userPoint = user.get().getPoint();
+
+        if(dto.getBestComment().equals("0")){
+            entity.get().setBestComment("1");
+            entity.get().setPoint(entityPoint + givenPoint);
+            user.get().setPoint(userPoint + givenPoint);
+        }
+        else{
+            entity.get().setBestComment("0");
+            int cal = entityPoint - givenPoint;
+            entity.get().setPoint(cal < 0 ? 0 : cal);
+            cal = userPoint - givenPoint;
+            user.get().setPoint(cal < 0 ? 0 : cal);
+        }
+
+        reviewRepository.save(entity.get());
+        userRepository.save(user.get());
+
         return "1";
     }
 }
