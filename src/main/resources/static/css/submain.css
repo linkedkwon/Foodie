@@ -62,7 +62,7 @@
 .main-section .filter-header .left-area .addr-info>* {
     display: inline-block;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 600;
     color: #000
 }
 
@@ -186,7 +186,7 @@
 
 .main-section .filter-wrapper .filter-body-layer {
     display: none;
-    width: 413px;
+    width: 500px;
     padding: 12px 15px 24px;
     position: absolute;
     top: 30px;

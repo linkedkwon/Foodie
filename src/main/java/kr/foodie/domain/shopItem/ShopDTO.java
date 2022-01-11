@@ -56,5 +56,5 @@ public class ShopDTO {
     private Integer epicureHit;
     private Integer foodieHit;
     private Integer wikiHit;
-
+    private String buga;
 }

@@ -150,7 +150,7 @@
 
 #contents .contents {
     width: 100%;
-    padding: 0 90px 0 30px;
+    padding: 0 90px 0 60px;
     position: relative;
     min-height: 300px;
     box-sizing: border-box
@@ -175,14 +175,14 @@
 
 #contents .contents .header-restaurant .left-area h2 {
     margin-bottom: 10px;
-    font-size: 32px;
+    font-size: 29px;
     font-weight: 500;
     text-align: left;
     color: #000
 }
 
 #contents .contents .header-restaurant .left-area .categories span {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 400;
     text-align: left;
     color: #a71b00
@@ -302,10 +302,10 @@
     width: 110px;
     float: left;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     text-align: left;
 
-    font-family: NotoSansKR;
+    font-family: "돋음, Dotum. 돋움체, DotumChe";
     font-stretch: normal;
     font-style: normal;
     letter-spacing: normal;
@@ -317,8 +317,8 @@
     float: left;
     font-size: 13px;
     text-align: left;
-    font-weight: normal;
-    font-family: NotoSansKR !important;
+    font-weight: 500;
+    font-family: "돋음, Dotum. 돋움체, DotumChe";
     font-stretch: normal;
     font-style: normal;
     line-height: 1.38;
@@ -396,7 +396,8 @@
 
 #contents .contents .detail-section.hashtag-section {
     display: flex;
-    -webkit-display: flex;
+    flex-wrap: wrap;
+    width: 45%;
 }
 
 #contents .contents .detail-section.hashtag-section a {
@@ -406,13 +407,13 @@
     border-radius: 22px;
 
     margin: 17px 5px 7px 6px;
-    padding: 4px 14px 3px;
+    padding: 4px 20px 3px;
     border: solid 1.5px #ff5c17;
     background-color: #fff;
 
-    font-family: NotoSansKR;
-    font-size: 11px;
-    font-weight: normal;
+    font-family: "돋음, Dotum. 돋움체, DotumChe";
+    font-size: 12px;
+    font-weight: 700;
     font-stretch: normal;
     font-style: normal;
     letter-spacing: normal;
@@ -452,8 +453,8 @@
 }
 
 #contents .contents .detail-section.menu-section .section-body .image-thumbnails .detail {
-    width: 637px;
-    height: 478px;
+    width: 533px;
+    height: 400px;
     float: left;
     background: #eee
 }
@@ -472,8 +473,8 @@
 }
 
 #contents .contents .detail-section.menu-section .section-body .image-thumbnails ul li {
-    width: 120px;
-    height: 90px;
+    width: 98px;
+    height: 72px;
     margin: 0 6px 7px 0;
     float: left;
     background: #eee
@@ -502,8 +503,8 @@
 #contents .contents .detail-section.menu-section .section-body .info li dl dd {
     color: #000;
     font-size: 16px;
-    font-family: NotoSansKR !important;
-    font-weight: normal;
+    font-family: "돋음, Dotum. 돋움체, DotumChe";
+    font-weight: 500;
     font-stretch: normal;
     font-style: normal;
     letter-spacing: normal;
@@ -538,6 +539,7 @@
 
 #contents .contents .detail-section.map-section .section-header ul li.naver a {
     color: #1cb900;
+    font-weight: 600 !important;
     background: url(/images/ico-naver-blog.png) 6px 5px no-repeat
 }
 
@@ -547,6 +549,7 @@
 
 #contents .contents .detail-section.map-section .section-header ul li.instagram a {
     color: #9300ff;
+    font-weight: 600 !important;
     background: url(/images/ico-insta.png) 6px 5px no-repeat
 }
 
@@ -590,7 +593,7 @@
     position: absolute;
     top: 15px;
     right: 0;
-    font-family: NotoSansKR;
+    font-family: "돋음, Dotum. 돋움체, DotumChe";
     font-size: 17px;
     color: #9d9d9d
 }
@@ -828,8 +831,8 @@
     border: solid 1px #d3d3d3;
     background-color: #ffffff;
     font-size: 12px;
-    font-weight: normal;
-    font-family: NotoSansKR;
+    font-weight: 500;
+    font-family: "돋음, Dotum. 돋움체, DotumChe";
     font-stretch: normal;
     font-style: normal;
     line-height: 1.7;

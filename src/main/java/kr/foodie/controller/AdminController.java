@@ -437,7 +437,14 @@ public class AdminController {
 
         return mav;
     }
-
+    @ResponseBody
+    @PostMapping("/epicure/towm")
+    public CommonResponse<String> createTown(@RequestBody List<RegionCreateDTO> param) {
+        shopTownService.update(param);
+        return CommonResponse.<String>builder()
+                .message("정상입니다.")
+                .build();
+    }
     @ResponseBody
     @PostMapping("/epicure/region")
     public CommonResponse<String> createRegion(@RequestBody List<RegionCreateDTO> param) {

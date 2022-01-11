@@ -19,7 +19,7 @@ public class FoodCategoryService {
         String category = "";
         bCode = bCode.startsWith(",")?bCode:bCode;
         mCode = mCode.startsWith(",")?mCode:mCode;
-        sCode = mCode.startsWith(",")?sCode:sCode;
+        sCode = sCode.startsWith(",")?sCode:sCode;
 
         bCode = bCode.contains(",")?bCode :bCode;
         mCode = mCode.contains(",")?mCode:mCode;
@@ -32,5 +32,18 @@ public class FoodCategoryService {
 
         return category;
     }
+    public String getListShopCategory(String bCode, String mCode, String address){
 
+        String category = "";
+        bCode = bCode.startsWith(",")?bCode:bCode;
+        mCode = mCode.startsWith(",")?mCode:mCode;
+
+        bCode = bCode.contains(",")?bCode :bCode;
+        mCode = mCode.contains(",")?mCode:mCode;
+
+        category += bCode.equalsIgnoreCase("0")? "":"" + epicureRegionRepository.findByCode(Integer.parseInt(bCode)).get(0).getListName();
+        category += mCode.equalsIgnoreCase("0")? "":" | " + epicureRegionRepository.findByCode(Integer.parseInt(mCode)).get(0).getListName();
+
+        return category;
+    }
 }

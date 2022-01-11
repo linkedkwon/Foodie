@@ -23,7 +23,7 @@
         <a href="#">
           <picture>
             <source srcset="/images/logo-detail@2x.png 2x">
-            <a href="/"><img src="/images/logo-detail.png" alt="foodie"></a>
+            <div href="/"><img src="/images/logo-detail.png" alt="foodie"></div>
           </picture>
         </a>
       </h1>
@@ -161,7 +161,7 @@
                     <dd>
                       <p id="normal-address" th:text="${payload.address}"></p>
                       <div style="margin-top: 2px;" th:if="${not #strings.isEmpty(payload.roadAddress)}">
-                        <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 1px 7px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
+                        <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 3px 7px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
                           도로명
                         </div>
                         <b id="road-address" th:text="${payload.roadAddress}"></b>
@@ -237,7 +237,9 @@
                 <th:block th:if="${not #strings.isEmpty(payload.homepage)}">
                   <dl>
                     <dt>홈페이지</dt>
-                    <dd th:text="${payload.homepage}"></dd>
+                    <dd>
+                      <button class="homepage" th:href="${payload.homepage}" target="_blank">바로가기</button>
+                    </dd>
                   </dl>
                 </th:block>
 
@@ -446,7 +448,7 @@
       font-weight: normal !important;
       font-stretch: normal !important;
       font-style: normal !important;
-      line-height: 1.25 !important;
+      line-height: 1.65 !important;
       letter-spacing: normal !important;
       text-align: left !important;
       color: #000 !important;

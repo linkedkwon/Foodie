@@ -159,9 +159,12 @@ public class Shop {
     @Column(name = "ETC_6")
     private String isParking;
 
-//    ?
+    //부가세
     @Column(name = "ETC_7")
-    private String premiumRegisterDate;
+    private String buga;
+
+    @Column(name = "PREMIUM_REGISTER_DATE")
+    private Date premiumRegisterDate;
 
     @Column(name = "ETC_9")
     private String homepage;
@@ -260,6 +263,7 @@ public class Shop {
                 .epicureHit(shopDto.getEpicureHit())
                 .foodieHit(shopDto.getFoodieHit())
                 .wikiHit(shopDto.getWikiHit())
+                .buga(shopDto.getBuga())
                 .build()
                 ;
     }

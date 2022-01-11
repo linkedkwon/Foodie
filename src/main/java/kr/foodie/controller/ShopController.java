@@ -176,16 +176,28 @@ public class ShopController {
             bCode = "0";
         }else{
             bCode = Optional.ofNullable(commentList.getBigCategory()).orElseGet(()->{return "0";});
+            String[] bCodeList = bCode.split(",");
+            if(bCodeList.length > 1){
+                bCode = bCodeList[0];
+            }
         }
         if(isStringEmpty(commentList.getMiddleCategory())){
             mCode = "0";
         }else{
             mCode = Optional.ofNullable(commentList.getMiddleCategory()).orElseGet(()->{return "0";});
+            String[] mCodeList = mCode.split(",");
+            if(mCodeList.length > 1){
+                mCode = mCodeList[0];
+            }
         }
         if(isStringEmpty(commentList.getSmallCategory())){
             sCode = "0";
         }else{
             sCode = Optional.ofNullable(commentList.getSmallCategory()).orElseGet(()->{return "0";});
+            String[] sCodeList = sCode.split(",");
+            if(sCodeList.length > 1){
+                sCode = sCodeList[0];
+            }
         }
 
         //tasteRating
@@ -203,6 +215,16 @@ public class ShopController {
         //menu images
         commentList.setMenuImages(extractMenuImages(commentList));
 
+        //insta keyword
+        mav.addObject("instaKeyword",commentList.getShopName().replaceAll("\\(.+\\)", "").strip());
+        
+        //buga
+        if(isStringEmpty(commentList.getBuga())){
+            commentList.setBuga("없음");
+        }
+        commentList.setMenuImages(extractMenuImages(commentList));
+        
+        
         mav.addObject("tasteRatingCnt", str[1]);
         mav.addObject("category", foodCategoryService.getShopCategory(bCode, mCode, sCode, commentList.getAddress()));
         mav.addObject("reviews", reviewService.getItemsByShopId(shopId, idx));
@@ -223,6 +245,9 @@ public class ShopController {
         }else {
             mav.setViewName("detail-blue");
         }
+
+
+
         return mav;
     }
 
@@ -231,6 +256,7 @@ public class ShopController {
         String replacedImg = null;
         if(commentList.getShopImage() != null){
             replacedImg = commentList.getShopImage().strip();
+            return replacedImg;
         }
 
         if (StringUtils.hasText(menuImgStr)) {

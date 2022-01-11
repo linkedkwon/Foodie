@@ -31,4 +31,19 @@ public class TripCategoryService {
 
         return category;
     }
+    public String getListTripCategory(String bCode, String mCode, String address){
+
+        String category = "";
+        bCode = bCode.startsWith(",")?bCode.substring(1):bCode;
+        mCode = mCode.startsWith(",")?mCode.substring(1):mCode;
+
+        bCode = bCode.contains(",")?bCode.split(",")[0]:bCode;
+        mCode = mCode.contains(",")?mCode.split(",")[0]:mCode;
+
+        category += address.split(" ")[0]+ " " + address.split(" ")[1];
+        category += bCode.equalsIgnoreCase("")? "":" | " + epicureRegionRepository.findByCode(Integer.parseInt(bCode)).get(0).getListName();
+        category += mCode.equalsIgnoreCase("")? "":" | " + epicureRegionRepository.findByCode(Integer.parseInt(mCode)).get(0).getListName();
+
+        return category;
+    }
 }
