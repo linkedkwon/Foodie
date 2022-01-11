@@ -290,11 +290,11 @@
                                     <th style="width: 30px;"><input type="checkbox" id="cbx_chkAll" name="cbx_chkAll" value=""></th>
                                     <th style="text-align: center; width: 120px;" >가게명</th>
                                     <th style="text-align: center; width: 100px;">이름</th>
-                                    <th style="text-align: center; width: 270px;">내용</th>
+                                    <th style="text-align: center; width: 265px;">내용</th>
                                     <th style="text-align: center; width: 40px;">평점</th>
                                     <th style="text-align: center; width: 100px;">작성일</th>
                                     <th style="text-align: center; width: 55px;">베스트</th>
-                                    <th style="text-align: center; width: 50px;">삭제</th>
+                                    <th style="text-align: center; width: 55px;">삭제</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -302,7 +302,7 @@
 
 
                         <!-- 내용 모달 -->
-                        <div class="modal-memo" style="display: none; position: fixed; width: 45%; left:53%; margin-left: -20%; height: 500px; top:50%; margin-top: -200px; overflow: auto;">
+                        <div class="modal-memo" style="display: none; position: fixed; width: 45%; left:53%; margin-left: -16%; height: 500px; top:50%; margin-top: -200px; overflow: auto;">
                             <div class="container-fluid">
                                 <div class="col-md-12">
                                     <div class="card">
@@ -324,7 +324,7 @@
                         </div>
 
                         <!-- 베댓 선정 모달 : 일반 -> 베댓 -->
-                        <div class="general-comment-modal" style="display: none; position: fixed; width: 35%; left:60%; margin-left: -20%; height: 500px; top:75%; margin-top: -150px; overflow: auto;">
+                        <div class="general-comment-modal" style="display: none; position: fixed; width: 34%; left:60%; margin-left: -20%; height: 500px; top:75%; margin-top: -400px; overflow: auto;">
                             <div class="container-fluid">
                                 <div class="col-md-12">
                                     <div class="card">
@@ -356,7 +356,7 @@
                         </div>
 
                         <!-- 베댓 선정 모달 : 베댓 -> 일반 -->
-                        <div class="best-comment-modal" style="display: none; position: fixed; width: 35%; left:60%; margin-left: -20%; height: 500px; top:75%; margin-top: -150px; overflow: auto;">
+                        <div class="best-comment-modal" style="display: none; position: fixed; width: 34%; left:60%; margin-left: -20%; height: 500px; top:75%; margin-top: -400px; overflow: auto;">
                             <div class="container-fluid">
                                 <div class="col-md-12">
                                     <div class="card">
@@ -396,7 +396,7 @@
 
                     <div class="pagination" style="padding: 0 20px 0 20px; margin-bottom: 15px;">
                         <div>
-                            <button value="선택삭제" style="font-size: 10px; width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="deleteCheckedReviews()">선택삭제</button>
+                            <button value="선택삭제" style="font-size: 10px; width: 60px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="deleteCheckedReviews()">선택삭제</button>
                         </div>
                         <div style="margin: 0 auto; display: flex;">
                             <button id="first" onclick="clickButton(this)"><img src="/images/paging_first.gif"/></button>
@@ -475,7 +475,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
-</div>
 </body>
 <style>
     #preview{
@@ -528,7 +527,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        width:260px;
+        width:255px;
     }
 
     .button-style{
@@ -808,6 +807,8 @@
     <!-- 베스트 댓글 모달 및 Api -->
 
     function popUpGeneralCommentModal(e){
+        closeBestModalMemo();
+
         var str = e.value.split(',');
         $("#hidden-general-user-id").val(str[0]);
         $("#hidden-general-review-id").val(str[1]);
@@ -820,6 +821,9 @@
     }
 
     function popUpBestCommentModal(e){
+        closeGeneralModalMemo();
+
+        $(".general-comment-modal").css("display", "none");
         var str = e.value.split(',');
         $("#hidden-best-user-id").val(str[0]);
         $("#hidden-best-review-id").val(str[1]);
@@ -860,7 +864,7 @@
             'reviewId': reviewId,
             'point': point,
             'bestComment':flag
-        }
+        };
 
         $.ajax({
             url: "/admin/review/switch",

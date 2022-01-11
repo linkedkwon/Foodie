@@ -304,7 +304,7 @@
                                     <td>
                                         <div class="addr-box addr1">
                                             <input type="text" id="post-code" name="user_zipcode" disabled="true" style="width: 300px;" th:value="${user.getAddress().split('\+')[0]}">
-                                                <a href="javascript:void(0);" class="button-style" onClick="execDaumPostcode()" style="float: none; font-size: 10px;">우편번호 찾기</a>
+                                                <a href="javascript:void(0);" class="button-style" onClick="execDaumPostcode()" style="float: none; font-size: 10px; padding: 2px 2px 2px 2px;">우편번호 찾기</a>
                                             </div>
 
                                             <div class="addr-box addr2">
@@ -380,7 +380,7 @@
                             <div style="display: inline-flex;">
                                 <!-- ajax 비동기로 form 요청만 하기-->
                                 <a class="button-style" onclick="updateUserInfo()">수정</a>
-                                <a id="back-first-a" class="button-style" href="/">목록</a>
+                                <a id="back-first-a" class="button-style">목록</a>
                             </div>
                         </div>
                     </div>
@@ -557,13 +557,10 @@
         });
 
         //뒤로가기 url 만들기
-        var link = document.location.href;
-        var url = new URL(link);
-        var urlParams = url.searchParams;
-        var backLink = "/admin/user/"+urlParams.get('userType')+"/all?page="
-            + urlParams.get('page') + "&userType=" + urlParams.get('userType')
-            + "&option=" + urlParams.get('option') + "&keyword=" + urlParams.get('keyword')
-            + "&renderOption=" + urlParams.get('renderOption');
+        var backLink = "/admin/user/"+getParam('userType')+"/all?page="
+            + getParam('page') + "&userType=" + getParam('userType')
+            + "&option=" + getParam('option') + "&keyword=" + getParam('keyword')
+            + "&renderOption=" + getParam('renderOption');
         $("#back-first-a").attr("href", backLink);
         $("#back-second-a").attr("href", backLink);
     });
@@ -663,6 +660,19 @@
                 location.reload();
             }
         });
+    }
+
+    function getParam(name)
+    {
+        var curr_url = decodeURI(location.search).substr(location.search.indexOf("?") + 1);
+        var svalue = "";
+        curr_url = curr_url.split("&");
+        for (var i = 0; i < curr_url.length; i++)
+        {
+            temp = curr_url[i].split("=");
+            if ([temp[0]] == name) { svalue = temp[1]; }
+        }
+        return svalue;
     }
 </script>
 </html>

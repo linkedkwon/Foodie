@@ -215,8 +215,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg"/>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -247,13 +246,13 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="card shadow mb-4" style="width: 800px;margin:auto;">
+                <div class="card shadow mb-4" style="width: 900px;margin:auto;">
                     <div class="card-header py-3">
                         <!--/*@thymesVar id="background" type="String"*/-->
-                        <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">일반 회원 관리</h6>
+                        <h6 class="m-0 font-weight-bold text-primary" style="width: 30%;float: left;">일반 회원 관리</h6>
                     </div>
                     <div>
-                        <div style="width: 90%;margin:auto;margin-top: 20px;    font-size: 9pt;    border: 1px solid lightgray">
+                        <div style="width: 90%; margin:auto; margin-top: 20px; font-size: 9pt; border: 1px solid lightgray">
                             <div style="display: inline-flex;">
                                 <div  style="height: 31px; text-align:center; width: 120px;  padding-top: 6px; background: rgb(247, 247, 247); border-right: 1px solid lightgray"> 검색어 </div>
                                 <p style="    padding-left: 20px;  padding-top: 5px;  margin-bottom: 0;">
@@ -277,7 +276,7 @@
                                 <table class="table table-bordered display" id="list-table" cellspacing="0" border="1px solid #dee2e6">
                                     <thead>
                                     <tr>
-                                        <th style=""><input type="checkbox" id="cbx_chkAll" name="cbx_chkAll" value=""></th>
+                                        <th style="width: 30px;"><input type="checkbox" id="cbx_chkAll" name="cbx_chkAll" value=""></th>
                                         <th style="text-align: center; width: 240px;" >이메일</th>
                                         <th style="text-align: center; width: 100px;">이름</th>
                                         <th style="text-align: center; width: 100px;">가입일</th>
@@ -312,13 +311,12 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
 
                         <div class="pagination" style="padding: 0 20px 0 20px; margin-bottom: 15px;">
                             <div>
-                                <button value="선택삭제" style="font-size: 10px; width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="deleteCheckedUsers()">선택삭제</button>
+                                <button value="선택삭제" style="font-size: 10px; width: 60px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="deleteCheckedUsers()">선택삭제</button>
                             </div>
                             <div style="margin: 0 auto; display: flex;">
                                 <button id="first" onclick="clickButton(this)"><img src="/images/paging_first.gif"/></button>
@@ -331,6 +329,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
@@ -396,7 +395,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
-    </div>
 </body>
 <style>
     #preview{
@@ -475,7 +473,7 @@
         console.log('링크에여 ', link.length);
 
         var param;
-        if(link.length < 40) {
+        if(link.indexOf("?") == -1) {
             param = {
                 page: 1,
                 'userType': '0',
@@ -485,18 +483,16 @@
             };
         }
         else{
-            var url = new URL(link);
-            var urlParams = url.searchParams;
             param = {
-                page: urlParams.get('page'),
+                page: getParam('page'),
                 'userType': '0',
-                'option': urlParams.get('option'),
-                'keyword': urlParams.get('keyword'),
-                'renderOption': urlParams.get('renderOption')
+                'option': getParam('option'),
+                'keyword': getParam('keyword'),
+                'renderOption': getParam('renderOption')
             };
 
-            $('#table-filter8 :selected').val(urlParams.get('option'));
-            $('#keyword').val(urlParams.get('keyword'));
+            $('#table-filter8').val(getParam('option')).prop("selected", true);
+            $('#keyword').val(getParam('keyword'));
         }
 
         //전역 현재 페이지(삭제 기능에 사용)
@@ -532,7 +528,7 @@
             'option': option,
             'keyword': keyword,
             'renderOption': '2'
-        }
+        };
 
         appendData(param);
     }
@@ -745,18 +741,35 @@
     }
 
     function editMemo(e) {
+        console.log('드러옴');
         var userId = e.value;
         var content = $('#summernote').summernote('code');
+        console.log('id', userId);
+        console.log('content', content);
 
         $.ajax({
-            url: "/admin/user/edit/memo?id=" + userId + "&content=" + content,
+            url: "/admin/user/edit/memo?id=" + userId + "&content=" + encodeURI(content),
             type: "POST",
+            cache: "false",
             success: function (data) {
                 console.log('성공');
                 alert('메모가 정상적으로 입력되었습니다.');
                 closeModalMemo();
             }
         });
+    }
+
+    function getParam(name)
+    {
+        var curr_url = decodeURI(location.search).substr(location.search.indexOf("?") + 1);
+        var svalue = "";
+        curr_url = curr_url.split("&");
+        for (var i = 0; i < curr_url.length; i++)
+        {
+            temp = curr_url[i].split("=");
+            if ([temp[0]] == name) { svalue = temp[1]; }
+        }
+        return svalue;
     }
 </script>
 </html>

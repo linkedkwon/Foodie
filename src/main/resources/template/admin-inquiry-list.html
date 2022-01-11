@@ -247,10 +247,10 @@
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
-            <div class="card shadow mb-4" style="width: 1000px;margin:auto;">
+            <div class="card shadow mb-4" style="width: 950px;margin:auto;">
                 <div class="card-header py-3">
                     <!--/*@thymesVar id="background" type="String"*/-->
-                    <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">댓글 관리</h6>
+                    <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">문의내역</h6>
                 </div>
                 <div>
                     <div style="width: 90%; margin:auto;margin-top: 20px; font-size: 9pt; border: 1px solid lightgray">
@@ -290,20 +290,20 @@
                                     <th style="width: 30px;"><input type="checkbox" id="cbx_chkAll" name="cbx_chkAll" value=""></th>
                                     <th style="text-align: center; width: 100px;">이름</th>
                                     <th style="text-align: center; width: 120px;" >제목</th>
-                                    <th style="text-align: center; width: 270px;">내용</th>
-                                    <th style="text-align: center; width: 120px;">연락처</th>
+                                    <th style="text-align: center; width: 240px;">내용</th>
+                                    <th style="text-align: center; width: 100px;">연락처</th>
                                     <th style="text-align: center; width: 100px;">답변작성</th>
-                                    <th style="text-align: center; width: 60px;">답변상태</th>
+                                    <th style="text-align: center; width: 65px;">답변상태</th>
                                     <th style="text-align: center; width: 100px;">등록일</th>
-                                    <th style="text-align: center; width: 50px;">삭제</th>
+                                    <th style="text-align: center; width: 55px;">삭제</th>
                                 </tr>
                                 </thead>
                             </table>
                         </div>
 
-                    <div class="pagination" style="padding: 0 20px 0 20px; margin-bottom: 15px;">
+                    <div class="pagination" style="margin-bottom: 15px;">
                         <div>
-                            <button value="선택삭제" style="font-size: 10px; width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="deleteCheckedInquiries()">선택삭제</button>
+                            <button value="선택삭제" style="font-size: 10px; width: 60px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="deleteCheckedInquiries()">선택삭제</button>
                         </div>
                         <div style="margin: 0 auto; display: flex;">
                             <button id="first" onclick="clickButton(this)"><img src="/images/paging_first.gif"/></button>
@@ -541,7 +541,7 @@
                         '<span>' + inquiry[i].name + '</span>' +
                         '</td>' +
                         '<td style="text-align: center">' +
-                        '<div class="overflow-shop" style="white-space: pre;">' +
+                        '<div class="overflow-shop">' +
                         '<a href="/">' + inquiry[i].title + '</a>' +
                         '</div>' +
                         '</td>' +

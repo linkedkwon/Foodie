@@ -33,7 +33,9 @@ public class AdminUserController {
     }
 
     @GetMapping("/user/1/all")
-    public String renderRestaurantUserList(){
+    public String renderRestaurantUserList(@RequestParam(value = "page", required = false) Integer page,
+                                           @RequestParam(value = "userType", required = false) String userType, @RequestParam(value = "option", required = false) String option,
+                                           @RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "renderOption", required = false) String renderOption){
         return "admin-restaurant-list";
     }
 

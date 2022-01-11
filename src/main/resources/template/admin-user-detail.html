@@ -307,7 +307,7 @@
                             <div style="text-align: center">
                                 <div style="display: inline-flex;">
                                     <a id="edit-a" class="button-style" href="/">수정</a>
-                                    <a id="back-first-a" class="button-style" href="/">목록</a>
+                                    <a id="back-first-a" class="button-style">목록</a>
                                 </div>
                             </div>
                         </div>
@@ -358,7 +358,7 @@
 
                         <div style="text-align: center">
                             <div style="display: inline-flex;">
-                                <a id="back-second-a" class="button-style" href="/">목록</a>
+                                <a id="back-second-a" class="button-style">목록</a>
                             </div>
                         </div>
                     </div>
@@ -514,13 +514,10 @@
         });
 
         //뒤로가기 url 만들기
-        var link = document.location.href;
-        var url = new URL(link);
-        var urlParams = url.searchParams;
-        var backLink = "/admin/user/"+urlParams.get('userType')+"/all?page="
-            + urlParams.get('page') + "&userType=" + urlParams.get('userType')
-            + "&option=" + urlParams.get('option') + "&keyword=" + urlParams.get('keyword')
-            + "&renderOption=" + urlParams.get('renderOption');
+        var backLink = "/admin/user/"+getParam('userType')+"/all?page="
+            + getParam('page') + "&userType=" + getParam('userType')
+            + "&option=" + getParam('option') + "&keyword=" + getParam('keyword')
+            + "&renderOption=" + getParam('renderOption');
         $("#back-first-a").attr("href", backLink);
         $("#back-second-a").attr("href", backLink);
 
@@ -529,12 +526,25 @@
          * @type {string}
          */
         //수정 url 만들기
-        var editUrl = "/admin/user/edit?id=" + urlParams.get('id') +
-            "&page=" + urlParams.get('page') + "&userType=" + urlParams.get('userType') +
-            "&option=" + urlParams.get('option') + "&keyword=" + urlParams.get('keyword') +
-            "&renderOption=" + urlParams.get('renderOption');
+        var editUrl = "/admin/user/edit?id=" + getParam('id') +
+            "&page=" + getParam('page') + "&userType=" + getParam('userType') +
+            "&option=" + getParam('option') + "&keyword=" + getParam('keyword') +
+            "&renderOption=" + getParam('renderOption');
 
         $("#edit-a").attr("href", editUrl);
     });
+
+    function getParam(name)
+    {
+        var curr_url = decodeURI(location.search).substr(location.search.indexOf("?") + 1);
+        var svalue = "";
+        curr_url = curr_url.split("&");
+        for (var i = 0; i < curr_url.length; i++)
+        {
+            temp = curr_url[i].split("=");
+            if ([temp[0]] == name) { svalue = temp[1]; }
+        }
+        return svalue;
+    }
 </script>
 </html>
