@@ -1,5 +1,6 @@
 <header id="header" xmlns:th="http://www.thymeleaf.org" th:fragment="type(type,height)" th:class="${type}">
     <div class="inner-wrapper">
+        <a href="/" class="mobile-main-btn"></a>
         <a href="#" id="mainCategory" class="btn-category"><span>카테고리</span></a>
 
         <div style="width: 196px; margin: 0 auto;">
@@ -400,6 +401,8 @@
                 changeRegionCategory1(1, 'regionDetailContent1', '1')
                 $("#regionContent1 .top-menu li:eq(0)").addClass("active");
                 $(".global-nav").css({"height": "315px"});
+                $("#header").addClass("active-mobile-nav");
+                $("#regionContent1 #top-menu-div").append("<div class='view-more-menu'></div>");
                 return false;
             });
 
@@ -422,6 +425,8 @@
                 $("#regionContent2 .top-menu li:eq(0)").addClass("active");
                 $(".global-nav").css({"height": "315px"});
                 $("#regionDetailContent2 .item-list-wrapper li").css({"margin-bottom": "15px"});
+                $("#header").addClass("active-mobile-nav");
+                $("#regionContent2 .top-menu:eq(0)").append("<div class='view-more-menu'></div>");
                 return false;
             });
             $("#sudoMain").click(function () {
@@ -504,6 +509,7 @@
                 changeRegionCategory1("서울", 'regionDetailContent3', '3')
                 $("#region3").addClass("active");
                 $("#regionContent3").show();
+                $("#header").addClass("active-mobile-nav");
                 // if (status == "none") {
                 //     $("#hidden").css("display", "");
                 // } else {

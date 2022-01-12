@@ -31,6 +31,8 @@
 <!--      <button class="w3-button w3-black w3-display-left" style="top: 57%;left: 10%;" onclick="plusDivs(-1)">&#10094;</button>-->
 <!--      <button class="w3-button w3-black w3-display-right"style="top: 57%;right: 10%;" onclick="plusDivs(1)">&#10095;</button>-->
     </div>
+    <!-- mobile small banner -->
+    <div class="mobile-main-banner-small">리뷰를 작성하고 푸디 포인트를 받아보세요!</div>
     <!-- 주요지역 추천맛집 -->
     <div class="main-section recommend-restaurants1">
       <div class="inner">
@@ -239,18 +241,45 @@
   <!-- footer -->
   <div th:replace="./fragments/main-footer.html"></div>
 
+  <div id="bottom-menubar">
+    <ul>
+      <li><a>홈</a></li>
+      <li><a>검색</a></li>
+      <li><a>내주변</a></li>
+      <li><a>MY</a></li>
+      <li><a>찜</a></li>
+    </ul>
+  </div>
+
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
   <script type="text/javascript" th:src="@{/js/commons.js}"></script>
 
   <script>
+    var app;
     window.onload = function () {
       // $('#gyeong').addClass('active');
       // $('#seoul').addClass('active');
       initialInfo('1', 'content1', 'mainRegion');
       initialInfo('6', 'content2', 'subRegion');
+
+      var innerWidth = window.innerWidth;
+      app = document.getElementById("app");
+      if(innerWidth < 480) {
+        app.classList.add("mobile-main");
+      }else if(innerWidth > 480) {
+        app.classList.remove("mobile-main");
+      }
     }
+    window.onresize = function () {
+      if(innerWidth < 480) {
+        app.classList.add("mobile-main");
+      }else if(innerWidth > 480) {
+        app.classList.remove("mobile-main");
+      }
+    }
+
     $(document).ready(function () {
       var slideIndex = 0;
       carousel();
@@ -431,5 +460,6 @@
 
   </script>
 </div>
+
 </body>
 </html>
