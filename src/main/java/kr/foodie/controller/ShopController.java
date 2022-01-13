@@ -208,6 +208,12 @@ public class ShopController {
         //logRating
         commentList.setFoodieLogRating(Optional.ofNullable(commentList.getFoodieLogRating())
                 .orElseGet(()->{return "없음";}));
+        if(commentList.getFoodieLogRating().equals("")){
+            commentList.setFoodieLogRating("없음");
+        }
+        commentList.setFoodieLogRating(Optional.ofNullable(commentList.getFoodieLogRating())
+                .orElseGet(()->{return "없음";}));
+
 
         //shop image
         mav.addObject("shopImage",extractShopImage(commentList));

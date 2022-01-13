@@ -20,7 +20,7 @@
 }
 
 #contents.detail-green {
-    background: #5ab489
+    background: #00b786
 }
 
 #contents.detail-blue {
@@ -212,6 +212,7 @@
 }
 
 #contents .contents .header-restaurant .right-area .scores {
+    padding-right: 23px;
     width: 150px;
     height: 71px;
     float: left;
@@ -293,6 +294,7 @@
 }
 
 #contents .contents .about-restaurant .right-area dl.line {
+    width: 450px;
     margin-bottom: 7px;
     padding-bottom: 7px;
     border-bottom: 1px solid #d0d0d0
@@ -313,7 +315,7 @@
 }
 
 #contents .contents .about-restaurant .right-area dl dd {
-    width: 366px;
+    width: 330px;
     float: left;
     font-size: 13px;
     text-align: left;
@@ -395,8 +397,6 @@
 }
 
 #contents .contents .detail-section.hashtag-section {
-    display: flex;
-    flex-wrap: wrap;
     width: 45%;
 }
 
@@ -750,7 +750,7 @@
 }
 
 .detail-footer .left-area p {
-    font-size: 16px;
+    font-size: 11px;
     text-align: left;
     color: #fff;
     font-weight: 400
@@ -798,7 +798,7 @@
 }
 
 .detail-footer>ul li a {
-    font-size: 14px;
+    font-size: 11px;
     color: #fff
 }
 

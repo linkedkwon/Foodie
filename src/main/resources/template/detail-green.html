@@ -41,35 +41,36 @@
               </div>
 
               <div class="right-area">
-                <ul class="scores" th:style="${not #strings.isEmpty(payload.foodieLogRating)}? '':'border-right:solid 0px #e4e4e4;'">
+                <ul class="scores">
                   <li th:text="${not #strings.isEmpty(payload.foodieLogRating)} ? '전문가 평점' : '전문가 평점'"></li>
                   <li>
                     <b style="padding-left:17px;">방문자 평점</b>
                   </li>
                 </ul>
 
-                <th:block th:switch="${payload.foodieLogRating}">
-                  <div class="star" th:case="A">
-                    <picture>
-                      <img src="/images/ico-detail-star-first.png" style="height: 40px;">
-                    </picture>
-                  </div>
-                  <div class="star" th:case="AA">
-                    <picture>
-                      <img src="/images/ico-detail-star-second.png" style="height: 40px;">
-                    </picture>
-                  </div>
-                  <div class="star" th:case="AAA">
-                    <picture>
-                      <img src="/images/ico-detail-star-third.png" style="height: 40px;">
-                    </picture>
-                  </div>
-                  <div class="star" th:case="없음">
-                    <picture>
-                      <img src="/images/noRating.png" style="height: 40px;">
-                    </picture>
-                  </div>
-                </th:block>
+                  <th:block th:switch="${payload.foodieLogRating}">
+                    <div class="star" th:case="A">
+                      <picture style="margin-right: -30px;">
+                        <img src="/images/ico-detail-star-first.png" style="margin-top: 20px;height: 40px;">
+                      </picture>
+                    </div>
+                    <div class="star" th:case="AA">
+                      <picture style="margin-right: -20px;">
+                        <img src="/images/ico-detail-star-second.png" style="margin-top: 20px;height: 40px;">
+                      </picture>
+                    </div>
+                    <div class="star" th:case="AAA">
+                      <picture>
+                        <img src="/images/ico-detail-star-third.png" style="margin-top: 20px;height: 40px;">
+                      </picture>
+                    </div>
+                    <div class="star" th:case="없음">
+                      <picture>
+                        <img src="/images/noRating.png" style="height: 40px;">
+                      </picture>
+                    </div>
+                  </th:block>
+<!--                </th:block>-->
 
                 <th:block th:switch="${tasteRatingCnt}">
                   <div th:case="5">
@@ -453,7 +454,7 @@
   </div>
   <style>
     .right-area picture{
-      padding-left: 10px;
+      padding-left: 24px;
     }
     .section-body span{
       font-family: "돋음, Dotum. 돋움체, DotumChe" !important;
@@ -504,8 +505,9 @@
     }
 
     .hash_tag_blank{
-      width: 24px !important;
-      height: 24px !important;
+
+      width: 36px !important;
+      height: 35px !important;
       padding: 4px 5px 3px 5px !important;
       margin: 17px 7px 7px 0px !important;
       border: solid 1.5px #ff571a !important;
