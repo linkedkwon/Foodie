@@ -1,9 +1,11 @@
 package kr.foodie.service.admin;
 
 import kr.foodie.domain.account.AdminInquiryListVO;
-import kr.foodie.domain.account.AdminReviewListVO;
+import kr.foodie.domain.account.InquiryDTO;
+import kr.foodie.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -18,7 +20,10 @@ public class AdminInquiryController {
     private final AdminInquiryService adminInquiryService;
 
     @GetMapping("/inquiry/all")
-    public String renderInquiryList(){
+    public String renderInquiryList(@RequestParam(value = "page", required = false) Integer page,
+                                    @RequestParam(value = "option", required = false) String option,
+                                    @RequestParam(value = "keyword", required = false) String keyword,
+                                    @RequestParam(value = "replied", required = false) String givenReplyOption){
         return "admin-inquiry-list";
     }
 
@@ -41,6 +46,29 @@ public class AdminInquiryController {
     @PostMapping("/delete/inquiry")
     public String deleteCheckedList(@RequestParam(value ="list[]") List<Integer> list){
         return adminInquiryService.deleteUserById(list);
+    }
+
+    @GetMapping("/inquiry/detail")
+    public String renderInquiryDetail(@RequestParam(value = "id", required = false) Integer id, @RequestParam(value = "page", required = false) Integer page,
+                                   @RequestParam(value = "option", required = false) String option, @RequestParam(value = "keyword", required = false) String keyword,
+                                   @RequestParam(value = "replied", required = false) String givenReplyOption, Model model){
+        model.addAttribute("inquiry", adminInquiryService.getAdminInquiryById(id));
+        return "admin-inquiry-detail";
+    }
+
+    @GetMapping("/inquiry/edit")
+    public String renderInquiryEdit(@RequestParam(value = "id", required = false) Integer id, @RequestParam(value = "page", required = false) Integer page,
+                                   @RequestParam(value = "option", required = false) String option, @RequestParam(value = "keyword", required = false) String keyword,
+                                   @RequestParam(value = "replied", required = false) String givenReplyOption, Model model) {
+        model.addAttribute("inquiry", adminInquiryService.getAdminInquiryById(id));
+        return "admin-inquiry-edit";
+    }
+
+    @ResponseBody
+    @PostMapping("/inquiry/edit/info")
+    public String updateInquiryInfo(@ModelAttribute InquiryDTO dto){
+        adminInquiryService.updateUserInfo(dto);
+        return "1";
     }
 
 }

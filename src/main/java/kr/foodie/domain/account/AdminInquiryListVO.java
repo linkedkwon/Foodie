@@ -8,6 +8,6 @@ public class AdminInquiryListVO {
     private int page;
     private String option;
     private String keyword;
-    private String givenReplyOption;
+    private String replied;
 
 }
