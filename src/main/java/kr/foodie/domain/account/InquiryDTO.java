@@ -10,6 +10,7 @@ public class InquiryDTO {
 
     private Long inquiryId;
     private String name;
+    private String email;
     private String title;
     private String content;
     private String phoneNum;
@@ -17,11 +18,12 @@ public class InquiryDTO {
     private String givenReply;
     private String createdTime;
 
-    public InquiryDTO(Long inquiryId, String name, String title,
+    public InquiryDTO(Long inquiryId, String name, String email, String title,
                       String content, String phoneNum, String comment,
                       String givenReply, String createdTime) {
         this.inquiryId = inquiryId;
         this.name = name;
+        this.email = email;
         this.title = title;
         this.content = content;
         this.phoneNum = phoneNum;

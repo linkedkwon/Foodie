@@ -250,139 +250,60 @@
             <div class="card shadow mb-4" style="width: 800px;margin:auto;">
                 <div>
                     <div class="card-body" style="width:100%; padding-right: 0px;margin: auto; padding-bottom: 0px;">
-                        <!-- 1. 회원정보수정 -->
+
+                        <!-- 1. 회원정보 -->
                         <div style="float: left; margin-bottom:10px;">
-                            <span style="color: #317CC1; font-weight: 600; font-size: 10px;">회원정보수정</span>
+                            <span style="color: #317CC1; font-weight: 600; font-size: 10px;">문의내역 상세보기</span>
                         </div>
                         <!-- 테이블 -->
                         <div class="table-responsive" style="font-size: 9pt;margin: auto;    padding-right: 20px;">
-                            <table class="table table-bordered display" cellspacing="0" border="1px solid #dee2e6" th:object="${user}">
+                            <table class="table table-bordered display" cellspacing="0" border="1px solid #dee2e6" th:object="${inquiry}">
                                 <thead>
                                 <tr>
-                                    <td class="gray-bg" width="100">이름</td>
-                                    <td width="100%">
-                                        <input type="text" id="user-name" th:value="${user.name}" th:field="*{name}"
-                                        onblur="checkName()" oninput="oninputName()"/>
-                                        <div class="error-next-box" id="name-msg"></div>
-                                    </td>
+                                    <td class="gray-bg" align="center" width="15%">이름</td>
+                                    <td width="35%" th:text="${inquiry.name}"></td>
+                                    <td class="gray-bg" align="center" width="15%">홈페이지</td>
+                                    <td width="35%"></td>
                                 </tr>
                                 <tr>
-                                    <td class="gray-bg" width="100">이메일</td>
-                                    <td><span id="user-email" th:text="${user.email}"></span></td>
+                                    <td class="gray-bg" align="center" width="15%">연락처</td>
+                                    <td width="35%" th:text="${inquiry.phoneNum}"></td>
+                                    <td class="gray-bg" align="center" width="15%">이메일</td>
+                                    <td width="35%" th:text="${inquiry.email}"></td>
                                 </tr>
                                 <tr>
-                                    <td class="gray-bg" width="100">비밀번호</td>
-                                    <td>
-                                        <input type="password" id="user-pswd1" th:field="*{password}"
-                                               onblur="checkPassword()" oninput="oninputPswd1()"/>
-                                        <div class="error-next-box" id="pswd-msg1"></div>
-                                    </td>
+                                    <td class="gray-bg" align="center" width="15%">제목</td>
+                                    <td colspan="3" th:text="${inquiry.title}"></td>
                                 </tr>
                                 <tr>
-                                    <td class="gray-bg" width="100">비밀번호 확인</td>
-                                    <td>
-                                        <input type="password" id="user-pswd2"
-                                               onblur="matchPassword()" oninput="oninputPswd2()"/>
-                                        <span class="tip"> +4~15자의 영문자, 숫자조합</span>
-                                        <div class="error-next-box" id="pswd-msg2"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="gray-bg" width="100">전화번호</td>
-                                    <td>
-                                        <input type="text" id="user-tel" th:value="${user.telNum}" th:field="*{telNum}"
-                                               onblur="checkTel()" oninput="oninputTel()"/>
-                                        <div class="error-next-box" id="tel-msg"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="gray-bg" width="100">휴대전화</td>
-                                    <td th:text="${user.phoneNum}"></td>
-                                </tr>
-                                <tr>
-                                    <td class="gray-bg" width="100">주소</td>
-                                    <td>
-                                        <div class="addr-box addr1">
-                                            <input type="text" id="post-code" name="user_zipcode" disabled="true" style="width: 300px;" th:value="${user.getAddress().split('\+')[0]}">
-                                                <a href="javascript:void(0);" class="button-style" onClick="execDaumPostcode()" style="float: none; font-size: 10px; padding: 2px 2px 2px 2px;">우편번호 찾기</a>
-                                            </div>
-
-                                            <div class="addr-box addr2">
-                                                <input type="text" id="address" name="user_add1" disabled="true" th:value="${user.getAddress().toString().split('\+')[1]}">
-                                            </div>
-
-                                            <div class="addr-box addr3">
-                                                <input type="text" id="detail-address" name="user_add2" disabled="true"
-                                                       oninput="oninputAddress()" onblur="checkAddress()" th:value="${user.getAddress().toString().split('\+')[2]}">
-                                                <span class="tip"> +상세주소 나머지</span>
-                                                <input type="text" id="composed-address" style="display:none" th:field="*{address}"/>
-                                            </div>
-                                            <div class="error-next-box" id="address-msg"></div>
+                                    <td colspan="4" height="200px;">
+                                        <textarea style="width: 100%; height:100%; border: 0px;" th:text="${inquiry.content}" readonly></textarea>
                                     </td>
                                 </tr>
                                 </thead>
                             </table>
-                        </div>
 
-                        <!-- 2.정보수신-->
-                        <div style="float: left; margin-bottom:10px;">
-                            <span style="color: #317CC1; font-weight: 600; font-size: 10px;">정보수신 설정 및 포인트</span>
-                        </div>
-
-                        <!-- 정보수신 테이블 -->
-                        <div class="table-responsive" style="font-size: 9pt;margin: auto;    padding-right: 20px;">
-                            <table class="table table-bordered display" cellspacing="0" border="1px solid #dee2e6" th:object="${user}">
-                                <thead>
-                                <tr>
-                                    <td class="gray-bg" width="100">SNS 수신 설정</td>
-                                    <td>
-                                        <span>
-                                          <span for="email-receiving">이메일 서비스</span>
-                                          <input type="checkbox" id="email-receiving" th:checked="${user.emailReceivedType.toString().equals('1')}">
-                                          <input type="text" id="email-receiving-value" style="display:none" th:field="*{emailReceivedType}"/>
-                                        </span>
-                                        <span>
-                                          <span for="sns-receiving">SNS 서비스</span>
-                                          <input type="checkbox" id="sns-receiving" th:checked="${user.snsReceivedType.toString().equals('1')}">
-                                          <input type="text" id="sns-receiving-value" style="display:none" th:field="*{snsReceivedType}"/>
-                                        </span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="gray-bg" width="100">포인트</td>
-                                    <td>
-                                        <input type="text" id="user-point" th:value="${user.point}" style="text-align: right;"/>
-                                        <span class="tip"> +지급할 포인트 입력</span>
-                                    </td>
-                                </tr>
-                                </thead>
-                            </table>
-                        </div>
-
-                        <!-- 3.관리자메모-->
-                        <div style="float: left; margin-bottom:10px;">
-                            <span style="color: #317CC1; font-weight: 600; font-size: 10px;">관리자메모</span><span class="tip"> +회원은 볼 수 없음</span>
-                        </div>
-
-                        <div class="table-responsive" style="font-size: 9pt;margin: auto;    padding-right: 20px;">
                             <table class="table table-bordered display" cellspacing="0" border="1px solid #dee2e6">
                                 <thead>
                                 <tr>
-                                    <td class="gray-bg" width="100">관리자 메모</td>
-                                    <td><textarea id="summernote" th:utext="${user.memo}"></textarea></td>
+                                    <td class="gray-bg" align="center">답변 내역</td>
+                                </tr>
+                                <tr>
+                                    <td height="200px;">
+                                        <textarea id="summernote" th:utext="${inquiry.comment}"></textarea>
+                                    </td>
                                 </tr>
                                 </thead>
                             </table>
-                        </div>
 
-                        <div style="text-align: center">
-                            <div style="display: inline-flex;">
-                                <!-- ajax 비동기로 form 요청만 하기-->
-                                <a class="button-style" onclick="updateUserInfo()">수정</a>
-                                <a id="back-first-a" class="button-style">목록</a>
+                            <div style="text-align: center">
+                                <div style="display: inline-flex;">
+                                    <a id="edit-a" class="button-style" href="/">답변</a>
+                                    <a id="back-first-a" class="button-style">목록</a>
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -447,9 +368,7 @@
     <script th:src="@{/js/demo/datatables-demo.js}"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-    <script type="text/javascript" th:src="@{/js/mypage.js}"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
@@ -492,10 +411,9 @@
         border: 1px solid gainsboro;
         color: slategray;
         padding-top: 3px;
-        cursor:pointer;
     }
 
-    .tip{
+    #tip{
         margin-left: 6px;
         color: #3399FF;
         font-size: 8pt;
@@ -509,13 +427,6 @@
         background-color: transparent;
     }
 
-    .error-next-box{
-        margin-top:2px;
-        margin-bottom:0px;
-        font-size:10px;
-        text-align:left;
-        color:#FF0000;
-    }
     /*.data_table {*/
     /*    text-align: center;*/
     /*    vertical-align: middle !important;*/
@@ -547,120 +458,27 @@
 
         $('#summernote').summernote({
             height: 300,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'paragraph']],
-                ['insert', ['link']],
-            ]
         });
+
+        $('#summernote').summernote('disable');
 
         //뒤로가기 url 만들기
-        var backLink = "/admin/user/"+getParam('userType')+"/all?page="
-            + getParam('page') + "&userType=" + getParam('userType')
-            + "&option=" + getParam('option') + "&keyword=" + getParam('keyword')
-            + "&renderOption=" + getParam('renderOption');
+        var backLink = "/admin/inquiry/all?page="
+            + getParam('page') + "&option=" + getParam('option') + "&keyword=" + getParam('keyword') + "&replied=" + getParam('replied');
         $("#back-first-a").attr("href", backLink);
         $("#back-second-a").attr("href", backLink);
+
+        /**
+         *'<a href="/admin/user/edit?id=' + user[i].id + '&page=' + currentPage + '&userType=0&option='+ $('#table-filter8 :selected').val() + '&keyword=' + $('#keyword').val() + '&renderOption=3">수정</a>'
+         * @type {string}
+         */
+            //수정 url 만들기
+        var editUrl = "/admin/inquiry/edit?id=" + getParam('id') +
+            "&page=" + getParam('page') + "&option=" + getParam('option') +
+            "&keyword=" + getParam('keyword') + "&replied=" + getParam('replied');
+
+        $("#edit-a").attr("href", editUrl);
     });
-
-    function execDaumPostcode() {
-
-        new daum.Postcode({
-            oncomplete: function(data) {
-                var addr = '';
-                if (data.userSelectedType === 'R') {
-                    addr = data.roadAddress;
-                } else {
-                    addr = data.jibunAddress;
-                }
-                document.getElementById("post-code").value = data.zonecode;
-                document.getElementById("address").value = addr;
-                document.getElementById("detail-address").disabled = false;
-                document.getElementById("detail-address").focus();
-                document.getElementById("address-msg").innerText = "";
-            }
-        }).open();
-    }
-    function composeAddress(){
-        var address = document.getElementById("composed-address");
-        var composed = document.getElementById("post-code").value + "+"
-            + document.getElementById("address").value+ "+"
-            + document.getElementById("detail-address").value;
-
-        address.value = composed;
-    }
-
-    /**
-     * checkValidation() : 데이터 포맷 확인
-     * updateUserInfo() : 수정 api
-     */
-    function checkValidation(){
-        var list = [checkName(), checkPassword(),
-        matchPassword(), checkTel(), checkAddress()];
-
-        for(var i = 0; i < list.length; i++){
-            if(list[i] == false)
-                return false;
-        }
-        return true;
-    }
-
-    function updateUserInfo() {
-        if (!checkValidation()) {
-            console.log('발챙이에여');
-            return;
-        }
-
-        var emailValue = document.getElementById("email-receiving-value");
-        var snsValue = document.getElementById("sns-receiving-value");
-
-        if($('input:checkbox[id="email-receiving"]').is(":checked"))
-            emailValue.value ="1";
-        else
-            emailValue.value = "0";
-
-        if($('input:checkbox[id="sns-receiving"]').is(":checked"))
-            snsValue.value = "1";
-        else
-            snsValue.value = "0";
-
-        var pswd = $('#user-password1').val();
-        if(!pswd)
-            pswd = "";
-
-        var telNum = $('#user-tel').val();
-        if(!telNum)
-            telNum = "";
-
-        var content = $('#summernote').summernote('code');
-        if(!content)
-            content = "";
-
-        var param = {
-            'name' : $('#user-name').val(),
-            'email': $('#user-email').text(),
-            'password': pswd,
-            'telNum': telNum,
-            'address': $('#composed-address').val(),
-            'emailReceivedType': emailValue.value,
-            'snsReceivedType': snsValue.value,
-            'point': $('#user-point').val(),
-            'memo': content
-        };
-
-        $.ajax({
-            url: "/admin/inquiry/edit/info",
-            type: "POST",
-            data: param,
-            dataType: "json",
-            success: function (data) {
-                alert('수정이 완료되었습니다.');
-                location.reload();
-            }
-        });
-    }
 
     function getParam(name)
     {

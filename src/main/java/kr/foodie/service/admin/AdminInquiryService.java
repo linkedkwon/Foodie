@@ -2,6 +2,7 @@ package kr.foodie.service.admin;
 
 import kr.foodie.domain.account.AdminInquiryListVO;
 import kr.foodie.domain.account.AdminReviewListVO;
+import kr.foodie.domain.account.Inquiry;
 import kr.foodie.domain.account.InquiryDTO;
 import kr.foodie.repo.InquiryRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -26,19 +24,26 @@ public class AdminInquiryService {
 
     private final InquiryRepository inquiryRepository;
 
+    private static final String select = "select new kr.foodie.domain.account.InquiryDTO("
+            +"i.inquiryId, u.name, u.email, i.title, i.content, u.phoneNum, i.comment, i.givenReply, "
+            +"function('date_format', i.createdTime, '%Y-%m-%d')) ";
     private static final String join = "from Inquiry i left join User u "
             +"on i.userId = u.id";
 
     public List<InquiryDTO> getAdminInquiryList(AdminInquiryListVO vo){
-        String jpql = "select new kr.foodie.domain.account.InquiryDTO("
-                +"i.inquiryId, u.name, i.title, i.content, u.phoneNum, i.comment, i.givenReply, "
-                +"function('date_format', i.createdTime, '%Y-%m-%d')) " + join;
+        String jpql =  select + join;
 
         TypedQuery<InquiryDTO> query = em.createQuery(addQueryByFilter(vo, jpql), InquiryDTO.class)
                 .setFirstResult((vo.getPage() - 1) * 15)
                 .setMaxResults(15);
 
         return query.getResultList();
+    }
+
+    public InquiryDTO getAdminInquiryById(int id){
+        String jpql = select + join + " where i.inquiryId =" + id;
+
+        return em.createQuery(jpql, InquiryDTO.class).getSingleResult();
     }
 
     public int getAllInquiryCount(AdminInquiryListVO vo){
@@ -107,11 +112,11 @@ public class AdminInquiryService {
             }
         }
 
-        if(!vo.getGivenReplyOption().equals("-1")) {
+        if(!vo.getReplied().equals("-1")) {
             if(!hasWhereCaluse)
-                jpql += " where i.givenReply like '%" + vo.getGivenReplyOption() + "%'";
+                jpql += " where i.givenReply like '%" + vo.getReplied() + "%'";
             else
-                jpql += " and i.givenReply like '%" + vo.getGivenReplyOption() + "%'";
+                jpql += " and i.givenReply like '%" + vo.getReplied() + "%'";
         }
 
         jpql += " order by i.createdTime desc";
@@ -125,5 +130,13 @@ public class AdminInquiryService {
             inquiryRepository.deleteByInquiryId(o);
         }
         return "1";
+    }
+
+    public void updateUserInfo(InquiryDTO dto){
+        Optional<Inquiry> entity = inquiryRepository.findById(dto.getInquiryId());
+        entity.get().setComment(dto.getComment());
+        entity.get().setGivenReply(dto.getGivenReply());
+
+        inquiryRepository.save(entity.get());
     }
 }

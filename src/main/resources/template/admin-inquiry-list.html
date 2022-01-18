@@ -301,6 +301,27 @@
                             </table>
                         </div>
 
+                        <!-- 내용 모달 -->
+                        <div class="container-fluid" id="modal-content" style="display: none; position: fixed; width: 48%; left:53%; margin-left: -20%; height: 400px; top:50%; margin-top: -200px; overflow: auto;">
+                            <div class="col-md-12" style="height: 100%;">
+                                <div class="card" style="height: 100%;">
+                                    <div class="card-header">
+                                        <h3 class="card-title">내용</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <textarea id="txt-area" style="width: 100%; height:80%; border: none;" readonly></textarea>
+
+                                        <div style="text-align: center; padding-top: 10px;">
+                                            <div style="display: inline-block;">
+                                                <button style="width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="closeModalMemo()">닫기</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="pagination" style="margin-bottom: 15px;">
                         <div>
                             <button value="선택삭제" style="font-size: 10px; width: 60px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="deleteCheckedInquiries()">선택삭제</button>
@@ -488,11 +509,29 @@
         });
 
         <!-- 페이지 로드 시 데이터 -->
-        var param = {
-            page: 1,
-            'option':'-1',
-            'keyword':'-1',
-            'givenReplyOption':'-1'
+        var link = document.location.href;
+
+        var param;
+        if(link.indexOf("?") == -1){
+            param = {
+                page: 1,
+                'option':'-1',
+                'keyword':'-1',
+                'replied':'-1'
+            };
+        }
+        else{
+            param = {
+                page: getParam('page'),
+                'option': '0',
+                'option': getParam('option'),
+                'keyword': getParam('keyword'),
+                'replied': getParam('replied')
+            };
+
+            $('#table-filter8').val(getParam('option')).prop("selected", true);
+            $('#keyword').val(getParam('keyword'));
+            $('#table-filter9').val(getParam('replied')).prop("selected", true);
         }
 
         var currentPage = 1;
@@ -542,27 +581,27 @@
                         '</td>' +
                         '<td style="text-align: center">' +
                         '<div class="overflow-shop">' +
-                        '<a href="/">' + inquiry[i].title + '</a>' +
+                        '<a href="/admin/inquiry/detail?id=' + inquiry[i].inquiryId + '&page=' + currentPage + '&option='+ $('#table-filter8 :selected').val() + '&keyword=' + $('#keyword').val() + '&replied='+ $('#table-filter9 :selected').val() + '">' + inquiry[i].title + '</a>' +
                         '</div>' +
                         '</td>' +
                         '<td style="text-align: left">' +
-                        '<div class="overflow-comment" style="white-space: pre;" onclick="popUpContentModal(this)">' + inquiry[i].content + '</div>' +
+                        '<div class="overflow-comment" style="white-space: pre;"><button onclick="popUpContentModal(this)" value="'+inquiry[i].content+'">' + inquiry[i].content + '</button></div>' +
                         '</td>' +
                         '<td style="text-align: center">' +
                         '<span>' + inquiry[i].phoneNum + '</span>' +
                         '</td>' +
                         '<td style="text-align: center">' +
-                        '<span>' + '작성' + '</span>' +
+                        '<a href="/admin/inquiry/edit?id=' + inquiry[i].inquiryId + '&page=' + currentPage + '&option='+ $('#table-filter8 :selected').val() + '&keyword=' + $('#keyword').val() + '&replied='+ $('#table-filter9 :selected').val() + '">' + '작성' + '</a>' +
                         '</td>' +
                         '<td style="text-align: center">';
 
                     if(inquiry[i].givenReply == 1){
                         tr +=
-                            '<button class="button-style" onclick="popUpBestCommentModal(this)">답변완료</button>';
+                            '<span class="button-style">답변완료</span>';
                     }
                     else{
                         tr +=
-                            '<button onclick="popUpGeneralCommentModal(this)">대기중</button>';
+                            '<span>대기중</span>';
                     }
 
                     tr +=   '</td>' +
@@ -625,14 +664,14 @@
         var page = e == 1 ? 1:e.value;
         var option = $('#table-filter8 :selected').val();
         var keyword = $('#keyword').val();
-        var givenReplyOption = $('#table-filter9 :selected').val();
+        var replied = $('#table-filter9 :selected').val();
         if(keyword == "") keyword = "-1";
 
         var param = {
             page: page,
             'option': option,
             'keyword': keyword,
-            'givenReplyOption':givenReplyOption
+            'replied':replied
         };
 
         appendData(param);
@@ -690,14 +729,14 @@
 
         var option = $('#table-filter8 :selected').val();
         var keyword = $('#keyword').val();
-        var givenReplyOption = $('#table-filter9 :selected').val();
+        var replied = $('#table-filter9 :selected').val();
         if(keyword == "") keyword = "-1";
 
         var param = {
             page: currentPage,
             'option': option,
             'keyword': keyword,
-            'givenReplyOption':givenReplyOption
+            'replied':replied
         };
 
         appendData(param);
@@ -707,102 +746,28 @@
         $("input[name=cbx_chkAll]").prop("checked", false);
     }
 
+    <!-- 내용 모달 -->
     function popUpContentModal(e){
         $("#txt-area").text(e.value);
-        $(".modal-memo").css("display", "");
+        $("#modal-content").css("display", "");
     }
 
     function closeModalMemo(){
         $("#txt-area").text("");
-        $(".modal-memo").css("display", "none");
+        $("#modal-content").css("display", "none");
     }
 
-    <!-- 베스트 댓글 모달 및 Api -->
-
-    function popUpGeneralCommentModal(e){
-        var str = e.value.split(',');
-        $("#hidden-general-user-id").val(str[0]);
-        $("#hidden-general-review-id").val(str[1]);
-        $(".general-comment-modal").css("display", "");
-    }
-
-    function closeGeneralModalMemo(){
-        $("#general-point").val(0);
-        $(".general-comment-modal").css("display", "none");
-    }
-
-    function popUpBestCommentModal(e){
-        var str = e.value.split(',');
-        $("#hidden-best-user-id").val(str[0]);
-        $("#hidden-best-review-id").val(str[1]);
-        $("#given-point").text(str[2] + " 포인트");
-
-        $(".best-comment-modal").css("display", "");
-    }
-
-    function closeBestModalMemo(){
-        $("#best-point").val(0);
-        $(".best-comment-modal").css("display", "none");
-    }
-
-    function switchCommentHasBest(flag){
-
-        console.log('유저 아이디', $("#hidden-general-user-id").val());
-        console.log('리뷰 아이디', $("#hidden-general-review-id").val());
-        console.log('포인트', $("#general-point").val());
-        //flag == 0 이면 일반 -> 베댓
-
-        var userId;
-        var reviewId;
-        var point;
-
-        if(flag == 0){
-            userId = $("#hidden-general-user-id").val();
-            reviewId = $("#hidden-general-review-id").val();
-            point = $("#general-point").val();
+    function getParam(name)
+    {
+        var curr_url = decodeURI(location.search).substr(location.search.indexOf("?") + 1);
+        var svalue = "";
+        curr_url = curr_url.split("&");
+        for (var i = 0; i < curr_url.length; i++)
+        {
+            temp = curr_url[i].split("=");
+            if ([temp[0]] == name) { svalue = temp[1]; }
         }
-        else{
-            userId = $("#hidden-best-user-id").val();
-            reviewId = $("#hidden-best-review-id").val();
-            point = $("#best-point").val();
-        }
-
-        var param = {
-            'userId': userId,
-            'reviewId': reviewId,
-            'point': point,
-            'bestComment':flag
-        }
-
-        $.ajax({
-            url: "/admin/review/switch",
-            type: "POST",
-            data: param,
-            dataType: "json",
-            success: function (data) {
-                $('#list-table tr:not(:first)').remove();
-                $("#pages").empty();
-
-                var page = currentPage;
-                var option = $('#table-filter8 :selected').val();
-                var keyword = $('#keyword').val();
-                var bestOption = $('#table-filter9 :selected').val();
-                if(keyword == "") keyword = "-1";
-
-                var param = {
-                    page: page,
-                    'option': option,
-                    'keyword': keyword,
-                    'bestOption': bestOption
-                };
-
-                appendData(param);
-                closeBestModalMemo();
-                closeGeneralModalMemo()
-            }
-        });
-
+        return svalue;
     }
-
 </script>
 </html>
