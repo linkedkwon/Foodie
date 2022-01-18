@@ -583,10 +583,10 @@
         color:#fff;
     }
     .custom-select{
-        font-size: 9px !important;
+        font-size: 12px !important;
     }
     .form-control{
-        font-size: 9px !important;
+        font-size: 12px !important;
     }
     input[id^='input_imgs']{
         display: none;
@@ -608,6 +608,15 @@
     let sel_files =[];
     var tagList = [];
     $(document).ready(function() {
+        if (window.history && window.history.pushState) {
+            window.history.pushState('forward', null, null);
+            $(window).on('popstate', function () {
+                window.location.href = '/admin/shop/list/allgreen?updated=true&'+serialize(getUrlParams());
+            });
+        }
+
+
+
         IMAGES = [[${payload.menuImages}]];
         SHOP_ID = [[${payload.shopId}]];
         SHOP = [[${shop}]];
@@ -911,8 +920,6 @@
 
         var itemData=new FormData(form);
         itemData.append("shop", SHOP);
-        console.log("업데이트직전 selfiles")
-        console.log(sel_files)
         itemData.append("files", sel_files);
         itemData.append("images", IMAGES);
         itemData.append("themeList", SHOP.themeList);

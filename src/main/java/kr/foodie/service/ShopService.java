@@ -67,11 +67,11 @@ public class ShopService {
         if(isGreen){
             List<Shop> shops = shopRepository.findByArea1stAndShopTypeInAndPremiumRegisterDateIsNullOrderByUpdatedAt(area2st, shopType,
                     PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
-            return addListAliasOnShops(shops);
+            return mainAliasOnShops(shops);
         }
         List<Shop> shops = shopRepository.findByArea2stAndShopTypeInAndPremiumRegisterDateIsNullOrderByUpdatedAt(area2st, shopType,
                 PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
-        return addListAliasOnShops(shops);
+        return mainAliasOnShops(shops);
 
     }
 
@@ -91,10 +91,10 @@ public class ShopService {
     public List<Shop> getShopPremiumInfos(Boolean isGreen, Integer area2st, List<Integer> shopType) {
         if(isGreen){
             List<Shop> shops = shopRepository.findRandomByArea1stAndShopTypeInAndPremiumRegisterDateIsNull(area2st, shopType);
-            return addAliasOnShops(shops);
+            return mainAliasOnShops(shops);
         }
         List<Shop> shops = shopRepository.findRandomByArea2stAndShopTypeInAndPremiumRegisterDateIsNull(area2st, shopType);
-        return addAliasOnShops(shops);
+        return mainAliasOnShops(shops);
     }
 
   /*  페이지 있는경우
@@ -127,10 +127,10 @@ public class ShopService {
     public List<Shop> getShopInfosWithSideOrder(Boolean isGreen, Integer area2st, List<Integer> shopType) {
         if(isGreen){
             List<Shop> shops = shopRepository.findByArea1stAndShopTypeIn(area2st, shopType);
-            return addAliasOnShops(shops);
+            return mainAliasOnShops(shops);
         }
         List<Shop> shops = shopRepository.findByArea2stAndShopTypeIn(area2st, shopType);
-        return addAliasOnShops(shops);
+        return mainAliasOnShops(shops);
     }
 
     public Shop getShopDetail(Integer shopId) {
@@ -144,6 +144,10 @@ public class ShopService {
     public List<Shop> getShopInfoByType(Integer type) {
         List<Shop> shops = shopRepository.findShopInfoByType(type);
         return addAliasOnShops(shops);
+    }
+    public List<Shop> getShopMainInfoByType(Integer type) {
+        List<Shop> shops = shopRepository.findShopInfoByType(type);
+        return mainAliasOnShops(shops);
     }
 
     public List<Shop> getShopInfoByAddressName(String address, Integer type) {
@@ -202,6 +206,37 @@ public class ShopService {
             } else {
                 shop.setShopAlias(foodCategoryService.getShopCategory(bCode, mCode, sCode, shop.getAddress()));
             }
+            shop.setShopImage(extractShopImage(shop));
+        }
+        return shops;
+    }
+    protected List<Shop> mainAliasOnShops(List<Shop> shops) {
+        for (Shop shop : shops) {
+            String bCode = Optional.ofNullable(shop.getBigCategory()).orElseGet(() -> {
+                return "0";
+            });
+            String mCode = Optional.ofNullable(shop.getMiddleCategory()).orElseGet(() -> {
+                return "0";
+            });
+            String sCode = Optional.ofNullable(shop.getSmallCategory()).orElseGet(() -> {
+                return "0";
+            });
+            if(shop.getSmallCategory() == null || shop.getSmallCategory().equals("")){
+                sCode = "0";
+            }
+            Integer type = Optional.ofNullable(shop.getShopType()).orElseGet(() -> {
+                return 0;
+            });
+
+//            if (type.toString().equals("1")) {
+//                shop.setShopAlias(tripCategoryService.getMainTripCategory(bCode, mCode, sCode));
+//            } else {
+                shop.setShopAlias(foodCategoryService.getMainShopCategory(bCode, mCode, sCode));
+            if(shop.getFoodieLogRating() == null || shop.getFoodieLogRating().equals("없음")){
+                shop.setFoodieLogRating("");
+            }
+//            }
+
             shop.setShopImage(extractShopImage(shop));
         }
         return shops;

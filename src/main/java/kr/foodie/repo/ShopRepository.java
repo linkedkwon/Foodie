@@ -25,6 +25,7 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
     List<Shop> findRandomByArea1stAndShopTypeInAndPremiumRegisterDateIsNull(Integer area2st , List<Integer> shopType);
 
     Page<Shop> findBySubwayTypeIdAndShopTypeOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st, Integer shopType, Pageable pageable);
+    @Query(nativeQuery = true, value = "select * from rankup_shop_introduce_data where area_2nd = ?1 and shop_bg_image in ?2 order by RAND() limit 4")
     List<Shop> findByArea2stAndShopTypeIn(Integer area2st, List<Integer> shopType);
     @Query(nativeQuery = true, value = "select * from rankup_shop_introduce_data where area_1st = ?1 and shop_bg_image in ?2 order by RAND() limit 4")
     List<Shop> findByArea1stAndShopTypeIn(Integer area1st, List<Integer> shopType);

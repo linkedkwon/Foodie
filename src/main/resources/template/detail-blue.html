@@ -23,7 +23,7 @@
         <a href="#">
           <picture>
             <source srcset="/images/logo-detail@2x.png 2x">
-            <div href="/"><img src="/images/logo-detail.png" alt="foodie"></div>
+            <div onclick="location.href='/'"><img src="/images/logo-detail.png" alt="foodie"></div>
           </picture>
         </a>
       </h1>
@@ -38,38 +38,30 @@
                 <div class="categories">
                   <span th:text="${category}"></span>
                 </div>
-<!--                빼기로함-->
-<!--                <div class="categories" style="margin-top: 10px;">-->
-<!--                  <a th:href="'http://epicure.co.kr/home/'+${payload.shopAlias}" th:text="'http://epicure.co.kr/home/'+${payload.shopAlias}" style="color:#838383;"></a>-->
-<!--                </div>-->
               </div>
 
               <div class="right-area">
-                <ul class="scores" th:style="${not #strings.isEmpty(payload.foodieLogRating)}? '':'border-right:solid 0px #e4e4e4;'">
+                <ul class="scores">
                   <li th:text="${not #strings.isEmpty(payload.foodieLogRating)} ? '전문가 평점' : '전문가 평점'"></li>
                   <li>
-<!--                    <b style="padding-left:17px;" th:text="${not #strings.isEmpty(payload.tasteRating)} ? '방문자 평점('+${payload.tasteRating}+'점)' : '오감 평점'"></b>-->
-                    <b style="padding-left:17px;">방문자 평점</b>
-<!--                    <b th:text="${not #strings.isEmpty(payload.tasteRating)} ? '오감 평점('+${payload.tasteRating}+'점)' : '오감 평점(없음)'"></b>-->
-
-                    <!--                    <b th:text="'('+${tasteRatingCnt}+'명)'" style="font-size: 12px;"></b>-->
+                    <span style="padding-left:17px;">방문자 평점</span>
                   </li>
                 </ul>
 
                 <th:block th:switch="${payload.foodieLogRating}">
                   <div class="star" th:case="A">
-                    <picture>
-                      <img src="/images/ico-detail-star-first.png" style="height: 40px;">
+                    <picture style="margin-right: -30px;">
+                      <img src="/images/ico-detail-star-first.png" style="margin-top: 20px;height: 40px;">
                     </picture>
                   </div>
                   <div class="star" th:case="AA">
-                    <picture>
-                      <img src="/images/ico-detail-star-second.png" style="height: 40px;">
+                    <picture style="margin-right: -20px;">
+                      <img src="/images/ico-detail-star-second.png" style="margin-top: 20px;height: 40px;">
                     </picture>
                   </div>
                   <div class="star" th:case="AAA">
                     <picture>
-                      <img src="/images/ico-detail-star-third.png" style="height: 40px;">
+                      <img src="/images/ico-detail-star-third.png" style="margin-top: 20px;height: 40px;">
                     </picture>
                   </div>
                   <div class="star" th:case="없음">
@@ -155,16 +147,29 @@
               <div class="right-area">
 
                 <!-- 1. 주소-->
-                <th:block th:if="${not #strings.isEmpty(payload.address)}">
+                <th:block th:if="${not #strings.isEmpty(payload.roadAddress)}">
                   <dl>
                     <dt>주소</dt>
                     <dd>
-                      <p id="normal-address" th:text="${payload.address}"></p>
-                      <div style="margin-top: 2px;" th:if="${not #strings.isEmpty(payload.roadAddress)}">
+                      <p id="normal-address" th:text="${payload.roadAddress}"></p>
+                      <div style="margin-top: 2px;" th:if="${not #strings.isEmpty(payload.address)}">
                         <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 3px 7px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
                           도로명
                         </div>
-                        <b id="road-address" th:text="${payload.roadAddress}"></b>
+                        <span id="road-address" th:text="${payload.address}"></span>
+                      </div>
+                    </dd>
+                  </dl>
+                </th:block>
+                <th:block th:unless="${not #strings.isEmpty(payload.roadAddress)}">
+                  <dl>
+                    <dt>주소</dt>
+                    <dd>
+                      <div style="margin-top: 2px;" th:if="${not #strings.isEmpty(payload.address)}">
+                        <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 3px 7px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
+                          도로명
+                        </div>
+                        <span id="road-address" th:text="${payload.address}"></span>
                       </div>
                     </dd>
                   </dl>
@@ -261,8 +266,21 @@
             <!-- about-restaurant END -->
 
             <div class="detail-section hashtag-section">
-              <th:block th:object="${tag}" th:each="tag : ${hashTags}">
-                <a th:text="${tag.tagName}"></a>
+              <th:block  th:each="tag,index : ${hash}">
+                <th:block th:if="${index.index} == 1 or ${index.index} == 5">
+                  <a class="hash_tag_blank">#</a>
+                  <a th:text="${tag}"></a>
+                  <a class="hash_tag_blank_back_white">#</a>
+                </th:block>
+                <th:block th:if="${index.index} == 2 or ${index.index} == 6">
+                  <a th:text="${tag}"></a>
+                </th:block>
+                <th:block th:if="${index.index} == 3 or ${index.index} == 7">
+                  <a class="hash_tag_first" th:text="${tag}"></a>
+                </th:block>
+                <th:block th:if="${index.index} == 4 or ${index.index} == 8">
+                  <a th:text="${tag}"></a>
+                </th:block>
               </th:block>
             </div>
 
@@ -320,14 +338,16 @@
                   </th:block>
                 </div>
 
-                <ul class="info">
+                <!--                <ul class="info" th:if="${not #strings.equals(payload.menu, '없음')}">-->
+                <ul class="info" th:if="${not #strings.contains(payload.menu, '없음')}">
                   <li>
                     <dl>
-                      <dt>메뉴</dt>
+                      <dt>입장료</dt>
                       <dd th:utext="${payload.menu}"></dd>
                     </dl>
                   </li>
                 </ul>
+
               </div>
             </div>
             <!-- menu-section END -->
@@ -338,7 +358,7 @@
                 <h3>MAP</h3>
                 <ul>
                   <li class="naver"><a th:href="@{'https://search.naver.com/search.naver?query='+ ${payload.address} + ${payload.shopName} + '&nso=&where=view&sm=tab_viw.all&mode=normal'}" target="_blank">블로그 리뷰 보기</a></li>
-                  <li class="instagram"><a th:href="@{'https://www.instagram.com/explore/tags/'+ ${payload.shopName}}" target="_blank">인스타 이미지 보기</a></li>
+                  <li class="instagram"><a th:href="@{'https://www.instagram.com/explore/tags/'+ ${payload.instaKeyword}}" target="_blank">인스타 이미지 보기</a></li>
                 </ul>
               </div>
 
@@ -434,18 +454,83 @@
   </div>
   <style>
     .right-area picture{
-      padding-left: 10px;
+      padding-left: 24px;
     }
     .section-body span{
-      font-family: NotoSansKR !important;
+      font-family: "돋음, Dotum. 돋움체, DotumChe" !important;
       font-size: 12px !important;
-      font-weight: normal !important;
+      font-weight: 400 !important;
       font-stretch: normal !important;
       font-style: normal !important;
       line-height: 1.65 !important;
       letter-spacing: normal !important;
       text-align: left !important;
       color: #000 !important;
+    }
+    .section-body p{
+      font-family: "돋음, Dotum. 돋움체, DotumChe" !important;
+      font-size: 12px !important;
+      font-weight: 600 !important;
+      font-stretch: normal !important;
+      font-style: normal !important;
+      line-height: 1.65 !important;
+      letter-spacing: normal !important;
+      text-align: left !important;
+      color: #000 !important;
+    }
+    .section-body div{
+      font-family: "돋음, Dotum. 돋움체, DotumChe" !important;
+      font-size: 12px !important;
+      font-weight: 600 !important;
+      font-stretch: normal !important;
+      font-style: normal !important;
+      line-height: 1.65 !important;
+      letter-spacing: normal !important;
+      text-align: left !important;
+      color: #000 !important;
+    }
+    a:visited {
+      color : black;
+    }
+    #contents h1 picture  img{
+      width: 188px;
+      height: 42px;
+    }
+
+    .hash_tag_first {
+      height: 24px !important;
+      margin: 17px 6px 7px 0 !important;
+      background-color: #ff571a !important;
+      color: white !important;
+    }
+
+    .hash_tag_blank{
+      height: 24px !important;
+      padding: 5px 12px 2px 13px !important;
+      margin: 16px 7px 7px 0px !important;
+      border: solid 1.5px #ff571a !important;
+      background-color: #ff571a !important;
+      color: white !important;
+    }
+    .hash_tag_blank_back_white{
+      height: 24px !important;
+      padding: 5px 12px 2px 13px !important;
+      margin: 16px 7px 7px 0px !important;
+      border: solid 1.5px #ff571a !important;
+      background-color: #fff !important;
+      color: #ff571a !important;
+    }
+    .homepage{
+      display: block;
+      width: 20%;
+      height: 25px;
+      margin-left: -5px;
+      border-radius: 21px;
+      box-shadow: 0 3px 2px 0 rgb(0 0 0 / 4%);
+      border: solid 1px #e6e6e6;
+      background-color: #fff;
+      font-size: 13px;
+      font-weight: 500;
     }
   </style>
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>

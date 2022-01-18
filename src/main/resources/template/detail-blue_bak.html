@@ -49,7 +49,7 @@
                   <li th:text="${not #strings.isEmpty(payload[0].foodieLogRating)} ? '전문가 평점' : '전문가 평점'"></li>
                   <li>
 <!--                    <b style="padding-left:17px;" th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '방문자 평점('+${payload[0].tasteRating}+'점)' : '오감 평점'"></b>-->
-                    <b style="padding-left:17px;">방문자 평점</b>
+                    <span style="padding-left:17px;">방문자 평점</span>
 <!--                    <b th:text="${not #strings.isEmpty(payload[0].tasteRating)} ? '오감 평점('+${payload[0].tasteRating}+'점)' : '오감 평점(없음)'"></b>-->
 
                     <!--                    <b th:text="'('+${tasteRatingCnt}+'명)'" style="font-size: 12px;"></b>-->
@@ -164,7 +164,7 @@
                         <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 1px 7px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
                           도로명
                         </div>
-                        <b id="road-address" th:text="${payload[0].roadAddress}"></b>
+                        <span id="road-address" th:text="${payload[0].roadAddress}"></span>
                       </div>
                     </dd>
                   </dl>

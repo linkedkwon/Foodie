@@ -31,6 +31,23 @@ public class TripCategoryService {
 
         return category;
     }
+    public String getMainTripCategory(String bCode, String mCode, String sCode){
+
+        String category = "";
+        bCode = bCode.startsWith(",")?bCode.substring(1):bCode;
+        mCode = mCode.startsWith(",")?mCode.substring(1):mCode;
+        sCode = sCode.startsWith(",")?sCode.substring(1):sCode;
+
+        bCode = bCode.contains(",")?bCode.split(",")[0]:bCode;
+        mCode = mCode.contains(",")?mCode.split(",")[0]:mCode;
+        sCode = sCode.contains(",")?sCode.split(",")[0]:sCode;
+
+        category += bCode.equalsIgnoreCase("")? "":" | " + epicureRegionRepository.findByCode(Integer.parseInt(bCode)).get(0).getListName();
+        category += mCode.equalsIgnoreCase("")? "":" | " + epicureRegionRepository.findByCode(Integer.parseInt(mCode)).get(0).getListName();
+        category += sCode.equalsIgnoreCase("")? "":" | " + epicureRegionRepository.findByCode(Integer.parseInt(sCode)).get(0).getListName();
+
+        return category;
+    }
     public String getListTripCategory(String bCode, String mCode, String address){
 
         String category = "";

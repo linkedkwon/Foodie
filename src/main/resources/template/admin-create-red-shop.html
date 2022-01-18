@@ -267,6 +267,7 @@
                                                         <div style="display: flex">
                                                             <select id="table-filter4" class="custom-select" th:field="${shop.area1st}">
                                                                 <!--/*@thymesVar id="listName" type="String"*/-->
+                                                                <option value="">선택</option>
                                                                 <option
                                                                         th:each="val : ${allFirstRegionInfos}"
                                                                         th:value="${val.id}"
@@ -296,6 +297,7 @@
                                                         <div style="display: flex">
                                                             <select id="table-filter7" class="custom-select" th:field="${shop.subwayTypeId}">
                                                                 <!--/*@thymesVar id="listName" type="String"*/-->
+                                                                <option value="">선택</option>
                                                                 <option
                                                                         th:each="val : ${allFirstSubwayInfos}"
                                                                         th:value="${val.id}"
@@ -527,10 +529,10 @@
 
 <style>
     .custom-select{
-        font-size: 9px !important;
+        font-size: 12px !important;
     }
     .form-control{
-        font-size: 9px !important;
+        font-size: 12px !important;
     }
     #preview{
         z-index: 9999;
@@ -542,10 +544,10 @@
         color:#fff;
     }
     .custom-select{
-        font-size: 9px !important;
+        font-size: 12px !important;
     }
     .form-control{
-        font-size: 9px !important;
+        font-size: 12px !important;
     }
     input[id^='input_imgs']{
         display: none;

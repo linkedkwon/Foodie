@@ -224,7 +224,7 @@
 #contents .contents .header-restaurant .right-area .scores li {
     margin-bottom: 10px;
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 400 !important;
     text-align: right;
     padding-right: 10px;
     color: #838383
@@ -319,7 +319,7 @@
     float: left;
     font-size: 13px;
     text-align: left;
-    font-weight: 500;
+    font-weight: 500 !important;
     font-family: "돋음, Dotum. 돋움체, DotumChe";
     font-stretch: normal;
     font-style: normal;
@@ -397,7 +397,7 @@
 }
 
 #contents .contents .detail-section.hashtag-section {
-    width: 45%;
+    display: flex;
 }
 
 #contents .contents .detail-section.hashtag-section a {
@@ -406,7 +406,7 @@
     text-align: center;
     border-radius: 22px;
 
-    margin: 17px 5px 7px 6px;
+    margin: 17px 5px 7px 0px;
     padding: 4px 20px 3px;
     border: solid 1.5px #ff5c17;
     background-color: #fff;

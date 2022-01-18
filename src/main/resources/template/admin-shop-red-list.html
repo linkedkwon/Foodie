@@ -287,6 +287,15 @@
 </style>
 <script type="text/javascript">
     $(document).ready(function() {
+
+        if (window.history && window.history.pushState) {
+            window.history.pushState('forward', null, null);
+            $(window).on('popstate', function () {
+                window.location.href = '/admin/shop/list/allred?updated=true&'+serialize(getUrlParams());
+            });
+        }
+
+
         var xOffset = 10;
         var yOffset = 30;
 
@@ -680,7 +689,7 @@
                         '</div>' +
                         '</td>' +
                         '<td>' + shop[i].shopPaid + '</td>' +
-                        '<td><a href="/admin/shop/green/' + shop[i].shopId + '?' + serialize(param) + '">수정</a></td>' +
+                        '<td><a href="/admin/shop/red/' + shop[i].shopId + '?' + serialize(param) + '">수정</a></td>' +
                         '<td><a onclick="return confirmUser();" href="/admin/shop/delete/red/' + shop[i].shopId + '">삭제</a></td>' +
                         '</tr>';
                 });

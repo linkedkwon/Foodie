@@ -44,7 +44,7 @@
                 <ul class="scores">
                   <li th:text="${not #strings.isEmpty(payload.foodieLogRating)} ? '전문가 평점' : '전문가 평점'"></li>
                   <li>
-                    <b style="padding-left:17px;">방문자 평점</b>
+                    <span style="padding-left:17px;">방문자 평점</span>
                   </li>
                 </ul>
 
@@ -156,7 +156,7 @@
                         <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 3px 7px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
                           도로명
                         </div>
-                        <b id="road-address" th:text="${payload.address}"></b>
+                        <span id="road-address" th:text="${payload.address}"></span>
                       </div>
                     </dd>
                   </dl>
@@ -169,7 +169,7 @@
                         <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 3px 7px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
                           도로명
                         </div>
-                        <b id="road-address" th:text="${payload.address}"></b>
+                        <span id="road-address" th:text="${payload.address}"></span>
                       </div>
                     </dd>
                   </dl>
@@ -505,20 +505,17 @@
     }
 
     .hash_tag_blank{
-
-      width: 36px !important;
-      height: 35px !important;
-      padding: 4px 5px 3px 5px !important;
-      margin: 17px 7px 7px 0px !important;
+      height: 24px !important;
+      padding: 5px 12px 2px 13px !important;
+      margin: 16px 7px 7px 0px !important;
       border: solid 1.5px #ff571a !important;
       background-color: #ff571a !important;
       color: white !important;
     }
     .hash_tag_blank_back_white{
-      width: 31px !important;
       height: 24px !important;
-      padding: 4px 0px 3px 0px !important;
-      margin: 17px 7px 7px 4px !important;
+      padding: 5px 12px 2px 13px !important;
+      margin: 16px 7px 7px 0px !important;
       border: solid 1.5px #ff571a !important;
       background-color: #fff !important;
       color: #ff571a !important;

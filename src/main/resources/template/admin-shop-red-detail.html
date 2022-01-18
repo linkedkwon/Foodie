@@ -590,10 +590,10 @@
         color:#fff;
     }
     .form-control{
-        font-size: 9px !important;
+        font-size: 12px !important;
     }
     .custom-select{
-        font-size: 9px !important;
+        font-size: 12px !important;
     }
     input[id^='input_imgs']{
         display: none;
@@ -603,7 +603,7 @@
         word-wrap:break-word;
     }
     select {
-        font-size: 8pt !important;
+        font-size: 10pt !important;
     }
     .data_table {
         text-align: center;
@@ -616,12 +616,17 @@
     let SHOP = [];
     let SHOP_ID = [];
     let sel_files =[];
+    var tagList = [];
     $(document).ready(function() {
+        if (window.history && window.history.pushState) {
+            window.history.pushState('forward', null, null);
+            $(window).on('popstate', function () {
+                window.location.href = '/admin/shop/list/allred?updated=true&'+serialize(getUrlParams());
+            });
+        }
         IMAGES = [[${payload.menuImages}]];
         SHOP_ID = [[${payload.shopId}]];
         SHOP = [[${shop}]];
-        console.log("SHOP")
-        console.log(SHOP)
 
         $('#shoptown input[type="checkbox"]').on('change', function() {
             $('#shoptown input[type="checkbox"]').not(this).prop('checked', false);
@@ -653,10 +658,28 @@
         // })
 
         $('#table-filter1').change( function(){
+            // $('#table-filter1 option').removeAttr('selected');
+            // console.log(this)
+            // $('#table-filter1').find('option:eq(0)').prop("selected", true);
+            // $('#table-filter1').find('option:eq(0)').attr('selected','selected');
+            var id = $( ':selected', this).val();
+            // if(id == ''){
+
+            $('#table-filter1 option[value='+id+']').prop('selected', true);
+            $("#table-filter1 option:not(:selected)").prop('selected', false);
+            $("#table-filter1 option:not(:selected)").removeAttr('selected')
+            $('#table-filter1 option[value='+id+']').attr('selected', 'selected')
+
+            // }else{}
             get_category_info( this , "table-filter1"); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
         });
 
         $('#table-filter2').change( function(){
+            var id = $( ':selected', this).val();
+            $('#table-filter2 option[value='+id+']').prop('selected', true);
+            $("#table-filter2 option:not(:selected)").prop('selected', false);
+            $("#table-filter2 option:not(:selected)").removeAttr('selected')
+            $('#table-filter2 option[value='+id+']').attr('selected', 'selected')
             get_category_info( this, "table-filter2" ); // 셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소" 를 함수로 전달
         });
 
@@ -765,10 +788,10 @@
         function get_category_info(o, type){
             var val = $( ':selected', o).val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
             console.log(val)
-            if(val != ''){
+            // if(val != ''){
                 $.ajax({
                     type:"get",
-                    url:"/admin/epicure/green_shop_type/" + val,
+                    url:"/admin/epicure/red_shop_type/" + val,
                     datatype: "json",
                     success: function(data) {
                         var data = data.data;
@@ -806,22 +829,20 @@
                         alert(msg);
                     }
                 });
-            }else {
-                if(type == "table-filter1") {
-                    $("#table-filter2").find("option").remove().end();
-                    $("#table-filter2").append("<option value=''></option>");
-                    $("#table-filter3").find("option").remove().end();
-                    $("#table-filter3").append("<option value=''></option>");
-                }else{
-                    $("#table-filter3").find("option").remove().end();
-                    $("#table-filter3").append("<option value=''> </option>");
-                }
-            }
+            // }
         }
 
 
     });
 
+    serialize = function(obj) {
+        var str = [];
+        for (var p in obj)
+            if (obj.hasOwnProperty(p)) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+        return str.join("&");
+    }
     //TODO 외주
     $("#uploadVehical").submit(function(event) {
 
@@ -833,7 +854,6 @@
                 checked.push($(this).val());
             }
         });
-        console.log(checked.toString())
 
 
         var validated1 = $('#background_type_1').is(':checked');
@@ -842,7 +862,6 @@
             alert("배경 체크해주세요")
             return false;
         }
-        console.log(IMAGES)
         SHOP.shopName=$('input[name=shopName]').val();
         SHOP.shopAlias=$('input[name=shopAlias]').val();
         SHOP.phone=$('input[name=phone]').val();
@@ -851,7 +870,7 @@
         SHOP.shopPaid=$('input[name=shopPaid]').val();
         SHOP.operationTime=$('input[name=operationTime]').val();
         SHOP.holiday=$('input[name=holiday]').val();
-        if($('#table-filter4').val() == ''){
+        if($('#table-filter1').val() == ''){
             SHOP.bigCategory = null;
         }else{
             SHOP.bigCategory =$('#table-filter1').val();
@@ -894,14 +913,15 @@
         SHOP.menuImages=IMAGES.toString();
         SHOP.themeList = checked.toString();
 
-        console.log(SHOP)
         var form = $('#uploadVehical')[0];
         var itemData=new FormData(form);
         itemData.append("shop", SHOP);
         itemData.append("files", sel_files);
         itemData.append("images", IMAGES);
         itemData.append("themeList", SHOP.themeList);
-
+        var oParams = getUrlParams();
+        console.log("oParams")
+        console.log(oParams)
         $.ajax({
             type:"POST",
             url:"/admin/shop/image/update/" + SHOP_ID,
@@ -911,8 +931,9 @@
             contentType: false,
             enctype: 'multipart/form-data',
             success: function(data) {
-                console.log(data)
-                window.location.href = '/admin/shop/list/allred';
+                console.log("index")
+                // console.log(oParams)
+                window.location.href = '/admin/shop/list/allred?updated=true&'+serialize(oParams);
             },
 
             error: function(x, o, e) {
@@ -925,17 +946,25 @@
 
     });
 
+    function getUrlParams() {
+        var params = {};
 
+        window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+            function(str, key, value) {
+                params[key] = value;
+            }
+        );
 
-
-
-
-    function fileUploadAction(){
-        console.log("upload")
-        $("#input_imgs").trigger('click')
+        return params;
     }
 
+
+
+
     function handleImgFileSelect(e){
+        console.log("ADD ACTION")
+        console.log("before_sel_files")
+        console.log(sel_files)
         var target_index = $('#'+e.id).attr('value');
         var files= $('#'+e.id)[0].files;
         var filesArr = Array.prototype.slice.call(files);
@@ -954,24 +983,49 @@
                 //     alert("이미지 가로 720px, 세로 270px로 맞춰서 올려주세요.");
                 // }else{
                 //     var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(" + index +")\" id=\"img_id_"+index+"\"> <img style=\"width: 150px;height: 120px;padding-left: 10px;\" src=\"" + e.target.result + "\" data-file='"+f.name + "' class='selProductFile' title='click to remove'></a>";
-                console.log($('#thum' + target_index))
-                console.log(reader)
                 $('#thum' + target_index).attr('src', e.target.result)
                 index++;
                 // }
             }
             reader.readAsDataURL(f);
         })
+        console.log("after_sel_files")
+        console.log(sel_files)
     }
     function deleteImageAction(index){
-        sel_files.splice(index, 1);
+        console.log("DELETE ACTION")
+        console.log("before_sel_files")
+        console.log(sel_files)
+        console.log("before_sel_files exist images")
+        console.log(IMAGES)
+
+        var target_index = $('#input_imgs'+index).attr('value');
+        var files= $('#input_imgs'+index)[0].files;
+        var filesArr = Array.prototype.slice.call(files);
         var img_id = "#thum"+index;
         var img_src = $(img_id).attr('src');
-        console.log("BEFORE IMAGES")
-        console.log(IMAGES)
-        IMAGES = IMAGES.split(",").filter((element) => element !== img_src);
+
+        console.log("img+src" + img_src)
+        if(img_src.includes("speedgabia")){
+            if(typeof IMAGES == "string"){
+                IMAGES = IMAGES.split(",").filter((element) => element !== img_src);
+            }else{
+                IMAGES = IMAGES.filter((element) => element !== img_src);
+            }
+        }else{
+            var clicked_file_name = $('#input_imgs'+index)[0].files[0].name;
+            var forIndex =0;
+            sel_files.forEach(function(f) {
+                if(f.name == clicked_file_name){
+                    sel_files.splice(forIndex, 1);
+                }
+                forIndex++;
+            })
+        }
         $(img_id).attr('src', '/images/default.png')
-        console.log("AFTER IMAGES")
+        console.log("after_sel_files")
+        console.log(sel_files)
+        console.log("after_sel_files exist images")
         console.log(IMAGES)
 
         var imgInput = document.getElementById("input_imgs"+index);
@@ -990,6 +1044,32 @@
         var id = e.target.value;
         deleteImageAction(id);
     });
+    function deleteTage(value) {
+        var index = tagList.indexOf(value);
+        if (index < 0) {
+            return;
+        }
+        tagList.splice(index, 1);
+        renderTagList();
+    };
+    var renderTagList = function() {
+        var i = 0;
+        var tagsHtml = '';
+
+        for(; i < tagList.length; i++) {
+            tagsHtml += "<div class=\"tag-item btn-secondary btn\">" + tagList[i] + "<a class=\"delete-tag-item\" onClick=\"deleteTag('" + tagList[i] + "\')\">×</a></div>"
+        }
+
+        $(".tag-list").html(tagsHtml);
+    };
+    function deleteTag(value) {
+        var index = tagList.indexOf(value);
+        if (index < 0) {
+            return;
+        }
+        tagList.splice(index, 1);
+        renderTagList();
+    };
 
 </script>
 
