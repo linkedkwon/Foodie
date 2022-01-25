@@ -23,7 +23,7 @@
         <!-- Contents -->
         <div id="contents">
             <div class="main-banner">
-                <img class="mySlides" src="/images/red-name@2x.png" style="width: 100%;height: 100%;">
+                <img class="mySlides" src="/images/red-name@2x.png" style="height: 100%;">
             </div>
 
             <!-- 주요지역 추천맛집 -->
@@ -32,16 +32,16 @@
                     <div class="filter-header">
                         <div class="left-area">
                             <div class="addr-info">
-                                <span th:text="${regionInfo[0].getProvinceName()}"></span>
-                                <span th:text="${regionInfo[0].getDistrictName()}"></span>
-                                <span th:if="${regionInfo[0].getSubwayName() != null}" th:text="${regionInfo[0].getSubwayName()}"></span>
+                                <span th:text="${middleRegionName}"></span>
+                                <span th:text="${bigRegionName}"></span>
                             </div>
                             <ul class="menu-link">
                                 <li class="tab-red">
-                                    <a id="red" th:href="@{/shop/region/{regionId}/red(regionId=${regionInfo[0].regionId})}" class="active">레드 리스트</a>
+<!--                                    <a id="red" th:href="@{/shop/region/{regionId}/red(regionId=${regionInfo[0].regionId})}" class="active">레드 리스트</a>-->
+                                    <a id="red" th:href="@{/shop/region/{regionId}/red(regionId=${regionId})}" class="active">레드 리스트</a>
                                 </li>
                                 <li class="tab-green">
-                                    <a id="blue" th:href="@{/shop/region/{regionId}/green(regionId=${regionInfo[0].regionId})}">그린 리스트</a>
+                                    <a id="blue" th:href="@{/shop/region/{regionId}/green(regionId=${regionId})}" >그린 리스트</a>
                                 </li>
                             </ul>
                         </div>
@@ -50,13 +50,13 @@
                                 <a href="#" class="filter-btn">필터설정</a>
                                 <div class="filter-body-layer">
                                     <p>나의 상황에 맞는 필터를 선택해보세요.</p>
-                                    <input type="hidden" id="regionId" th:value="${regionInfo[0].regionId}">
+                                    <input type="hidden" id="regionId" th:value="${regionId}">
                                     <input type="hidden" id="regionType" value="red">
                                     <ul id="filter_theme">
                                         <li th:object="${theme}" th:each="theme : ${themeList}">
                                             <a id="filter_anchor">
-                                                <label th:for="${theme.getThemeId()}" th:text="${theme.getName()}"></label>
-                                                <input type="checkbox" name="checkbox" th:id="${theme.getThemeId()}" th:value="${theme.getName()}">
+                                                <label th:for="${theme.getId()}" th:text="${theme.getListName()}"></label>
+                                                <input type="checkbox" name="checkbox" th:id="${theme.getId()}" th:value="${theme.getListName()}">
                                             </a>
                                         </li>
                                     </ul>
@@ -75,9 +75,9 @@
 
                                     <div class="card-data">
                                         <div class="name">
-                                            <div class="hide-text-1" th:text="${shop.shopCharge}"></div>
+                                            <div class="hide-text-1" th:text="${shop.shopName}"></div>
                                                 <div class="categories">
-                                                    <span class="hide-text-1" th:text="${shop.shopAlias}" style="line-height: 20px;color: #a71b00;">한식 | 모던한식</span>
+                                                    <span class="hide-text-1" th:text="${shop.shopAlias}" style="font-size: 11px;line-height: 20px;color: #a71b00;font-size: 11px;">한식 | 모던한식</span>
                                                 </div>
                                             </div>
                                             <ul class="info">
@@ -114,9 +114,9 @@
                                     <div class="img"></div>
                                     <div class="card-data">
                                         <div class="name" style="width: 380px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                            <div class="hide-text-2" th:text="${shop.shopCharge}"></div>
-                                            <div class="categories">
-                                                <span class="hide-text-2" th:text="${shop.shopAlias}" style="line-height: 20px;color: #a71b00; width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+                                            <div class="hide-text-2" th:text="${shop.shopName}"></div>
+                                            <div class="categories" style="margin-top: -5px">
+                                                <span class="hide-text-2" th:text="${shop.shopAlias}" style="font-size: 11px;line-height: 20px;color: #a71b00; width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
                                             </div>
                                         </div>
                                         <ul class="info">
@@ -140,7 +140,7 @@
                         <a th:href="@{'/shop?id='+${shop.shopId}+'&page=0'}">
                             <dt style="    padding-bottom: 27px;">
                                 <div class="info" style="float: left">
-                                    <span class="name" th:text="${shop.shopCharge}" style="width:120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+                                    <span class="name" th:text="${shop.shopName}" style="width:120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
                                 </div>
                                 <div style="float: right;color: #c73425;font-size: 12px; line-height: 17px; width:130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: right;">
                                     <span class="name" th:text="${shop.shopAlias}"></span>
@@ -191,8 +191,8 @@
                                     <div class="card-data">
                                         <div class="name">
                                             <div class="hide-text-2" th:text="${shop.shopCharge}"></div>
-                                            <div class="categories">
-                                                <span class="hide-text-2" th:text="${shop.shopAlias}" style="line-height: 20px;color: #a71b00;"></span>
+                                            <div class="categories"  style="margin-top: -5px">
+                                                <span class="hide-text-2" th:text="${shop.shopAlias}" style="font-size: 11px;line-height: 20px;color: #a71b00;"></span>
                                             </div>
                                         </div>
                                         <ul class="info">
@@ -397,12 +397,14 @@
     }
     .list-section .right-area dl dd .info .address {
         float: right;
+        padding-top: 2px;
         padding-left: 18px;
-        background: url("/images/ico-sm-map.png") 0 -1px no-repeat;
+        background-size: 14px 14px;
+        background: url("/images/ico-sm-map.svg") 0 -1px no-repeat;
     }
     #filter_theme li {
         float:left;
-        width: 127px;
+        width: 155px;
     }
     #filter_theme li a:hover{
         color: #ff571a;
@@ -468,5 +470,55 @@
     .paginationjs .paginationjs-pages li:last-child {
         background:url('/images/ico-page-next.png') 0 0 no-repeat;
         /*opacity: 0;*/
+    }
+
+    li.description {
+        font-family: NotoSansKR !important;
+        font-size: 13px !important;
+        font-weight: 300 !important;
+        font-stretch: normal !important;
+        font-style: normal !important;
+        color: #000 !important;
+    }
+    .description div{
+        font-family: NotoSansKR !important;
+        font-size: 13px !important;
+        font-weight: 300 !important;
+        font-stretch: normal !important;
+        font-style: normal !important;
+        color: #000 !important;
+    }
+    .description div span{
+        font-family: NotoSansKR !important;
+        font-size: 13px !important;
+        font-weight: 300 !important;
+        font-stretch: normal !important;
+        font-style: normal !important;
+        letter-spacing: normal;
+        text-align: left;
+        color: #000;
+    }
+
+    .card-data .name > .hide-text-2{
+        font-size: 17px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.7;
+        letter-spacing: normal;
+        text-align: left;
+        color: #000;
+    }
+
+    .card-data .name .hide-text-2 .categories{
+        font-family: NotoSansKR;
+        font-size: 10px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 2.72;
+        letter-spacing: normal;
+        text-align: left;
+        color: #a71b00;
     }
 </style>

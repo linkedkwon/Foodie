@@ -15,19 +15,20 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
     Shop findByShopId(Integer shopId);
 
     Page<Shop> findByShopIdOrderByUpdatedAt(Integer shopId, Pageable pageable);
-    Page<Shop> findByArea1stAndArea2stAndArea3stAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st, String shopType, Pageable pageable);
+    Page<Shop> findByArea2stAndShopTypeInAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer area2st, List<Integer> shopType, Pageable pageable);
+    Page<Shop> findByArea1stAndShopTypeInAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer area1st, List<Integer> shopType, Pageable pageable);
 //    Page<Shop> findByArea1stAndArea2stAndArea3stInAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st , String shopType, Pageable pageable);
 //    List<Shop> findByArea1stAndArea2stAndArea3stAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st, String shopType);
-    List<Shop> findByArea1stAndArea2stAndArea3stAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st , String shopType);
+    @Query(nativeQuery = true,value = "select * from rankup_shop_introduce_data where area_2nd = ?1 and (ETC_7 is not null or shop_paid='y') and shop_name not like '%현재폐점%' and shop_bg_image in ?2 order by RAND() limit 8")
+    List<Shop> findRandomByArea2stAndShopTypeInAndPremiumRegisterDateIsNull(Integer area2st , List<Integer> shopType);
+    @Query(nativeQuery = true,value = "select * from rankup_shop_introduce_data where area_1st = ?1 and (ETC_7 is not null or shop_paid='y') and shop_name not like '%현재폐점%' and shop_bg_image in ?2 order by RAND() limit 8")
+    List<Shop> findRandomByArea1stAndShopTypeInAndPremiumRegisterDateIsNull(Integer area2st , List<Integer> shopType);
 
-//    Page<Shop> findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNullOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st, String shopType, Pageable pageable);
-    Page<Shop> findBySubwayTypeIdAndShopTypeOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st, String shopType, Pageable pageable);
-//    List<Shop> findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(Integer area1st, Integer area2st, Integer area3st, String shopType);
-    List<Shop> findByArea1stAndArea2stAndArea3stAndShopType(Integer area1st, Integer area2st, Integer area3st, String shopType);
-
-//    List<Shop> findByArea1stAndArea2stAndArea3stAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(Integer area1st, Integer area2st, Integer area3st, String shopType);
-//    List<Shop> findByArea1stAndArea2stAndArea3stAndShopType(Integer area1st, Integer area2st, Integer area3st, String shopType);
-
+    Page<Shop> findBySubwayTypeIdAndShopTypeOrderByUpdatedAt(Integer area1st, Integer area2st, Integer area3st, Integer shopType, Pageable pageable);
+    @Query(nativeQuery = true, value = "select * from rankup_shop_introduce_data where area_2nd = ?1 and shop_bg_image in ?2 order by RAND() limit 4")
+    List<Shop> findByArea2stAndShopTypeIn(Integer area2st, List<Integer> shopType);
+    @Query(nativeQuery = true, value = "select * from rankup_shop_introduce_data where area_1st = ?1 and shop_bg_image in ?2 order by RAND() limit 4")
+    List<Shop> findByArea1stAndShopTypeIn(Integer area1st, List<Integer> shopType);
     List<Shop> findTop4ByArea1stAndArea2stAndArea3stAndShopType(Integer area1st, Integer area2st, Integer area3st, String shopType);
 //    List<Shop> findByShopId(Integer shopId);
 
@@ -47,7 +48,8 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
     List<Shop> findByShopTypeAndAddress(String shopTypeId, String Filter);
 
 
-    Optional<Integer> countByArea1stAndArea2stAndArea3stAndShopType(Integer area1st, Integer area2st, Integer area3st, String shopType);
+    Optional<Integer> countByArea2stAndShopTypeIn(Integer area2st, List<Integer> shopType);
+    Optional<Integer> countByArea1stAndShopTypeIn(Integer area1st, List<Integer> shopType);
 
 
     @Query(value="select * from rankup_shop_introduce_data where no in (select shop_id from main_board where type = ?1)", nativeQuery = true)

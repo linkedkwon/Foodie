@@ -73,6 +73,7 @@ public class MemberService {
         user.setCreatedDate(time);
         user.setLastModifiedDate(time);
         user.setVisitedCnt(0);
+
         userRepository.save(user);
 
         return "signup_done";
@@ -111,4 +112,7 @@ public class MemberService {
         return userRepository.findAllByUserType(userType);
     }
 
+    public User findUserById(int userId){
+        return userRepository.findUserById(userId).orElseGet(() -> { return new User();});
+    }
 }

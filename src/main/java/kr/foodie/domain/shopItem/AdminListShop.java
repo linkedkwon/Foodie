@@ -85,7 +85,7 @@ public class AdminListShop {
     private Integer subway3th;
 
     @Column(name = "exit_num")
-    private Integer exitNum;
+    private String exitNum;
 
     @Column(name = "map_infos")
     private String mapInfos;

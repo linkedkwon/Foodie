@@ -38,14 +38,18 @@ public class Review {
     @Column(name = "CREATED_AT")
     private Date createdTime;
 
+    @Column(name = "POINT")
+    private Integer point;
+
     @Builder
     public Review(Integer shopId, Integer userId, String starRating,
-                  String content, String bestComment, Date createdTime) {
+                  String content, String bestComment, Date createdTime, Integer point) {
         this.shopId = shopId;
         this.userId = userId;
         this.starRating = starRating;
         this.content = content;
         this.bestComment = bestComment;
         this.createdTime = createdTime;
+        this.point = point;
     }
 }

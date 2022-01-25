@@ -101,7 +101,7 @@
                                                         <label for="select-tags" style="width: 400px;">전문가평가</label>
                                                         <div style="display: flex">
                                                             <select class="custom-select" id="select-tags1" th:field="${shop.foodieLogRating}">
-                                                                <option value=""></option>
+                                                                <option value="">없음</option>
                                                                 <option value="A">A</option>
                                                                 <option value="AA">AA</option>
                                                                 <option value="AAA">AAA</option>
@@ -562,12 +562,14 @@
     <script th:src="@{/js/adminlte.js}"></script>
     <script th:src="@{/js/admin_commons.js}"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script th:src="@{/js/admin-create-manage-restaurants.js}"></script>
     <script th:src="@{/js/admin-recommand.js}"></script>
 <!--    <script th:src="@{/js/demo/datatables-demo.js}"></script>-->
     <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
     <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+</div>
 </body>
 
 <style>
@@ -581,10 +583,10 @@
         color:#fff;
     }
     .custom-select{
-        font-size: 9px !important;
+        font-size: 12px !important;
     }
     .form-control{
-        font-size: 9px !important;
+        font-size: 12px !important;
     }
     input[id^='input_imgs']{
         display: none;
@@ -606,6 +608,15 @@
     let sel_files =[];
     var tagList = [];
     $(document).ready(function() {
+        if (window.history && window.history.pushState) {
+            window.history.pushState('forward', null, null);
+            $(window).on('popstate', function () {
+                window.location.href = '/admin/shop/list/allgreen?updated=true&'+serialize(getUrlParams());
+            });
+        }
+
+
+
         IMAGES = [[${payload.menuImages}]];
         SHOP_ID = [[${payload.shopId}]];
         SHOP = [[${shop}]];
@@ -909,8 +920,6 @@
 
         var itemData=new FormData(form);
         itemData.append("shop", SHOP);
-        console.log("업데이트직전 selfiles")
-        console.log(sel_files)
         itemData.append("files", sel_files);
         itemData.append("images", IMAGES);
         itemData.append("themeList", SHOP.themeList);

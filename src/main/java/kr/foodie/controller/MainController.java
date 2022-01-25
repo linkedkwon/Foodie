@@ -69,6 +69,8 @@ public class MainController {
                     .replace("도", ""));
         }
         mav.addObject("regionInfos", regionsInfos);
+        mav.addObject("redCommentList", shopService.getShopMainInfoByType(18));
+        mav.addObject("greenCommentList", shopService.getShopMainInfoByType(19));
         mav.setViewName("main");
         return mav;
     }
@@ -76,6 +78,6 @@ public class MainController {
     @ResponseBody
     @GetMapping(value ="/main/region/{regionType}")
     public List<Shop> getMainShopList(@PathVariable Integer regionType){
-        return shopService.getShopInfoByType(regionType);
+        return shopService.getShopMainInfoByType(regionType);
     }
 }

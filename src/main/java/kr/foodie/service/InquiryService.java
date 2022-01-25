@@ -31,6 +31,7 @@ public class InquiryService {
                                 .title(title)
                                 .content(content)
                                 .comment("")
+                                .givenReply("0")
                                 .createdTime(Calendar.getInstance().getTime())
                                 .modifiedTime(Calendar.getInstance().getTime()).build());
     }

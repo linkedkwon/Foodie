@@ -38,7 +38,7 @@
 }
 
 .header-red .global-nav {
-    top: 158px
+    top: 136px
 }
 
 .global-nav {
@@ -388,7 +388,8 @@
 
 .card-item .name .categories {
     margin-top: 5px;
-    font-size: 9px;
+    font-size: 11px !important;
+    /*font-weight: 600 !important;*/
     text-align: left;
     color: #707070
 }
@@ -419,22 +420,26 @@
 }
 
 .card-item .info li.address {
-    background-image: url(/images/ico-sm-map.png);
+    background-image: url(/images/ico-sm-map.svg);
     background-position: 0 2px;
+    background-size: 15px 14px;
     display: block;
     overflow: hidden;
+    padding-top: 3px;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 240px;
 }
 
 .card-item .info li.phone {
-    background-image: url(/images/ico-sm-phone.png);
+    background-image: url(/images/ico-sm-phone.svg);
+    background-size: 8px 9px;
     background-position: 3px 5px
 }
 
 .card-item .info li.description {
-    background-image: url(/images/ico-sm-docs.png);
+    background-image: url(/images/ico-sm-docs.svg);
+    background-size: 9px 9px;
     background-position: 3px 4px
 }
 
@@ -729,11 +734,12 @@
 
 .hide-text-1 {
     display: block;
+    padding-top: 2px;
     overflow: hidden;
     height: 20px;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 160px;
+    width: 200px;
 }
 
 .hide-text-2 {

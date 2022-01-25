@@ -62,7 +62,7 @@
 .main-section .filter-header .left-area .addr-info>* {
     display: inline-block;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 600;
     color: #000
 }
 
@@ -186,7 +186,7 @@
 
 .main-section .filter-wrapper .filter-body-layer {
     display: none;
-    width: 413px;
+    width: 500px;
     padding: 12px 15px 24px;
     position: absolute;
     top: 30px;
@@ -294,6 +294,7 @@
 .list-section .left-area>ul>li .card-item .info li {
     margin-bottom: 0;
     font-size: 13px;
+    padding-top:0px;
     font-weight: 300;
     height: 23px;
 }
@@ -363,7 +364,8 @@
 .list-section .right-area dl dd .info .address {
     float: right;
     padding-left: 18px;
-    background: url(/images/ico-sm-map.png) 0 2px no-repeat
+    background-size: 15px 14px;
+    background: url(/images/ico-sm-map.svg) 0 2px no-repeat
 }
 
 .list-section .right-area dl dd .img {

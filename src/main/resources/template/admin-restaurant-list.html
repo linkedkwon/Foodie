@@ -247,7 +247,7 @@
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
-            <div class="card shadow mb-4" style="width: 800px;margin:auto;">
+            <div class="card shadow mb-4" style="width: 900px;margin:auto;">
                 <div class="card-header py-3">
                     <!--/*@thymesVar id="background" type="String"*/-->
                     <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;">맛집 회원 관리</h6>
@@ -277,7 +277,7 @@
                             <table class="table table-bordered display" id="list-table" cellspacing="0" border="1px solid #dee2e6">
                                 <thead>
                                 <tr>
-                                    <th style=""><input type="checkbox" id="cbx_chkAll" name="cbx_chkAll" value=""></th>
+                                    <th style="width: 30px;"><input type="checkbox" id="cbx_chkAll" name="cbx_chkAll" value=""></th>
                                     <th style="text-align: center; width: 240px;" >이메일</th>
                                     <th style="text-align: center; width: 100px;">이름</th>
                                     <th style="text-align: center; width: 100px;">가입일</th>
@@ -318,7 +318,7 @@
 
                     <div class="pagination" style="padding: 0 20px 0 20px; margin-bottom: 15px;">
                         <div>
-                            <button value="선택삭제" style="font-size: 10px; width: 50px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="deleteCheckedUsers()">선택삭제</button>
+                            <button value="선택삭제" style="font-size: 10px; width: 60px;margin-right: 5px;height: 25px;float: right;margin-top: 3px; background-color: #41609b; color: white; border-radius: 5px;" onclick="deleteCheckedUsers()">선택삭제</button>
                         </div>
                         <div style="margin: 0 auto; display: flex;">
                             <button id="first" onclick="clickButton(this)"><img src="/images/paging_first.gif"/></button>
@@ -397,6 +397,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
+</div>
 </body>
 <style>
     #preview{
@@ -469,13 +470,33 @@
         });
 
         <!-- 페이지 로드 시 데이터 -->
-        var param = {
-            page: 1,
-            'userType': '1',
-            'option': "없음",
-            'keyword':"없음",
-            'renderOption': '1'
-        };
+        //url에 붙어 있는지 없는지 확인
+
+        var link = document.location.href;
+        console.log('링크에여 ', link.length);
+
+        var param;
+        if(link.indexOf("?") == -1) {
+            param = {
+                page: 1,
+                'userType': '1',
+                'option': "없음",
+                'keyword': "없음",
+                'renderOption': '1'
+            };
+        }
+        else{
+            param = {
+                page: getParam('page'),
+                'userType': '1',
+                'option': getParam('option'),
+                'keyword': getParam('keyword'),
+                'renderOption': getParam('renderOption')
+            };
+
+            $('#table-filter8').val(getParam('option')).prop("selected", true);
+            $('#keyword').val(getParam('keyword'));
+        }
 
         //전역 현재 페이지(삭제 기능에 사용)
         var currentPage = 1;
@@ -551,40 +572,6 @@
                 $('#item-size').text('총 ' + data.size + '의 회원이 검색되었습니다.');
                 var user = data.item;
 
-                //2. 상점 리스트 업
-                var tr = '';
-                $.each(user, function (i) {
-                    tr +=
-                        '<tr>' +
-                        '<td style="text-align: center">' +
-                        '<input type="checkbox" name="userId_checkBox" value="'+ user[i].id +'">' +
-                        '</td>' +
-                        '<td style="text-align: center">' +
-                        '<a href="/">' + user[i].email + '</a>' +
-                        '</td>' +
-                        '<td style="text-align: center">' +
-                        '<span>' + user[i].name + '</span>' +
-                        '</td>' +
-                        '<td style="text-align: center">' +
-                        '<span>' + moment(user[i].createdDate).format("YYYY-MM-DD") + '</span>' +
-                        '</td>' +
-                        '<td style="text-align: center">' +
-                        '<span>' + user[i].visitedCnt + '</span>' +
-                        '</td>' +
-                        '<td style="text-align: center">' +
-                        '<button onclick="memoModalPopUp(this)" value = "' + user[i].id + '">메모</button>' +
-                        '</td>' +
-                        '<td style="text-align: center">' +
-                        '<a href="/">' + '수정' + '</a>' +
-                        '</td>' +
-                        '<td style="text-align: center">' +
-                        '<button onclick="deleteClickedUser(this)" value="' + user[i].id + '">' + '삭제' + '</button>' +
-                        '</td>' +
-                        '</tr>';
-                });
-
-                $("#list-table").append(tr);
-
                 //3. 페이지 업
                 var pages = data.pages;
                 var thisPage = data.currentPage;
@@ -602,6 +589,41 @@
                     }
                 });
                 $("#pages").append(button);
+
+                //2. 상점 리스트 업
+                var tr = '';
+                $.each(user, function (i) {
+                    tr +=
+                        '<tr>' +
+                            '<td style="text-align: center">' +
+                                '<input type="checkbox" name="userId_checkBox" value="'+ user[i].id +'">' +
+                            '</td>' +
+                            '<td style="text-align: center">' +
+                                '<a href="/admin/user/detail?id=' + user[i].id + '&page=' + currentPage + '&userType=1&option='+ $('#table-filter8 :selected').val() + '&keyword=' + $('#keyword').val() + '&renderOption=3">' + user[i].email + '</a>' +
+                            '</td>' +
+                            '<td style="text-align: center">' +
+                                '<span>' + user[i].name + '</span>' +
+                            '</td>' +
+                            '<td style="text-align: center">' +
+                                '<span>' + moment(user[i].createdDate).format("YYYY-MM-DD") + '</span>' +
+                            '</td>' +
+                            '<td style="text-align: center">' +
+                                '<span>' + user[i].visitedCnt + '</span>' +
+                            '</td>' +
+                            '<td style="text-align: center">' +
+                                '<button onclick="memoModalPopUp(this)" value = "' + user[i].id + '">메모</button>' +
+                            '</td>' +
+                            '<td style="text-align: center">' +
+                                '<a href="/admin/user/edit?id=' + user[i].id + '&page=' + currentPage + '&userType=1&option='+ $('#table-filter8 :selected').val() + '&keyword=' + $('#keyword').val() + '&renderOption=3">수정</a>' +
+                            '</td>' +
+                            '<td style="text-align: center">' +
+                                '<button onclick="deleteClickedUser(this)" value="' + user[i].id + '">' + '삭제' + '</button>' +
+                            '</td>' +
+                        '</tr>';
+                });
+
+                $("#list-table").append(tr);
+
 
                 //4. 버튼들
                 var btns = data.btns;
@@ -726,14 +748,28 @@
         var content = $('#summernote').summernote('code');
 
         $.ajax({
-            url: "/admin/user/edit/memo?id=" + userId + "&content=" + content,
+            url: "/admin/user/edit/memo?id=" + userId + "&content=" + encodeURI(content),
             type: "POST",
+            cache: "false",
             success: function (data) {
                 console.log('성공');
                 alert('메모가 정상적으로 입력되었습니다.');
                 closeModalMemo();
             }
         });
+    }
+
+    function getParam(name)
+    {
+        var curr_url = decodeURI(location.search).substr(location.search.indexOf("?") + 1);
+        var svalue = "";
+        curr_url = curr_url.split("&");
+        for (var i = 0; i < curr_url.length; i++)
+        {
+            temp = curr_url[i].split("=");
+            if ([temp[0]] == name) { svalue = temp[1]; }
+        }
+        return svalue;
     }
 </script>
 </html>

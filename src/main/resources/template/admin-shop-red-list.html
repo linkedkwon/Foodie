@@ -47,7 +47,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4" style="width: 800px;margin:auto;">
+                    <div class="card shadow mb-4" style="width: 83%;margin:auto;">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary" style="    width: 30%;float: left;" th:text="${background}">레드리스트 맛집목록</h6>
                             <input type="hidden" th:value="${shopBackground}" id="background">
@@ -287,6 +287,15 @@
 </style>
 <script type="text/javascript">
     $(document).ready(function() {
+
+        if (window.history && window.history.pushState) {
+            window.history.pushState('forward', null, null);
+            $(window).on('popstate', function () {
+                window.location.href = '/admin/shop/list/allred?updated=true&'+serialize(getUrlParams());
+            });
+        }
+
+
         var xOffset = 10;
         var yOffset = 30;
 
@@ -582,7 +591,7 @@
     function clickButtonAfterUpdate() {
         $('#list-table tr:not(:first)').remove();
         $("#pages").empty();
-        console.log('오더에여', ordering);
+        console.log('오더에여2', ordering);
 
 
         var page = getUrlParams().page;
@@ -638,6 +647,7 @@
             data: param,
             dataType: "json",
             success: function (data) {
+                console.log(data)
                 //1. 맛집 개수 출력
                 $('#item-size').text('총' + data.count + '건의 맛집정보가 검색되었습니다.');
                 var shop = data.data;
@@ -647,7 +657,7 @@
                 $.each(shop, function (i) {
                     var imgUrl = '';
                     var shopPaid = '';
-                    console.log(shop[i].hit)
+                    // console.log(shop[i].hit)
                     // if(shop[i].menuImages == "" || "[]") imgUrl = '/images/default.png';
                     // else imgUrl = shop[i].shopImage;
                     if (shop[i].shopPaid != null) {
@@ -679,8 +689,8 @@
                         '</div>' +
                         '</td>' +
                         '<td>' + shop[i].shopPaid + '</td>' +
-                        '<td><a href="/admin/shop/green/' + shop[i].shopId + '?' + serialize(param) + '">수정</a></td>' +
-                        '<td><a onclick="return confirmUser();" href="/admin/shop/delete/green/' + shop[i].shopId + '">삭제</a></td>' +
+                        '<td><a href="/admin/shop/red/' + shop[i].shopId + '?' + serialize(param) + '">수정</a></td>' +
+                        '<td><a onclick="return confirmUser();" href="/admin/shop/delete/red/' + shop[i].shopId + '">삭제</a></td>' +
                         '</tr>';
                 });
                 $("#list-table").append(tr);
@@ -736,7 +746,7 @@
     function clickButton(e){
         $('#list-table tr:not(:first)').remove();
         $("#pages").empty();
-        console.log('오더에여', ordering);
+        console.log('오더에여1231', ordering);
         var page = e == 1 ? 1:e.value;
 
         var shop1st = $('#table-filter1 :selected').val(); // 전달받은 "셀렉트박스 요소" 에서 선택된 것 찾기
@@ -799,10 +809,11 @@
                 //1. 맛집 개수 출력
                 $('#item-size').text('총' + data.count + '건의 맛집정보가 검색되었습니다.');
                 // var shop = data.data;
+                console.log("이쪾")
                 var shop = data.data;
-                if(shop[i].shopPaid != null){
-                    shopPaid = shop[i].shopPaid
-                }
+                // if(shop[i].shopPaid != null){
+                //     shopPaid = shop[i].shopPaid
+                // }
                 //2. 상점 리스트 업
                 var tr = '';
                 $.each(shop, function (i) {

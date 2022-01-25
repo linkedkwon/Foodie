@@ -76,7 +76,7 @@
                                     <td>
                                         <input type="checkbox" class="chkRadio" id="category_1" th:value="${val.id}"
                                                th:name="${val.listName}" th:text="${' ' + val.listName}"/>
-                                        <label th:for="${val.listName}" >
+                                        <span th:text="${val.seq}"></span>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -410,10 +410,6 @@
             }
             var chkbox = $(this).find('td:first-child :checkbox');
             console.log(chkbox)
-            // if($(this).prop('checked')) {
-            //     $('#example1 tr td input[type=checkbox]').prop('checked', false);
-            //     $(this).prop('checked', true);
-            // }
             $(this).addClass('highlight').siblings().removeClass('highlight');
             chkbox.prop('checked', !chkbox.prop('checked'));
         });
@@ -469,7 +465,7 @@
     const updateRequest = (target) => {
         // alert(target);
         $.ajax({
-            url: "/admin/epicure/region",
+            url: "/admin/epicure/towm",
             type: "POST",
             data: JSON.stringify(target),
             dataType: "json",
@@ -661,7 +657,6 @@
     }
 
     const modifyListName = () => {
-        const type = $('#modify-type').val();
         const listName = $("#modify-category-name").val();
         const checked = $("#bcode .chkRadio:checked");
         checked.parent().contents()[2].data = " " + listName;
