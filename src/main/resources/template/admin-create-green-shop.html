@@ -889,6 +889,9 @@
         sel_files.splice(index, 1);
         var img_id = "#thum"+index;
         $(img_id).attr('src', '/images/default.png')
+
+        var imgInput = document.getElementById("input_imgs"+index);
+        imgInput.value = "";
         console.log(sel_files)
     }
 

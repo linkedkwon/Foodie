@@ -161,9 +161,6 @@ public class ShopController {
             }
         }
 
-
-
-
         int idx = page;
         int size = reviewService.getItemSizeByShopId(shopId);
         String url = "/shop?id=" + shopId + "&page=";
@@ -223,14 +220,12 @@ public class ShopController {
 
         //insta keyword
         mav.addObject("instaKeyword",commentList.getShopName().replaceAll("\\(.+\\)", "").strip());
-        
+
         //buga
         if(isStringEmpty(commentList.getBuga())){
             commentList.setBuga("없음");
         }
-        commentList.setMenuImages(extractMenuImages(commentList));
-        
-        
+
         mav.addObject("tasteRatingCnt", str[1]);
         mav.addObject("category", foodCategoryService.getShopCategory(bCode, mCode, sCode, commentList.getAddress()));
         mav.addObject("reviews", reviewService.getItemsByShopId(shopId, idx));
