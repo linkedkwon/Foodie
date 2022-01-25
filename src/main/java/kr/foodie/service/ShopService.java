@@ -1,6 +1,6 @@
 package kr.foodie.service;
 
-import com.google.gson.Gson;
+import kr.foodie.common.utils.ImageStrUtils;
 import kr.foodie.domain.shopItem.AdminListShop;
 import kr.foodie.domain.shopItem.Shop;
 import kr.foodie.domain.shopItem.ShopDTO;
@@ -8,8 +8,10 @@ import kr.foodie.repo.ShopRepository;
 import kr.foodie.service.admin.RegionAdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.logging.log4j.util.Strings;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
@@ -19,7 +21,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
@@ -51,32 +52,32 @@ public class ShopService {
     }
 
     public List<Shop> getSubwayShopInfos(Integer area1st, Integer area2st, Integer area3st, Integer shopType, int idx, int interval) {
-        if(shopType.equals("1")){
+        if (shopType.equals("1")) {
 //            List<Integer> greenListRegionInfos = regionAdminRepository.findGreenRegionInfo(area1st,  area2st,  area3st);
-            List<Shop> shops = shopRepository.findBySubwayTypeIdAndShopTypeOrderByUpdatedAt(area1st,  area2st,  area3st, shopType,
-                    PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
+            List<Shop> shops = shopRepository.findBySubwayTypeIdAndShopTypeOrderByUpdatedAt(area1st, area2st, area3st, shopType,
+                    PageRequest.of(idx, interval, Sort.by("createdAt").descending())).getContent();
             return addAliasOnShops(shops);
-        }else{
-            List<Shop> shops = shopRepository.findBySubwayTypeIdAndShopTypeOrderByUpdatedAt(area1st,  area2st,  area3st, shopType,
-                    PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
+        } else {
+            List<Shop> shops = shopRepository.findBySubwayTypeIdAndShopTypeOrderByUpdatedAt(area1st, area2st, area3st, shopType,
+                    PageRequest.of(idx, interval, Sort.by("createdAt").descending())).getContent();
             return addAliasOnShops(shops);
         }
     }
 
     public List<Shop> getShopInfos(Integer area2st, List<Integer> shopType, Boolean isGreen, int idx, int interval) {
-        if(isGreen){
+        if (isGreen) {
             List<Shop> shops = shopRepository.findByArea1stAndShopTypeInAndPremiumRegisterDateIsNullOrderByUpdatedAt(area2st, shopType,
-                    PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
+                    PageRequest.of(idx, interval, Sort.by("createdAt").descending())).getContent();
             return mainAliasOnShops(shops);
         }
         List<Shop> shops = shopRepository.findByArea2stAndShopTypeInAndPremiumRegisterDateIsNullOrderByUpdatedAt(area2st, shopType,
-                PageRequest.of(idx,interval,Sort.by("createdAt").descending())).getContent();
+                PageRequest.of(idx, interval, Sort.by("createdAt").descending())).getContent();
         return mainAliasOnShops(shops);
 
     }
 
     public List<Shop> getSubwayPremiumShopInfos(Integer area1st, Integer area2st, Integer area3st, Integer shopType) {
-        if(shopType.equals("1")) {
+        if (shopType.equals("1")) {
 //            List<Integer> greenListRegionInfos = regionAdminRepository.findGreenRegionInfo(area1st,  area2st,  area3st);
 //            List<Shop> shops = shopRepository.findBySubwayTypeIdAndShopTypeAndPremiumRegisterDateIsNotNullOrderByPremiumRegisterDateDesc(area1st,  area2st,  area3st, "1");
 //            return addAliasOnShops(shops);
@@ -89,7 +90,7 @@ public class ShopService {
 
 
     public List<Shop> getShopPremiumInfos(Boolean isGreen, Integer area2st, List<Integer> shopType) {
-        if(isGreen){
+        if (isGreen) {
             List<Shop> shops = shopRepository.findRandomByArea1stAndShopTypeInAndPremiumRegisterDateIsNull(area2st, shopType);
             return mainAliasOnShops(shops);
         }
@@ -111,13 +112,14 @@ public class ShopService {
 
 
     public void updateHit(Integer shopId, Integer count) {
-        if(count == null){
-            count=0;
+        if (count == null) {
+            count = 0;
         }
-        shopRepository.updateFoodieHit(shopId, count+1);
+        shopRepository.updateFoodieHit(shopId, count + 1);
 //        return duplicatedInfos;
 //        return;
     }
+
     public List<Shop> getDuplicatedInfos(List<Integer> shopType, String shopName) {
         List<Shop> duplicatedInfos = shopRepository.findDuplicatedShop(shopType, shopName);
         return duplicatedInfos;
@@ -125,7 +127,7 @@ public class ShopService {
 
     //    사이드에 그린리스트<-> 레드리스트 우선순위 지정필요
     public List<Shop> getShopInfosWithSideOrder(Boolean isGreen, Integer area2st, List<Integer> shopType) {
-        if(isGreen){
+        if (isGreen) {
             List<Shop> shops = shopRepository.findByArea1stAndShopTypeIn(area2st, shopType);
             return mainAliasOnShops(shops);
         }
@@ -145,6 +147,7 @@ public class ShopService {
         List<Shop> shops = shopRepository.findShopInfoByType(type);
         return addAliasOnShops(shops);
     }
+
     public List<Shop> getShopMainInfoByType(Integer type) {
         List<Shop> shops = shopRepository.findShopInfoByType(type);
         return mainAliasOnShops(shops);
@@ -169,11 +172,15 @@ public class ShopService {
     }
 
 
-    public int getItemSizeByRegionTypeAndShopType(Boolean isGreen, Integer area2st, List<Integer> shopType){
-        if(isGreen){
-            return shopRepository.countByArea1stAndShopTypeIn(area2st, shopType).orElseGet(()->{return 0;});
+    public int getItemSizeByRegionTypeAndShopType(Boolean isGreen, Integer area2st, List<Integer> shopType) {
+        if (isGreen) {
+            return shopRepository.countByArea1stAndShopTypeIn(area2st, shopType).orElseGet(() -> {
+                return 0;
+            });
         }
-        return shopRepository.countByArea2stAndShopTypeIn(area2st, shopType).orElseGet(()->{return 0;});
+        return shopRepository.countByArea2stAndShopTypeIn(area2st, shopType).orElseGet(() -> {
+            return 0;
+        });
     }
 
     public List<Shop> getTop50AdminShopInfos(List<Integer> background) {
@@ -181,6 +188,7 @@ public class ShopService {
         return shopRepository.findByShopTypeInOrderByShopIdDesc(background);
         //return shopRepository.findByShopTypeIn(background);
     }
+
     //rderByUpdatedAtDesc
     public List<Shop> getAllShopInfos(List<Integer> shopType) {
         return shopRepository.findByShopTypeIn(shopType);
@@ -210,6 +218,7 @@ public class ShopService {
         }
         return shops;
     }
+
     protected List<Shop> mainAliasOnShops(List<Shop> shops) {
         for (Shop shop : shops) {
             String bCode = Optional.ofNullable(shop.getBigCategory()).orElseGet(() -> {
@@ -221,7 +230,7 @@ public class ShopService {
             String sCode = Optional.ofNullable(shop.getSmallCategory()).orElseGet(() -> {
                 return "0";
             });
-            if(shop.getSmallCategory() == null || shop.getSmallCategory().equals("")){
+            if (shop.getSmallCategory() == null || shop.getSmallCategory().equals("")) {
                 sCode = "0";
             }
             Integer type = Optional.ofNullable(shop.getShopType()).orElseGet(() -> {
@@ -231,8 +240,8 @@ public class ShopService {
 //            if (type.toString().equals("1")) {
 //                shop.setShopAlias(tripCategoryService.getMainTripCategory(bCode, mCode, sCode));
 //            } else {
-                shop.setShopAlias(foodCategoryService.getMainShopCategory(bCode, mCode, sCode));
-            if(shop.getFoodieLogRating() == null || shop.getFoodieLogRating().equals("없음")){
+            shop.setShopAlias(foodCategoryService.getMainShopCategory(bCode, mCode, sCode));
+            if (shop.getFoodieLogRating() == null || shop.getFoodieLogRating().equals("없음")) {
                 shop.setFoodieLogRating("");
             }
 //            }
@@ -241,6 +250,7 @@ public class ShopService {
         }
         return shops;
     }
+
     protected List<Shop> addListAliasOnShops(List<Shop> shops) {
         for (Shop shop : shops) {
             String bCode = Optional.ofNullable(shop.getBigCategory()).orElseGet(() -> {
@@ -262,16 +272,17 @@ public class ShopService {
         }
         return shops;
     }
+
     private String extractShopImage(Shop commentList) {
         String menuImgStr = commentList.getMenuImages();
         String replacedImg = "";
-        if(commentList.getShopImage() != null){
+        if (commentList.getShopImage() != null) {
             replacedImg = commentList.getShopImage().strip();
             return replacedImg;
         }
 
 
-        if (StringUtils.hasText(menuImgStr)) {
+        if (StringUtils.isNotBlank(menuImgStr)) {
             String[] images = menuImgStr
                     .replace("[", "")
                     .replace("]", "")
@@ -285,6 +296,7 @@ public class ShopService {
 
         return replacedImg;
     }
+
     public Map<String, Object> getSearchListByKeyword(String keyword, String shopType, int shopInterval, int idx) {
 
         FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
@@ -304,7 +316,7 @@ public class ShopService {
 
         List<Shop> result = fullTextQuery.getResultList();
         List<Shop> list = result.stream()
-                .filter(e -> e.getShopType()==Integer.parseInt(shopType))
+                .filter(e -> e.getShopType() == Integer.parseInt(shopType))
                 .collect(Collectors.toList());
 
         //list has only 1nd index(key:size, value:list)
@@ -346,8 +358,8 @@ public class ShopService {
         SimpleDateFormat nowDateymd = new SimpleDateFormat("yyyyMMdd");
         String nowHHmmss = nowDateHHmmss.format(from);
         String nowymd = nowDateymd.format(from);
-        ArrayList<String> images = new ArrayList<>();
-        String[] items=null;
+        List<String> images = new ArrayList<>();
+        List<String> existImageList = ImageStrUtils.strToList(existImages);
         if (files.length > 0) {
             try {
                 con = new FTPClient();
@@ -357,33 +369,31 @@ public class ShopService {
                     con.enterLocalPassiveMode(); // important!
                     con.setFileType(FTP.BINARY_FILE_TYPE);
 
-
-//                    Gson gson = new Gson();
-//                    JsonObject convertedObject = new Gson().fromJson(existImages, JsonObject.class);
-//                    Map<String, Object> map = gson.fromJson(existImages, Map.class);
-                    if(existImages != null){
-                        items = existImages.replace("[", "").replace("]", "").replaceAll("\"", "").split(",");
-                        for(int i=0; i < items.length; i++){
-                            if(!(items[i].equals(""))){
-                                images.add(items[i]);
-                            }
-                        }
-                    }
-
+                    int existImageIdx = 0;
                     for (int i = 0; i < files.length; i++) {
-                        if (!(files[i].getOriginalFilename().equals(""))) {
-                            con.storeFile(files[i].getOriginalFilename(), files[i].getInputStream());
-                            images.add("http://foodie.speedgabia.com/" + files[i].getOriginalFilename());
+
+                        if (!StringUtils.equals(files[i].getOriginalFilename(), Strings.EMPTY)) {
+                            if (i >= images.size()) {
+                                images.add(i, "http://foodie.speedgabia.com/" + files[i].getOriginalFilename());
+                            } else {
+                                images.set(i, "http://foodie.speedgabia.com/" + files[i].getOriginalFilename());
+                            }
+                        } else if (existImageIdx < existImageList.size()) {
+                            images.add(existImageList.get(existImageIdx));
+                            existImageIdx++;
                         }
+
+                        con.storeFile(files[i].getOriginalFilename(), files[i].getInputStream());
                     }
 
-                    String result = new Gson().toJson(images);
+                    String result = ImageStrUtils.listToStr(images);
 
                     updated.setMenuImages(result);
                     con.logout();
                     con.disconnect();
                 }
             } catch (Exception e) {
+                log.error("updateShopInfo error ", e);
             }
         }
         Shop applied = shopRepository.save(updated);
@@ -420,7 +430,7 @@ public class ShopService {
         return query.getResultList();
     }
 
-    public void updateExistImage(Integer shopId, String existImages){
+    public void updateExistImage(Integer shopId, String existImages) {
         Shop entity = shopRepository.findByShopId(shopId);
         List<String> list = new ArrayList<>();
         list.add(existImages);
@@ -428,7 +438,7 @@ public class ShopService {
         shopRepository.save(entity);
     }
 
-    public void deleteShop(Integer shopId){
+    public void deleteShop(Integer shopId) {
         Shop entity = shopRepository.findByShopId(shopId);
         shopRepository.delete(entity);
     }

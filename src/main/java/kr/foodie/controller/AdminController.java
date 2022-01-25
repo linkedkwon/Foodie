@@ -3,6 +3,7 @@ package kr.foodie.controller;
 import com.google.gson.Gson;
 //import kr.foodie.domain.account.ReviewAdmin;
 import kr.foodie.common.CommonResponse;
+import kr.foodie.common.utils.ImageStrUtils;
 import kr.foodie.domain.category.Category;
 import kr.foodie.domain.category.Theme;
 import kr.foodie.domain.shopItem.*;
@@ -10,6 +11,7 @@ import kr.foodie.service.*;
 import kr.foodie.service.admin.FoodCategoryAdminService;
 import kr.foodie.service.admin.RegionAdminService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.stereotype.Controller;
@@ -579,14 +581,13 @@ public class AdminController {
                         con.setFileType(FTP.BINARY_FILE_TYPE);
 
                         for (int i = 0; i < files.length; i++) {
-                            if (!(files[i].getOriginalFilename().equals(""))) {
-                                con.storeFile(files[i].getOriginalFilename(), files[i].getInputStream());
+                            if (!StringUtils.equals(files[i].getOriginalFilename(), StringUtils.EMPTY)) {
                                 images.add("http://foodie.speedgabia.com/" + files[i].getOriginalFilename());
+                                con.storeFile(files[i].getOriginalFilename(), files[i].getInputStream());
                             }
                         }
 
-                        String result = new Gson().toJson(images);
-                        shop.setMenuImages(result);
+                        shop.setMenuImages(ImageStrUtils.listToStr(images));
                         con.logout();
                         con.disconnect();
                     }
