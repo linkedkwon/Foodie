@@ -266,18 +266,18 @@
             <!-- about-restaurant END -->
               <div class="detail-section hashtag-section">
                 <th:block  th:each="tag,index : ${hash}">
-                  <th:block th:if="${index.index} == 1 or ${index.index} == 5">
+                  <th:block th:if="${index.index} == 0 or ${index.index} == 4">
                     <a class="hash_tag_blank">#</a>
                     <a th:text="${tag}"></a>
                     <a class="hash_tag_blank_back_white">#</a>
                   </th:block>
-                  <th:block th:if="${index.index} == 2 or ${index.index} == 6">
+                  <th:block th:if="${index.index} == 1 or ${index.index} == 5">
                     <a th:text="${tag}"></a>
                   </th:block>
-                  <th:block th:if="${index.index} == 3 or ${index.index} == 7">
+                  <th:block th:if="${index.index} == 2 or ${index.index} == 6">
                     <a class="hash_tag_first" th:text="${tag}"></a>
                   </th:block>
-                  <th:block th:if="${index.index} == 4 or ${index.index} == 8">
+                  <th:block th:if="${index.index} == 3 or ${index.index} == 7">
                     <a th:text="${tag}"></a>
                   </th:block>
                 </th:block>

@@ -89,7 +89,7 @@ public class AdminController {
             templateFormat = "admin-register-env-subway";
         }else if(categoryType.equals("foodVillage")) {
             type= regionType.get(5);
-            templateFormat = "admin-register-env-foodVillage";
+            templateFormat = "admin-register-env-foodvillage";
         }else if(categoryType.equals("theme")) {
             type = regionType.get(4);
             templateFormat = "admin-register-env-theme";
