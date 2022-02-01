@@ -226,16 +226,7 @@
                                                     <div class="form-group">
                                                         <div class="form-group">
                                                             <label for="restaurants-closed">포장/배달</label>
-                                                            <div class="flex">
-                                                                <div class="custom-control custom-radio">
-                                                                    <input class="custom-control-input" id="delivery-y"  type="radio" value="Y" name="delivery"  th:field="${shop.isDelivery}">
-                                                                    <label class="custom-control-label" for="delivery-y">가능</label>
-                                                                </div>
-                                                                <div class="custom-control custom-radio">
-                                                                    <input class="custom-control-input" id="delivery-n"  type="radio" value="N" name="delivery" th:field="${shop.isDelivery}" >
-                                                                    <label class="custom-control-label" for="delivery-n">불가능</label>
-                                                                </div>
-                                                            </div>
+                                                            <input type="text" class="form-control" id="isDelivery" placeholder="포장/배달" th:field="${shop.isDelivery}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -329,16 +320,16 @@
 
                                             <div class="form-group" style="display: flex; padding-top: 20px;">
                                                 <div class="" style="width: 50%;">
-                                                    <label for="restaurants-address-detial">주소 (도로명)</label>
+                                                    <label for="restaurants-address-detial">주소 (지번)</label>
                                                     <div style="display: flex;">
-                                                        <input type="text" class="form-control" id="restaurants-address-detial" placeholder="주소" th:field="${shop.address}" >
+                                                        <input type="text" class="form-control" id="restaurants-address-detial-jibun" placeholder="주소" th:field="${shop.address}" >
                                                     </div>
                                                 </div>
 
                                                 <div class="" style="width: 50%;">
-                                                    <label for="restaurants-address-detial">주소 (지번)</label>
+                                                    <label for="restaurants-address-detial">주소 (도로명)</label>
                                                     <div style="display: flex;">
-                                                        <input type="text" class="form-control" id="restaurants-address-detial-jibun" placeholder="주소"  th:field="${shop.roadAddress}">
+                                                        <input type="text" class="form-control" id="restaurants-address-detial" placeholder="주소"  th:field="${shop.roadAddress}">
                                                     </div>
                                                 </div>
                                             </div>

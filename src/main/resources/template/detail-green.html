@@ -147,27 +147,27 @@
               <div class="right-area">
 
                 <!-- 1. 주소-->
-                <th:block th:if="${not #strings.isEmpty(payload.roadAddress)}">
+                <th:block th:if="${not #strings.isEmpty(payload.address)}">
                   <dl>
                     <dt>주소</dt>
                     <dd>
-                      <p id="normal-address" th:text="${payload.roadAddress}"></p>
-                      <div style="margin-top: 2px;" th:if="${not #strings.isEmpty(payload.address)}">
+                      <p id="normal-address" th:text="${payload.address}"></p>
+                      <div style="margin-top: 2px;" th:if="${not #strings.isEmpty(payload.roadAddress)}">
                         <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 3px 7px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
                           도로명
                         </div>
-                        <span id="road-address" th:text="${payload.address}"></span>
+                        <span id="road-address" th:text="${payload.roadAddress}"></span>
                       </div>
                     </dd>
                   </dl>
                 </th:block>
-                <th:block th:unless="${not #strings.isEmpty(payload.roadAddress)}">
+                <th:block th:unless="${not #strings.isEmpty(payload.address)}">
                   <dl>
                     <dt>주소</dt>
                     <dd>
                       <div style="margin-top: 2px;" th:if="${not #strings.isEmpty(payload.address)}">
                         <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 3px 7px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
-                          도로명
+                          지번
                         </div>
                         <span id="road-address" th:text="${payload.address}"></span>
                       </div>

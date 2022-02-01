@@ -85,12 +85,12 @@ public class Shop {
     @Column(name = "AREA_ETC")
     private String areaEtc;
 
-    @Column(name = "ADDRESS")
+    @Column(name = "ROAD_ADDRESS")
     @Field
     @Analyzer(definition = "shopAnalyzer")
     private String address;
 
-    @Column(name = "ROAD_ADDRESS")
+    @Column(name = "ADDRESS")
     @Field
     @Analyzer(definition = "shopAnalyzer")
     private String roadAddress;

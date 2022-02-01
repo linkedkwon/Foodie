@@ -255,8 +255,8 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                        <div class="form-group">
-                                                            <label for="restaurants-closed">포장/배달</label>
-                                                                <input type="text" class="form-control" id="is_delivery" placeholder="포장" th:field="${shop.isDelivery}">
+                                                           <label for="restaurants-closed">포장/배달</label>
+                                                           <input type="text" class="form-control" id="isDelivery" placeholder="포장/배달" th:field="${shop.isDelivery}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -351,16 +351,16 @@
 
                                             <div class="form-group" style="display: flex; padding-top: 20px;">
                                                 <div class="" style="width: 50%;">
-                                                    <label for="restaurants-address-detial">주소 (도로명)</label>
+                                                    <label for="restaurants-address-detial">주소 (지번)</label>
                                                     <div style="display: flex;">
-                                                        <input type="text" class="form-control" id="restaurants-address-detial" placeholder="주소" th:field="${shop.address}" >
+                                                        <input type="text" class="form-control" id="restaurants-address-detial-jibun" placeholder="주소" th:field="${shop.address}" >
                                                     </div>
                                                 </div>
 
                                                 <div class="" style="width: 50%;">
-                                                    <label for="restaurants-address-detial">주소 (지번)</label>
+                                                    <label for="restaurants-address-detial">주소 (도로명)</label>
                                                     <div style="display: flex;">
-                                                        <input type="text" class="form-control" id="restaurants-address-detial-jibun" placeholder="주소"  th:field="${shop.roadAddress}">
+                                                        <input type="text" class="form-control" id="restaurants-address-detial" placeholder="주소"  th:field="${shop.roadAddress}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -960,7 +960,7 @@
 
 
 
-
+    var sel_files =[];
     function handleImgFileSelect(e){
         console.log("ADD ACTION")
         console.log("before_sel_files")

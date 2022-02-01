@@ -155,7 +155,7 @@
                         <div style="width: 26px;height: 15px;margin: 6px 5px 6px 0px;padding: 3px 3px 3px 7px;border-radius: 4px;background-color: #9d9d9d ; display: inline; font-family: NotoSansKR;font-size: 10px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 2;letter-spacing: normal;text-align: left;color: #fff;">
                           도로명
                         </div>
-                        <span="road-address" th:text="${payload.roadAddress}"></b>
+                        <span id="road-address" th:text="${payload.roadAddress}"></span>
                       </div>
                     </dd>
                   </dl>
@@ -249,8 +249,15 @@
 
                 <!--11. 포장 및 배달 -->
                 <th:block th:if="${not #strings.isEmpty(payload.isDelivery)}">
-                  <dt>포장 | 배달</dt>
-                  <dd th:text="${payload.isDelivery}"></dd>
+                  <dl>
+                    <dt>포장 | 배달</dt>
+                    <th:block th:if="${payload.isDelivery.toString().equals('Y')}">
+                      <dd>가능</dd>
+                    </th:block>
+                    <th:block th:unless="${payload.isDelivery.toString().equals('Y')}">
+                      <dd th:text="${payload.isDelivery}"></dd>
+                    </th:block>
+                  </dl>
                 </th:block>
 
                 <dd class="btn-dd">

@@ -249,8 +249,15 @@
 
                 <!--11. 포장 및 배달 -->
                 <th:block th:if="${not #strings.isEmpty(payload.isDelivery)}">
-                  <dt>포장 | 배달</dt>
-                  <dd th:text="${payload.isDelivery}"></dd>
+                  <dl>
+                    <dt>포장 | 배달</dt>
+                    <th:block th:if="${payload.isDelivery.toString().equals('Y')}">
+                      <dd>가능</dd>
+                    </th:block>
+                    <th:block th:unless="${payload.isDelivery.toString().equals('Y')}">
+                      <dd th:text="${payload.isDelivery}"></dd>
+                    </th:block>
+                  </dl>
                 </th:block>
 
                 <dd class="btn-dd">

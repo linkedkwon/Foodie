@@ -398,6 +398,7 @@
 
 #contents .contents .detail-section.hashtag-section {
     display: flex;
+    padding-top: 20px;
 }
 
 #contents .contents .detail-section.hashtag-section a {
@@ -412,7 +413,7 @@
     background-color: #fff;
 
     font-family: "돋음, Dotum. 돋움체, DotumChe";
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 700;
     font-stretch: normal;
     font-style: normal;

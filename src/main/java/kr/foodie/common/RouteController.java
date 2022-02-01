@@ -36,7 +36,7 @@ public class RouteController {
 
     @GetMapping("/detail/red")
     public String renderDetailRed(){
-        return "detail-red_bak";
+        return "detail-red";
     }
 
     @GetMapping("/admin/index")
