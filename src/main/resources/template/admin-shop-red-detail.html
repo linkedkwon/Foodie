@@ -44,34 +44,6 @@
         <!-- Main Content -->
         <div id="content" style="font-size: 9pt">
 
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                <!-- Sidebar Toggle (Topbar) -->
-                <form class="form-inline">
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                </form>
-
-                <!-- Topbar Search -->
-                <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                               aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-
-            </nav>
-            <!-- End of Topbar -->
-
-            <!-- Begin Page Content -->
             <div class="container-fluid" style="    width: 700px;">
 
                 <!-- DataTales Example TODO 외주 -->
@@ -81,7 +53,7 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary" th:text="${payload.shopName}" style="    width: 30%;float: left;"></h6>
 <!--                            <a>-->
-                            <button class="btn btn-info btn-sm" style="float: right;width: 100px;margin-left: 14px;margin-top: -2px;height: 37px;" type="submit">등록하기</button>
+                            <button class="btn btn-info btn-sm" style="float: right;width: 100px;margin-left: 14px;margin-top: -2px;height: 37px;" id="submit" type="submit">등록하기</button>
 <!--                            <button class="btn btn-info btn-sm" onclick="return false;" value="상점조회" id="search_duplicated_list_detail" style=" float: right;   width: 100px;margin-left: 14px;margin-top: -2px;height: 37px;">중복확인</button>-->
 <!--                            </a>-->
                         </div>
@@ -179,6 +151,7 @@
                                                                 ></option>
                                                             </select>
                                                             <select id="table-filter2" class="custom-select" th:field="${shop.middleCategory}">
+                                                                <option value="">선택</option>
                                                                 <option
                                                                         th:each="val : ${secondFoodInfos}"
                                                                         th:value="${val.id}"
@@ -186,6 +159,7 @@
                                                                 ></option>
                                                             </select>
                                                             <select id="table-filter3" class="custom-select" th:field="${shop.smallCategory}">
+                                                                <option value="">선택</option>
                                                                 <option
                                                                         th:each="val : ${thirdFoodInfos}"
                                                                         th:value="${val.id}"
@@ -327,6 +301,7 @@
                                                                 ></option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter8" th:field="${shop.subway2st}">
+                                                                <option value="">선택</option>
                                                                 <option
                                                                         th:each="val : ${secondSubwayInfos}"
                                                                         th:value="${val.id}"
@@ -334,6 +309,7 @@
                                                                 ></option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter9" th:field="${shop.subway3st}">
+                                                                <option value="">선택</option>
                                                                 <option
                                                                         th:each="val : ${thirdSubwayInfos}"
                                                                         th:value="${val.id}"
@@ -410,8 +386,27 @@
                                                 </div>
                                             </div>
                                             <div class="row">
+                                                <div class="form-group" style="    padding-top: 40px;">
+                                                    <label for="restaurants-location-detial">가게 대표 이미지</label>
+                                                    <div>
+                                                        <div class="imgs_wrap">
+                                                            <th:block>
+                                                                <div style="display: inline-block; width: 155px;text-align: center">
+                                                                    <div th:text="${payload.shopImage}"></div>
+                                                                    <img id="shopMainImage"  value="shopMainImage" onerror="this.src='/images/default.png'" style="width: 150px;height: 120px; padding-top: 5px;  float: left;" th:src="${payload.shopImage}">
+                                                                    <br>
+                                                                    <input value="shopMainImage" name="mainShopFiles"  th:data="shopMainImage" type="file" id="shopMainImageInput" onchange="handleMainShopImgFileSelect(this)">
+                                                                    <button id="uploadShopMainImage" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;" >추가</button>
+                                                                    <button id="deleteShopMainImage" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
+                                                                </div>
+                                                            </th:block>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="form-group" style="padding-top: 40px;">
-                                                    <label for="restaurants-location-detial">가게 이미지 추가</label>
+                                                    <label for="restaurants-location-detial">메뉴 이미지 추가</label>
                                                     <div>
                                                         <div class="imgs_wrap">
                                                             <th:block>
@@ -549,7 +544,7 @@
                 </div>
             </div>
         </div>
-    </div>ㅁ
+    </div>
     <!-- Bootstrap core JavaScript-->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
@@ -579,7 +574,9 @@
 </body>
 
 <style>
-
+    input[id^='shopMainImage']{
+        display: none;
+    }
     #preview{
         z-index: 9999;
         position:absolute;
@@ -616,6 +613,7 @@
     let SHOP = [];
     let SHOP_ID = [];
     let sel_files =[];
+    let SHOP_MAIN_IMAGE = [];
     var tagList = [];
     $(document).ready(function() {
         if (window.history && window.history.pushState) {
@@ -627,6 +625,7 @@
         IMAGES = [[${payload.menuImages}]];
         SHOP_ID = [[${payload.shopId}]];
         SHOP = [[${shop}]];
+        SHOP_MAIN_IMAGE = [[${payload.shopImage}]];
 
         $('#shoptown input[type="checkbox"]').on('change', function() {
             $('#shoptown input[type="checkbox"]').not(this).prop('checked', false);
@@ -651,11 +650,6 @@
         $(document).on("mouseout",".thumbnail",function(){ //마우스 아웃시
             $("#preview").remove();
         });
-
-        // $("#themeInfo input[type='checkbox']").change(function(e) {
-        //     console.log(e.target.checked)
-
-        // })
 
         $('#table-filter1').change( function(){
             // $('#table-filter1 option').removeAttr('selected');
@@ -734,10 +728,10 @@
                         $("#table-filter8").append("<option value=''></option>");
                         return;
                     }else{
-                        $("#table-filter9").find("option").remove().end().append("<option value=''></option>");
-                        $("#table-filter9").find("option").remove().end();
-                        $("#table-filter9").append("<option value=''></option>");
-                        return;
+                        // $("#table-filter9").find("option").remove().end().append("<option value=''></option>");
+                        // $("#table-filter9").find("option").remove().end();
+                        // $("#table-filter9").append("<option value=''></option>");
+                        // return;
                     }
                 }
 
@@ -845,7 +839,7 @@
     }
     //TODO 외주
     $("#uploadVehical").submit(function(event) {
-
+        console.log("clicked")
         /* stop form from submitting normally */
         event.preventDefault();
         var checked = [];
@@ -919,6 +913,8 @@
         itemData.append("files", sel_files);
         itemData.append("images", IMAGES);
         itemData.append("themeList", SHOP.themeList);
+        itemData.append("shopMainImage", SHOP_MAIN_IMAGE);
+
         var oParams = getUrlParams();
         console.log("oParams")
         console.log(oParams)
@@ -957,18 +953,14 @@
 
         return params;
     }
-
-
-
-    var sel_files =[];
     function handleImgFileSelect(e){
-        console.log("ADD ACTION")
         console.log("before_sel_files")
         console.log(sel_files)
         var target_index = $('#'+e.id).attr('value');
         var files= $('#'+e.id)[0].files;
         var filesArr = Array.prototype.slice.call(files);
         var index = 0;
+        console.log(target_index + "-------" + files + "-------"  + filesArr )
         filesArr.forEach(function(f) {
             if(!f.type.match("image.*")){
                 alert("확장자는 이미지확장자만 가능");
@@ -1006,7 +998,7 @@
         var img_src = $(img_id).attr('src');
 
         console.log("img+src" + img_src)
-        if(img_src.includes("speedgabia")){
+        if(img_src.includes("speedgabia") || img_src.includes("epicure.co.kr")){
             if(typeof IMAGES == "string"){
                 IMAGES = IMAGES.split(",").filter((element) => element !== img_src);
             }else{
@@ -1070,6 +1062,75 @@
         tagList.splice(index, 1);
         renderTagList();
     };
+
+
+    function handleMainShopImgFileSelect(e){
+        console.log("ADD ACTION")
+        console.log("before_SHOP_MAIN_IMAGE")
+        console.log(SHOP_MAIN_IMAGE)
+        var files= $('#shopMainImageInput')[0].files;
+        var filesArr = Array.prototype.slice.call(files);
+        var index = 0;
+        filesArr.forEach(function(f) {
+            if(!f.type.match("image.*")){
+                alert("확장자는 이미지확장자만 가능");
+                return
+            }
+            SHOP_MAIN_IMAGE = f;
+            var reader = new FileReader();
+            reader.onload = function(e){
+                // var img = new Image();
+                // img.src = e[0].value;
+                // if(img.width < 720 || img.height > 100) {
+                //     alert("이미지 가로 720px, 세로 270px로 맞춰서 올려주세요.");
+                // }else{
+                //     var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(" + index +")\" id=\"img_id_"+index+"\"> <img style=\"width: 150px;height: 120px;padding-left: 10px;\" src=\"" + e.target.result + "\" data-file='"+f.name + "' class='selProductFile' title='click to remove'></a>";
+                $('#shopMainImage').attr('src', e.target.result)
+                index++;
+                // }
+            }
+            reader.readAsDataURL(f);
+        })
+        console.log("after_SHOP_MAIN_IMAGE")
+        console.log(SHOP_MAIN_IMAGE)
+    }
+    function deleteMainShopImageAction(index){
+        var img_id = "#shopMainImage"
+        var img_src = $(img_id).attr('src');
+        console.log(img_src)
+        if(img_src.includes("speedgabia") || img_src.includes("epicure.co.kr")){
+            if(typeof SHOP_MAIN_IMAGE == "string"){
+                SHOP_MAIN_IMAGE = null;
+            }else{
+                SHOP_MAIN_IMAGE = SHOP_MAIN_IMAGE.filter((element) => element !== img_src);
+            }
+        }else{
+            SHOP_MAIN_IMAGE = null;
+        }
+        $(img_id).attr('src', '/images/default.png')
+        console.log("after_SHOP_MAIN_IMAGE")
+        console.log(SHOP_MAIN_IMAGE)
+        console.log("after_SHOP_MAIN_IMAGE exist images")
+        console.log(SHOP_MAIN_IMAGE)
+
+        // var imgInput = document.getElementById("SHOP_MAIN_IMAGE");
+        // imgInput.value = "";
+    }
+
+    $('button[id^=\'uploadShopMainImage\']').click(function (e) {
+        e.preventDefault();
+        var id = e.target.value;
+        console.log('uploadShopMainImage click')
+        $('#shopMainImageInput').click();
+
+    });
+
+    $('button[id^=\'deleteShopMainImage\']').click(function (e) {
+        e.preventDefault();
+        var id = e.target.value;
+        deleteMainShopImageAction(id);
+    });
+
 
 </script>
 

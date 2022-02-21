@@ -311,19 +311,31 @@ public class AdminController {
         if(isStringEmpty(detailInfo.getBigCategory())){
             firstFoodInfos = null;
         }else{
-            firstFoodInfos = regionAdminService.getRegionFirstInfoByRegionId(Integer.parseInt(detailInfo.getBigCategory()), categoryShopType);
+            if(detailInfo.getBigCategory().contains(",")){
+                firstFoodInfos = regionAdminService.getRegionFirstInfoByRegionId(Integer.parseInt(detailInfo.getBigCategory().split(",")[0]), categoryShopType);
+            }else{
+                firstFoodInfos = regionAdminService.getRegionFirstInfoByRegionId(Integer.parseInt(detailInfo.getBigCategory()), categoryShopType);
+            }
         }
 
         if(isStringEmpty(detailInfo.getMiddleCategory())){
             secondFoodInfos = null;
         }else{
-            secondFoodInfos = regionAdminService.getEpicureDistrict(Integer.parseInt(detailInfo.getBigCategory()), categoryShopType);
+            if(detailInfo.getBigCategory().contains(",")){
+                secondFoodInfos = regionAdminService.getEpicureDistrict(Integer.parseInt(detailInfo.getBigCategory().split(",")[0]), categoryShopType);
+            }else{
+                secondFoodInfos = regionAdminService.getEpicureDistrict(Integer.parseInt(detailInfo.getBigCategory()), categoryShopType);
+            }
         }
 
         if(isStringEmpty(detailInfo.getSmallCategory())){
             thirdFoodInfos = null;
         }else{
-            thirdFoodInfos = regionAdminService.getRegionSecondInfoByRegionId(Integer.parseInt(detailInfo.getSmallCategory()), categoryShopType);
+            if(detailInfo.getSmallCategory().contains(",")){
+                thirdFoodInfos = regionAdminService.getRegionSecondInfoByRegionId(Integer.parseInt(detailInfo.getSmallCategory().split(",")[0]), categoryShopType);
+            }else{
+                thirdFoodInfos = regionAdminService.getRegionSecondInfoByRegionId(Integer.parseInt(detailInfo.getSmallCategory()), categoryShopType);
+            }
         }
 
         if(isStringEmpty(detailInfo.getSubwayTypeId())){
@@ -432,7 +444,7 @@ public class AdminController {
             }else{
                 mav.addObject("imageSize", imageSize-1);
             }
-            detailInfo.setShopImage(detailInfo.getMenuImages().split(",")[0]);
+            detailInfo.setShopImage(detailInfo.getShopImage());
         }
         mav.addObject("shop", detailInfo);
         mav.addObject("payload", detailInfo);
@@ -625,7 +637,7 @@ public class AdminController {
             shop.setSubway3st(null);
         }
 
-        String viewName = shopService.updateShopInfo(shop, shopId, files, "aa");
+        String viewName = shopService.updateShopInfo(shop, shopId, files, null, "aa", "");
         return viewName;
     }
 
@@ -656,7 +668,11 @@ public class AdminController {
         }
         String existImages = ((StandardMultipartHttpServletRequest) mtfRequest).getRequest().getParameter("images");
         MultipartFile[] files1 = ((StandardMultipartHttpServletRequest) mtfRequest).getFiles("files").toArray(new MultipartFile[0]);
-        String viewName = shopService.updateShopInfo(shop, shopId, files1, existImages);
+
+        String existShopImage = ((StandardMultipartHttpServletRequest) mtfRequest).getRequest().getParameter("shopMainImage");
+        MultipartFile[] shopImagefiles = ((StandardMultipartHttpServletRequest) mtfRequest).getFiles("mainShopFiles").toArray(new MultipartFile[0]);
+
+        String viewName = shopService.updateShopInfo(shop, shopId, files1, shopImagefiles, existImages, existShopImage);
         return viewName;
     }
 

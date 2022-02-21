@@ -47,7 +47,11 @@ public class FoodCategoryAdminService {
         if(isStringEmpty(sCode)){
             category.put("sCode", null);
         }else{
-            category.put(sCode.toString(),epicureRegionRepository.getRegionSecondInfoByRegionId(Integer.parseInt(sCode),type).get(0).getListName());
+            if(sCode.contains(",")){
+                category.put(sCode.toString(),epicureRegionRepository.getRegionSecondInfoByRegionId(Integer.parseInt(sCode.split(",")[0]),type).get(0).getListName());
+            }else{
+                category.put(sCode.toString(),epicureRegionRepository.getRegionSecondInfoByRegionId(Integer.parseInt(sCode),type).get(0).getListName());
+            }
         }
         return category;
     }

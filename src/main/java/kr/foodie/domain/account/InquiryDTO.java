@@ -17,10 +17,11 @@ public class InquiryDTO {
     private String comment;
     private String givenReply;
     private String createdTime;
+    private String userRole;
 
     public InquiryDTO(Long inquiryId, String name, String email, String title,
                       String content, String phoneNum, String comment,
-                      String givenReply, String createdTime) {
+                      String givenReply, String createdTime,String userRole) {
         this.inquiryId = inquiryId;
         this.name = name;
         this.email = email;
@@ -30,5 +31,6 @@ public class InquiryDTO {
         this.comment = comment;
         this.givenReply = givenReply;
         this.createdTime = createdTime;
+        this.userRole = userRole;
     }
 }

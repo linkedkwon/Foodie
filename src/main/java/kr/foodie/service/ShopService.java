@@ -334,19 +334,19 @@ public class ShopService {
     }
 
     @Transactional
-    public String updateShopInfo(ShopDTO shopDto, Integer shopId, MultipartFile[] files, String existImages) {
+    public String updateShopInfo(ShopDTO shopDto, Integer shopId, MultipartFile[] files, MultipartFile[] shopImagefiles, String existImages, String existShopImage) {
         Shop shop = shopRepository.findById(shopId).orElseThrow();
         Shop updated = shop.toEntity(shopDto, shopId);
         String viewName = null;
         Integer shopBackground = shop.getShopType();
         if (shopBackground == 1) {
-            viewName = "redirect:/admin/shop/list/red";
+            viewName = "redirect:/admin/shop/list/allred";
         } else if (shopBackground == 2) {
-            viewName = "redirect:/admin/shop/list/green";
+            viewName = "redirect:/admin/shop/list/allgreen";
         } else if (shopBackground == 3) {
-            viewName = "redirect:/admin/shop/list/mustard";
+            viewName = "redirect:/admin/shop/list/allred";
         } else if (shopBackground == 4) {
-            viewName = "redirect:/admin/shop/list/mint";
+            viewName = "redirect:/admin/shop/list/allgreen";
         }
         String server = "foodie.speedgabia.com";
         int port = 21;
@@ -360,6 +360,34 @@ public class ShopService {
         String nowymd = nowDateymd.format(from);
         List<String> images = new ArrayList<>();
         List<String> existImageList = ImageStrUtils.strToList(existImages);
+
+
+        if (shopImagefiles.length > 0) {
+            try {
+                con = new FTPClient();
+                con.setControlEncoding("utf-8");
+                con.connect(server, port);
+                if (con.login(user, pw)) {
+                    con.enterLocalPassiveMode(); // important!
+                    con.setFileType(FTP.BINARY_FILE_TYPE);
+
+                    if(existShopImage == null){
+                        if(!StringUtils.equals(shopImagefiles[0].getOriginalFilename(), Strings.EMPTY)){
+                            String shopImage = "http://foodie.speedgabia.com/" + shopImagefiles[0].getOriginalFilename();
+                            con.storeFile(shopImagefiles[0].getOriginalFilename(), shopImagefiles[0].getInputStream());
+                            updated.setShopImage(shopImage);
+                        }
+                    }else{
+                        updated.setShopImage(existShopImage);
+                    }
+                    con.logout();
+                    con.disconnect();
+                }
+            } catch (Exception e) {
+                log.error("updateShopInfo error ", e);
+            }
+        }
+
         if (files.length > 0) {
             try {
                 con = new FTPClient();
@@ -370,15 +398,21 @@ public class ShopService {
                     con.setFileType(FTP.BINARY_FILE_TYPE);
 
                     int existImageIdx = 0;
-                    for (int i = 0; i < files.length; i++) {
 
+
+
+                    for (int i = 0; i < files.length; i++) {
+                        int index = images.size();
                         if (!StringUtils.equals(files[i].getOriginalFilename(), Strings.EMPTY)) {
-                            if (i >= images.size()) {
-                                images.add(i, "http://foodie.speedgabia.com/" + files[i].getOriginalFilename());
-                            } else {
-                                images.set(i, "http://foodie.speedgabia.com/" + files[i].getOriginalFilename());
+                            if(!(existImageList.contains("http://foodie.speedgabia.com/"+ files[i].getOriginalFilename()))) {
+                                if (i >= images.size()) {
+                                    images.add(index, "http://foodie.speedgabia.com/" + files[i].getOriginalFilename());
+                                } else {
+                                    images.set(i, "http://foodie.speedgabia.com/" + files[i].getOriginalFilename());
+                                }
                             }
-                        } else if (existImageIdx < existImageList.size()) {
+                        }
+                        if (existImageIdx < existImageList.size()) {
                             images.add(existImageList.get(existImageIdx));
                             existImageIdx++;
                         }
@@ -387,7 +421,6 @@ public class ShopService {
                     }
 
                     String result = ImageStrUtils.listToStr(images);
-
                     updated.setMenuImages(result);
                     con.logout();
                     con.disconnect();

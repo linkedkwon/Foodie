@@ -146,6 +146,7 @@ public class AdminUserService {
         entity.setSnsReceivedType(vo.getSnsReceivedType());
         entity.setTelNum(vo.getTelNum());
         entity.setMemo(vo.getMemo());
+        entity.setRoleType(vo.getRoleType());
         entity.setPoint(vo.getPoint());
         Date time = Calendar.getInstance().getTime();
         entity.setLastModifiedDate(time);

@@ -253,6 +253,9 @@ public class ShopController {
     }
 
     private String extractShopImage(Shop commentList) {
+        if(commentList.getShopImage() != null){
+            return commentList.getShopImage();
+        }
         String menuImgStr = commentList.getMenuImages();
         String replacedImg = null;
         if(commentList.getShopImage() != null){
@@ -285,9 +288,8 @@ public class ShopController {
                     .replaceAll("\"", "")
                     .split(",");
 
-            return Arrays.stream(menuImages)
-                    .skip(1L)
-                    .collect(Collectors.joining(","));
+//            return Arrays.stream(menuImages).skip(1L).collect(Collectors.joining(","));
+            return Arrays.stream(menuImages).collect(Collectors.joining(","));
         }
 
         return Strings.EMPTY;

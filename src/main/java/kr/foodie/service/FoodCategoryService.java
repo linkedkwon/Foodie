@@ -28,7 +28,9 @@ public class FoodCategoryService {
 
         category += bCode.equalsIgnoreCase("0")? "":"" + epicureRegionRepository.findByCode(Integer.parseInt(bCode)).get(0).getListName();
         category += mCode.equalsIgnoreCase("0")? "":" | " + epicureRegionRepository.findByCode(Integer.parseInt(mCode)).get(0).getListName();
-        category += sCode.equalsIgnoreCase("0")? "":" | " + epicureRegionRepository.findByCode(Integer.parseInt(sCode)).get(0).getListName();
+        if(!sCode.equals("")){
+            category += sCode.equalsIgnoreCase("0")? "":" | " + epicureRegionRepository.findByCode(Integer.parseInt(sCode)).get(0).getListName();
+        }
 
         return category;
     }

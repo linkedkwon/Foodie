@@ -303,6 +303,7 @@
 
                                                             </select>
                                                             <select class="custom-select"  id="table-filter8" th:field="${shop.subway2st}">
+                                                                <option value="" selected>선택</option>
                                                                 <option
                                                                         th:each="val : ${secondSubwayInfos}"
                                                                         th:value="${val.id}"
@@ -310,6 +311,7 @@
                                                                 ></option>
                                                             </select>
                                                             <select class="custom-select"  id="table-filter9" th:field="${shop.subway3st}">
+                                                                <option value="" selected>선택</option>
                                                                 <option
                                                                         th:each="val : ${thirdSubwayInfos}"
                                                                         th:value="${val.id}"
@@ -395,7 +397,27 @@
                                             </div>
                                             <div class="row">
                                                 <div class="form-group" style="    padding-top: 40px;">
-                                                    <label for="restaurants-location-detial">가게 이미지 추가</label>
+                                                    <label for="restaurants-location-detial">그린 대표 이미지</label>
+                                                    <div>
+                                                        <div class="imgs_wrap">
+                                                            <th:block>
+                                                                <div style="display: inline-block; width: 155px;text-align: center">
+                                                                    <div th:text="${payload.shopImage}"></div>
+                                                                    <img id="shopMainImage"  value="shopMainImage" onerror="this.src='/images/default.png'" style="width: 150px;height: 120px; padding-top: 5px;  float: left;" th:src="${payload.shopImage}">
+                                                                    <br>
+                                                                    <input value="shopMainImage" name="mainShopFiles"  th:data="shopMainImage" type="file" id="shopMainImageInput" onchange="handleMainShopImgFileSelect(this)">
+                                                                    <button id="uploadShopMainImage" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;" >추가</button>
+                                                                    <button id="deleteShopMainImage" style="margin-top:5px;width: 35px;font-size: 10px;height: 20px;color: black;border: aliceblue 3px;">삭제</button>
+                                                                </div>
+                                                            </th:block>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group" style="    padding-top: 40px;">
+                                                    <label for="restaurants-location-detial">그린 이미지 추가</label>
                                                     <div>
                                                         <div class="imgs_wrap">
                                                                 <th:block>
@@ -582,6 +604,9 @@
     input[id^='input_imgs']{
         display: none;
     }
+    input[id^='shopMainImage']{
+        display: none;
+    }
     table{
         table-layout: fixed;
         word-wrap:break-word;
@@ -597,7 +622,8 @@
     let SHOP = [];
     let SHOP_ID = [];
     let sel_files =[];
-    var tagList = [];
+    let tagList = [];
+    let SHOP_MAIN_IMAGE = [];
     $(document).ready(function() {
         if (window.history && window.history.pushState) {
             window.history.pushState('forward', null, null);
@@ -611,7 +637,7 @@
         IMAGES = [[${payload.menuImages}]];
         SHOP_ID = [[${payload.shopId}]];
         SHOP = [[${shop}]];
-
+        SHOP_MAIN_IMAGE = [[${payload.shopImage}]];
         $('#shoptown input[type="checkbox"]').on('change', function() {
             $('#shoptown input[type="checkbox"]').not(this).prop('checked', false);
         });
@@ -718,10 +744,10 @@
                         $("#table-filter8").append("<option value=''></option>");
                         return;
                     }else{
-                        $("#table-filter9").find("option").remove().end().append("<option value=''></option>");
-                        $("#table-filter9").find("option").remove().end();
-                        $("#table-filter9").append("<option value=''></option>");
-                        return;
+                        // $("#table-filter9").find("option").remove().end().append("<option value=''></option>");
+                        // $("#table-filter9").find("option").remove().end();
+                        // $("#table-filter9").append("<option value=''></option>");
+                        // return;
                     }
                 }
 
@@ -908,12 +934,14 @@
         SHOP.themeList = checked.toString();
 
         var form = $('#uploadVehical')[0];
-
+        console.log('update_+sel_files')
+        console.log(sel_files)
         var itemData=new FormData(form);
         itemData.append("shop", SHOP);
         itemData.append("files", sel_files);
         itemData.append("images", IMAGES);
         itemData.append("themeList", SHOP.themeList);
+        itemData.append("shopMainImage", SHOP_MAIN_IMAGE);
 
 
         var oParams = getUrlParams();
@@ -1031,6 +1059,60 @@
         imgInput.value = "";
     }
 
+
+    function handleMainShopImgFileSelect(e){
+        console.log("ADD ACTION")
+        console.log("before_SHOP_MAIN_IMAGE")
+        console.log(SHOP_MAIN_IMAGE)
+        var files= $('#shopMainImageInput')[0].files;
+        var filesArr = Array.prototype.slice.call(files);
+        var index = 0;
+        filesArr.forEach(function(f) {
+            if(!f.type.match("image.*")){
+                alert("확장자는 이미지확장자만 가능");
+                return
+            }
+            SHOP_MAIN_IMAGE = f;
+            var reader = new FileReader();
+            reader.onload = function(e){
+                // var img = new Image();
+                // img.src = e[0].value;
+                // if(img.width < 720 || img.height > 100) {
+                //     alert("이미지 가로 720px, 세로 270px로 맞춰서 올려주세요.");
+                // }else{
+                //     var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction(" + index +")\" id=\"img_id_"+index+"\"> <img style=\"width: 150px;height: 120px;padding-left: 10px;\" src=\"" + e.target.result + "\" data-file='"+f.name + "' class='selProductFile' title='click to remove'></a>";
+                $('#shopMainImage').attr('src', e.target.result)
+                index++;
+                // }
+            }
+            reader.readAsDataURL(f);
+        })
+        console.log("after_SHOP_MAIN_IMAGE")
+        console.log(SHOP_MAIN_IMAGE)
+    }
+    function deleteMainShopImageAction(index){
+        var img_id = "#shopMainImage"
+        var img_src = $(img_id).attr('src');
+        console.log(img_src)
+        if(img_src.includes("speedgabia") || img_src.includes("epicure.co.kr")){
+            if(typeof SHOP_MAIN_IMAGE == "string"){
+                SHOP_MAIN_IMAGE = null;
+            }else{
+                SHOP_MAIN_IMAGE = SHOP_MAIN_IMAGE.filter((element) => element !== img_src);
+            }
+        }else{
+            SHOP_MAIN_IMAGE = null;
+        }
+        $(img_id).attr('src', '/images/default.png')
+        console.log("after_SHOP_MAIN_IMAGE")
+        console.log(SHOP_MAIN_IMAGE)
+        console.log("after_SHOP_MAIN_IMAGE exist images")
+        console.log(SHOP_MAIN_IMAGE)
+
+        // var imgInput = document.getElementById("SHOP_MAIN_IMAGE");
+        // imgInput.value = "";
+    }
+
     $('button[id^=\'uploadImage\']').click(function (e) {
         e.preventDefault();
         var id = e.target.value;
@@ -1043,6 +1125,7 @@
         var id = e.target.value;
         deleteImageAction(id);
     });
+
     function deleteTage(value) {
         var index = tagList.indexOf(value);
         if (index < 0) {
@@ -1070,6 +1153,19 @@
         renderTagList();
     };
 
+    $('button[id^=\'uploadShopMainImage\']').click(function (e) {
+        e.preventDefault();
+        var id = e.target.value;
+        console.log('uploadShopMainImage click')
+        $('#shopMainImageInput').click();
+
+    });
+
+    $('button[id^=\'deleteShopMainImage\']').click(function (e) {
+        e.preventDefault();
+        var id = e.target.value;
+        deleteMainShopImageAction(id);
+    });
 </script>
 
 

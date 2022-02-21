@@ -39,6 +39,13 @@ public class AdminUserController {
         return "admin-restaurant-list";
     }
 
+    @GetMapping("/user/email/all")
+    public String renderEmailList(@RequestParam(value = "page", required = false) Integer page,
+                                           @RequestParam(value = "userType", required = false) String userType, @RequestParam(value = "option", required = false) String option,
+                                           @RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "renderOption", required = false) String renderOption){
+        return "admin-email-list";
+    }
+
     @ResponseBody
     @PostMapping("/user/list")
     public Map<String, Object> getUserInfo(@ModelAttribute AdminUserListVO vo){
